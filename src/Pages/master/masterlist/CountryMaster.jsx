@@ -15,6 +15,7 @@ const CountryMaster = () => {
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
@@ -24,6 +25,7 @@ const CountryMaster = () => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("countrylist", postData);
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -238,6 +240,7 @@ const CountryMaster = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

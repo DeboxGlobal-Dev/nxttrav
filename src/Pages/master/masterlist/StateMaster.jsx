@@ -34,8 +34,8 @@ const StateMaster = () => {
       console.log(err);
     }
     // try{
-      
-    
+
+
     // }catch(err){
     //   console.log(err);
     // }
@@ -164,6 +164,7 @@ const StateMaster = () => {
                           className="form-control"
                           component={"select"}
                         >
+                        <option value="">Select</option>
                         {country.map((item) => {
                           // {(item.Id===isEditing.id) ? 'selected':''}
                           return (
