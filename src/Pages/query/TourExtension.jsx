@@ -3,7 +3,7 @@ import React from "react";
 const TourExtension = () =>{
     return(
         <>
-            <h1>This is Tour Extension</h1>
+            <h1 className="p-3">Tour Extension</h1>
         </>
     )
 };

@@ -21,7 +21,7 @@ const FleetMaster = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("countrylist", postData);
+        const { data } = await axiosOther.post("fleetmasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -126,7 +126,7 @@ const FleetMaster = () => {
                 </NavLink>
                 <Model
                   heading={"Add Fleet"}
-                  apiurl={"addupdatecountry"}
+                  apiurl={"addupdatefleetmaster"}
                   initialValues={countryInitialValue}
                   validationSchema={countryValidationSchema}
                   forEdit={editData}
@@ -163,7 +163,19 @@ const FleetMaster = () => {
                           <option value={2}>Vovlo-Large-Coach</option>
                         </Field>
                     </div>
-                      <div className="col-sm-4">
+                    <div className="col-sm-4">
+                        <label>Chassis Number</label>
+                        <Field
+                          type="text"
+                          name="ShortName"
+                          placeholder="Chassis"
+                          className="form-control"
+                        />
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="ShortName" />
+                        </span>
+                    </div>
+                    <div className="col-sm-4">
                         <label>Brand</label>
                         <Field
                           name="SetDefault"
@@ -190,8 +202,20 @@ const FleetMaster = () => {
                           <option value={2}>SUV-Luxury</option>
                           <option value={2}>Vovlo-Large-Coach</option>
                         </Field>
-                      </div>
-                      <div className="col-sm-4">
+                    </div>
+                    <div className="col-sm-4">
+                        <label>Engine Number</label>
+                        <Field
+                          type="text"
+                          name="ShortName"
+                          placeholder="Engine"
+                          className="form-control"
+                        />
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="ShortName" />
+                        </span>
+                    </div>
+                    <div className="col-sm-4">
                         <label>Vehicle</label>
                         <Field
                           name="SetDefault"
@@ -221,8 +245,20 @@ const FleetMaster = () => {
                           <option value={2}>Hatchback</option>
                           <option value={2}>Ertiga</option>
                         </Field>
-                      </div>
-                      <div className="col-sm-4">
+                    </div>
+                    <div className="col-sm-4">
+                        <label>Company Name</label>
+                        <Field
+                          type="text"
+                          name="ShortName"
+                          placeholder="Company Name"
+                          className="form-control"
+                        />
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="ShortName" />
+                        </span>
+                    </div>
+                    <div className="col-sm-4">
                         <label>Color</label>
                         <Field
                           type="text"
@@ -230,8 +266,20 @@ const FleetMaster = () => {
                           placeholder="Color"
                           className="form-control"
                         />
-                      </div>
-                      <div className="col-sm-4">
+                    </div>
+                    <div className="col-sm-4">
+                        <label>Policy Number</label>
+                        <Field
+                          type="text"
+                          name="BirthDate"
+                          placeholder="Policy Number"
+                          className="form-control"
+                        />
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="ShortName" />
+                        </span>
+                    </div>
+                    <div className="col-sm-4">
                         <label>Fuel Type</label>
                         <Field
                           name="SetDefault"
@@ -243,8 +291,16 @@ const FleetMaster = () => {
                           <option value={1}>CNG</option>
                           <option value={2}>Electric</option>
                         </Field>
-                      </div>
-                      <div className="col-sm-4">
+                    </div>
+                    <div className="col-sm-4">
+                        <label>Issue Date</label>
+                        <Field
+                          type="date"
+                          name="ShortName"
+                          className="form-control"
+                        />
+                    </div>
+                    <div className="col-sm-4">
                         <label className="font-size-10">Seating Capacity (Including Driver)</label>
                         <Field
                           type="text"
@@ -255,7 +311,7 @@ const FleetMaster = () => {
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="ShortName" />
                         </span>
-                      </div>
+                    </div>
                       <div className="col-sm-4">
                         <label>Assigned Driver</label>
                         <Field
@@ -322,62 +378,6 @@ const FleetMaster = () => {
                         <label>Car Photo</label>
                         <Field
                           type="file"
-                          name="ShortName"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Chassis Number</label>
-                        <Field
-                          type="text"
-                          name="ShortName"
-                          placeholder="Chassis"
-                          className="form-control"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Engine Number</label>
-                        <Field
-                          type="text"
-                          name="ShortName"
-                          placeholder="Engine"
-                          className="form-control"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Company Name</label>
-                        <Field
-                          type="text"
-                          name="ShortName"
-                          placeholder="Company Name"
-                          className="form-control"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Policy Number</label>
-                        <Field
-                          type="text"
-                          name="BirthDate"
-                          placeholder="Policy Number"
-                          className="form-control"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Issue Date</label>
-                        <Field
-                          type="date"
                           name="ShortName"
                           className="form-control"
                         />

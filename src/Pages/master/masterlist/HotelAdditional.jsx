@@ -29,7 +29,7 @@ const HotelAdditional = () => {
     };
 
     postDataToServer();
-  }, []);
+  }, [getData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -121,7 +121,7 @@ const HotelAdditional = () => {
                 </NavLink>
                 <Model
                   heading={"Add Additional"}
-                  apiurl={"addupdatehoteladdition"}
+                  apiurl={"addupdatehoteladditional"}
                   initialValues={hotelAdditonalInitialValue}
                   validationSchema={hotelAdditionalValidationSchema}
                   forEdit={editData}
@@ -129,8 +129,8 @@ const HotelAdditional = () => {
                   setIsEditing={setIsEditing}
                 >
                   <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-3">
+                    <div className="row row-gap-3">
+                      <div className="col-sm-4">
                         <label>Additonal Name</label>
                         <Field
                           type="text"
@@ -142,7 +142,7 @@ const HotelAdditional = () => {
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-8">
                         <label>Details</label>
                         <Field
                           as="textarea"
@@ -163,7 +163,7 @@ const HotelAdditional = () => {
                           className="form-control"
                         />
                       </div>
-                      <div className="col-sm-2">
+                      <div className="col-sm-4">
                         <label>Status</label>
                         <Field
                           className="form-control"

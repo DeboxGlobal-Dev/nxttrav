@@ -43,7 +43,7 @@ const DriverMaster = () => {
 
   const handleEditClick = (rowValue) => {
     setEditData({
-      id: romwValue.Id,
+      id: rowValue.Id,
       Country: rowValue.Country,
       DriverName: rowValue.DriverName,
       MobileNumber: rowValue.MobileNumber,

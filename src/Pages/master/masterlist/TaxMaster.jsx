@@ -23,7 +23,7 @@ const TaxMaster = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("countrylist", postData);
+        const { data } = await axiosOther.post("tasmasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -127,7 +127,7 @@ const TaxMaster = () => {
                 </NavLink>
                 <Model
                   heading={"Add TAX Master"}
-                  apiurl={"addupdatecountry"}
+                  apiurl={"addupdatetaxmaster"}
                   initialValues={countryInitialValue}
                   validationSchema={countryValidationSchema}
                   forEdit={editData}

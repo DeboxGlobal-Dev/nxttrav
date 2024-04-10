@@ -21,7 +21,7 @@ const PassportCost = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("countrylist", postData);
+        const { data } = await axiosOther.post("passportcostlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -126,7 +126,7 @@ const PassportCost = () => {
                 </NavLink>
                 <Model
                   heading={"Add Passport Cost"}
-                  apiurl={"addupdatecountry"}
+                  apiurl={"addupdatepassportcost"}
                   initialValues={countryInitialValue}
                   validationSchema={countryValidationSchema}
                   forEdit={editData}

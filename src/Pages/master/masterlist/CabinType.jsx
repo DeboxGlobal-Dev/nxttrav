@@ -20,7 +20,7 @@ const CabinType = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("citylist", postData);
+        const { data } = await axiosOther.post("cabintypelist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -29,7 +29,7 @@ const CabinType = () => {
     };
 
     postDataToServer();
-  }, []);
+  }, [editData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -129,7 +129,7 @@ const CabinType = () => {
                 </NavLink>
                 <Model
                   heading={"Add Cabin Type"}
-                  apiurl={"addupdatecity"}
+                  apiurl={"addupdatecabintype"}
                   initialValues={cityInitialValue}
                   validationSchema={cityValidationSchema}
                   forEdit={editData}

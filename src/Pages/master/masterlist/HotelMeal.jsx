@@ -20,7 +20,6 @@ const HotelMeal = () => {
     Status: "",
   });
 
-  const [valueForEdit, setValueForEdit] = useState({});
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -34,7 +33,7 @@ const HotelMeal = () => {
     };
 
     postDataToServer();
-  }, []);
+  }, [getData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {

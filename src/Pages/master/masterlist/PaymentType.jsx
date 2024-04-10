@@ -23,7 +23,7 @@ const PaymentType = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("countrylist", postData);
+        const { data } = await axiosOther.post("paymenttypelist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -127,7 +127,7 @@ const PaymentType = () => {
                 </NavLink>
                 <Model
                   heading={"Add Payment Type"}
-                  apiurl={"addupdatecountry"}
+                  apiurl={"addupdatepaymenttype"}
                   initialValues={countryInitialValue}
                   validationSchema={countryValidationSchema}
                   forEdit={editData}

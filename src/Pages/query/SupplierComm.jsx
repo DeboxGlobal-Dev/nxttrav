@@ -3,7 +3,7 @@ import React from "react";
 const SupplierComm = () =>{
     return(
         <>
-            <h1>This is Supplier Communication</h1>
+            <h1 className="p-3">Supplier Communication</h1>
         </>
     )
 };

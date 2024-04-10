@@ -21,7 +21,7 @@ const VehicleType = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("vehicletypemasterlist", postData);
+        const { data } = await axiosOther.post("vehicletypelist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -114,7 +114,7 @@ const VehicleType = () => {
                 </NavLink>
                 <Model
                   heading={"Add Vehicle Type"}
-                  apiurl={"addupdatevehicletypemaster"}
+                  apiurl={"addupdatevehicletype"}
                   initialValues={vehicleTypeInitialValue}
                   validationSchema={vehicleTypeValidationSchema}
                   forEdit={editData}

@@ -21,7 +21,7 @@ const VehicleMaster = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("countrylist", postData);
+        const { data } = await axiosOther.post("vehiclemasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -113,7 +113,7 @@ const VehicleMaster = () => {
               style={{ padding: "10px" }}
             >
               <div className="col-xl-10 d-flex align-items-center">
-                <h5 className="card-title d-none d-sm-block">Airline Master</h5>
+                <h5 className="card-title d-none d-sm-block">Vehicle Master</h5>
               </div>
               <div className="col-xl-2 d-flex justify-content-end">
                 {/*Bootstrap Modal*/}
@@ -124,9 +124,9 @@ const VehicleMaster = () => {
                 >
                   Back
                 </NavLink>
-                <Model
+                {/* <Model
                   heading={"Add Airline"}
-                  apiurl={"addupdatecountry"}
+                  apiurl={"addupdatevehiclemasterlist"}
                   initialValues={countryInitialValue}
                   validationSchema={countryValidationSchema}
                   forEdit={editData}
@@ -183,7 +183,7 @@ const VehicleMaster = () => {
                       </div>
                     </div>
                   </div>
-                </Model>
+                </Model> */}
               </div>
             </div>
             <div className="card-body">

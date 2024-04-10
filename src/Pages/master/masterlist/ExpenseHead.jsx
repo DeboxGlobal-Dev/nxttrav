@@ -23,7 +23,7 @@ const ExpenseHead = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("countrylist", postData);
+        const { data } = await axiosOther.post("addupdateexpensehead", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -127,7 +127,7 @@ const ExpenseHead = () => {
                 </NavLink>
                 <Model
                   heading={"Add Expense Head"}
-                  apiurl={"addupdatecountry"}
+                  apiurl={"addupdateexpensehead"}
                   initialValues={countryInitialValue}
                   validationSchema={countryValidationSchema}
                   forEdit={editData}

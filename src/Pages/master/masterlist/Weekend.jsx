@@ -20,7 +20,6 @@ const Weekend = () => {
     Status: "",
   });
 
-
   useEffect(() => {
     const postDataToServer = async () => {
       try {

@@ -23,7 +23,7 @@ import DivisionMaster from "./Pages/master/masterList/DivisionMaster";
 import TourType from "./Pages/master/masterList/TourType";
 import SeasonMaster from "./Pages/master/masterList/SeasonMaster";
 import RoomMaster from "./Pages/master/masterList/RoomMaster";
-import HotelMaster from "./Pages/master/masterList/HotelMaster.jsx";
+
 import RoomType from "./Pages/master/masterList/RoomType";
 import Amenties from "./Pages/master/masterList/Amenties";
 import HotelType from "./Pages/master/masterList/HotelType";
@@ -89,10 +89,22 @@ import ClientComm from "./Pages/query/ClientComm.jsx";
 import SupplierComm from "./Pages/query/SupplierComm.jsx";
 import TourExtension from "./Pages/query/TourExtension.jsx";
 import HotelMasterCreate from "./Pages/master/masterList/HotelMasterCreate.jsx";
+import EmergencyDetails from "./Pages/master/masterList/EmergencyDetails.jsx";
+import ProposalSetting from "./Pages/master/masterList/ProposalSetting.jsx";
+import CommissionMaster from "./Pages/master/masterList/CommissionMaster.jsx";
+import HotelMaster from "./Pages/master/masterlist/HotelMaster.jsx";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import ItenaryRequirement from "./Pages/master/masterList/ItenaryRequirement.jsx";
+import Proposal from "./Pages/query/Proposal.jsx";
+import Vouchers from "./Pages/query/Vouchers.jsx";
+import Invoices from "./Pages/query/Invoices.jsx";
+
 
 const App = () => {
   return (
     <>
+    <ToastContainer />
       <Router>
         <Routes>
           <Route path="/" element={<Protected><Home /></Protected>}/>
@@ -105,6 +117,9 @@ const App = () => {
             <Route path="tourextension" element={<Protected><TourExtension/></Protected>}></Route>
             <Route path="clientcomm" element={<Protected><ClientComm/></Protected>}></Route>
             <Route path="suppliercomm" element={<Protected><SupplierComm/></Protected>}></Route>
+            <Route path="proposal" element={<Protected><Proposal/></Protected>}></Route>
+            <Route path="vouchers" element={<Protected><Vouchers/></Protected>}></Route>
+            <Route path="invoices" element={<Protected><Invoices/></Protected>}></Route>
           </Route>
 
           <Route path="/master" element={ <Protected> <Master/> </Protected>}/>
@@ -119,61 +134,65 @@ const App = () => {
           <Route path="/master/division" element={ <Protected> <DivisionMaster /> </Protected>}/>
           <Route path="/master/tour_type" element={ <Protected> <TourType /> </Protected>} />
           <Route path="/master/season" element={ <Protected><SeasonMaster /> </Protected>}/>
-          <Route path="/master/room_master" element={<RoomMaster/>}></Route>
+          <Route path="/master/room_master" element={<Protected><RoomMaster/></Protected>}></Route>
           <Route path="/master/hotelmaster" element={<Protected><HotelMaster/></Protected>}/>
           <Route path="/master/hotelmaster/create" element={<Protected><HotelMasterCreate/></Protected>}/>
-          <Route path="/master/roomtype" element={<RoomType/>}></Route>
-          <Route path="/master/amenties" element={<Amenties/>}></Route>
-          <Route path="/master/hoteltype" element={<HotelType/>}></Route>
-          <Route path="/master/hotelmeal" element={<HotelMeal/>}></Route>
-          <Route path="/master/weekend" element={<Weekend/>}></Route>
-          <Route path="/master/hotelcategory" element={<HotelCategory/>}></Route>
-          <Route path="/master/hotel_additional" element={<HotelAdditional/>}></Route>
-          <Route path="/master/hotelchain" element={<HotelChain/>}></Route>
-          <Route path="/master/resturant" element={<Resturant/>}></Route>
-          <Route path="/master/resturant_mealplan" element={<ResturantMealPlan/>}></Route>
-          <Route path="/master/monument" element={<Monument/>}></Route>
-          <Route path="/master/sightseeing" element={<Sightseeing/>}></Route>
-          <Route path="/master/tourescort" element={<TourEscort/>}></Route>
-          <Route path="/master/tourescortprice" element={<TourEscortPrice/>}></Route>
-          <Route path="/master/visatype" element={<VisaType/>}></Route>
-          <Route path="/master/visacost" element={<VisaCost/>}></Route>
-          <Route path="/master/insurancecost" element={<InsuranceCost/>}></Route>
-          <Route path="/master/insurancetype" element={<InsuranceType/>}></Route>
-          <Route path="/master/passporttype" element={<PassportType/>}></Route>
-          <Route path="/master/passportcost" element={<PassportCost/>}></Route>
-          <Route path="/master/train" element={<TrainMaster/>}></Route>
-          <Route path="/master/airline" element={<AirlineMaster/>}></Route>
-          <Route path="/master/additionalrequirement" element={<AdditionalRequirement/>}></Route>
-          <Route path="/master/operationrestriction" element={<OperationRestriction/>}></Route>
-          <Route path="/master/transfermaster" element={<TransferMaster/>}></Route>
-          <Route path="/master/vehicletype" element={<VehicleType/>}></Route>
-          <Route path="/master/transfertype" element={<TransferType/>}></Route>
-          <Route path="/master/vehiclebrand" element={<VehicleBrand/>}></Route>
-          <Route path="/master/transport" element={<TransportMaster/>}></Route>
-          <Route path="/master/driver" element={<DriverMaster/>}></Route>
-          <Route path="/master/vehiclemaster" element={<VehicleMaster/>}></Route>
-          <Route path="/master/fleet" element={<FleetMaster/>}></Route>
-          <Route path="/master/cruisecompany" element={<CruiseCompany/>}></Route>
-          <Route path="/master/cruisenamecompany" element={<CruiseNameCompany/>}></Route>
-          <Route path="/master/cabintype" element={<CabinType/>}></Route>
-          <Route path="/master/cabincategory" element={<CabinCategory/>}></Route>
-          <Route path="/master/cruisemaster" element={<CruiseMaster/>}></Route>
-          <Route path="/master/ferrycompany" element={<FerryCompany/>}></Route>
-          <Route path="/master/ferrymaster" element={<FerryMaster/>}></Route>
-          <Route path="/master/ferryseat" element={<FerrySeat/>}></Route>
-          <Route path="/master/ferryprice" element={<FerryPrice/>}></Route>
-          <Route path="/master/itenararyoverview" element={<ItenaryOverview/>}></Route>
-          <Route path="/master/lettermaster" element={<LetterMaster/>}></Route>
-          <Route path="/master/fit" element={<FIT/>}></Route>
-          <Route path="/master/git" element={<GIT/>}></Route>
-          <Route path="/master/currencymaster" element={<CurrencyMaster/>}></Route>
-          <Route path="/master/taxmaster" element={<TaxMaster/>}></Route>
-          <Route path="/master/expensetype" element={<ExpenseType/>}></Route>
-          <Route path="/master/expensehead" element={<ExpenseHead/>}></Route>
-          <Route path="/master/saccode" element={<SACCode/>}></Route>
-          <Route path="/master/paymenttype" element={<PaymentType/>}></Route>
-          <Route path="/master/bankmaster" element={<BankMaster/>}></Route>
+          <Route path="/master/roomtype" element={<Protected><RoomType/></Protected>}></Route>
+          <Route path="/master/amenties" element={<Protected><Amenties/></Protected>}></Route>
+          <Route path="/master/hoteltype" element={<Protected><HotelType/></Protected>}></Route>
+          <Route path="/master/hotelmeal" element={<Protected><HotelMeal/></Protected>}></Route>
+          <Route path="/master/weekend" element={<Protected><Weekend/></Protected>}></Route>
+          <Route path="/master/hotelcategory" element={<Protected><HotelCategory/></Protected>}></Route>
+          <Route path="/master/hotel_additional" element={<Protected><HotelAdditional/></Protected>}></Route>
+          <Route path="/master/hotelchain" element={<Protected><HotelChain/></Protected>}></Route>
+          <Route path="/master/resturant" element={<Protected><Resturant/></Protected>}></Route>
+          <Route path="/master/resturant_mealplan" element={<Protected><ResturantMealPlan/></Protected>}></Route>
+          <Route path="/master/monument" element={<Protected><Monument/></Protected>}></Route>
+          <Route path="/master/sightseeing" element={<Protected><Sightseeing/></Protected>}></Route>
+          <Route path="/master/tourescort" element={<Protected><TourEscort/></Protected>}></Route>
+          <Route path="/master/tourescortprice" element={<Protected><TourEscortPrice/></Protected>}></Route>
+          <Route path="/master/visatype" element={<Protected><VisaType/></Protected>}></Route>
+          <Route path="/master/visacost" element={<Protected><VisaCost/></Protected>}></Route>
+          <Route path="/master/insurancecost" element={<Protected><InsuranceCost/></Protected>}></Route>
+          <Route path="/master/insurancetype" element={<Protected><InsuranceType/></Protected>}></Route>
+          <Route path="/master/passporttype" element={<Protected><PassportType/></Protected>}></Route>
+          <Route path="/master/passportcost" element={<Protected><PassportCost/></Protected>}></Route>
+          <Route path="/master/train" element={<Protected><TrainMaster/></Protected>}></Route>
+          <Route path="/master/airline" element={<Protected><AirlineMaster/></Protected>}></Route>
+          <Route path="/master/additionalrequirement" element={<Protected><AdditionalRequirement/></Protected>}></Route>
+          <Route path="/master/operationrestriction" element={<Protected><OperationRestriction/></Protected>}></Route>
+          <Route path="/master/transfermaster" element={<Protected><TransferMaster/></Protected>}></Route>
+          <Route path="/master/vehicletype" element={<Protected><VehicleType/></Protected>}></Route>
+          <Route path="/master/transfertype" element={<Protected><TransferType/></Protected>}></Route>
+          <Route path="/master/vehiclebrand" element={<Protected><VehicleBrand/></Protected>}></Route>
+          <Route path="/master/transport" element={<Protected><TransportMaster/></Protected>}></Route>
+          <Route path="/master/driver" element={<Protected><DriverMaster/></Protected>}></Route>
+          <Route path="/master/vehiclemaster" element={<Protected><VehicleMaster/></Protected>}></Route>
+          <Route path="/master/fleet" element={<Protected><FleetMaster/></Protected>}></Route>
+          <Route path="/master/cruisecompany" element={<Protected><CruiseCompany/></Protected>}></Route>
+          <Route path="/master/cruisenamecompany" element={<Protected><CruiseNameCompany/></Protected>}></Route>
+          <Route path="/master/cabintype" element={<Protected><CabinType/></Protected>}></Route>
+          <Route path="/master/cabincategory" element={<Protected><CabinCategory/></Protected>}></Route>
+          <Route path="/master/cruisemaster" element={<Protected><CruiseMaster/></Protected>}></Route>
+          <Route path="/master/ferrycompany" element={<Protected><FerryCompany/></Protected>}></Route>
+          <Route path="/master/ferrymaster" element={<Protected><FerryMaster/></Protected>}></Route>
+          <Route path="/master/ferryseat" element={<Protected><FerrySeat/></Protected>}></Route>
+          <Route path="/master/ferryprice" element={<Protected><FerryPrice/></Protected>}></Route>
+          <Route path="/master/itenararyoverview" element={<Protected><ItenaryOverview/></Protected>}></Route>
+          <Route path="/master/itenaryrequirement" element={<Protected><ItenaryRequirement/></Protected>}></Route>
+          <Route path="/master/emergencydetails" element={<Protected><EmergencyDetails/></Protected>}></Route>
+          <Route path="/master/lettermaster" element={<Protected><LetterMaster/></Protected>}></Route>
+          <Route path="/master/proposalsetting" element={<Protected><ProposalSetting/></Protected>}></Route>
+          <Route path="/master/fit" element={<Protected><FIT/></Protected>}></Route>
+          <Route path="/master/git" element={<Protected><GIT/></Protected>}></Route>
+          <Route path="/master/currencymaster" element={<Protected><CurrencyMaster/></Protected>}></Route>
+          <Route path="/master/commissionmaster" element={<Protected><CommissionMaster/></Protected>}></Route>
+          <Route path="/master/taxmaster" element={<Protected><TaxMaster/></Protected>}></Route>
+          <Route path="/master/expensetype" element={<Protected><ExpenseType/></Protected>}></Route>
+          <Route path="/master/expensehead" element={<Protected><ExpenseHead/></Protected>}></Route>
+          <Route path="/master/saccode" element={<Protected><SACCode/></Protected>}></Route>
+          <Route path="/master/paymenttype" element={<Protected><PaymentType/></Protected>}></Route>
+          <Route path="/master/bankmaster" element={<Protected><BankMaster/></Protected>}></Route>
 
           <Route path="/setting/" element={<Protected><Setting/></Protected>}>
             <Route index element={<Protected><Users/></Protected>}></Route>

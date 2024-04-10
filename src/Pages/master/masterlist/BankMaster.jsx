@@ -23,7 +23,7 @@ const BankMaster = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("countrylist", postData);
+        const { data } = await axiosOther.post("banklist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -127,7 +127,7 @@ const BankMaster = () => {
                 </NavLink>
                 <Model
                   heading={"Add Bank"}
-                  apiurl={"addupdatecountry"}
+                  apiurl={"addupdatebankmaster"}
                   initialValues={countryInitialValue}
                   validationSchema={countryValidationSchema}
                   forEdit={editData}

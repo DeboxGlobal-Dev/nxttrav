@@ -23,7 +23,7 @@ const FIT = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("countrylist", postData);
+        const { data } = await axiosOther.post("fitlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -129,7 +129,7 @@ const FIT = () => {
                 </NavLink>
                 <Model
                   heading={"Add FIT Inculsions I Exculsions"}
-                  apiurl={"addupdatecountry"}
+                  apiurl={"addupdatefit"}
                   initialValues={countryInitialValue}
                   validationSchema={countryValidationSchema}
                   forEdit={editData}

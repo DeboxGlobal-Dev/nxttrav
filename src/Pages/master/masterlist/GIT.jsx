@@ -23,7 +23,7 @@ const GIT = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("countrylist", postData);
+        const { data } = await axiosOther.post("gitlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -129,7 +129,7 @@ const GIT = () => {
                 </NavLink>
                 <Model
                   heading={"Add GIT Inculsions I Exculsions"}
-                  apiurl={"addupdatecountry"}
+                  apiurl={"addupdategit"}
                   initialValues={countryInitialValue}
                   validationSchema={countryValidationSchema}
                   forEdit={editData}

@@ -115,7 +115,7 @@ const CountryMaster = () => {
             style={{ marginBottom: "0" }}
           >
             <div
-              className="card-header header-elements-inline bg-info-700 py-2"
+              className="card-header header-elements-inline bg-primary-700 py-2"
               style={{ padding: "10px" }}
             >
               <div className="col-xl-10 d-flex align-items-center">

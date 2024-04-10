@@ -5,7 +5,7 @@ const MasterMenu = () => {
   return(
     <>
       {/* General Master Menu List */}
-      <div className="card bg-light w-100 shadow-none border">
+      <div className="card w-100 shadow-none border">
         <div className="card-body p-2 ">
           <p className="text-primary fw-500 m-0 mb-1 d-block master-head">
             GENERAL
@@ -100,7 +100,7 @@ const MasterMenu = () => {
         </div>
       </div>
       {/* Hotel Master Menu List */}
-      <div className="card bg-light w-100 shadow-none border">
+      <div className="card w-100 shadow-none border">
         <div className="card-body p-2 ">
           <p className="text-primary fw-500 m-0 mb-1 d-block master-head">
             HOTEL
@@ -207,7 +207,7 @@ const MasterMenu = () => {
         </div>
       </div>
       {/* Sightseeing Master Menu List */}
-      <div className="card bg-light w-100 shadow-none border">
+      <div className="card w-100 shadow-none border">
         <div className="card-body p-2 ">
           <div className="row row-gap-2">
             <div className="col-md-3 col-sm-6">
@@ -326,7 +326,7 @@ const MasterMenu = () => {
         </div>
       </div>
       {/* Passport Master Menu List */}
-      <div className="card bg-light w-100 shadow-none border">
+      <div className="card w-100 shadow-none border">
         <div className="card-body p-2 ">
           <div className="row row-gap-2">
             <div className="col-md-3 col-sm-6">
@@ -417,7 +417,7 @@ const MasterMenu = () => {
         </div>
       </div>
       {/* Transport Master Menu List */}
-      <div className="card bg-light w-100 shadow-none border">
+      <div className="card w-100 shadow-none border">
         <div className="card-body p-2 ">
           <p className="text-primary fw-500 m-0 mb-1 d-block master-head">
             TRANSPORT
@@ -492,12 +492,12 @@ const MasterMenu = () => {
                 </div>
               </div>
             </div>
-            
+
           </div>
         </div>
       </div>
       {/* Cruise Master Menu List */}
-      <div className="card bg-light w-100 shadow-none border">
+      <div className="card w-100 shadow-none border">
         <div className="card-body p-2 ">
           <p className="text-primary fw-500 m-0 mb-1 d-block master-head">
             Cruise
@@ -519,7 +519,7 @@ const MasterMenu = () => {
                       <span className="pl-1">Cruise Componey</span>
                     </div>
                   </NavLink>
-                  
+
                 </div>
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/cruisenamecompany">
@@ -560,7 +560,7 @@ const MasterMenu = () => {
         </div>
       </div>
       {/* Ferry Master Menu List */}
-      <div className="card bg-light w-100 shadow-none border">
+      <div className="card w-100 shadow-none border">
         <div className="card-body p-2 ">
           <p className="text-primary fw-500 m-0 mb-1 d-block master-head">
             Ferry
@@ -582,7 +582,7 @@ const MasterMenu = () => {
                       <span className="pl-1">Ferry Componey</span>
                     </div>
                   </NavLink>
-                  
+
                 </div>
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/ferrymaster">
@@ -615,7 +615,7 @@ const MasterMenu = () => {
         </div>
       </div>
       {/* Itinerary Proposal Setting Master Menu List */}
-      <div className="card bg-light w-100 shadow-none border">
+      <div className="card w-100 shadow-none border">
         <div className="card-body p-2 ">
           <p className="text-primary fw-500 m-0 mb-1 d-block master-head">
             ITINERARY PROPOSAL SETTING
@@ -632,7 +632,7 @@ const MasterMenu = () => {
             <div className="col-xl-11 col-lg-10 col-md-10 col-sm-10">
               <div className="row">
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
-                  <NavLink to="/master/hotel_ratesheet">
+                  <NavLink to="/master/itenaryrequirement">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
                       <img src="assets/icons/destination.png" alt="image" />
                       <span className="pl-1">Itenarary Requirement</span>
@@ -644,7 +644,7 @@ const MasterMenu = () => {
                       <span className="pl-1">Letter Master</span>
                     </div>
                   </NavLink>
-                  
+
                 </div>
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/itenararyoverview">
@@ -653,7 +653,7 @@ const MasterMenu = () => {
                       <span className="pl-1">Itenarary Overview</span>
                     </div>
                   </NavLink>
-                  <NavLink to="/master/roomtype">
+                  <NavLink to="/master/proposalsetting">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
                       <img src="assets/icons/business-proposal.png" alt="image" />
                       <span className="pl-1">Proposal Setting</span>
@@ -661,7 +661,7 @@ const MasterMenu = () => {
                   </NavLink>
                 </div>
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
-                  <NavLink to="/master/amenties">
+                  <NavLink to="/master/emergencydetails">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
                       <img src="assets/icons/resume.png" alt="image" />
                       <span className="pl-1">Emergency Details</span>
@@ -691,7 +691,7 @@ const MasterMenu = () => {
         </div>
       </div>
       {/* Finance Proposal Setting Master Menu List */}
-      <div className="card bg-light w-100 shadow-none border">
+      <div className="card w-100 shadow-none border">
         <div className="card-body p-2 ">
           <p className="text-primary fw-500 m-0 mb-1 d-block master-head">
             FINANCE
@@ -719,10 +719,10 @@ const MasterMenu = () => {
                       <span className="pl-1">Bank Master</span>
                     </div>
                   </NavLink>
-                  
+
                 </div>
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
-                  <NavLink to="/master/roomtype">
+                  <NavLink to="/master/commissionmaster">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
                       <img src="assets/icons/commission.png" alt="image" />
                       <span className="pl-1">Commission Master</span>
@@ -771,7 +771,7 @@ const MasterMenu = () => {
           </div>
         </div>
       </div>
- 
+
     </>
   );
 };

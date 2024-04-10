@@ -33,7 +33,7 @@ const SeasonMaster = () => {
     };
 
     postDataToServer();
-  }, []);
+  }, [getData]);
   useEffect(()=>{
     getData.map((v)=>{
       console.log(v["Status"]);

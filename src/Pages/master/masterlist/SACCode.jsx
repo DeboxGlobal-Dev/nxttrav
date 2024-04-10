@@ -23,7 +23,7 @@ const SACCode = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("countrylist", postData);
+        const { data } = await axiosOther.post("saccodelist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -127,7 +127,7 @@ const SACCode = () => {
                 </NavLink>
                 <Model
                   heading={"Add SAC Code"}
-                  apiurl={"addupdatecountry"}
+                  apiurl={"addupdatecsaccode"}
                   initialValues={countryInitialValue}
                   validationSchema={countryValidationSchema}
                   forEdit={editData}

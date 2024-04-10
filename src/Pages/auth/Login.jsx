@@ -8,7 +8,6 @@ import { login } from "../../reducer/authReducers";
 import { axiosNew } from "../../http/axios/axios_new";
 
 const Login = () => {
-  
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -26,7 +25,7 @@ const Login = () => {
       if (user.username != "" && user.password != "") {
         setLoading(true);
 
-        const { data } = await axiosNew.post("/auth/login",{
+        const { data } = await axiosNew.post("/auth/login", {
           username: user.username,
           password: user.password,
         });
@@ -87,7 +86,10 @@ const Login = () => {
               <div className="card mb-0">
                 <div className="card-body">
                   <div className="text-center mb-3">
-                    <i className="icon-reading icon-2x text-slate-300 border-slate-300 border-3 rounded-round p-3 mb-3 mt-1"></i>
+                    <i
+                      className="icon-reading icon-2x text-slate-300 border-slate-300 
+                    border-3 rounded-round p-3 mb-3 mt-1"
+                    ></i>
                     <h5 className="mb-0">Login to your account</h5>
                     <span className="d-block text-muted">Your credentials</span>
                   </div>
@@ -124,7 +126,8 @@ const Login = () => {
                   <div className="form-group d-flex align-items-center">
                     <div className="form-check mb-0" style={{ padding: "0px" }}>
                       <Checkbox defaultChecked size="small" value="2" />
-                      {/* <input type="checkbox" name="remember" className="form-input-styled" checked data-fouc readOnly value="1"  /> */}
+                      {/* <input type="checkbox" name="remember" className="form-input-styled" 
+                      checked data-fouc readOnly value="1"  /> */}
                       Remember
                       <label className="form-check-label"></label>
                     </div>
@@ -136,7 +139,8 @@ const Login = () => {
 
                   <div className="form-group">
                     <button type="submit" className="btn btn-primary btn-block">
-                      {isLoading ? "Loading.." : "Sign In"} <i className="icon-circle-right2 ml-2"></i>
+                      {isLoading ? "Loading.." : "Sign In"}{" "}
+                      <i className="icon-circle-right2 ml-2"></i>
                     </button>
                   </div>
 
@@ -156,24 +160,48 @@ const Login = () => {
       </div>
       {/*<!-- /page content -->*/}
       {/* <!-- Footer --> */}
-      <div className="navbar navbar-expand-lg navbar-light" style={{
-        display: "block",
-        position: "absolute",
-        bottom: "0px",
-        width: "100%",
-      }}>
+      <div
+        className="navbar navbar-expand-lg navbar-light"
+        style={{
+          display: "block",
+          position: "absolute",
+          bottom: "0px",
+          width: "100%",
+        }}
+      >
         <div className="text-center d-lg-none w-100">
-          <button type="button" className="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
+          <button
+            type="button"
+            className="navbar-toggler dropdown-toggle"
+            data-toggle="collapse"
+            data-target="#navbar-footer"
+          >
             <i className="icon-unfold mr-2"></i>
             Footer
           </button>
         </div>
         <div className="navbar-collapse collapse" id="navbar-footer">
           <span className="navbar-text">
-            &copy; 2024. Powered By <a href="https://www.deboxglobal.com/" ><img src="https://shivdvn.com/staging/global_assets/images/debox-logo.png" alt="footerlogo" style={{ width: "50px", marginLeft: "5px" }} /></a>
+            &copy; 2024. Powered By{" "}
+            <a href="https://www.deboxglobal.com/">
+              <img
+                src="https://shivdvn.com/staging/global_assets/images/debox-logo.png"
+                alt="footerlogo"
+                style={{ width: "50px", marginLeft: "5px" }}
+              />
+            </a>
           </span>
           <ul className="navbar-nav ml-lg-auto">
-            <li className="nav-item"><a href="https://www.deboxglobal.com/" className="navbar-nav-link font-weight-semibold"><span className="text-pink-400"><i className="icon-lifebuoy mr-2"></i> Support</span></a></li>
+            <li className="nav-item">
+              <a
+                href="https://www.deboxglobal.com/"
+                className="navbar-nav-link font-weight-semibold"
+              >
+                <span className="text-pink-400">
+                  <i className="icon-lifebuoy mr-2"></i> Support
+                </span>
+              </a>
+            </li>
           </ul>
         </div>
       </div>

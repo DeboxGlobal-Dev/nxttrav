@@ -4,6 +4,7 @@ import DataTable from "react-data-table-component";
 import Layout from "../Layout/Layout";
 
 const Company = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -171,6 +172,7 @@ const Company = () => {
       </Layout>
     </>
   );
+
 };
 
 export default Company;

@@ -32,7 +32,7 @@ const HotelType = () => {
     };
 
     postDataToServer();
-  }, []);
+  }, [getData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -125,7 +125,7 @@ const HotelType = () => {
                   setIsEditing={setIsEditing}
                 >
                   <div className="card-body">
-                    <div className="row">
+                    <div className="row row-gap-2">
                       <div className="col-sm-4">
                         <label>Name</label>
                         <Field
@@ -148,6 +148,18 @@ const HotelType = () => {
                         />
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="UploadKeyword" />
+                        </span>
+                      </div>
+                      <div className="col-sm-4">
+                        <label>Proposal Priority</label>
+                        <Field
+                          type="text"
+                          placeholder="Name"
+                          className="form-control"
+                          name="ProposalPriority"
+                        />
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="ProposalPriority" />
                         </span>
                       </div>
                       <div className="col-sm-4">

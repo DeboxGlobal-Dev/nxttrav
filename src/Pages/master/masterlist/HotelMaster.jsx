@@ -7,8 +7,7 @@ import { hotelMasterValue } from "./MasterValidation";
 // import toast, { Toaster } from "react-hot-toast";
 import * as XLSX from "xlsx";
 import LinearWithValueLabel from "../../../hooks/LinearWithValueLabel";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const HotelMaster = () => {
   const [getData, setGetData] = useState([]);
@@ -35,7 +34,7 @@ const HotelMaster = () => {
     };
 
     postDataToServer();
-  }, []);
+  }, [getData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -83,11 +82,9 @@ const HotelMaster = () => {
           setErrorMessage("Header Name: [ "+difference+" ] is not matched with template. Please upload correct one.");
 
         }else{
-          toast.success("Header Matched");
+          toast.success("Template Matched");
           setExcelToJson(JSON.stringify(json, null, 2));
         }
-
-
       };
 
       reader.readAsBinaryString(file);
@@ -101,7 +98,7 @@ const HotelMaster = () => {
       //console.log(excelToJson);
       setFile({ [file.name]: "" });
       document.getElementById("cancel").click();
-      toast.info("Data uploading in process..");
+      toast.success("Data Validating..");
 
 
       setLinearStatus(true);
@@ -111,6 +108,7 @@ const HotelMaster = () => {
         if (response) {
           setTimeout(() => {
             setLinearStatus(false);
+            toast.success("Data uploaded sucessfully");
           },5000)
 
         } else {
@@ -191,7 +189,7 @@ const HotelMaster = () => {
             >
               <div className="col-xl-10 d-flex align-items-center">
                 <h5 className="card-title d-none d-sm-block">Hotel Master</h5>
-                <ToastContainer />
+
               </div>
               <div className="col-xl-2 d-flex justify-content-end">
                 {/* Bootstrap Modal */}
@@ -324,7 +322,7 @@ const HotelMaster = () => {
           <div className="card shadow-none border">
             <DataTable
               columns={columns}
-              data={hotelMasterValue}
+              data={filterData}
               // data={
               //   postData.Search !== "" || postData.Status !== ""
               //     ? filterData

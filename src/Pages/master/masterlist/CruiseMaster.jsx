@@ -20,7 +20,7 @@ const CruiseMaster = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("citylist", postData);
+        const { data } = await axiosOther.post("cruisemasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -29,7 +29,7 @@ const CruiseMaster = () => {
     };
 
     postDataToServer();
-  }, []);
+  }, [getData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -129,7 +129,7 @@ const CruiseMaster = () => {
                 </NavLink>
                 <Model
                   heading={"Add Cruise Package Name"}
-                  apiurl={"addupdatecity"}
+                  apiurl={"addupdatecruisemaster"}
                   initialValues={cityInitialValue}
                   validationSchema={cityValidationSchema}
                   forEdit={editData}

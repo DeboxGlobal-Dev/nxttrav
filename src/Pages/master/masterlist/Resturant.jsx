@@ -14,7 +14,8 @@ const Resturant = () => {
     Search: "",
     Status: "",
   });
-  const [valueForEdit, setValueForEdit] = useState({});
+  const [editData, setEditData] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -27,7 +28,7 @@ const Resturant = () => {
       }
     };
     postDataToServer();
-  }, []);
+  }, [getData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -38,7 +39,14 @@ const Resturant = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    setValueForEdit({ ...rowValue });
+    setValueForEdit({
+      Name:rowValue.Name,
+      Destination:rowValue.Destination,
+      Address:rowValue.Address,
+      RateSheet:rowValue.RateSheet,
+      Status:rowValue.Status==="Active"? 1:0
+    });
+    setIsEditing(true);
   };
 
   const columns = [
@@ -110,7 +118,9 @@ const Resturant = () => {
                   apiurl={"addupdaterestaurantmaster"}
                   initialValues={resturantInitialValue}
                   validationSchema={resturantValidationSchema}
-                  valueForEdit={valueForEdit}
+                  editData = {editData}
+                  isEditing= {isEditing}
+                  setIsEditing={setIsEditing}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">

@@ -204,6 +204,7 @@ export const hotelTypeInitialValue = {
   id: "",
   Name: "",
   UploadKeyword: "",
+  ProposalPriority:"",
   Status: 1,
   AddedBy: 1,
   UpdatedBy: 0,
@@ -510,6 +511,7 @@ export const amentiesValidationSchema = yup.object().shape({
 export const hotelTypeValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
   UploadKeyword: yup.string().required("Required"),
+  ProposalPriority: yup.string().required("Required"),
 });
 export const weekendValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),

@@ -21,7 +21,7 @@ const AdditionalRestriction= () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("countrylist", postData);
+        const { data } = await axiosOther.post("operationrestrictionlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -125,8 +125,8 @@ const AdditionalRestriction= () => {
                   Back
                 </NavLink>
                 <Model
-                  heading={"Add Airline"}
-                  apiurl={"addupdatecountry"}
+                  heading={"Add Operation Restriction"}
+                  apiurl={"addupdateoperationrestriction"}
                   initialValues={countryInitialValue}
                   validationSchema={countryValidationSchema}
                   forEdit={editData}
@@ -135,52 +135,20 @@ const AdditionalRestriction= () => {
                 >
                   <div className="card-body">
                     <div className="row">
-                      <div className="col-sm-3">
-                        <label>Name</label>
-                        <Field
-                          type="text"
-                          name="Name"
-                          placeholder="Enter Name"
-                          className="form-control"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
-                      </div>
-                      <div className="col-sm-3">
-                        <label>Short Name</label>
-                        <Field
-                          type="text"
-                          name="ShortName"
-                          placeholder="Enter Short Name"
-                          className="form-control"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
+                      <div className="col-sm-6">
+                        <label>Service Type</label>
                         <Field
                           name="Status"
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
+                          <option value={""}>Select Service</option>
+                          <option value={1}>Hotel</option>
+                          <option value={2}>Monument</option>
+                          <option value={3}>Sightsieeng</option>
                         </Field>
                       </div>
-                      <div className="col-sm-2">
-                        <label>Set Default</label>
-                        <Field
-                          name="SetDefault"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={0}>No</option>
-                          <option value={1}>Yes</option>
-                        </Field>
-                      </div>
+                      
                     </div>
                   </div>
                 </Model>

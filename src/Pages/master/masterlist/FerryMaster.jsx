@@ -23,7 +23,7 @@ const FerryMaster = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("ferrynamelist", postData);
+        const { data } = await axiosOther.post("ferrymasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -144,7 +144,7 @@ const FerryMaster = () => {
                 </NavLink>
                 <Model
                   heading={"Add Ferry Name"}
-                  apiurl={"addupdateferryname"}
+                  apiurl={"addupdateferrymaster"}
                   initialValues={ferryMasterInitialValue}
                   validationSchema={ferryMasterValidationSchema}
                   forEdit={editData}

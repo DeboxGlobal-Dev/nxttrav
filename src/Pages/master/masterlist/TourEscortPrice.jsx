@@ -25,7 +25,7 @@ const TourEscortPrice = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("tourescortlist", postData);
+        const { data } = await axiosOther.post("tourescortpricelist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -123,7 +123,7 @@ const TourEscortPrice = () => {
                 </NavLink>
                 <Model
                   heading={"Add Tour Escort Service"}
-                  apiurl={"addupdatetourescort"}
+                  apiurl={"addupdatetourprice"}
                   initialValues={tourEscrotPriceInitialValue}
                   validationSchema={tourEscortPriceValidationSchema}
                   forEdit={editData}

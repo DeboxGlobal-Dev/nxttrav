@@ -14,7 +14,7 @@ const HotelChain = () => {
     Search: "",
     Status: "",
   });
-  const [valueForEdit, setValueForEdit] = useState({});
+  const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const HotelChain = () => {
     };
 
     postDataToServer();
-  }, []);
+  }, [getData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -40,7 +40,16 @@ const HotelChain = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    setValueForEdit({ ...rowValue });
+    setEditData({ 
+      Name:rowValue.Name,
+      Location:rowValue.Location,
+      HotelWebsite:rowValue.HotelWebsite,
+      SelfSupplier:rowValue.SelfSupplier,
+      ContaractPerson:rowValue.ContaractPerson,
+      AddedBy:rowValue.AddedBy,
+      UpdatedBy:rowValue.UpdatedBy,
+      Status:rowValue.Status==="Active"?1:0
+     });
     setIsEditing(true);
   };
 
@@ -62,32 +71,32 @@ const HotelChain = () => {
     },
     {
       name: "Location",
-      selector: (row) => row.Status,
+      selector: (row) => row.Location,
       sortable: true,
     },
     {
       name: "Hotel Website",
-      selector: (row) => row.Status,
+      selector: (row) => row.HotelWebsite,
       sortable: true,
     },
     {
       name: "Self Supplier",
-      selector: (row) => row.Status,
+      selector: (row) => row.Supplier,
       sortable: true,
     },
     {
       name: "Cont.Person",
-      selector: (row) => row.Status,
+      selector: (row) => row.ContractPerson,
       sortable: true,
     },
     {
       name: "AddedBy",
-      selector: (row) => row.Status,
+      selector: (row) => row.AddedBy,
       sortable: true,
     },
     {
       name: "UpdatedBy",
-      selector: (row) => row.Status,
+      selector: (row) => row.UpdatedBy,
       sortable: true,
     },
     {
@@ -125,7 +134,7 @@ const HotelChain = () => {
                   apiurl={"addupdatehotelchain"}
                   initialValues={hotelChainInitialValue}
                   validationSchema={hotelChainValidationSchema}
-                  valueForEdit={valueForEdit}
+                  forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                 >
@@ -256,7 +265,7 @@ const HotelChain = () => {
                       </div>
                     </div>
                     <div className="row mt-2">
-                    <div className="col-sm-5">
+                    <div className="col-sm-3">
                         <label>Status</label>
                         <Field
                           className="form-control"

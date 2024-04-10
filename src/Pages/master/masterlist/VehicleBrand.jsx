@@ -20,7 +20,7 @@ const VehicleBrand = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("citylist", postData);
+        const { data } = await axiosOther.post("vehiclebrandlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -127,9 +127,9 @@ const VehicleBrand = () => {
                 >
                   Back
                 </NavLink>
-                <Model
+                {/* <Model
                   heading={"Add Vehicle"}
-                  apiurl={"addupdatecity"}
+                  apiurl={"addupdatevehiclebrand"}
                   initialValues={cityInitialValue}
                   validationSchema={cityValidationSchema}
                   forEdit={editData}
@@ -190,7 +190,7 @@ const VehicleBrand = () => {
                       </div>
                     </div>
                   </div>
-                </Model>
+                </Model> */}
               </div>
             </div>
             <div className="card-body">

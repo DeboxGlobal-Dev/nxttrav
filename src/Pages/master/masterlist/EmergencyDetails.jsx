@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
-import { Field, ErrorMessage } from "formik";
-import { cityInitialValue, cityValidationSchema } from "./MasterValidation";
 import { axiosOther } from "../../../http/axios/axios_new";
+import { Field, ErrorMessage } from "formik";
+import {
+  countryInitialValue,
+  countryValidationSchema,
+} from "./MasterValidation";
 
-const FerryPrice = () => {
+const EmergencyDetails = () => {
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -20,7 +23,7 @@ const FerryPrice = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("ferryprice", postData);
+        const { data } = await axiosOther.post("emergencydetailslist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -37,14 +40,13 @@ const FerryPrice = () => {
 
     setFilterData(result);
   }, [postData]);
-  
+
   const handleEditClick = (rowValue) => {
-    console.log(rowValue);
     setEditData({
       id: rowValue.Id,
-      CountryId: rowValue.CountryName === "India" ? "1" : "2",
-      StateId: rowValue.StateName === "Rajsthan" ? "1" : "2",
       Name: rowValue.Name,
+      ShortName: rowValue.ShortName,
+      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
       Status: rowValue.Status === "Active" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
       UpdatedBy: rowValue.UpdatedBy,
@@ -54,7 +56,7 @@ const FerryPrice = () => {
 
   const columns = [
     {
-      name: "Name",
+      name: "Country Name",
       selector: (row) => (
         <span>
           <i
@@ -69,13 +71,13 @@ const FerryPrice = () => {
       sortable: true,
     },
     {
-      name: "State Name",
-      selector: (row) => row.StateName,
+      name: "Short Name",
+      selector: (row) => row.ShortName,
       sortable: true,
     },
     {
-      name: "Country Name",
-      selector: (row) => row.CountryName,
+      name: "Status Name",
+      selector: (row) => row.Status,
       sortable: true,
     },
     {
@@ -98,27 +100,24 @@ const FerryPrice = () => {
         );
       },
     },
-    {
-      name: "Status",
-      selector: (row) => row.Status,
-      sortable: true,
-    },
   ];
-
   return (
     <>
       <Layout>
         <div className="container-fluid p-3 mb-4">
-          <div className="card shadow-none border">
+          <div
+            className="card shadow-none border"
+            style={{ marginBottom: "0" }}
+          >
             <div
               className="card-header header-elements-inline bg-info-700 py-2"
               style={{ padding: "10px" }}
             >
               <div className="col-xl-10 d-flex align-items-center">
-                <h5 className="card-title d-none d-sm-block">Ferry Price</h5>
+                <h5 className="card-title d-none d-sm-block">Emergency Details</h5>
               </div>
               <div className="col-xl-2 d-flex justify-content-end">
-                {/* Bootstrap Modal */}
+                {/*Bootstrap Modal*/}
                 <NavLink
                   to="/master"
                   className="gray-button"
@@ -126,102 +125,154 @@ const FerryPrice = () => {
                 >
                   Back
                 </NavLink>
-                <Model
-                  heading={"Add Ferry Price"}
-                  apiurl={"addupdateferryprice"}
-                  initialValues={cityInitialValue}
-                  validationSchema={cityValidationSchema}
+                {/* <Model
+                  heading={"Add Emergency Details"}
+                  apiurl={"addupdateemergencydetails"}
+                  initialValues={countryInitialValue}
+                  validationSchema={countryValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
+                      
                       <div className="col-sm-4">
-                        <label>Ferry Transer Name</label>
+                        <label>Ferry Company Name</label>
                         <Field
                           type="text"
-                          placeholder="Ferry Transer Name"
+                          name="Color"
+                          placeholder="Cruise Company"
                           className="form-control"
-                          name="Name"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
                       </div>
                       <div className="col-sm-4">
-                        <label htmlFor="country">From Destination</label>
+                        <label>Destination</label>
                         <Field
+                          name="SetDefault"
                           className="form-control"
                           component={"select"}
-                          name="countryId"
                         >
-                          <option value={"1"}>Noida</option>
-                          <option value={"2"}>Gurgaon</option>
-                          <option value={"3"}>Delhi</option>
+                          <option value={1}>Noida</option>
+                          <option value={1}>Mumbai</option>
+                          <option value={1}>Delhi</option>
+                          <option value={2}>Gurgaon</option>
+                          <option value={2}>Kolkata</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
-                        <label htmlFor="country">To Destination</label>
+                        <label>Website</label>
                         <Field
+                          type="text"
+                          name="Color"
+                          placeholder="Website"
+                          className="form-control"
+                        />
+                      </div>
+                      <div className="col-sm-4">
+                        <label>Self Supplier</label>
+                        <Field
+                          name="SetDefault"
                           className="form-control"
                           component={"select"}
-                          name="countryId"
                         >
-                          <option value={"2"}>Gurgaon</option>
-                          <option value={"3"}>Delhi</option>
-                          <option value={"1"}>Noida</option>
+                          <option value={1}>Yes</option>
+                          <option value={1}>No</option>
                         </Field>
                       </div>
-                    
                       <div className="col-sm-4">
-                        <label>Arrival Time</label>
+                        <label>Contact Person Division</label>
                         <Field
-                          type="time"
+                          name="SetDefault"
                           className="form-control"
-                          name="Name"
+                          component={"select"}
+                        >
+                          <option value={1}>Select Division</option>
+                          <option value={2}>Accounts</option>
+                          <option value={3}>FIT Reserveration</option>
+                          <option value={4}>GIT Reserveration</option>
+                          <option value={5}>HR</option>
+                          <option value={6}>Operations</option>
+                          <option value={7}>Others</option>
+                          <option value={8}>Sales</option>
+                          <option value={9}>Software Developer</option>
+                        </Field>
+                      </div>
+                      <div className="col-sm-4">
+                        <label>Contact Person</label>
+                        <Field
+                          type="text"
+                          name="ShortName"
+                          placeholder="Contact Person"
+                          className="form-control"
                         />
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
+                          <ErrorMessage name="ShortName" />
                         </span>
                       </div>
                       <div className="col-sm-4">
-                        <label>Departure Time</label>
+                        <label>Designation</label>
                         <Field
-                          type="time"
+                          type="text"
+                          name="ShortName"
+                          placeholder="Designation"
                           className="form-control"
-                          name="Name"
                         />
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
+                          <ErrorMessage name="ShortName" />
+                        </span>
+                      </div>
+                      <div className="col-sm-4">
+                        <label>Country Code</label>
+                        <Field
+                          type="text"
+                          name="CountryCode"
+                          placeholder="+91"
+                          className="form-control"
+                          value="+91"
+                        />
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="ShortName" />
+                        </span>
+                      </div>
+                      <div className="col-sm-4">
+                        <label>Phone</label>
+                        <Field
+                          type="text"
+                          name="Phone"
+                          placeholder="Phone"
+                          className="form-control"
+                        />
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="ShortName" />
+                        </span>
+                      </div>
+                      <div className="col-sm-4">
+                        <label>Email</label>
+                        <Field
+                          type="email"
+                          name="Email"
+                          placeholder="Email"
+                          className="form-control"
+                        />
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="ShortName" />
                         </span>
                       </div>
                       <div className="col-sm-4">
                         <label>Status</label>
                         <Field
+                          name="Status"
                           className="form-control"
                           component={"select"}
-                          name="Status"
                         >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
+                          <option value={1}>Active</option>
+                          <option value={0}>Inactive</option>
                         </Field>
-                      </div>
-                      <div className="col-sm-12">
-                        <label>Detail</label>
-                        <Field
-                          as="textarea"
-                          className="form-control"
-                          name="Name"
-                          placeholder="Write Your Detail's Here..."
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
                       </div>
                     </div>
                   </div>
-                </Model>
+                </Model> */}
               </div>
             </div>
             <div className="card-body">
@@ -229,9 +280,9 @@ const FerryPrice = () => {
                 <div className="col-lg-2 col-md-3 mt-2 mt-md-0">
                   <input
                     type="text"
-                    placeholder="Search"
-                    className="search-input focus-ring form-input"
                     name="Search"
+                    placeholder="Search here.."
+                    className="search-input focus-ring form-input"
                     value={postData.Search}
                     onChange={(e) =>
                       setPostData({ ...postData, Search: e.target.value })
@@ -247,9 +298,9 @@ const FerryPrice = () => {
                       setPostData({ ...postData, Status: e.target.value })
                     }
                   >
-                    <option value="0">Select Status</option>
-                    <option value="1">Active</option>
-                    <option value="2">Inactive</option>
+                    <option>Select Status</option>
+                    <option value={0}>Inactive</option>
+                    <option value={1}>Active</option>
                   </select>
                 </div>
                 <div className="col-lg-2 col-md-3 mt-2 mt-md-0">
@@ -261,14 +312,11 @@ const FerryPrice = () => {
             </div>
           </div>
 
-          <div className="card shadow-none border">
+          {/*******************------Table Card-----*******************/}
+          <div className="card shadow-none border mt-2">
             <DataTable
               columns={columns}
-              data={
-                postData.Search !== "" || postData.Status !== ""
-                  ? filterData
-                  : getData
-              }
+              data={filterData}
               pagination
               fixedHeader
               fixedHeaderScrollHeight="280px"
@@ -281,4 +329,4 @@ const FerryPrice = () => {
   );
 };
 
-export default FerryPrice;
+export default EmergencyDetails;

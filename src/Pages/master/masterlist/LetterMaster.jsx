@@ -23,7 +23,7 @@ const LetterMaster = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("countrylist", postData);
+        const { data } = await axiosOther.post("lettermasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -56,7 +56,7 @@ const LetterMaster = () => {
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Name",
       selector: (row) => (
         <span>
           <i
@@ -71,13 +71,13 @@ const LetterMaster = () => {
       sortable: true,
     },
     {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
+      name: "Greeitng Note",
+      selector: (row) => row.GreetingNote,
       sortable: true,
     },
     {
-      name: "Status Name",
-      selector: (row) => row.Status,
+      name: "Welcome Note",
+      selector: (row) => row.WelcomeNote,
       sortable: true,
     },
     {
@@ -127,7 +127,7 @@ const LetterMaster = () => {
                 </NavLink>
                 <Model
                   heading={"Add Letter"}
-                  apiurl={"addupdatecountry"}
+                  apiurl={"addupdatelettermaster"}
                   initialValues={countryInitialValue}
                   validationSchema={countryValidationSchema}
                   forEdit={editData}

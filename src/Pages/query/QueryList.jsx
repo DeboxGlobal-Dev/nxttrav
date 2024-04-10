@@ -11,7 +11,7 @@ const QueryList = () => {
     Search: "",
     Status: "",
   });
-  const data = localStorage.getItem('Query');
+  const data = localStorage.getItem("Query");
   const storedData = JSON.parse(data);
 
   useEffect(() => {
@@ -136,7 +136,7 @@ const QueryList = () => {
       },
     },
   ];
-  
+
   return (
     <>
       <Layout>
@@ -149,22 +149,31 @@ const QueryList = () => {
               className="card-header header-elements-inline bg-info-700 py-2"
               style={{ padding: "10px" }}
             >
-              <div className="col-xl-10 d-flex align-items-center">
+              <div className="col-xl-8 d-flex align-items-center">
                 <h5 className="card-title d-none d-sm-block">Query</h5>
               </div>
-              <div className="col-xl-2 d-flex justify-content-end">
-
-              {storedData?<div className="progress-container col-10 ml-auto p-0 mr-3">
+              <div className="col-xl-4 d-flex justify-content-end">
+                {storedData && <div className="progress-container col-5 ml-auto p-0 mr-3 mt-1" style={{height:'35px'}}>
                   <div className="progress-bar p-0">
-                    <div className="progress-text"><NavLink to="/querylist/queryview/" style={{color:'white'}}>Un-Submitted Query</NavLink></div>
+                    <div className="progress-text">
+                      <NavLink
+                        to="/querylist/queryview/"
+                        style={{ color: "white" }}
+                      >
+                        Un-Submitted Query
+                      </NavLink>
+                    </div>
                   </div>
-                </div>:<NavLink
-                  to="/querylist/queryview/"
-                  className="blue-button"
-                  aria-expanded="false"
-                >
-                  + Create Query
-                </NavLink>}
+                </div>}
+                
+                  <NavLink
+                    to="/querylist/queryview/"
+                    className="blue-button"
+                    aria-expanded="false"
+                  >
+                    + Create Query
+                  </NavLink>
+                
               </div>
             </div>
             <div className="card-body">

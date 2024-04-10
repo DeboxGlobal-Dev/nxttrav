@@ -43,7 +43,7 @@ const LeadSource = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    console.log(rowValue);
+    console.log('row value',rowValue);
     setEditData({
       id: rowValue.Id,
       Name: rowValue.Name,
@@ -56,6 +56,7 @@ const LeadSource = () => {
     });
     setIsEditing(true);
   };
+  console.log('Edit Data', editData);
 
   const columns = [
     {

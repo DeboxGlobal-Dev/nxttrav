@@ -21,7 +21,7 @@ const TransferType = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("countrylist", postData);
+        const { data } = await axiosOther.post("transfertype", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -126,7 +126,7 @@ const TransferType = () => {
                 </NavLink>
                 <Model
                   heading={"Add Transfer Type"}
-                  apiurl={"addupdatecountry"}
+                  apiurl={"addupdatetransfertype"}
                   initialValues={countryInitialValue}
                   validationSchema={countryValidationSchema}
                   forEdit={editData}

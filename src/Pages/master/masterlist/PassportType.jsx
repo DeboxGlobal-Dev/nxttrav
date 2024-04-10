@@ -21,7 +21,7 @@ const PassportType = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("countrylist", postData);
+        const { data } = await axiosOther.post("passporttypelist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -126,7 +126,7 @@ const PassportType = () => {
                 </NavLink>
                 <Model
                   heading={"Add Passport Type"}
-                  apiurl={"addupdatecountry"}
+                  apiurl={"addupdatepassporttype"}
                   initialValues={countryInitialValue}
                   validationSchema={countryValidationSchema}
                   forEdit={editData}

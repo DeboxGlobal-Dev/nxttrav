@@ -23,7 +23,7 @@ const ItenaryOverview = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("countrylist", postData);
+        const { data } = await axiosOther.post("itenaryoverviewlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -43,13 +43,9 @@ const ItenaryOverview = () => {
 
   const handleEditClick = (rowValue) => {
     setEditData({
-      id: rowValue.Id,
-      Name: rowValue.Name,
-      ShortName: rowValue.ShortName,
+      ...rowValue,
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
-      Status: rowValue.Status === "Active" ? 1 : 0,
-      AddedBy: rowValue.AddedBy,
-      UpdatedBy: rowValue.UpdatedBy,
+      Status: rowValue.Status === "Active" ? 1 : 0
     });
     setIsEditing(true);
   };
@@ -127,7 +123,7 @@ const ItenaryOverview = () => {
                 </NavLink>
                 <Model
                   heading={"Add Overview"}
-                  apiurl={"addupdatecountry"}
+                  apiurl={"addupdateitenaryoverview"}
                   initialValues={countryInitialValue}
                   validationSchema={countryValidationSchema}
                   forEdit={editData}

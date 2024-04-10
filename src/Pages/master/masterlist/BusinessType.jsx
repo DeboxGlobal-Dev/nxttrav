@@ -32,7 +32,7 @@ const BusinessType = () => {
     };
 
     postDataToServer();
-  }, []);
+  }, [getData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -230,5 +230,4 @@ const BusinessType = () => {
     </>
   );
 };
-
 export default BusinessType;

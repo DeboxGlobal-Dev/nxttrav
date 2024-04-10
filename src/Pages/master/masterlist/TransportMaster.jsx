@@ -20,7 +20,7 @@ const TransportMaster = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("citylist", postData);
+        const { data } = await axiosOther.post("transportmasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -29,7 +29,7 @@ const TransportMaster = () => {
     };
 
     postDataToServer();
-  }, []);
+  }, [getData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -127,9 +127,9 @@ const TransportMaster = () => {
                 >
                   Back
                 </NavLink>
-                <Model
-                  heading={"Add Vehicle"}
-                  apiurl={"addupdatecity"}
+                {/* <Model
+                  heading={"Add Transport"}
+                  apiurl={"addupdatetransportmaster"}
                   initialValues={cityInitialValue}
                   validationSchema={cityValidationSchema}
                   forEdit={editData}
@@ -210,7 +210,7 @@ const TransportMaster = () => {
                       </div>
                     </div>
                   </div>
-                </Model>
+                </Model> */}
               </div>
             </div>
             <div className="card-body">

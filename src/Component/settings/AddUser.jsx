@@ -7,6 +7,7 @@ import {
   addUserInitialValue,
   addUserValidationSchema,
 } from "../Layout/FormValidation";
+import { NavLink } from "react-router-dom";
 
 const AddUser = () => {
   const handleSubmit = async (value, { resetForm }) => {
@@ -38,9 +39,14 @@ const AddUser = () => {
                     <h5 className="card-title d-none d-sm-block m-0 text-light">
                       Account Information
                     </h5>
+                    <div className="col-2 d-flex justify-content-around">
+                    <NavLink  to="/setting" className="btn btn-light" type="submit">
+                      Back
+                    </NavLink>
                     <button className="btn btn-light" type="submit">
                       Save
                     </button>
+                    </div>
                   </div>
                 </div>
                 <div className="card-body mt-4">

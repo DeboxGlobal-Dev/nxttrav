@@ -32,7 +32,7 @@ const Amenties = () => {
     };
 
     postDataToServer();
-  }, []);
+  }, [getData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -132,7 +132,7 @@ const Amenties = () => {
                   setIsEditing={setIsEditing}
                 >
                   <div className="card-body">
-                    <div className="row">
+                    <div className="row row-gap-2">
                       <div className="col-sm-3">
                         <label>Name</label>
                         <Field

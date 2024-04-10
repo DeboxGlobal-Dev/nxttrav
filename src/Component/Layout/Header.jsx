@@ -53,6 +53,7 @@ const Header = () => {
               <div className="dropdown-menu dropdown-menu-right dropdown-content wmin-md-300">
                 <div className="dropdown-content-header">
                   <span className="font-weight-semibold">Users online</span>
+
                   <a href="/#" className="text-default">
                     <i className="icon-search4 font-size-base"></i>
                   </a>
