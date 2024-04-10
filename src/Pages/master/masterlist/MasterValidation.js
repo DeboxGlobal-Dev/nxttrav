@@ -12,7 +12,7 @@ export const countryInitialValue = {
 export const stateInitialValue = {
   id: "",
   Name: "",
-  CountryId: 1,
+  CountryId: "",
   Status: 1,
   AddedBy: 1,
   UpdatedBy: 1,

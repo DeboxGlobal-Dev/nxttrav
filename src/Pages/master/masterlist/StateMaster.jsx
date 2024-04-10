@@ -13,10 +13,31 @@ const StateMaster = () => {
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+  const [country, setCountry] = useState([]);
+
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
   });
+
+  const getDataToServer = async () => {
+    try{
+      const countryData = await axiosOther.post(
+        "countrylist",{
+          Search: "",
+          Status: 1,
+        }
+      );
+      setCountry(countryData.data.DataList);
+      console.log(country);
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getDataToServer();
+  }, []);
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -137,8 +158,12 @@ const StateMaster = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>India</option>
-                          <option value={2}>America</option>
+                        {country.map((item) => {
+                          // {(item.Id===isEditing.id) ? 'selected':''}
+                          return (
+                            <option value={item.Id} key={item.Id} >{item.Name}</option>
+                          )
+                        })}
                         </Field>
                       </div>
                       <div className="col-sm-4">
