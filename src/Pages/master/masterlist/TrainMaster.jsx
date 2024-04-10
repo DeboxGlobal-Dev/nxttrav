@@ -8,7 +8,7 @@ import { Field, ErrorMessage } from "formik";
 import {
   trainMasterInitialValue,
   trainMasterValidationSchema,
-} from "./MasterValidation";
+} from "./MasterValidations";
 
 const TrainMaster = () => {
   const [getData, setGetData] = useState([]);

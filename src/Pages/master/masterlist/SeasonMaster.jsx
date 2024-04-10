@@ -7,7 +7,7 @@ import { Field, ErrorMessage } from "formik";
 import {
   seasonTypeInitialValue,
   seasonTypeValidationSchema,
-} from "./MasterValidation";
+} from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const SeasonMaster = () => {

@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 import {
   businessTypeInitialValue,
   businessTypeValidationSchema,
-} from "./MasterValidation";
+} from "./MasterValidations";
 
 const BusinessType = () => {
   const [getData, setGetData] = useState([]);

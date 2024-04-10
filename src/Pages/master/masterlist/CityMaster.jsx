@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
-import { cityInitialValue, cityValidationSchema } from "./MasterValidation";
+import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const CityMaster = () => {
@@ -28,13 +28,13 @@ const CityMaster = () => {
           Status: 1,
         }
       );   
-      // const stateData = await axiosOther.post(
-      //   "statelist",{
-      //     Search:"",
-      //     Status:1
-      //   }
-      // )
-      // setStateList(stateData);
+      const stateData = await axiosOther.post(
+        "statelist",{
+          Search:"",
+          Status:1
+        }
+      )
+      setStateList(stateData.data.DataList);
       setCountryList(countryData.data.DataList);
     }catch(err){
       console.log(err);

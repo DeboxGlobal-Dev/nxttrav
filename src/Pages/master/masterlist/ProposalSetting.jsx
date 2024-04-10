@@ -8,7 +8,7 @@ import { Field, ErrorMessage } from "formik";
 import {
   countryInitialValue,
   countryValidationSchema,
-} from "./MasterValidation";
+} from "./MasterValidations";
 
 const ProposalSetting = () => {
   const [getData, setGetData] = useState([]);

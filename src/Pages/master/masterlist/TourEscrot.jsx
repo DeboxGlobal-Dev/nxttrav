@@ -8,7 +8,7 @@ import { Field, ErrorMessage } from "formik";
 import {
   tourEscortInitialValue,
   tourEscortValidationSchema
-} from "./MasterValidation";
+} from "./MasterValidations";
 import "jquery";
 import "select2";
 
