@@ -7,7 +7,7 @@ import { Field, ErrorMessage } from "formik";
 import {
   roomMasterInitialValue,
   roomMasterValidationSchema,
-} from "./MasterValidation";
+} from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const RoomMaster = () => {

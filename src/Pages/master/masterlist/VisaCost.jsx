@@ -5,7 +5,7 @@ import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field } from "formik";
-import { visaCostInitialValue } from "./MasterValidation";
+import { visaCostInitialValue } from "./MasterValidations";
 
 const VisaCost = () => {
   const [getData, setGetData] = useState([]);

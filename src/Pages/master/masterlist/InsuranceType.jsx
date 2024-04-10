@@ -8,7 +8,7 @@ import { Field, ErrorMessage, Formik } from "formik";
 import {
   insuranceTypeInitialValue,
   insuranceTypeValidationSchema,
-} from "./MasterValidation";
+} from "./MasterValidations";
 
 const InsuranceType = () => {
   const [getData, setGetData] = useState([]);

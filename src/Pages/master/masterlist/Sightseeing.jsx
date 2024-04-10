@@ -8,7 +8,7 @@ import { Field, ErrorMessage, Formik } from "formik";
 import {
   sightseeingInitialValue,
   sightseeingValidationSchema,
-} from "./MasterValidation";
+} from "./MasterValidations";
 import "jquery";
 import "select2";
 

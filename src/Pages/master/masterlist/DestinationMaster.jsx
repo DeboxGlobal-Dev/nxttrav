@@ -7,7 +7,7 @@ import { Field, ErrorMessage } from "formik";
 import {
   destinationInitialValue,
   destinationValidationSchema,
-} from "./MasterValidation";
+} from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { isDeepEqual } from "@mui/x-data-grid/internals";
 

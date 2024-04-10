@@ -16,7 +16,7 @@ import {
   hotelTypeInitialValue,
   roomTypeInitialValue,
   stateInitialValue,
-} from "./MasterValidation";
+} from "./MasterValidations";
 
 const HotelMasterCreate = () => {
   const [moreAddress, setMoreAddress] = useState(false);

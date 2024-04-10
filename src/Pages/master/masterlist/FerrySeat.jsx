@@ -8,7 +8,7 @@ import { Field } from "formik";
 import {
   countryInitialValue,
   countryValidationSchema,
-} from "./MasterValidation";
+} from "./MasterValidations";
 
 const FerrySeat = () => {
   const [getData, setGetData] = useState([]);

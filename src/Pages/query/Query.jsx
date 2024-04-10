@@ -1,12 +1,11 @@
 import React, { useState, useReducer, useEffect } from "react";
 import { axiosOther } from "../../http/axios/axios_new";
 import { eachDayOfInterval, format } from "date-fns";
-import {
-  hotelTypeInitialValue,
-  hotelMealInitialValue,
-  leadSourceInitialValue,
-  tourtypeInitialValue,
-} from "../master/masterList/MasterValidation";
+import { hotelTypeInitialValue, 
+  hotelMealInitialValue, 
+  leadSourceInitialValue, 
+  tourtypeInitialValue } 
+  from "../master/masterlist/MasterValidations";
 import * as Yup from "yup";
 import axios from "axios";
 import "jquery";

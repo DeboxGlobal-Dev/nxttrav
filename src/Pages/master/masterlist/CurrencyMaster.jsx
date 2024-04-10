@@ -8,7 +8,7 @@ import { Field, ErrorMessage } from "formik";
 import {
   currencyMasterInitialValue,
   currencyMasterValidationSchema,
-} from "./MasterValidation";
+} from "./MasterValidations";
 
 const CurrencyMaster = () => {
   const [getData, setGetData] = useState([]);

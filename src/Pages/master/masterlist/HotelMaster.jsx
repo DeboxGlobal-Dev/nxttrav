@@ -3,7 +3,7 @@ import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
-import { hotelMasterValue } from "./MasterValidation";
+import { hotelMasterValue } from "./MasterValidations";
 // import toast, { Toaster } from "react-hot-toast";
 import * as XLSX from "xlsx";
 import LinearWithValueLabel from "../../../hooks/LinearWithValueLabel";

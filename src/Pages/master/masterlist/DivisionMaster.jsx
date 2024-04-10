@@ -7,7 +7,7 @@ import { Field, ErrorMessage } from "formik";
 import {
   divisionInitialValue,
   divisionValidationSchema,
-} from "./MasterValidation";
+} from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const DivisionMaster = () => {

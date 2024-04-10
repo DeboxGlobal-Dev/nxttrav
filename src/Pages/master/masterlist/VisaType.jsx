@@ -8,7 +8,7 @@ import { Field, ErrorMessage } from "formik";
 import {
   visaTypeInitialValue,
   visaTypeValidationSchema,
-} from "./MasterValidation";
+} from "./MasterValidations";
 
 const VisaType = () => {
   const [getData, setGetData] = useState([]);

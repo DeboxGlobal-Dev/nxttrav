@@ -8,7 +8,7 @@ import { Field, ErrorMessage } from "formik";
 import {
   ferryMasterInitialValue,
   ferryMasterValidationSchema,
-} from "./MasterValidation";
+} from "./MasterValidations";
 
 const FerryMaster = () => {
   const [getData, setGetData] = useState([]);

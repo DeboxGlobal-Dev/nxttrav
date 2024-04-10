@@ -8,7 +8,7 @@ import { Field, ErrorMessage } from "formik";
 import {
   airlineMasterInitialValue,
   airlineMasterValidationSchema,
-} from "./MasterValidation";
+} from "./MasterValidations";
 
 const AirlineMaster = () => {
   const [getData, setGetData] = useState([]);
