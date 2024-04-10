@@ -14,11 +14,11 @@ const StateMaster = () => {
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [country, setCountry] = useState([]);
-
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
   });
+
 
   const getDataToServer = async () => {
     try{
@@ -33,6 +33,12 @@ const StateMaster = () => {
     }catch(err){
       console.log(err);
     }
+    // try{
+      
+    
+    // }catch(err){
+    //   console.log(err);
+    // }
   }
 
   useEffect(() => {

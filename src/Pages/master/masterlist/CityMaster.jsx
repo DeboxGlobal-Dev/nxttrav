@@ -12,10 +12,47 @@ const CityMaster = () => {
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList ] = useState([]);
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
   });
+  
+
+  const getDataToServer = async () => {
+    try{
+      const countryData = await axiosOther.post(
+        "countrylist",{
+          Search: "",
+          Status: 1,
+        }
+      );   
+      setCountryList(countryData.data.DataList);
+
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  const getStateDataToServer = async () =>{
+    // State Date
+
+    try{
+      const stateData = await axiosOther.post("statelist", {
+        Search:"",
+        Status:1
+      })
+      setStateList(stateData.data.DataList);
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  useEffect(()=>{
+    getDataToServer();
+    // getStateDataToServer();
+  }, []);
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -145,9 +182,13 @@ const CityMaster = () => {
                           component={"select"}
                           name="countryId"
                         >
-                          <option value={1}>India</option>
-                          <option value={2}>Iran</option>
-                          <option value={3}>China</option>
+                        {
+                          countryList.map((value, index)=>{
+                            return <option value={index+1} key={index+1}>{value.Name}</option>
+                            // console.log(value);
+                          })
+                        }
+                        
                         </Field>
                       </div>
                       <div className="col-sm-3">
@@ -156,13 +197,12 @@ const CityMaster = () => {
                           className="form-control"
                           component={"select"}
                           name="stateId"
-                        >
-                          <option value={1}>Rajsthan</option>
-                          <option value={2}>Hryana</option>
-                          <option value={4}>Bihar</option>
-                          <option value={5}>West Bangal</option>
-                          <option value={6}>Banglore</option>
-                          <option value={7}>Uttar Pradesh</option>
+                        >{
+                          stateList.map((value,index)=>{
+                            return <option value={index+1} key={index+1}>{value.Name}</option>
+                          })
+                        }
+         
                         </Field>
                       </div>
                       <div className="col-sm-3">
