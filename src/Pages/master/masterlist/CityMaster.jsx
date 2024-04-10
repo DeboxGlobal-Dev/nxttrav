@@ -35,23 +35,10 @@ const CityMaster = () => {
     }
   }
 
-  const getStateDataToServer = async () =>{
-    // State Date
-
-    try{
-      const stateData = await axiosOther.post("statelist", {
-        Search:"",
-        Status:1
-      })
-      setStateList(stateData.data.DataList);
-    }catch(err){
-      console.log(err);
-    }
-  }
 
   useEffect(()=>{
     getDataToServer();
-    // getStateDataToServer();
+    
   }, []);
 
   useEffect(() => {
