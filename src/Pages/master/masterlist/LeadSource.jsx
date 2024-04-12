@@ -32,7 +32,7 @@ const LeadSource = () => {
     };
 
     postDataToServer();
-  }, []);
+  }, [getData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -69,10 +69,25 @@ const LeadSource = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.Name}&nbsp;
+          {row.SetDefault == "Yes" ? (
+            <span className="badge bg-success">Default</span>
+          ) : (
+            ""
+          )}
         </span>
       ),
       sortable: true,
+    },
+    {
+      name: "Status",
+      selector: (row) => {
+        return (
+          <span>
+            {row.Status}
+          </span>
+        );
+      },
     },
     {
       name: "Created By",
@@ -83,16 +98,6 @@ const LeadSource = () => {
       name: "Updated By",
       selector: (row) => row.UpdatedBy,
       sortable: true,
-    },
-    {
-      name: "Status",
-      selector: (row) => {
-        return (
-          <span>
-            Admin <br /> {row.Status}
-          </span>
-        );
-      },
     },
   ];
 

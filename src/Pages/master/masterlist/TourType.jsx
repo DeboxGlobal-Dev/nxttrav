@@ -33,7 +33,7 @@ const TourType = () => {
     };
 
     postDataToServer();
-  }, []);
+  }, [getData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -47,10 +47,8 @@ const TourType = () => {
     setEditData({
       id: rowValue.Id,
       Name: rowValue.Name,
-      Status: rowValue.Status ==="Active"?1:0,
-      AddedBy: rowValue.AddedBy,
+      Status: rowValue.Status ==="Active"? 1 : 0,
       UpdatedBy: rowValue.UpdatedBy,
-      Created_at: rowValue.Created_at,
       Updated_at: rowValue.Updated_at,
     })
     setIsEditing(true);
@@ -73,6 +71,16 @@ const TourType = () => {
       sortable: true,
     },
     {
+      name: "Status",
+      selector: (row) => {
+        return (
+          <span>
+            {row.Status}
+          </span>
+        );
+      },
+    },
+    {
       name: "Added By",
       selector: (row) => row.AddedBy,
       sortable: true,
@@ -81,16 +89,6 @@ const TourType = () => {
       name: "Updated By",
       selector: (row) => row.UpdatedBy,
       sortable: true,
-    },
-    {
-      name: "Status",
-      selector: (row) => {
-        return (
-          <span>
-            Admin <br /> {row.Status}
-          </span>
-        );
-      },
     },
   ];
 
@@ -127,7 +125,7 @@ const TourType = () => {
                   <div className="card-body">
                     <div className="row">
                       <div className="col-sm-6">
-                        <label htmlFor="country">Lead Source Name</label>
+                        <label htmlFor="country">Tour Name</label>
                         <Field
                           type="text"
                           placeholder="Name"

@@ -40,7 +40,7 @@ const RoomType = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    setValueForEdit({ 
+    setValueForEdit({
       Name:rowValue.Name,
       Size:rowValue.Size,
       MaximumOccupancy:rowValue.MaxOccupancy,
@@ -131,7 +131,7 @@ const RoomType = () => {
                   Back
                 </NavLink>
                 <Model
-                  heading={"Add Hotel Rate"}
+                  heading={"Add Room Type"}
                   apiurl={"addupdateroomtype"}
                   initialValues={cityInitialValue}
                   validationSchema={cityValidationSchema}

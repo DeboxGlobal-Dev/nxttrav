@@ -15,7 +15,7 @@ export const stateInitialValue = {
   CountryId: "",
   Status: 1,
   AddedBy: 1,
-  UpdatedBy: 1,
+  UpdatedBy: 0,
 };
 export const cityInitialValue = {
   id: "",
@@ -24,7 +24,7 @@ export const cityInitialValue = {
   Name: "",
   Status: 1,
   AddedBy: 1,
-  UpdatedBy: 1,
+  UpdatedBy: 0,
 };
 export const leadSourceInitialValue = {
   id: "",
@@ -85,12 +85,12 @@ export const tourtypeInitialValue = {
 };
 export const seasonTypeInitialValue = {
   id: "",
-  Name: 1,
+  SeasonName: "",
   FromDate: "",
   ToDate: "",
   Status: 1,
   AddedBy: 1,
-  UpdatedBy: 1,
+  UpdatedBy: 0,
 };
 export const hotelMasterCreateInitialValue = {
   HotelChain: "",

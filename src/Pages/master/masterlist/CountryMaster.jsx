@@ -69,7 +69,7 @@ const CountryMaster = () => {
           ></i>
           {row.Name} &nbsp;
           {row.SetDefault == "Yes" ? (
-            <span class="badge bg-success">Default</span>
+            <span className="badge bg-success">Default</span>
           ) : (
             ""
           )}
@@ -83,7 +83,7 @@ const CountryMaster = () => {
       sortable: true,
     },
     {
-      name: "Status Name",
+      name: "Status",
       selector: (row) => row.Status,
       sortable: true,
     },

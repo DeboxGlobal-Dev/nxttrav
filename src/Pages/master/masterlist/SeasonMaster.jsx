@@ -26,7 +26,7 @@ const SeasonMaster = () => {
         const { data } = await axiosOther.post("seasonlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
-        console.log('Data of Season Master', data.DataList);
+        //console.log('Data of Season Master', data.DataList);
       } catch (error) {
         console.log(error);
       }
@@ -34,11 +34,12 @@ const SeasonMaster = () => {
 
     postDataToServer();
   }, [getData]);
-  useEffect(()=>{
-    getData.map((v)=>{
-      console.log(v["Status"]);
-    })
-  })
+
+  // useEffect(()=>{
+  //   getData.map((v)=>{
+  //     console.log(v["Status"]);
+  //   })
+  // })
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -51,14 +52,11 @@ const SeasonMaster = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       id: rowValue.Id,
-      Name: rowValue.Name,
+      SeasonName: rowValue.SeasonName,
       FromDate: rowValue.FromDate,
       ToDate: rowValue.ToDate,
-      Status: rowValue.Status==="Active"? 1:0,
-      AddedBy: rowValue.AddedBy,
+      Status: rowValue.Status==="Active" ? 1 : 0,
       UpdatedBy: rowValue.UpdatedBy,
-      Created_at: rowValue.Created_at,
-      Updated_at: rowValue.Updated_at,
     });
     setIsEditing(true);
   };
@@ -81,12 +79,12 @@ const SeasonMaster = () => {
     },
     {
       name: "From Date",
-      selector: (row) => row["FromDate"],
+      selector: (row) => row.FromDate,
       sortable: true,
     },
     {
       name: "To Date",
-      selector: (row) => row["ToDate"],
+      selector: (row) => row.ToDate,
       sortable: true,
     },
     {
@@ -94,7 +92,7 @@ const SeasonMaster = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Status}
+            {row.Status}
           </span>
         );
       },
@@ -139,11 +137,12 @@ const SeasonMaster = () => {
                           className="form-control"
                           component={"select"}
                           id="Season"
-                          name="Name"
+                          name="SeasonName"
                         >
-                          <option value={1}>Summer</option>
-                          <option value={2}>Winter</option>
-                          <option value={3}>All</option>
+                          <option>Select</option>
+                          <option value={"Summer"}>Summer</option>
+                          <option value={"Winter"}>Winter</option>
+                          <option value={"All"}>All</option>
                         </Field>
                         <span className="font-size-10 text-danger">
                           {<ErrorMessage name="Name" />}

@@ -32,7 +32,7 @@ const Language = () => {
     };
 
     postDataToServer();
-  }, []);
+  }, [getData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -45,15 +45,17 @@ const Language = () => {
   const handleEditClick = (rowValue) => {
     console.log(rowValue);
     setEditData({
-      ...rowValue,
-      Status: rowValue.Status ==="Active" ? 1:0
+      id: rowValue.Id,
+      Name: rowValue.Name,
+      Status: rowValue.Status ==="Active" ? 1:0,
+      UpdatedBy: rowValue.UpdatedBy,
     });
     setIsEditing(true);
   };
 
   const columns = [
     {
-      name: "Language Value",
+      name: "Language",
       selector: (row) => (
         <span>
           <i
@@ -68,13 +70,13 @@ const Language = () => {
       sortable: true,
     },
     {
-      name: "Language",
-      selector: (row) => row.language,
+      name: "Status",
+      selector: (row) => row.Status,
       sortable: true,
     },
     {
       name: "Added By",
-      selector: (row) => row.AddedBy,
+      selector: (row) => "Admin",
       sortable: true,
     },
     {
@@ -82,15 +84,10 @@ const Language = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.UpdatedBy}
+            {row.UpdatedBy}
           </span>
         );
       },
-    },
-    {
-      name: "Status",
-      selector: (row) => row.Status,
-      sortable: true,
     },
   ];
 

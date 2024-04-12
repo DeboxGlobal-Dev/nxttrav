@@ -13,12 +13,12 @@ import { axiosOther } from "../../../http/axios/axios_new";
 const ResturantMealPlan = () => {
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
+  const [editData, setEditData] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
   });
-  const [editData, setEditData] = useState({});
-  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -43,9 +43,10 @@ const ResturantMealPlan = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    setValueForEdit({ 
+    setEditData({
+      id: rowValue.Id,
       Name:rowValue.Name,
-      Status:rowValue.Status==="Active"?1:0,
+      Status:rowValue.Status==="Active" ? 1 : 0,
       AddedBy:rowValue.AddedBy,
       UpdatedBy:rowValue.UpdatedBy
     });
@@ -69,6 +70,11 @@ const ResturantMealPlan = () => {
       sortable: true,
     },
     {
+      name: "Status",
+      selector: (row) => row.Status,
+      sortable: true,
+    },
+    {
       name: "Added By",
       selector: (row) => row.AddedBy,
       sortable: true,
@@ -78,15 +84,10 @@ const ResturantMealPlan = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.UpdatedBy}
+             {row.UpdatedBy}
           </span>
         );
       },
-    },
-    {
-      name: "Status",
-      selector: (row) => row.Status,
-      sortable: true,
     },
   ];
 
@@ -118,7 +119,7 @@ const ResturantMealPlan = () => {
                   apiurl={"addupdaterestaurantmeal"}
                   initialValues={restaurantMealInitialValue}
                   validationSchema={restaurantMealValidationSchema}
-                  editData={editData}
+                  forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                 >

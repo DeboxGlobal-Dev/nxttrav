@@ -38,7 +38,6 @@ const BusinessType = () => {
     const result = getData.filter((item) => {
       return item.Name.toLowerCase().match(postData.Search.toLowerCase());
     });
-
     setFilterData(result);
   }, [postData]);
 
@@ -49,9 +48,7 @@ const BusinessType = () => {
       Name: rowValue.Name,
       SetDefault: rowValue.SetDefault ==="Yes" ? 1:0,
       Status: rowValue.Status ==="Active" ? 1:0,
-      AddedBy: rowValue.AddedBy,
       UpdatedBy: rowValue.UpdatedBy,
-      Created_at: rowValue.Created_at,
       Updated_at: rowValue.Updated_at,
     });
     setIsEditing(true);
@@ -68,9 +65,19 @@ const BusinessType = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.Name}&nbsp;
+          {row.SetDefault == true ? (
+            <span className="badge bg-success">Default</span>
+          ) : (
+            ""
+          )}
         </span>
       ),
+      sortable: true,
+    },
+    {
+      name: "Status",
+      selector: (row) => row.Status,
       sortable: true,
     },
     {
@@ -83,15 +90,10 @@ const BusinessType = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.UpdatedBy}
+             <br /> {row.UpdatedBy}
           </span>
         );
       },
-    },
-    {
-      name: "Status",
-      selector: (row) => row.Status,
-      sortable: true,
     },
   ];
 

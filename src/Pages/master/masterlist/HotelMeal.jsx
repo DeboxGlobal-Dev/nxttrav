@@ -50,9 +50,7 @@ const HotelMeal = () => {
       ShortName: rowValue.ShortName,
       SetDefault: rowValue.SetDefault==="Yes"?1:0,
       Status: rowValue.Status==="Active"?1:0,
-      AddedBy: rowValue.AddedBy,
       UpdatedBy: rowValue.UpdatedBy,
-      Created_at: rowValue.Created_at,
       Updated_at: rowValue.Updated_at,
     });
     setIsEditing(true);
@@ -69,9 +67,19 @@ const HotelMeal = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.Name} &nbsp;
+          {row.SetDefault == 'Yes' ? (
+            <span className="badge bg-success">Default</span>
+          ) : (
+            ""
+          )}
         </span>
       ),
+      sortable: true,
+    },
+    {
+      name: "Status",
+      selector: (row) => row.Status,
       sortable: true,
     },
     {
@@ -88,11 +96,6 @@ const HotelMeal = () => {
           </span>
         );
       },
-    },
-    {
-      name: "Status",
-      selector: (row) => row.Status,
-      sortable: true,
     },
   ];
 
