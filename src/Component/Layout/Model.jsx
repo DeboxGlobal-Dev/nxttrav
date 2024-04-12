@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { axiosOther } from "../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 import { Formik, Form, useFormik } from "formik";
@@ -12,21 +12,21 @@ const Model = ({
   forEdit,
   isEditing,
   setIsEditing,
+  setChangeValue,
 }) => {
-
   const closeModel = () => {
     document.getElementById("cancel").click();
   };
 
   const handleSubmit = async (values, { resetForm }) => {
-    console.log('modal value', values);
+    console.log("Modal-Submit-Value", values);
 
     try {
       const response = await axiosOther.post(apiurl, values);
       if (response.data.Status) {
         toast.success(response.data.Message);
-        console.log(response);
-        console.log(response.config.data);
+        // console.log(response);
+        // console.log(response.config.data);
         resetForm();
         closeModel();
       } else {
@@ -35,7 +35,6 @@ const Model = ({
     } catch (err) {
       console.log(err);
     }
-
   };
 
   return (
@@ -47,7 +46,7 @@ const Model = ({
         data-target="#modal_form_vertical"
         onClick={() => setIsEditing(false)}
       >
-         <span>Create New</span>
+        <span>Create New</span>
       </button>
 
       {/* <!-- Modal --> */}
@@ -76,32 +75,44 @@ const Model = ({
             <Formik
               method="POST"
               action=""
-              onSubmit={handleSubmit}
               initialValues={isEditing ? forEdit : initialValues}
               validationSchema={validationSchema}
               enableReinitialize
+              onSubmit={(values, { resetForm }) => {
+                handleSubmit(values, { resetForm });
+              }}
             >
-              <Form>
-                <div className="modal-body">
-                  {/* modal body */}
-                  {children}
-                  {/* /modal body */}
-                </div>
+              {({ values, handleChange, handleBlur }) => {
+                console.log('change value in modal', values);
+                {
+                  useEffect(() => {
+                    setChangeValue(values);
+                  }, [values]);
+                }
+                return (
+                  <Form>
+                    <div className="modal-body">
+                      {/* modal body */}
+                      {children}
+                      {/* /modal body */}
+                    </div>
 
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    id="cancel"
-                    className="default-button"
-                    data-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button type="submit" className="green-button">
-                    {"Save"}
-                  </button>
-                </div>
-              </Form>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        id="cancel"
+                        className="default-button"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button type="submit" className="green-button">
+                        {"Save"}
+                      </button>
+                    </div>
+                  </Form>
+                );
+              }}
             </Formik>
           </div>
         </div>

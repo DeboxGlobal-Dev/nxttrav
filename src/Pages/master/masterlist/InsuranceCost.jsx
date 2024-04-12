@@ -19,7 +19,7 @@ const InsuranceCost = () => {
     Search: "",
     Status: "",
   });
-
+  const [changeValue, setChangeValue] = useState("");
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -118,6 +118,7 @@ const InsuranceCost = () => {
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  setChangeValue={setChangeValue}
                 >
                   <div className="card-body">
                     <div className="row">

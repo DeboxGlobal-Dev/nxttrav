@@ -11,6 +11,7 @@ import {
 } from "./MasterValidations";
 
 const CountryMaster = () => {
+  console.log("This is Country Master");
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -20,7 +21,7 @@ const CountryMaster = () => {
     Search: "",
     Status: "",
   });
-
+  const [changeValue, setChangeValue] = useState("");
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -140,6 +141,7 @@ const CountryMaster = () => {
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  setChangeValue={setChangeValue}
                 >
                   <div className="card-body">
                     <div className="row">

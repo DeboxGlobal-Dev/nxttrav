@@ -21,7 +21,7 @@ const TourEscort = () => {
     Search: "",
     Status: "",
   });
-
+  const [changeValue, setChangeValue] = useState("");
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -170,6 +170,7 @@ const TourEscort = () => {
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  setChangeValue={setChangeValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">

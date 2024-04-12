@@ -8,6 +8,7 @@ import { Field, ErrorMessage } from "formik";
 import {stateInitialValue, stateValidationSchema} from "./MasterValidations";
 
 const StateMaster = () => {
+  console.log("This is State Master");
 
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
@@ -17,7 +18,8 @@ const StateMaster = () => {
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
-  });
+  }); 
+  const [changeValue, setChangeValue] = useState("");
 
 
   const getDataToServer = async () => {
@@ -154,6 +156,7 @@ const StateMaster = () => {
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setEditData}
+                  setChangeValue={setChangeValue}
                 >
                   <div className="card-body">
                     <div className="row">

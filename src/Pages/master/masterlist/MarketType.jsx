@@ -16,7 +16,7 @@ const MarketType = () => {
   });
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
-
+  const [changeValue, setChangeValue] = useState("");
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -122,6 +122,7 @@ const MarketType = () => {
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  setChangeValue={setChangeValue}
                 >
                   <div className="card-body">
                     <div className="row">

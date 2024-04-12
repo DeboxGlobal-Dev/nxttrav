@@ -21,7 +21,7 @@ const Sightseeing = () => {
     Search: "",
     Status: "",
   });
-
+  const [changeValue, setChangeValue] = useState("");
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -168,6 +168,7 @@ const Sightseeing = () => {
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  setChangeValue={setChangeValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">

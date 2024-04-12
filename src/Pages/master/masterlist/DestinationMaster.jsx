@@ -20,6 +20,7 @@ const DestinationMaster = () => {
     Search: "",
     Status: "",
   });
+  const [changeValue, setChangeValue] = useState("");
 
 
   useEffect(() => {
@@ -168,6 +169,7 @@ const DestinationMaster = () => {
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  setChangeValue={setChangeValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">

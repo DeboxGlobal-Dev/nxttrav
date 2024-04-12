@@ -17,6 +17,7 @@ const PassportType = () => {
     Search: "",
     Status: "",
   });
+  const [changeValue, setChangeValue]= useState("");
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -132,6 +133,7 @@ const PassportType = () => {
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  setChangeValue={setChangeValue}
                 >
                   <div className="card-body">
                     <div className="row">

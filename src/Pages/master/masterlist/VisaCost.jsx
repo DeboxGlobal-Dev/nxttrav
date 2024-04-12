@@ -15,7 +15,8 @@ const VisaCost = () => {
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
-  });
+  }); 
+  const [changeValue, setChangeValue] = useState("");
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -114,6 +115,7 @@ const VisaCost = () => {
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  setChangeValue={setChangeValue}
                 >
                   <div className="card-body">
                     <div className="row">

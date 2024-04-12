@@ -19,6 +19,7 @@ const TourType = () => {
     Search: "",
     Status: "",
   });
+  const [changeValue, setChangeValue] = useState("");
 
 
   useEffect(() => {
@@ -121,6 +122,7 @@ const TourType = () => {
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  setChangeValue={setChangeValue}
                 >
                   <div className="card-body">
                     <div className="row">

@@ -1,24 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
-import { Field, ErrorMessage } from "formik";
+import { Field, ErrorMessage, useFormik } from "formik";
 import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const CityMaster = () => {
+
+  console.log("This is City Master");
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList ] = useState([]);
+  const [stateFiltered, setStateFiltered] = useState([]);
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
   });
-  
+  const [changeValue, setChangeValue] = useState("");
+  console.log('On-Change-Value', changeValue);
 
   const getDataToServer = async () => {
     try{
@@ -28,6 +33,12 @@ const CityMaster = () => {
           Status: 1,
         }
       );   
+      setCountryList(countryData.data.DataList);
+    }catch(err){
+      console.log('Erro Occured', err);
+    }
+
+    try{
       const stateData = await axiosOther.post(
         "statelist",{
           Search:"",
@@ -35,7 +46,6 @@ const CityMaster = () => {
         }
       )
       setStateList(stateData.data.DataList);
-      setCountryList(countryData.data.DataList);
     }catch(err){
       console.log(err);
     }
@@ -44,22 +54,21 @@ const CityMaster = () => {
 
   useEffect(()=>{
     getDataToServer();
-    
   }, []);
 
   useEffect(() => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("citylist", postData);
-        // setGetData(data.DataList);
-        // setFilterData(data.DataList);
+        setGetData(data.DataList);
+        setFilterData(data.DataList);
       } catch (error) {
         console.log(error);
       }
     };
 
     postDataToServer();
-  }, [getData]);
+  }, []);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -82,6 +91,25 @@ const CityMaster = () => {
     });
     setIsEditing(true);
   };
+
+  // const filteredState = useMemo(()=>{
+  //   const data = stateList?.filter((value)=>{
+  //     console.log('filter',value);
+  //     const data = value.CountryId==changeValue.CountryId;
+  //     return data;
+  //   });
+  // }, [changeValue]);
+
+  function filteringState(){
+    const filteredState = stateList.filter((value)=> changeValue.CountryId==value.CountryId);
+      setStateFiltered(filteredState);
+  };
+
+  useEffect(()=>{
+    filteringState();
+  }, [changeValue.CountryId, changeValue.StateId]);
+
+
 
   const columns = [
     {
@@ -136,6 +164,8 @@ const CityMaster = () => {
     },
   ];
 
+  
+
   return (
     <>
       <Layout>
@@ -165,6 +195,7 @@ const CityMaster = () => {
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  setChangeValue ={setChangeValue}
                 >
                   <div className="card-body">
                     <div className="row">
@@ -173,12 +204,12 @@ const CityMaster = () => {
                         <Field
                           className="form-control"
                           component={"select"}
-                          name="countryId"
+                          name="CountryId"
                         >
+                          <option value="">Select Country</option>
                         {
                           countryList.map((value, index)=>{
-                            return <option value={index+1} key={index+1}>{value.Name}</option>
-                            // console.log(value);
+                           return <option value={value.Id} key={index+1}>{value.Name}</option>
                           })
                         }
                         
@@ -189,13 +220,14 @@ const CityMaster = () => {
                         <Field
                           className="form-control"
                           component={"select"}
-                          name="stateId"
-                        >{
-                          stateList.map((value,index)=>{
-                            return <option value={index+1} key={index+1}>{value.Name}</option>
+                          name="StateId"
+                        >
+                          <option value="">Select State</option>
+                          {
+                          stateFiltered?.map((value,index)=>{
+                            return <option value={value.CountryId} key={index+1}>{value.Name}</option>
                           })
                         }
-         
                         </Field>
                       </div>
                       <div className="col-sm-3">

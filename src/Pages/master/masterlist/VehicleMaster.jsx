@@ -17,6 +17,7 @@ const VehicleMaster = () => {
     Search: "",
     Status: "",
   });
+  const [changeValue, setChangeValue] = useState("");
 
   useEffect(() => {
     const postDataToServer = async () => {
