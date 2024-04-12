@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo} from "react";
 import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
@@ -21,39 +21,33 @@ const DestinationMaster = () => {
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
-  const [stateFiltered, setStateFiltered] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [countryList, setCountryList] = useState([]);
 
   const getDataToServer = async () => {
-    try{
-      const countryData = await axiosOther.post(
-        "countrylist",{
-          Search: "",
-          Status: 1,
-        }
-      );   
+    try {
+      const countryData = await axiosOther.post("countrylist", {
+        Search: "",
+        Status: 1,
+      });
       setCountryList(countryData.data.DataList);
-    }catch(err){
-      console.log('Erro Occured', err);
+    } catch (err) {
+      console.log("Erro Occured", err);
     }
 
-    try{
-      const stateData = await axiosOther.post(
-        "statelist",{
-          Search:"",
-          Status:1
-        }
-      )
+    try {
+      const stateData = await axiosOther.post("statelist", {
+        Search: "",
+        Status: 1,
+      });
       setStateList(stateData.data.DataList);
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
     getDataToServer();
   }, []);
-
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -87,8 +81,8 @@ const DestinationMaster = () => {
       CountryId: rowValue.CountryId,
       StateId: rowValue.StateId,
       Description: rowValue.Description,
-      SetDefault: rowValue.SetDefault ==="Yes"? 1: 0,
-      Status: rowValue.Status === "Active"? 1:0,
+      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
+      Status: rowValue.Status === "Active" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
       UpdatedBy: rowValue.UpdatedBy,
       Created_at: rowValue.Created_at,
@@ -97,15 +91,12 @@ const DestinationMaster = () => {
     setIsEditing(true);
   };
 
-  function filteringState(){
+  const stateFiltered = useMemo(()=>{
+
     const filteredState = stateList.filter((value)=> changeValue.CountryId==value.CountryId);
-      setStateFiltered(filteredState);
-  };
+      return filteredState;
 
-  useEffect(()=>{
-    filteringState();
   }, [changeValue.CountryId, changeValue.StateId]);
-
 
   const columns = [
     {
@@ -223,12 +214,13 @@ const DestinationMaster = () => {
                           name="CountryId"
                         >
                           <option value={"1"}>Select Country</option>
-                          {
-                            countryList.map((value)=>{
-                              return <option value={value.Id} key={value.Id}>{value.Name}</option>
-                            })
-                          }
-                          
+                          {countryList.map((value) => {
+                            return (
+                              <option value={value.Id} key={value.Id}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -239,8 +231,12 @@ const DestinationMaster = () => {
                           name="StateId"
                         >
                           <option value="">Select State</option>
-                          {stateFiltered.map((value)=>{
-                            return <option value={value.StateId} key={value.Id}>{value.Name}</option>
+                          {stateFiltered.map((value) => {
+                            return (
+                              <option value={value.StateId} key={value.Id}>
+                                {value.Name}
+                              </option>
+                            );
                           })}
                         </Field>
                       </div>

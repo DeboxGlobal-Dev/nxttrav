@@ -168,10 +168,9 @@ const StateMaster = () => {
                           component={"select"}
                         >
                         <option value="">Select</option>
-                        {country.map((item) => {
-                          // {(item.Id===isEditing.id) ? 'selected':''}
+                        {country.map((value) => {
                           return (
-                            <option value={item.Id} key={item.Id} >{item.Name}</option>
+                            <option value={value.Id} key={value.Id} >{value.Name}</option>
                           )
                         })}
                         </Field>

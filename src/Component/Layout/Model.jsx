@@ -83,7 +83,7 @@ const Model = ({
               }}
             >
               {({ values, handleChange, handleBlur }) => {
-                console.log('change value in modal', values);
+                // console.log('change value in modal', values);
                 {
                   useEffect(() => {
                     setChangeValue(values);

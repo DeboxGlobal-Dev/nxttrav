@@ -9,21 +9,18 @@ import { axiosOther } from "../../../http/axios/axios_new";
 
 const CityMaster = () => {
 
-  console.log("This is City Master");
-
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList ] = useState([]);
-  const [stateFiltered, setStateFiltered] = useState([]);
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
-  console.log('On-Change-Value', changeValue);
+  // console.log('On-Change-Value', changeValue);
 
   const getDataToServer = async () => {
     try{
@@ -77,11 +74,11 @@ const CityMaster = () => {
   }, [postData]);
   
   const handleEditClick = (rowValue) => {
-    console.log(rowValue);
+    console.log('Row Value', rowValue);
     setEditData({
       id: rowValue.Id,
-      CountryId: rowValue.CountryName === "India" ? "1" : "2",
-      StateId: rowValue.StateName === "Rajsthan" ? "1" : "2",
+      CountryId: 91,
+      StateName: rowValue.StateName,
       Name: rowValue.Name,
       Status: rowValue.Status === "Active" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
@@ -89,22 +86,13 @@ const CityMaster = () => {
     });
     setIsEditing(true);
   };
+  console.log('Edit Data', editData);
 
-  // const filteredState = useMemo(()=>{
-  //   const data = stateList?.filter((value)=>{
-  //     console.log('filter',value);
-  //     const data = value.CountryId==changeValue.CountryId;
-  //     return data;
-  //   });
-  // }, [changeValue]);
+  const stateFiltered = useMemo(()=>{
 
-  function filteringState(){
     const filteredState = stateList.filter((value)=> changeValue.CountryId==value.CountryId);
-      setStateFiltered(filteredState);
-  };
+      return filteredState;
 
-  useEffect(()=>{
-    filteringState();
   }, [changeValue.CountryId, changeValue.StateId]);
 
 
@@ -222,7 +210,7 @@ const CityMaster = () => {
                           <option value="">Select State</option>
                           {
                           stateFiltered?.map((value,index)=>{
-                            return <option value={value.CountryId} key={index+1}>{value.Name}</option>
+                            return <option value={value.Id} key={index+1}>{value.Name}</option>
                           })
                         }
                         </Field>
