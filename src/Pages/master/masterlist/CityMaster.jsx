@@ -50,8 +50,6 @@ const CityMaster = () => {
       console.log(err);
     }
   }
-
-
   useEffect(()=>{
     getDataToServer();
   }, []);
@@ -212,7 +210,6 @@ const CityMaster = () => {
                            return <option value={value.Id} key={index+1}>{value.Name}</option>
                           })
                         }
-                        
                         </Field>
                       </div>
                       <div className="col-sm-3">

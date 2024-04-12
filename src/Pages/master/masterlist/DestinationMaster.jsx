@@ -21,6 +21,38 @@ const DestinationMaster = () => {
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
+  const [stateFiltered, setStateFiltered] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [countryList, setCountryList] = useState([]);
+
+  const getDataToServer = async () => {
+    try{
+      const countryData = await axiosOther.post(
+        "countrylist",{
+          Search: "",
+          Status: 1,
+        }
+      );   
+      setCountryList(countryData.data.DataList);
+    }catch(err){
+      console.log('Erro Occured', err);
+    }
+
+    try{
+      const stateData = await axiosOther.post(
+        "statelist",{
+          Search:"",
+          Status:1
+        }
+      )
+      setStateList(stateData.data.DataList);
+    }catch(err){
+      console.log(err);
+    }
+  }
+  useEffect(()=>{
+    getDataToServer();
+  }, []);
 
 
   useEffect(() => {
@@ -64,6 +96,16 @@ const DestinationMaster = () => {
     });
     setIsEditing(true);
   };
+
+  function filteringState(){
+    const filteredState = stateList.filter((value)=> changeValue.CountryId==value.CountryId);
+      setStateFiltered(filteredState);
+  };
+
+  useEffect(()=>{
+    filteringState();
+  }, [changeValue.CountryId, changeValue.StateId]);
+
 
   const columns = [
     {
@@ -180,9 +222,13 @@ const DestinationMaster = () => {
                           component={"select"}
                           name="CountryId"
                         >
-                          <option value={"1"}>India</option>
-                          <option value={"2"}>Iran</option>
-                          <option value={"3"}>China</option>
+                          <option value={"1"}>Select Country</option>
+                          {
+                            countryList.map((value)=>{
+                              return <option value={value.Id} key={value.Id}>{value.Name}</option>
+                            })
+                          }
+                          
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -192,12 +238,10 @@ const DestinationMaster = () => {
                           component={"select"}
                           name="StateId"
                         >
-                          <option value={"1"}>Rajsthan</option>
-                          <option value={"2"}>Hryana</option>
-                          <option value={"4"}>Bihar</option>
-                          <option value={"5"}>West Bangal</option>
-                          <option value={"6"}>Banglore</option>
-                          <option value={"7"}>Uttar Pradesh</option>
+                          <option value="">Select State</option>
+                          {stateFiltered.map((value)=>{
+                            return <option value={value.StateId} key={value.Id}>{value.Name}</option>
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-4">
