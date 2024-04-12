@@ -8,13 +8,12 @@ import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const CityMaster = () => {
-
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [countryList, setCountryList] = useState([]);
-  const [stateList, setStateList ] = useState([]);
+  const [stateList, setStateList] = useState([]);
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
@@ -23,31 +22,27 @@ const CityMaster = () => {
   // console.log('On-Change-Value', changeValue);
 
   const getDataToServer = async () => {
-    try{
-      const countryData = await axiosOther.post(
-        "countrylist",{
-          Search: "",
-          Status: 1,
-        }
-      );   
+    try {
+      const countryData = await axiosOther.post("countrylist", {
+        Search: "",
+        Status: 1,
+      });
       setCountryList(countryData.data.DataList);
-    }catch(err){
-      console.log('Erro Occured', err);
+    } catch (err) {
+      console.log("Erro Occured", err);
     }
 
-    try{
-      const stateData = await axiosOther.post(
-        "statelist",{
-          Search:"",
-          Status:1
-        }
-      )
+    try {
+      const stateData = await axiosOther.post("statelist", {
+        Search: "",
+        Status: 1,
+      });
       setStateList(stateData.data.DataList);
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
     getDataToServer();
   }, []);
 
@@ -72,9 +67,9 @@ const CityMaster = () => {
 
     setFilterData(result);
   }, [postData]);
-  
+
   const handleEditClick = (rowValue) => {
-    console.log('Row Value', rowValue);
+    console.log("Row Value", rowValue);
     setEditData({
       id: rowValue.Id,
       CountryId: 91,
@@ -86,16 +81,14 @@ const CityMaster = () => {
     });
     setIsEditing(true);
   };
-  console.log('Edit Data', editData);
+  console.log("Edit Data", editData);
 
-  const stateFiltered = useMemo(()=>{
-
-    const filteredState = stateList.filter((value)=> changeValue.CountryId==value.CountryId);
-      return filteredState;
-
+  const stateFiltered = useMemo(() => {
+    const filteredState = stateList.filter(
+      (value) => changeValue.CountryId == value.CountryId
+    );
+    return filteredState;
   }, [changeValue.CountryId, changeValue.StateId]);
-
-
 
   const columns = [
     {
@@ -150,8 +143,6 @@ const CityMaster = () => {
     },
   ];
 
-  
-
   return (
     <>
       <Layout>
@@ -181,7 +172,7 @@ const CityMaster = () => {
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
-                  setChangeValue ={setChangeValue}
+                  setChangeValue={setChangeValue}
                 >
                   <div className="card-body">
                     <div className="row">
@@ -193,11 +184,13 @@ const CityMaster = () => {
                           name="CountryId"
                         >
                           <option value="">Select Country</option>
-                        {
-                          countryList.map((value, index)=>{
-                           return <option value={value.Id} key={index+1}>{value.Name}</option>
-                          })
-                        }
+                          {countryList.map((value, index) => {
+                            return (
+                              <option value={value.Id} key={index + 1}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-3">
@@ -208,11 +201,13 @@ const CityMaster = () => {
                           name="StateId"
                         >
                           <option value="">Select State</option>
-                          {
-                          stateFiltered?.map((value,index)=>{
-                            return <option value={value.Id} key={index+1}>{value.Name}</option>
-                          })
-                        }
+                          {stateFiltered?.map((value, index) => {
+                            return (
+                              <option value={value.Id} key={index + 1}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-3">
