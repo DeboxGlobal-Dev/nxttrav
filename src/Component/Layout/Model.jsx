@@ -13,7 +13,10 @@ const Model = ({
   isEditing,
   setIsEditing,
   setChangeValue,
+  setUpdateData,
+  updateData
 }) => {
+  
   const closeModel = () => {
     document.getElementById("cancel").click();
   };
@@ -25,8 +28,7 @@ const Model = ({
       const response = await axiosOther.post(apiurl, values);
       if (response.data.Status) {
         toast.success(response.data.Message);
-        // console.log(response);
-        // console.log(response.config.data);
+        setUpdateData(!updateData);
         resetForm();
         closeModel();
       } else {

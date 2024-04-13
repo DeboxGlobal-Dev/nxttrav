@@ -17,11 +17,11 @@ const CabinType = () => {
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
-
+  const [updateData, setUpdateData] = useUpdate("");
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("cabintypelist", postData);
+        const { data } = await axiosOther.post("cabintypelist" , postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -30,7 +30,7 @@ const CabinType = () => {
     };
 
     postDataToServer();
-  }, [editData]);
+  }, [updateData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -137,6 +137,8 @@ const CabinType = () => {
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
+                  setUpdateData={setUpdateData}
+                  updateData={updateData}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">

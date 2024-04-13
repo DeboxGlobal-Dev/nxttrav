@@ -20,6 +20,7 @@ const Amenties = () => {
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
+  const [updateData, setUpdateData] = useState(false);
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -33,7 +34,7 @@ const Amenties = () => {
     };
 
     postDataToServer();
-  }, [getData]);
+  }, [updateData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -132,6 +133,8 @@ const Amenties = () => {
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
+                  updateData={updateData}
+                  setUpdateData={setUpdateData}
                 >
                   <div className="card-body">
                     <div className="row row-gap-2">

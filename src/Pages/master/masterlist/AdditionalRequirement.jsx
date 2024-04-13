@@ -20,6 +20,7 @@ const AdditionalRequirement = () => {
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
+  const [updateData, setUpdateData] = useState(false);
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -35,7 +36,7 @@ const AdditionalRequirement = () => {
       }
     };
     postDataToServer();
-  }, [getData]);
+  }, [updateData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -179,6 +180,8 @@ const AdditionalRequirement = () => {
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
+                  updateData={updateData}
+                  setUpdateData={setUpdateData}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">

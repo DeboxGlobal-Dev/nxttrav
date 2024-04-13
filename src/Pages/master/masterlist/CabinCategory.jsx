@@ -16,6 +16,7 @@ const CabinCategory = () => {
     Search: "",
     Status: "",
   });
+  const [updateData, setUpdateData] = useState(false);
   const [changeValue, setChangeValue] = useState("");
   useEffect(() => {
     const postDataToServer = async () => {
@@ -29,7 +30,7 @@ const CabinCategory = () => {
     };
 
     postDataToServer();
-  }, [getData]);
+  }, [updateData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -136,6 +137,8 @@ const CabinCategory = () => {
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
+                  updateData={updateData}
+                  setUpdateData={setUpdateData}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">

@@ -11,7 +11,8 @@ import {
 } from "./MasterValidations";
 
 const CountryMaster = () => {
-  console.log("This is Country Master");
+  
+  // console.log("This is Country Master");
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -21,7 +22,9 @@ const CountryMaster = () => {
     Search: "",
     Status: "",
   });
+  const [updateData, setUpdateData] = useState(false);
   const [changeValue, setChangeValue] = useState("");
+  console.log('GetData', getData);
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -34,7 +37,7 @@ const CountryMaster = () => {
       }
     };
     postDataToServer();
-  }, [getData]);
+  }, [updateData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -142,6 +145,8 @@ const CountryMaster = () => {
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
+                  setUpdateData={setUpdateData}
+                  updateData={updateData}
                 >
                   <div className="card-body">
                     <div className="row">
