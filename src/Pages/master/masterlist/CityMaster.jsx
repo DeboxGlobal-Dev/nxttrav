@@ -29,6 +29,7 @@ const CityMaster = () => {
         Status: 1,
       });
       setCountryList(countryData.data.DataList);
+     
     } catch (err) {
       console.log(err);
     }
@@ -39,6 +40,7 @@ const CityMaster = () => {
         Status: 1,
       });
       setStateList(stateData.data.DataList);
+      
     } catch (err) {
       console.log(err);
     }
@@ -54,6 +56,7 @@ const CityMaster = () => {
         const { data } = await axiosOther.post("citylist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
+        console.log('CityList', data);
       } catch (error) {
         console.log(error);
       }
