@@ -24,7 +24,7 @@ const CountryMaster = () => {
   });
   const [updateData, setUpdateData] = useState(false);
   const [changeValue, setChangeValue] = useState("");
-  console.log('GetData', getData);
+  // console.log('GetData', getData);
   useEffect(() => {
     const postDataToServer = async () => {
       try {

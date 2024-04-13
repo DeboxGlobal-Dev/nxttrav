@@ -20,9 +20,9 @@ const CityMaster = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
-  // console.log('On-Change-Value', changeValue);
 
   const getDataToServer = async () => {
+    console.log('First Action');
     try {
       const countryData = await axiosOther.post("countrylist", {
         Search: "",
@@ -30,7 +30,7 @@ const CityMaster = () => {
       });
       setCountryList(countryData.data.DataList);
     } catch (err) {
-      console.log("Erro Occured", err);
+      console.log(err);
     }
 
     try {
@@ -48,6 +48,7 @@ const CityMaster = () => {
   }, []);
 
   useEffect(() => {
+    console.log('Second Action');
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("citylist", postData);
@@ -62,19 +63,20 @@ const CityMaster = () => {
   }, [updateData]);
 
   useEffect(() => {
+    console.log('Third Action');
     const result = getData.filter((item) => {
       return item.Name.toLowerCase().match(postData.Search.toLowerCase());
     });
-
     setFilterData(result);
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+    console.log('Fourth Action');
     console.log("Row Value", rowValue);
     setEditData({
       id: rowValue.Id,
-      CountryId: 91,
-      StateName: rowValue.StateName,
+      CountryId: rowValue.CountryId,
+      StateId: rowValue.StateId,
       Name: rowValue.Name,
       Status: rowValue.Status === "Active" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
@@ -85,6 +87,7 @@ const CityMaster = () => {
   console.log("Edit Data", editData);
 
   const stateFiltered = useMemo(() => {
+    console.log('Fivth Action');
     const filteredState = stateList.filter(
       (value) => changeValue.CountryId == value.CountryId
     );
@@ -188,6 +191,7 @@ const CityMaster = () => {
                         >
                           <option value="">Select Country</option>
                           {countryList.map((value, index) => {
+                            // console.log(value);
                             return (
                               <option value={value.Id} key={index + 1}>
                                 {value.Name}
@@ -205,6 +209,7 @@ const CityMaster = () => {
                         >
                           <option value="">Select State</option>
                           {stateFiltered?.map((value, index) => {
+                            console.log(value);
                             return (
                               <option value={value.Id} key={index + 1}>
                                 {value.Name}

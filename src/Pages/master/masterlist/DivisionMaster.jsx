@@ -20,6 +20,8 @@ const DivisionMaster = () => {
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
+  const [updateData, setUpdateData] = useState(false);
+  
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -32,7 +34,7 @@ const DivisionMaster = () => {
     };
 
     postDataToServer();
-  }, [getData]);
+  }, [updateData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
