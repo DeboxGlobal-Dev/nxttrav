@@ -1,11 +1,12 @@
 import React, { useState, useReducer, useEffect } from "react";
 import { axiosOther } from "../../http/axios/axios_new";
 import { eachDayOfInterval, format } from "date-fns";
-import { hotelTypeInitialValue, 
-  hotelMealInitialValue, 
-  leadSourceInitialValue, 
-  tourtypeInitialValue } 
-  from "../master/masterlist/MasterValidations";
+import {
+  hotelTypeInitialValue,
+  hotelMealInitialValue,
+  leadSourceInitialValue,
+  tourtypeInitialValue,
+} from "../master/masterlist/MasterValidations";
 import * as Yup from "yup";
 import axios from "axios";
 import "jquery";
@@ -57,9 +58,9 @@ const Query = () => {
     QueryId: "",
     TravelType: "1",
     TravelSeason: "",
-    TravelYear:"",
-    Budget:"",
-    PackageSearch:""
+    TravelYear: "",
+    Budget: "",
+    PackageSearch: "",
   });
   // console.log("JSON Values...", {
   //   ...queryFields,
@@ -993,7 +994,10 @@ const Query = () => {
                           value={queryFields.TravelType}
                           onChange={handleChange}
                         />
-                        <label className="form-check-label m-0" htmlFor="typedateorday">
+                        <label
+                          className="form-check-label m-0"
+                          htmlFor="typedateorday"
+                        >
                           Date Wise
                         </label>
                       </div>
@@ -1006,11 +1010,14 @@ const Query = () => {
                           value={queryFields.TravelType}
                           onChange={handleChange}
                         />
-                        <label className="form-check-label m-0" htmlFor="daywise">
+                        <label
+                          className="form-check-label m-0"
+                          htmlFor="daywise"
+                        >
                           Day Wise
                         </label>
                       </div>
-                      {queryFields.TravelType=='2' &&
+                      {queryFields.TravelType == "2" && (
                         <>
                           <div className="col-6 col-md-12 col-lg-6">
                             <select
@@ -1043,19 +1050,28 @@ const Query = () => {
                             </select>
                           </div>
                         </>
-                      }
-                      {queryFields.TravelType=="2" ? "" : 
-                      <div className="col-6 col-md-12 col-lg-6">
-                        <label className="m-0">From Date</label>
-                        <input
-                          type="date"
-                          className="form-input-2"
-                          name="FromDate"
-                          value={TravelDate.FromDate}
-                          onChange={handleChange}
-                        ></input>
-                      </div>}
-                      <div className={queryFields.TravelType=="2"? 'col-6' : 'col-4 col-md-6 col-lg-3'}>
+                      )}
+                      {queryFields.TravelType == "2" ? (
+                        ""
+                      ) : (
+                        <div className="col-6 col-md-12 col-lg-6">
+                          <label className="m-0">From Date</label>
+                          <input
+                            type="date"
+                            className="form-input-2"
+                            name="FromDate"
+                            value={TravelDate.FromDate}
+                            onChange={handleChange}
+                          ></input>
+                        </div>
+                      )}
+                      <div
+                        className={
+                          queryFields.TravelType == "2"
+                            ? "col-6"
+                            : "col-4 col-md-6 col-lg-3"
+                        }
+                      >
                         <label htmlFor="queryType" className="m-0">
                           Total Nights
                         </label>
@@ -1068,7 +1084,7 @@ const Query = () => {
                           onChange={handleChange}
                         />
                       </div>
-                      <div className={'col-4 col-md-6 col-lg-2 mt-3'}>
+                      <div className={"col-4 col-md-6 col-lg-2 mt-3"}>
                         <button className="btn btn-primary p-1 height-30">
                           Add Night
                         </button>
@@ -1425,6 +1441,25 @@ const Query = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+              <div className="col-12 p-0">
+                <div className="form-group">
+                  <label htmlFor="exampleFormControlTextarea1" className="m-0">
+                    Description
+                  </label>
+                  <textarea
+                    className="form-input-2" 
+                    id="exampleFormControlTextarea1"
+                    rows="3"
+                    style={{height:'100px'}}
+                  ></textarea>
+                </div>
+              </div>
+              <div className="col-12 p-0 d-flex justify-content-end">
+                    <div className="p-0">
+                      <button className="blue-button">Save</button>
+                      <button className="green-button">Submit</button>
+                    </div>
               </div>
             </div>
           </form>
