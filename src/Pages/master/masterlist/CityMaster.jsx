@@ -19,6 +19,7 @@ const CityMaster = () => {
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
+  const [updateData, setUpdateData] = useState(false);
   // console.log('On-Change-Value', changeValue);
 
   const getDataToServer = async () => {
@@ -58,7 +59,7 @@ const CityMaster = () => {
     };
 
     postDataToServer();
-  }, []);
+  }, [updateData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -173,6 +174,8 @@ const CityMaster = () => {
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
+                  setUpdateData={setUpdateData}
+                  updateData={updateData}
                 >
                   <div className="card-body">
                     <div className="row">
