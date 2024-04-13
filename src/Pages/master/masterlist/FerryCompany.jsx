@@ -19,6 +19,7 @@ const FerryCompany = () => {
     Search: "",
     Status: "",
   });
+  const [updateData, setUpdateData] = useState(false);
   const [changeValue, setChangeValue] = useState("");
   useEffect(() => {
     const postDataToServer = async () => {
@@ -31,7 +32,7 @@ const FerryCompany = () => {
       }
     };
     postDataToServer();
-  }, [getData]);
+  }, [updateData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -134,6 +135,8 @@ const FerryCompany = () => {
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
+                  setUpdateData={setUpdateData}
+                  updateData={updateData}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">

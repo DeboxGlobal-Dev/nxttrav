@@ -17,6 +17,7 @@ const FerryPrice = () => {
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
+  const [updateData, setUpdateData] = useState(false);
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -28,7 +29,7 @@ const FerryPrice = () => {
       }
     };
     postDataToServer();
-  }, [getData]);
+  }, [updateData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -135,6 +136,8 @@ const FerryPrice = () => {
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
+                  setUpdateData={setUpdateData}
+                  updateData={updateData}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">

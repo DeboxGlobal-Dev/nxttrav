@@ -12,11 +12,13 @@ const CruiseMaster = () => {
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+  const [changeValue, setChangeValue] = useState("");
+  const [updateData, setUpdateData] = useState(false);
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
   });
-  const [changeValue, setChangeValue] = useState("");
+  
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -29,7 +31,7 @@ const CruiseMaster = () => {
     };
 
     postDataToServer();
-  }, [getData]);
+  }, [updateData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -136,6 +138,8 @@ const CruiseMaster = () => {
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
+                  updateData={updateData}
+                  setUpdateData={setUpdateData}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">

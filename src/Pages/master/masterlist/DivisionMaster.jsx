@@ -120,6 +120,8 @@ const DivisionMaster = () => {
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
+                  setUpdateData={setUpdateData}
+                  updateData={updateData}
                 >
                   <div className="card-body">
                     <div className="row">

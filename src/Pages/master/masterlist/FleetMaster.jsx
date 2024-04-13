@@ -18,6 +18,7 @@ const FleetMaster = () => {
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
+  const [updateData, setUpdateData] = useState(false);
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -38,7 +39,7 @@ const FleetMaster = () => {
     });
 
     setFilterData(result);
-  }, [postData]);
+  }, [updateData]);
 
 
   const handleEditClick = (rowValue) => {
@@ -134,6 +135,8 @@ const FleetMaster = () => {
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
+                  setUpdateData={setUpdateData}
+                  updateData={updateData}
                 >
                   <div className="card-body">
                   <div className="row row-gap-3">

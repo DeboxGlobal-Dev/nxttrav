@@ -23,6 +23,7 @@ const DestinationMaster = () => {
   const [changeValue, setChangeValue] = useState("");
   const [stateList, setStateList] = useState([]);
   const [countryList, setCountryList] = useState([]);
+  const [updateData, setUpdateData] = useState(false);
 
   const getDataToServer = async () => {
     try {
@@ -61,7 +62,7 @@ const DestinationMaster = () => {
     };
 
     postDataToServer();
-  }, [getData]);
+  }, [updateData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -203,6 +204,8 @@ const DestinationMaster = () => {
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
+                  updateData={updateData}
+                  setUpdateData={setUpdateData}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">

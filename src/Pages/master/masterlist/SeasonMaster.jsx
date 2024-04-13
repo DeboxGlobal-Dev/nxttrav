@@ -20,7 +20,7 @@ const SeasonMaster = () => {
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
-
+  const [updateData, setUpdateData] = useState(false);
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -34,7 +34,7 @@ const SeasonMaster = () => {
     };
 
     postDataToServer();
-  }, [getData]);
+  }, [updateData]);
 
   // useEffect(()=>{
   //   getData.map((v)=>{
@@ -130,6 +130,8 @@ const SeasonMaster = () => {
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
+                  setUpdateData={setUpdateData}
+                  updateData={updateData}
                 >
                   <div className="card-body">
                     <div className="row">

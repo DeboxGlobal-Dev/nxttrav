@@ -20,7 +20,7 @@ const StateMaster = () => {
     Status: "",
   }); 
   const [changeValue, setChangeValue] = useState("");
-
+  const [updateData, setUpdateData] = useState(false);
 
   const getDataToServer = async () => {
     try{
@@ -35,12 +35,6 @@ const StateMaster = () => {
     }catch(err){
       console.log(err);
     }
-    // try{
-
-
-    // }catch(err){
-    //   console.log(err);
-    // }
   }
 
   useEffect(() => {
@@ -58,7 +52,7 @@ const StateMaster = () => {
       }
     };
     postDataToServer();
-  }, [getData]);
+  }, [updateData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -157,6 +151,8 @@ const StateMaster = () => {
                   isEditing={isEditing}
                   setIsEditing={setEditData}
                   setChangeValue={setChangeValue}
+                  updateData={updateData}
+                  setUpdateData={setUpdateData}
                 >
                   <div className="card-body">
                     <div className="row">
