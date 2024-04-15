@@ -95,7 +95,7 @@ const HotelMaster = () => {
     const extension = file?.name?.split(".")?.pop()?.toLowerCase();
     if ((excelToJson !== "" && extension == "xls") || extension == "xlsx") {
       setErrorMessage("");
-      //console.log(excelToJson);
+      console.log(excelToJson);
       setFile({ [file.name]: "" });
       document.getElementById("cancel").click();
       toast.success("Data Validating..");
