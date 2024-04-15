@@ -216,10 +216,10 @@ const DestinationMaster = () => {
                           component={"select"}
                           name="CountryId"
                         >
-                          <option value={"1"}>Select Country</option>
-                          {countryList.map((value) => {
+                          <option value={""}>Select Country</option>
+                          {countryList.map((value, index) => {
                             return (
-                              <option value={value.Id} key={value.Id}>
+                              <option value={value.Id} key={index + 1}>
                                 {value.Name}
                               </option>
                             );
@@ -234,9 +234,9 @@ const DestinationMaster = () => {
                           name="StateId"
                         >
                           <option value="">Select State</option>
-                          {stateFiltered.map((value) => {
+                          {stateFiltered.map((value, index) => {
                             return (
-                              <option value={value.StateId} key={value.Id}>
+                              <option value={value.Id} key={index + 1}>
                                 {value.Name}
                               </option>
                             );

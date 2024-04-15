@@ -124,7 +124,7 @@ const TourEscortPrice = () => {
                 </NavLink>
                 <Model
                   heading={"Add Tour Escort Service"}
-                  apiurl={"addupdatetourprice"}
+                  apiurl={"addupdatetourescortprice"}
                   initialValues={tourEscrotPriceInitialValue}
                   validationSchema={tourEscortPriceValidationSchema}
                   forEdit={editData}
@@ -136,7 +136,7 @@ const TourEscortPrice = () => {
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Service Type</label>
                         <Field
                           name="ServiceType"
@@ -147,7 +147,7 @@ const TourEscortPrice = () => {
                           <option value={1}>Porter</option>
                         </Field>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Destination</label>
                         <Field
                           name="Destination"
@@ -162,7 +162,7 @@ const TourEscortPrice = () => {
                           <option value={5}>Gurugram</option>
                         </Field>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Tour Escort Service</label>
                         <Field
                           type="text"
@@ -174,7 +174,7 @@ const TourEscortPrice = () => {
                           <ErrorMessage name="Name"/>
                         </span>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Status</label>
                         <Field
                           name="Status"
@@ -185,7 +185,7 @@ const TourEscortPrice = () => {
                           <option value={0}>Inactive</option>
                         </Field>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>SetDefault</label>
                         <Field
                           name="SetDefault"

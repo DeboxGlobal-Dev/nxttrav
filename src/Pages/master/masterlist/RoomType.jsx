@@ -180,7 +180,7 @@ const RoomType = () => {
                           name="Bedding"
                         />
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
+                          <ErrorMessage name="Bedding" />
                         </span>
                       </div>
                       <div className="col-sm-4">
@@ -192,7 +192,7 @@ const RoomType = () => {
                           name="Size"
                         />
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
+                          <ErrorMessage name="Size" />
                         </span>
                       </div>
 
@@ -206,9 +206,6 @@ const RoomType = () => {
                           <option value="1">Active</option>
                           <option value="0">Inactive</option>
                         </Field>
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Status" />
-                        </span>
                       </div>
                     </div>
                   </div>

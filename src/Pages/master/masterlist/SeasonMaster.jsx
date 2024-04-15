@@ -21,13 +21,16 @@ const SeasonMaster = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  let data =JSON.stringify({"Name":"SanaulAnsari"});
+
+  // console.log('Parsing Value', JSON.parse(data));
   useEffect(() => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("seasonlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
-        //console.log('Data of Season Master', data.DataList);
+        console.log(data.DataList);
       } catch (error) {
         console.log(error);
       }
@@ -36,11 +39,6 @@ const SeasonMaster = () => {
     postDataToServer();
   }, [updateData]);
 
-  // useEffect(()=>{
-  //   getData.map((v)=>{
-  //     console.log(v["Status"]);
-  //   })
-  // })
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -234,7 +232,7 @@ const SeasonMaster = () => {
             <DataTable
               columns={columns}
               data={
-                postData.Search !== "" || postData.Status !== ""
+                postData.Search !=="" || postData.Status !==""
                   ? filterData
                   : getData
               }

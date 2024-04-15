@@ -24,7 +24,7 @@ const InsuranceCost = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("insurancecostlist", postData);
+        const { data } = await axiosOther.post("insurancecostmasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -113,7 +113,7 @@ const InsuranceCost = () => {
                 </NavLink>
                 <Model
                   heading={"Add Insurance Cost"}
-                  apiurl={"addupdateinsurancecost"}
+                  apiurl={"addupdateinsurancecostmaster"}
                   initialValues={insuranceCostInitialValue}
                   validationSchema={insuranceCostValidationSchema}
                   forEdit={editData}

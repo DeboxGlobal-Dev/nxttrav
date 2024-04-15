@@ -23,7 +23,6 @@ import DivisionMaster from "./Pages/master/masterList/DivisionMaster";
 import TourType from "./Pages/master/masterList/TourType";
 import SeasonMaster from "./Pages/master/masterList/SeasonMaster";
 import RoomMaster from "./Pages/master/masterList/RoomMaster";
-
 import RoomType from "./Pages/master/masterList/RoomType";
 import Amenties from "./Pages/master/masterList/Amenties";
 import HotelType from "./Pages/master/masterList/HotelType";
@@ -112,8 +111,8 @@ const App = () => {
           <Route path="/querylist" element={ <Protected>  <QueryList />  </Protected>}/>
           <Route path="/querylist/queryview" element={<Protected><QueryView /></Protected>}>
             <Route index element={<Protected><Query/></Protected>}></Route>
-            <Route path="querydetails" element={<Protected><QueryDetails/></Protected>}></Route>
             <Route path="quotation" element={<Protected><Quotation/></Protected>}></Route>
+            <Route path="costsheet" element={<Protected><QueryDetails/></Protected>}></Route>
             <Route path="tourextension" element={<Protected><TourExtension/></Protected>}></Route>
             <Route path="clientcomm" element={<Protected><ClientComm/></Protected>}></Route>
             <Route path="suppliercomm" element={<Protected><SupplierComm/></Protected>}></Route>
@@ -215,4 +214,3 @@ const App = () => {
 };
 
 export default App;
-

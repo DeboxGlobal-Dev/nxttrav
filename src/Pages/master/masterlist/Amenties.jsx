@@ -45,11 +45,12 @@ const Amenties = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+    console.log('Row Value....', rowValue);
     setEditData({
       id: rowValue.Id,
       Name: rowValue.Name,
       SetDefault: rowValue.SetDefault==="Yes"? 1:0,
-      Status: rowValue.SetDefault==="Active"? 1:0,
+      Status: rowValue.Status==="Active"? 1:0,
       AddedBy: rowValue.AddedBy,
       UpdatedBy: rowValue.UpdatedBy,
       Created_at: rowValue.Created_at,
@@ -125,7 +126,7 @@ const Amenties = () => {
                   Back
                 </NavLink>
                 <Model
-                  heading={"Add City"}
+                  heading={"Add Amenties"}
                   apiurl={"addupdateamenities"}
                   initialValues={amentiesInitialValue}
                   validationSchema={amentiesValidationSchema}
@@ -158,7 +159,7 @@ const Amenties = () => {
                           name="Status"
                         >
                           <option value={1}>Active</option>
-                          <option value={2}>Inactive</option>
+                          <option value={0}>Inactive</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">

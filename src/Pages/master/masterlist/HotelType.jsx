@@ -44,10 +44,12 @@ const HotelType = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+    console.log('Row Value', rowValue);
     setEditData({
       id: rowValue.Id,
       Name: rowValue.Name,
       UploadKeyword: rowValue.UploadKeyword,
+      ProposalPriority: rowValue.ProposalPriority,
       Status: rowValue.Status==="Active"? 1:0,
       AddedBy: rowValue.AddedBy,
       UpdatedBy: rowValue.UpdatedBy,
@@ -146,7 +148,7 @@ const HotelType = () => {
                         <label>Upload Keyword</label>
                         <Field
                           type="text"
-                          placeholder="Name"
+                          placeholder="Keyword"
                           className="form-control"
                           name="UploadKeyword"
                         />
@@ -158,7 +160,7 @@ const HotelType = () => {
                         <label>Proposal Priority</label>
                         <Field
                           type="text"
-                          placeholder="Name"
+                          placeholder="Priority"
                           className="form-control"
                           name="ProposalPriority"
                         />

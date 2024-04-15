@@ -24,7 +24,7 @@ const InsuranceType = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("insurancetypelist", postData);
+        const { data } = await axiosOther.post("insurancetypemasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -101,7 +101,7 @@ const InsuranceType = () => {
                 </NavLink>
                 <Model
                   heading={"Add Insurance Type"}
-                  apiurl={"addupdateinsurancetype"}
+                  apiurl={"addupdateinsurancetypemaster"}
                   initialValues={insuranceTypeInitialValue}
                   validationSchema={insuranceTypeValidationSchema}
                   forEdit={editData}

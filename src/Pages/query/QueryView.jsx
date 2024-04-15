@@ -76,9 +76,9 @@ const QueryView = () => {
               </li>
               <li className="nav-item view-nav-item">
                 <NavLink
-                  to="querydetails"
+                  to="quotation"
                   className={`nav-link fs-6 ${
-                    pathname === "/querylist/queryview/querydetails"
+                    pathname === "/querylist/queryview/quotation"
                       ? "Active"
                       : "text-primary"
                   }`}
@@ -88,9 +88,9 @@ const QueryView = () => {
               </li>
               <li className="nav-item view-nav-item">
                 <NavLink
-                  to="quotation"
+                  to="costsheet"
                   className={`nav-link fs-6 ${
-                    pathname === "/querylist/queryview/quotation"
+                    pathname === "/querylist/queryview/costsheet"
                       ? "Active"
                       : "text-primary"
                   }`}

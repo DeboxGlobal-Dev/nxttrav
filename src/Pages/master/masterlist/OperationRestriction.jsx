@@ -22,7 +22,7 @@ const AdditionalRestriction= () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("operationrestrictionlist", postData);
+        const { data } = await axiosOther.post("operationlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -127,7 +127,7 @@ const AdditionalRestriction= () => {
                 </NavLink>
                 <Model
                   heading={"Add Operation Restriction"}
-                  apiurl={"addupdateoperationrestriction"}
+                  apiurl={"addupdateoperation"}
                   initialValues={countryInitialValue}
                   validationSchema={countryValidationSchema}
                   forEdit={editData}

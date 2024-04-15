@@ -7,7 +7,7 @@ export const countryInitialValue = {
   SetDefault: 0,
   Status: 1,
   AddedBy: 1,
-  UpdatedBy: 0,
+  UpdatedBy: 0
 };
 export const stateInitialValue = {
   id: "",
@@ -15,7 +15,7 @@ export const stateInitialValue = {
   CountryId: "",
   Status: 1,
   AddedBy: 1,
-  UpdatedBy: 0,
+  UpdatedBy: 0
 };
 export const cityInitialValue = {
   id: "",
@@ -24,7 +24,7 @@ export const cityInitialValue = {
   Name: "",
   Status: 1,
   AddedBy: 1,
-  UpdatedBy: 0,
+  UpdatedBy: 0
 };
 export const leadSourceInitialValue = {
   id: "",
@@ -32,7 +32,7 @@ export const leadSourceInitialValue = {
   SetDefault: 0,
   Status: 1,
   AddedBy: 2,
-  UpdatedBy: 0,
+  UpdatedBy: 0
 };
 export const businessTypeInitialValue = {
   id: "",

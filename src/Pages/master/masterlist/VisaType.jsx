@@ -24,7 +24,7 @@ const VisaType = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("visatypelist", postData);
+        const { data } = await axiosOther.post("visatypemasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -102,7 +102,7 @@ const VisaType = () => {
                 </NavLink>
                 <Model
                   heading={"Add Visa Type"}
-                  apiurl={"addupdatevisatype"}
+                  apiurl={"addupdatevisatypemaster"}
                   initialValues={visaTypeInitialValue}
                   validationSchema={visaTypeValidationSchema}
                   forEdit={editData}

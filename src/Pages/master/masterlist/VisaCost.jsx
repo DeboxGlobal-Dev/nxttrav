@@ -21,7 +21,7 @@ const VisaCost = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("visacostlist", postData);
+        const { data } = await axiosOther.post("visacostmasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -110,7 +110,7 @@ const VisaCost = () => {
                 </NavLink>
                 <Model
                   heading={"Add Visa Cost"}
-                  apiurl={"addupdatevisacost"}
+                  apiurl={"addupdatevisacostmaster"}
                   initialValues={visaCostInitialValue}
                   forEdit={editData}
                   isEditing={isEditing}
