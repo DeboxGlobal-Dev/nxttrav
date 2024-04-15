@@ -123,7 +123,7 @@ const VisaType = () => {
                           className="form-control"
                         />
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="VisaType" />
+                          <ErrorMessage name="Name" />
                         </span>
                       </div>
                       <div className="col-sm-6">

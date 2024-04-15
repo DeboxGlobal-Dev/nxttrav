@@ -527,7 +527,7 @@ export const sightseeingValidationSchema = yup.object().shape({
   SightseeingName: yup.string().required("Required"),
 });
 export const visaTypeValidationSchema = yup.object().shape({
-  VisaType: yup.string().required("Required"),
+  Name: yup.string().required("Required"),
 });
 export const insuranceTypeValidationSchema = yup.object().shape({
   InsuranceType: yup.string().required("Required"),
