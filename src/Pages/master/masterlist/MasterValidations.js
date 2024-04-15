@@ -264,7 +264,7 @@ export const visaCostInitialValue = {
 };
 export const visaTypeInitialValue = {
   id: "",
-  VisaType: "",
+  Name: "",
   Status: 1,
   AddedBy: 1,
   UpdatedBy: 1,

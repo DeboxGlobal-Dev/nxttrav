@@ -45,7 +45,7 @@ const VisaType = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       id: rowValue.Id,
-      VisaType: rowValue.VisaType,
+      Name: rowValue.Name,
       Status: rowValue.Status === "Active" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
       UpdatedBy: rowValue.UpdatedBy,
@@ -64,7 +64,7 @@ const VisaType = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.VisaType}
+          {row.Name}
         </span>
       ),
       sortable: true,
@@ -118,8 +118,8 @@ const VisaType = () => {
                         <label>Visa Type</label>
                         <Field
                           type="text"
-                          name="VisaType"
-                          placeholder="Visa Type"
+                          name="Name"
+                          placeholder="Name"
                           className="form-control"
                         />
                         <span className="font-size-10 text-danger">
