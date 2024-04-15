@@ -6,8 +6,8 @@ import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
-  tourEscrotPriceInitialValue,
-  tourEscortPriceValidationSchema
+  tourEscortPriceInitialValue,
+  tourEscortPriceValidationSchema,
 } from "./MasterValidations";
 import "jquery";
 import "select2";
@@ -17,12 +17,29 @@ const TourEscortPrice = () => {
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+  const [destinationList, setDestinationList] = useState([]);
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  
+  const getDataToServer = async () => {
+    try {
+      const destination = await axiosOther.post("destinationlist", {
+        Search: "",
+        Status: 1,
+      });
+      setDestinationList(destination.data.DataList);
+    } catch (err) {
+      console.log("Erro Occured", err);
+    }
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -38,13 +55,14 @@ const TourEscortPrice = () => {
 
   useEffect(() => {
     const result = getData.filter((item) => {
-      return item.Name.toLowerCase().match(postData.Search.toLowerCase());
+      return item.Status.toLowerCase().match(postData.Search.toLowerCase());
     });
 
     setFilterData(result);
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+    console.log("Row Value", rowValue);
     setEditData({
       id: rowValue.Id,
       ServiceType: rowValue.ServiceType,
@@ -87,12 +105,12 @@ const TourEscortPrice = () => {
     {
       name: "Rate Sheet",
       selector: (row) => <button className="btn btn-primary">+Add/View</button>,
+      sortable: true,
     },
     {
       name: "Status",
-      selector: (row) => {
-        row.Status, sortable;
-      },
+      selector: (row) => row.Status,
+      sortable: true,
     },
   ];
 
@@ -125,7 +143,7 @@ const TourEscortPrice = () => {
                 <Model
                   heading={"Add Tour Escort Service"}
                   apiurl={"addupdatetourescortprice"}
-                  initialValues={tourEscrotPriceInitialValue}
+                  initialValues={tourEscortPriceInitialValue}
                   validationSchema={tourEscortPriceValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
@@ -143,8 +161,8 @@ const TourEscortPrice = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={0}>Guide</option>
-                          <option value={1}>Porter</option>
+                          <option value="0">Guide</option>
+                          <option value="1">Porter</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -154,12 +172,12 @@ const TourEscortPrice = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={0}>ALL</option>
-                          <option value={1}>Dubai</option>
-                          <option value={2}>Abu Dhabi</option>
-                          <option value={3}>Delhi</option>
-                          <option value={4}>Banglore</option>
-                          <option value={5}>Gurugram</option>
+                          <option value="0">ALL</option>
+                          {
+                            destinationList.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -171,7 +189,7 @@ const TourEscortPrice = () => {
                           className="form-control"
                         />
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name"/>
+                          <ErrorMessage name="Name" />
                         </span>
                       </div>
                       <div className="col-sm-4">

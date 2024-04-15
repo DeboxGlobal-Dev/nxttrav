@@ -18,6 +18,34 @@ const VisaCost = () => {
   }); 
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [countryList, setCountryList] = useState([]);
+  const [visaList, setVisaList] = useState([]);
+
+
+  const getDataToServer = async () => {
+    try {
+      const countryData = await axiosOther.post("countrylist", {
+        Search: "",
+        Status: 1,
+      });
+      setCountryList(countryData.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const visaData = await axiosOther.post("visatypemasterlist", {
+        Search: "",
+        Status: 1,
+      });
+      setVisaList(visaData.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -128,9 +156,12 @@ const VisaCost = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>India</option>
-                          <option value={2}>Australia</option>
-                          <option value={3}>Germany</option>
+                          <option value="">Select Country</option>
+                          {
+                            countryList.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -140,13 +171,12 @@ const VisaCost = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Work Permit Visa</option>
-                          <option value={2}>Tourist Visa</option>
-                          <option value={3}>H-1 B-1 Visa</option>
-                          <option value={4}>Single Entry Visa</option>
-                          <option value={5}>Tourist Visa</option>
-                          <option value={6}>Business Visa</option>
-                          <option value={7}>Student Visa</option>
+                          <option value="">Select Visa</option>
+                          {
+                            visaList.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">

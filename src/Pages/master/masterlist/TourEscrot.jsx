@@ -57,8 +57,8 @@ const TourEscort = () => {
       LicenseExpiry: rowValue.LicenseExpiry,
       Destination: rowValue.Destination,
       Language: rowValue.Language,
-      TourEscortImageName: rowValue.TourEscortImageName,
-      TourEscortImageData: rowValue.TourEscortImageData,
+      // TourEscortImageName: rowValue.TourEscortImageName,
+      // TourEscortImageData: rowValue.TourEscortImageData,
       Supplier: rowValue.Supplier,
       TourEscortLicenseTwo: rowValue.TourEscortLicenseTwo,
       ContactPerson: rowValue.ContactPerson,
@@ -69,7 +69,7 @@ const TourEscort = () => {
       PinCode: rowValue.PinCode,
       Detail: rowValue.Detail,
       Address: rowValue.Address,
-      Status: rowValue.Status,
+      Status: rowValue.Status ==="Active"?1:0,
       AddedBy: rowValue.AddedBy,
       UpdatedBy: rowValue.UpdatedBy,
     });
@@ -280,7 +280,7 @@ const TourEscort = () => {
                           className="form-control"
                         />
                       </div>
-                      <div className="col-sm-4">
+                      {/* <div className="col-sm-4">
                         <label className="font-size-10">
                           Tour Escort / Tour Manager Image
                         </label>
@@ -289,7 +289,7 @@ const TourEscort = () => {
                           name="TourEscortImageData"
                           className="form-control"
                         />
-                      </div>
+                      </div> */}
                       <div className="col-sm-4">
                         <label>Supplier</label>
                         <Field

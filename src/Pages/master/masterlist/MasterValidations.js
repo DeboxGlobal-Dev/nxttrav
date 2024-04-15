@@ -256,15 +256,15 @@ export const sightseeingInitialValue = {
 };
 export const visaCostInitialValue = {
   id: "",
-  Country: 1,
-  VisaType: 1,
+  Country: "",
+  VisaType: "",
   Status: 1,
   AddedBy: 1,
   UpdatedBy: 0,
 };
 export const visaTypeInitialValue = {
   id: "",
-  VisaType: "",
+  Name: "",
   Status: 1,
   AddedBy: 1,
   UpdatedBy: 1,
@@ -284,10 +284,10 @@ export const insuranceCostInitialValue = {
   AddedBy: 1,
   UpdatedBy: 1,
 };
-export const tourEscrotPriceInitialValue = {
+export const tourEscortPriceInitialValue = {
   id: "",
-  ServiceType: 0,
-  Destination: 1,
+  ServiceType: "1",
+  Destination: "2",
   TourEscortService: "",
   Status: 1,
   Default: 0,
@@ -306,8 +306,8 @@ export const tourEscortInitialValue = {
   LicenseExpiry: "",
   Destination: "",
   Language: "",
-  TourEscortImageName: "",
-  TourEscortImageData: "",
+  // TourEscortImageName: "",
+  // TourEscortImageData: "",
   Supplier: 1,
   TourEscortLicenseTwo: "",
   ContactPerson: "",
@@ -527,7 +527,7 @@ export const sightseeingValidationSchema = yup.object().shape({
   SightseeingName: yup.string().required("Required"),
 });
 export const visaTypeValidationSchema = yup.object().shape({
-  VisaType: yup.string().required("Required"),
+  Name: yup.string().required("Required")
 });
 export const insuranceTypeValidationSchema = yup.object().shape({
   InsuranceType: yup.string().required("Required"),
@@ -540,7 +540,7 @@ export const tourEscortPriceValidationSchema = yup.object().shape({
 });
 export const tourEscortValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
-  MobileNumber: yup.string().required("Required"),
+  MobileNumber: yup.number().required("Required"),
   Email: yup.string().required("Required"),
   Destination: yup.string().required("Required"),
   Address: yup.string().required("Required"),

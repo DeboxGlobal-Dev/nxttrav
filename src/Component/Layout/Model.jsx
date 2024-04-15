@@ -31,8 +31,10 @@ const Model = ({
         setUpdateData(!updateData);
         resetForm();
         closeModel();
+        console.log(response);
       } else {
         toast.error(response.data.Name);
+        console.log(response.data.Name);
       }
     } catch (err) {
       console.log(err);

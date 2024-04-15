@@ -9,6 +9,7 @@ import {
   insuranceCostInitialValue,
   insuranceCostValidationSchema,
 } from "./MasterValidations";
+import { Value } from "sass";
 
 const InsuranceCost = () => {
   const [getData, setGetData] = useState([]);
@@ -21,12 +22,30 @@ const InsuranceCost = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [insuranceType, setInsuranceType] = useState([]);
+
+  const getDataToServer = async () => {
+    try {
+      const insuranceData = await axiosOther.post("insurancetypemasterlist", {
+        Search: "",
+        Status: 1,
+      });
+      setInsuranceType(insuranceData.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("insurancecostmasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
+        console.log(data.DataList);
       } catch (error) {
         console.log(error);
       }
@@ -125,7 +144,7 @@ const InsuranceCost = () => {
                 >
                   <div className="card-body">
                     <div className="row">
-                      <div className="col-sm-6">
+                      <div className="col-sm-4">
                         <label>Insurance Name</label>
                         <Field
                           type="text"
@@ -137,19 +156,22 @@ const InsuranceCost = () => {
                           <ErrorMessage name="InsuranceName" />
                         </span>
                       </div>
-                      <div className="col-sm-6">
+                      <div className="col-sm-4">
                         <label>Insurance Type</label>
                         <Field
                           name="InsuranceType"
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Senior Citizen Travel Ins</option>
-                          <option value={2}>Family Travel Insurance</option>
-                          <option value={3}>Student Travel Insurance</option>
+                          <option value="">Select Insurance</option>
+                          {
+                            insuranceType.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.InsuranceType}</option>
+                            })
+                          }
                         </Field>
                       </div>
-                      <div className="col-sm-6">
+                      <div className="col-sm-4">
                         <label>Status</label>
                         <Field
                           name="Status"

@@ -23,7 +23,6 @@ const SeasonMaster = () => {
   const [updateData, setUpdateData] = useState(false);
   let data =JSON.stringify({"Name":"SanaulAnsari"});
 
-  // console.log('Parsing Value', JSON.parse(data));
   useEffect(() => {
     const postDataToServer = async () => {
       try {
