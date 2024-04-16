@@ -4,7 +4,10 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
-import { hotelChainInitialValue, hotelChainValidationSchema } from "./MasterValidations";
+import {
+  hotelChainInitialValue,
+  hotelChainValidationSchema,
+} from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const HotelChain = () => {
@@ -41,16 +44,16 @@ const HotelChain = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    setEditData({ 
-      Name:rowValue.Name,
-      Location:rowValue.Location,
-      HotelWebsite:rowValue.HotelWebsite,
-      SelfSupplier:rowValue.SelfSupplier,
-      ContaractPerson:rowValue.ContaractPerson,
-      AddedBy:rowValue.AddedBy,
-      UpdatedBy:rowValue.UpdatedBy,
-      Status:rowValue.Status==="Active"?1:0
-     });
+    setEditData({
+      Name: rowValue.Name,
+      Location: rowValue.Location,
+      HotelWebsite: rowValue.HotelWebsite,
+      SelfSupplier: rowValue.SelfSupplier,
+      ContaractPerson: rowValue.ContaractPerson,
+      AddedBy: rowValue.AddedBy,
+      UpdatedBy: rowValue.UpdatedBy,
+      Status: rowValue.Status === "Active" ? 1 : 0,
+    });
     setIsEditing(true);
   };
 
@@ -143,8 +146,8 @@ const HotelChain = () => {
                   updateData={updateData}
                 >
                   <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-3">
+                    <div className="row row-gap-2">
+                      <div className="col-sm-4">
                         <label>Hotel Chain Name</label>
                         <Field
                           type="text"
@@ -156,7 +159,7 @@ const HotelChain = () => {
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Location</label>
                         <Field
                           type="text"
@@ -168,7 +171,7 @@ const HotelChain = () => {
                           <ErrorMessage name="Location" />
                         </span>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Hotel Website</label>
                         <Field
                           type="text"
@@ -180,7 +183,7 @@ const HotelChain = () => {
                           <ErrorMessage name="HotelWebsite" />
                         </span>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Self Supplier</label>
                         <Field
                           type="text"
@@ -192,10 +195,23 @@ const HotelChain = () => {
                           <ErrorMessage name="SelfSupplier" />
                         </span>
                       </div>
-                    </div>
-                    <div className="row mt-2">
-                      <label>Contact Person</label>
-                      <div className="col-sm-2">
+                      <div className="col-sm-4">
+                        <label>Status</label>
+                        <Field
+                          className="form-control"
+                          component={"select"}
+                          name="Status"
+                        >
+                          <option value="1">Active</option>
+                          <option value="0">Inactive</option>
+                        </Field>
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="Status" />
+                        </span>
+                      </div>
+
+                      <div className="col-sm-4">
+                        <label>Contact Person</label>
                         <Field
                           className="form-control px-1"
                           component={"select"}
@@ -212,7 +228,7 @@ const HotelChain = () => {
                           <option value={"7"}>Software Developer</option>
                         </Field>
                       </div>
-                      <div className="col-sm-2 px-1">
+                      <div className="col-sm-3 px-1">
                         <Field
                           type="text"
                           placeholder="Contact Person"
@@ -223,7 +239,7 @@ const HotelChain = () => {
                           <ErrorMessage name="ContactName" />
                         </span>
                       </div>
-                      <div className="col-sm-2 px-1">
+                      <div className="col-sm-3 px-1">
                         <Field
                           type="text"
                           placeholder="Designation"
@@ -234,16 +250,14 @@ const HotelChain = () => {
                           <ErrorMessage name="ContactDesignation" />
                         </span>
                       </div>
-                      <div className="col-sm-2 px-1">
+                      <div className="col-sm-1 px-1">
                         <Field
                           type="text"
                           placeholder="+91"
                           className="form-control"
                           name="ContactCountryCode"
                         />
-                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ContactCountryCode" />
-                        </span>
+                       
                       </div>
                       <div className="col-sm-2 px-1">
                         <Field
@@ -256,7 +270,7 @@ const HotelChain = () => {
                           <ErrorMessage name="ContactMobile" />
                         </span>
                       </div>
-                      <div className="col-sm-2 px-1">
+                      <div className="col-sm-3 px-1">
                         <Field
                           type="text"
                           placeholder="Email"
@@ -265,22 +279,6 @@ const HotelChain = () => {
                         />
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="ContactEmail" />
-                        </span>
-                      </div>
-                    </div>
-                    <div className="row mt-2">
-                    <div className="col-sm-3">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Status" />
                         </span>
                       </div>
                     </div>

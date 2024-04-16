@@ -137,8 +137,8 @@ const HotelMeal = () => {
                 >
                   <div className="card-body">
                     <div className="row">
-                      <div className="col-sm-3">
-                        <label>Name</label>
+                      <div className="col-sm-4">
+                        <label>Meal Name</label>
                         <Field
                           type="text"
                           placeholder="Name"
@@ -149,7 +149,7 @@ const HotelMeal = () => {
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Status</label>
                         <Field
                           className="form-control"
@@ -160,7 +160,7 @@ const HotelMeal = () => {
                           <option value="0">Inactive</option>
                         </Field>
                       </div>
-                      <div className="col-sm-2">
+                      <div className="col-sm-4">
                         <label>Set Default</label>
                         <Field
                           name="SetDefault"

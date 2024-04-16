@@ -129,7 +129,7 @@ const Language = () => {
                 >
                   <div className="card-body">
                     <div className="row">
-                      <div className="col-sm-4">
+                      <div className="col-sm-6">
                         <label>Name</label>
                         <Field
                           type="text"
@@ -141,7 +141,7 @@ const Language = () => {
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
+                      <div className="col-sm-6">
                         <label>Status</label>
                         <Field
                           className="form-control"

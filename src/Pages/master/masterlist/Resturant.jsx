@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
@@ -18,7 +18,55 @@ const Resturant = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
-  
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [destinationList, setDestinationList] = useState([]);
+
+  const getDataToServer = async () => {
+    try {
+      const countryData = await axiosOther.post("countrylist", {
+        Search: "",
+        Status: 1,
+      });
+      setCountryList(countryData.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+
+    try {
+      const stateData = await axiosOther.post("statelist", {
+        Search: "",
+        Status: 1,
+      });
+      setStateList(stateData.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+
+    try {
+      const cityData = await axiosOther.post("citylist", {
+        Search: "",
+        Status: 1,
+      });
+      setCityList(cityData.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+
+    try {
+      const destination = await axiosOther.post("destinationlist", {
+        Search: "",
+        Status: 1,
+      });
+      setDestinationList(destination.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -94,6 +142,21 @@ const Resturant = () => {
     },
   ];
 
+  const stateFiltered = useMemo(() => {
+    const filteredState = stateList.filter(
+      (value) => changeValue.Country == value.CountryId
+    );
+    return filteredState;
+  }, [changeValue.Country, changeValue.StateId]);
+
+  const cityFiltered = useMemo(() => {
+    const filteredCity = cityList.filter(
+      (value) => changeValue.State == value.StateId
+    );
+    return filteredCity;
+  }, [changeValue.city, changeValue.State, changeValue.Country]);
+
+
   return (
     <>
       <Layout>
@@ -149,12 +212,11 @@ const Resturant = () => {
                           name="DestinationId"
                         >
                           <option value={"0"}>Select Destination</option>
-                          <option value={"1"}>Rajsthan</option>
-                          <option value={"2"}>Hryana</option>
-                          <option value={"4"}>Bihar</option>
-                          <option value={"5"}>West Bangal</option>
-                          <option value={"6"}>Banglore</option>
-                          <option value={"7"}>Uttar Pradesh</option>
+                          {
+                            destinationList.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -172,44 +234,53 @@ const Resturant = () => {
                       <div className="col-sm-4">
                         <label>Country</label>
                         <Field
+                          name="Country"
                           className="form-control"
                           component={"select"}
-                          name="CountryId"
                         >
-                          <option value={"0"}>Select Destination</option>
-                          <option value={"1"}>India</option>
-                          <option value={"2"}>Nepal</option>
-                          <option value={"4"}>Pakistan</option>
+                          <option value={0}>Select</option>
+                          {countryList.map((value, index) => {
+                            return (
+                              <option value={value.Id} key={index + 1}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-4">
                         <label>State</label>
                         <Field
+                          name="State"
                           className="form-control"
                           component={"select"}
-                          name="StateId"
                         >
-                          <option value={"0"}>Select Destination</option>
-                          <option value={"1"}>Rajsthan</option>
-                          <option value={"2"}>Hryana</option>
-                          <option value={"4"}>Bihar</option>
-                          <option value={"5"}>West Bangal</option>
-                          <option value={"6"}>Banglore</option>
-                          <option value={"7"}>Uttar Pradesh</option>
+                          <option value={0}>Select</option>
+                          {stateFiltered.map((value, index) => {
+                            return (
+                              <option value={value.Id} key={index + 1}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
 
                       <div className="col-sm-4">
                         <label>City</label>
                         <Field
-                          className="form-control px-1"
+                          name="City"
+                          className="form-control"
                           component={"select"}
-                          name="CityId"
                         >
-                          <option value={""}>Select City</option>
-                          <option value={"2"}>Gurgaon</option>
-                          <option value={"4"}>Noida</option>
-                          <option value={"5"}>Delhi</option>
+                          <option value={0}>Select</option>
+                          {cityFiltered.map((value, index) => {
+                            return (
+                              <option value={value.Id} key={index + 1}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
 

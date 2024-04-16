@@ -146,18 +146,6 @@ const HotelAdditional = () => {
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-8">
-                        <label>Details</label>
-                        <Field
-                          as="textarea"
-                          name="Details"
-                          className="form-control"
-                          style={{height:'38px'}}
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Details" />
-                        </span>
-                      </div>
                       <div className="col-sm-4">
                         <label>Image</label>
                         <Field
@@ -177,6 +165,18 @@ const HotelAdditional = () => {
                           <option value="1">Active</option>
                           <option value="0">Inactive</option>
                         </Field>
+                      </div>
+                      <div className="col-sm-12">
+                        <label>Details</label>
+                        <Field
+                          as="textarea"
+                          name="Details"
+                          className="form-control"
+                          style={{height:'38px'}}
+                        />
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="Details" />
+                        </span>
                       </div>
                     </div>
                   </div>
