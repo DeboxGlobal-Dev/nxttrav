@@ -156,7 +156,7 @@ const StateMaster = () => {
                 >
                   <div className="card-body">
                     <div className="row">
-                    <div className="col-sm-4">
+                      <div className="col-sm-4">
                         <label>Country</label>
                         <Field
                           name="CountryId"

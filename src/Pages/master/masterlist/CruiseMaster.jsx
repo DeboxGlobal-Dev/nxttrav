@@ -18,6 +18,21 @@ const CruiseMaster = () => {
     Search: "",
     Status: "",
   });
+  const [destinationList, setDestinationList] = useState([]);
+  const getDataToServer = async () => {
+    try {
+      const destination = await axiosOther.post("destinationlist", {
+        Search: "",
+        Status: 1,
+      });
+      setDestinationList(destination.data.DataList);
+    } catch (err) {
+      console.log("Erro Occured", err);
+    }
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
   
   useEffect(() => {
     const postDataToServer = async () => {
@@ -149,30 +164,34 @@ const CruiseMaster = () => {
                           type="text"
                           placeholder="Cruise Package Name"
                           className="form-control"
-                          name="Name"
+                          name="CruisePackageName"
                         />
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
                       <div className="col-sm-4">
-                        <label htmlFor="country">Destination</label>
+                        <label>Destination</label>
                         <Field
+                          name="Destination"
                           className="form-control"
                           component={"select"}
-                          name="countryId"
                         >
-                          <option value={"1"}>Noida</option>
-                          <option value={"2"}>Gurgaon</option>
-                          <option value={"3"}>Delhi</option>
+                          <option value="0">ALL</option>
+                          {
+                            destinationList.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">
-                        <label htmlFor="country">Running Days</label>
+                        <label htmlFor="running">Running Days</label>
                         <Field
                           className="form-control"
                           component={"select"}
-                          name="countryId"
+                          name="RunningDays"
+                          id="running"
                         >
                           <option value={"1"}>Monday</option>
                           <option value={"2"}>Tuesday</option>

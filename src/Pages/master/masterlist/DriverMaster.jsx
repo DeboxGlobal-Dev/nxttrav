@@ -21,6 +21,24 @@ const DriverMaster = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [countryList, setCountryList] = useState([]);
+
+  const getDataToServer = async () => {
+    try {
+      const destination = await axiosOther.post("countrylist", {
+        Search: "",
+        Status: 1,
+      });
+      setCountryList(destination.data.DataList);
+    } catch (err) {
+      console.log("Erro Occured", err);
+    }
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
+
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -185,11 +203,12 @@ const DriverMaster = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>India</option>
-                          <option value={2}>Pakistan</option>
-                          <option value={2}>Sri Lanka</option>
-                          <option value={2}>Australia</option>
-                          <option value={2}>England</option>
+                          <option value={1}>Select Country</option>
+                          {
+                            countryList.map((value, index)=>{
+                              return <option value={value.Id} key={index + 1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">

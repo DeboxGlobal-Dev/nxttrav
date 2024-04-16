@@ -7,7 +7,7 @@ export const countryInitialValue = {
   SetDefault: 0,
   Status: 1,
   AddedBy: 1,
-  UpdatedBy: 0
+  UpdatedBy: 0,
 };
 export const stateInitialValue = {
   id: "",
@@ -15,7 +15,7 @@ export const stateInitialValue = {
   CountryId: "",
   Status: 1,
   AddedBy: 1,
-  UpdatedBy: 0
+  UpdatedBy: 0,
 };
 export const cityInitialValue = {
   id: "",
@@ -24,7 +24,7 @@ export const cityInitialValue = {
   Name: "",
   Status: 1,
   AddedBy: 1,
-  UpdatedBy: 0
+  UpdatedBy: 0,
 };
 export const leadSourceInitialValue = {
   id: "",
@@ -32,7 +32,7 @@ export const leadSourceInitialValue = {
   SetDefault: 0,
   Status: 1,
   AddedBy: 2,
-  UpdatedBy: 0
+  UpdatedBy: 0,
 };
 export const businessTypeInitialValue = {
   id: "",
@@ -130,7 +130,7 @@ export const hotelCategoryInitialValue = {
   Name: "",
   UploadKeyword: "",
   Status: 1,
-  AddedBy: 1
+  AddedBy: 1,
 };
 export const hotelAdditonalInitialValue = {
   id: "",
@@ -204,7 +204,7 @@ export const hotelTypeInitialValue = {
   id: "",
   Name: "",
   UploadKeyword: "",
-  ProposalPriority:"",
+  ProposalPriority: "",
   Status: 1,
   AddedBy: 1,
   UpdatedBy: 0,
@@ -411,7 +411,24 @@ export const roomTypeInitialValue = {
   AddedBy: 1,
   UpdatedBy: "0",
 };
-
+export const cruiseCompanyInitialValue = {
+  id: "",
+  CruiseCompanyName: "",
+  Destination: "",
+  Country: "",
+  State: "",
+  City: "",
+  PinCode: "",
+  Address: "",
+  Website: "",
+  GST: "",
+  SelfSupplier: "",
+  Type: "",
+  Phone: "",
+  Email: "",
+  Status: "",
+  UpdatedBy: 1,
+};
 // ------------------------VALIDATION SCHEMAS-------------------------- //
 
 export const countryValidationSchema = yup.object().shape({
@@ -456,9 +473,7 @@ export const hotelMasterCreateValidationSchema = yup.object().shape({
   HotelRoomType: yup.string().required("Required"),
 });
 export const hotelMasterValidationSchema = yup.object().shape({
-  HotelExcelFile: yup
-    .mixed()
-    .required("Required")
+  HotelExcelFile: yup.mixed().required("Required"),
 });
 export const hotelCategoryValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
@@ -527,7 +542,7 @@ export const sightseeingValidationSchema = yup.object().shape({
   SightseeingName: yup.string().required("Required"),
 });
 export const visaTypeValidationSchema = yup.object().shape({
-  Name: yup.string().required("Required")
+  Name: yup.string().required("Required"),
 });
 export const insuranceTypeValidationSchema = yup.object().shape({
   InsuranceType: yup.string().required("Required"),

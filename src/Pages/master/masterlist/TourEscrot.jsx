@@ -7,12 +7,13 @@ import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
   tourEscortInitialValue,
-  tourEscortValidationSchema
+  tourEscortValidationSchema,
 } from "./MasterValidations";
 import "jquery";
 import "select2";
 
 const TourEscort = () => {
+  
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -30,14 +31,12 @@ const TourEscort = () => {
   const [languageList, setLanguageList] = useState([]);
 
   const getDataToServer = async () => {
-    console.log('First Action');
     try {
       const countryData = await axiosOther.post("countrylist", {
         Search: "",
         Status: 1,
       });
       setCountryList(countryData.data.DataList);
-     
     } catch (err) {
       console.log(err);
     }
@@ -48,7 +47,6 @@ const TourEscort = () => {
         Status: 1,
       });
       setStateList(stateData.data.DataList);
-      
     } catch (err) {
       console.log(err);
     }
@@ -59,7 +57,6 @@ const TourEscort = () => {
         Status: 1,
       });
       setCityList(cityData.data.DataList);
-      
     } catch (err) {
       console.log(err);
     }
@@ -70,7 +67,6 @@ const TourEscort = () => {
         Status: 1,
       });
       setDestinationList(destination.data.DataList);
-      
     } catch (err) {
       console.log(err);
     }
@@ -80,11 +76,10 @@ const TourEscort = () => {
         Search: "",
         Status: 1,
       });
-      setLanguageList(language.data.DataList);  
+      setLanguageList(language.data.DataList);
     } catch (err) {
       console.log(err);
     }
-
   };
   useEffect(() => {
     getDataToServer();
@@ -93,7 +88,10 @@ const TourEscort = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("tourescortmasterlist", postData);
+        const { data } = await axiosOther.post(
+          "tourescortmasterlist",
+          postData
+        );
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -114,7 +112,7 @@ const TourEscort = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       id: rowValue.Id,
-      ServiceType:rowValue.ServiceType,
+      ServiceType: rowValue.ServiceType,
       Name: rowValue.Name,
       MobileNumber: rowValue.MobileNumber,
       WhatsAppNumber: rowValue.WhatsAppNumber,
@@ -136,29 +134,19 @@ const TourEscort = () => {
       PinCode: rowValue.PinCode,
       Detail: rowValue.Detail,
       Address: rowValue.Address,
-      Status: rowValue.Status ==="Active"?1:0,
+      Status: rowValue.Status === "Active" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
       UpdatedBy: rowValue.UpdatedBy,
     });
     setIsEditing(true);
   };
 
-  function filtering(){
-    // const data = cityList.filter((value)=> changeValue.State==value.);
-    // console.log('FilteredValue',data);
-    console.log('StateValue', cityList);
-  }
-
-  filtering();
-
   const stateFiltered = useMemo(() => {
     const filteredState = stateList.filter(
-      (value) => changeValue.Country==value.CountryId
+      (value) => changeValue.Country == value.CountryId
     );
     return filteredState;
   }, [changeValue.Country, changeValue.StateId]);
-
-
 
   const cityFiltered = useMemo(() => {
     const filteredCity = cityList.filter(
@@ -167,7 +155,6 @@ const TourEscort = () => {
     return filteredCity;
   }, [changeValue.city, changeValue.State, changeValue.Country]);
 
-  console.log('ChangeValue', changeValue);
   const columns = [
     {
       name: "Image",
@@ -198,8 +185,8 @@ const TourEscort = () => {
       name: "Email/Phone",
       selector: (row) => (
         <>
-        <span className="font-size-10">{row.Email} /</span>
-        <span className="font-size-10">{row.MobileNumber}</span>
+          <span className="font-size-10">{row.Email} /</span>
+          <span className="font-size-10">{row.MobileNumber}</span>
         </>
       ),
       sortable: true,
@@ -359,11 +346,13 @@ const TourEscort = () => {
                           component={"select"}
                         >
                           <option value="">Select Destination</option>
-                          {
-                            destinationList.map((value, index)=>{
-                              return  <option value={value.Id} key={index+1}>{value.Name}</option>
-                            })
-                          }
+                          {destinationList.map((value, index) => {
+                            return (
+                              <option value={value.Id} key={index + 1}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -374,11 +363,13 @@ const TourEscort = () => {
                           component={"select"}
                         >
                           <option value="">Select Language</option>
-                          {
-                            languageList.map((value, index)=>{
-                              return  <option value={value.Id} key={index+1}>{value.Name}</option>
-                            })
-                          }
+                          {languageList.map((value, index) => {
+                            return (
+                              <option value={value.Id} key={index + 1}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -437,11 +428,13 @@ const TourEscort = () => {
                           component={"select"}
                         >
                           <option value={0}>Select</option>
-                          {
-                            countryList.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
-                            })
-                          }
+                          {countryList.map((value, index) => {
+                            return (
+                              <option value={value.Id} key={index + 1}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -452,11 +445,13 @@ const TourEscort = () => {
                           component={"select"}
                         >
                           <option value={0}>Select</option>
-                          {
-                            stateFiltered.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
-                            })
-                          }
+                          {stateFiltered.map((value, index) => {
+                            return (
+                              <option value={value.Id} key={index + 1}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -467,11 +462,13 @@ const TourEscort = () => {
                           component={"select"}
                         >
                           <option value={0}>Select</option>
-                          {
-                            cityFiltered.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
-                            })
-                          }
+                          {cityFiltered.map((value, index) => {
+                            return (
+                              <option value={value.Id} key={index + 1}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -515,7 +512,6 @@ const TourEscort = () => {
                         >
                           <option value={1}>Active</option>
                           <option value={0}>InActive</option>
-
                         </Field>
                       </div>
                     </div>

@@ -21,6 +21,23 @@ const CurrencyMaster = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [countryList, setCountryList] = useState([]);
+
+  const getDataToServer = async () => {
+    try {
+      const countryData = await axiosOther.post("countrylist", {
+        Search: "",
+        Status: 1,
+      });
+      setCountryList(countryData.data.DataList);
+      console.log(country);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -49,8 +66,8 @@ const CurrencyMaster = () => {
       CountryId: rowValue.CountryId,
       CurrencyCode: rowValue.CurrencyCode,
       CurrencyName: rowValue.CurrencyName,
-      Status: rowValue.Status==="Active"? 1:0,
-      SetDefault: rowValue.SetDefault==="Yes"?1:0,
+      Status: rowValue.Status === "Active" ? 1 : 0,
+      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
       UpdatedBy: rowValue.UpdatedBy,
     });
@@ -90,7 +107,7 @@ const CurrencyMaster = () => {
     },
     {
       name: "Rate List",
-      selector: (row) => 'View',
+      selector: (row) => "View",
       sortable: true,
     },
     {
@@ -146,12 +163,14 @@ const CurrencyMaster = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>India</option>
-                          <option value={1}>UAE</option>
-                          <option value={1}>Canada</option>
-                          <option value={1}>Australia</option>
-                          <option value={1}>South Africa</option>
-                          <option value={1}>Tanzania</option>
+                          <option value="">Select Country</option>
+                          {countryList.map((value) => {
+                            return (
+                              <option value={value.Id} key={value.Id}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-4">

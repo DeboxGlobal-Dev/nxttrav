@@ -17,7 +17,8 @@ const CabinType = () => {
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
-  const [updateData, setUpdateData] = useUpdate("");
+  const [updateData, setUpdateData] = useState("");
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {

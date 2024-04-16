@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
@@ -6,8 +6,7 @@ import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
-  countryInitialValue,
-  countryValidationSchema,
+  cruiseCompanyInitialValue,
 } from "./MasterValidations";
 
 const CruiseCompany = () => {
@@ -21,6 +20,57 @@ const CruiseCompany = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [destinationList, setDestinationList] = useState([]);
+
+  const getDataToServer = async () => {
+    try {
+      const countryData = await axiosOther.post("countrylist", {
+        Search: "",
+        Status: 1,
+      });
+      setCountryList(countryData.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+
+    try {
+      const stateData = await axiosOther.post("statelist", {
+        Search: "",
+        Status: 1,
+      });
+      setStateList(stateData.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+
+    try {
+      const cityData = await axiosOther.post("citylist", {
+        Search: "",
+        Status: 1,
+      });
+      setCityList(cityData.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+
+    try {
+      const destination = await axiosOther.post("destinationlist", {
+        Search: "",
+        Status: 1,
+      });
+      setDestinationList(destination.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getDataToServer();
+  }, []);
+
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -55,6 +105,22 @@ const CruiseCompany = () => {
     });
     setIsEditing(true);
   };
+
+  const stateFiltered = useMemo(() => {
+    const filteredState = stateList.filter(
+      (value) => changeValue.Country == value.CountryId
+    );
+    return filteredState;
+  }, [changeValue.Country, changeValue.StateId]);
+
+  const cityFiltered = useMemo(() => {
+    const filteredCity = cityList.filter(
+      (value) => changeValue.State == value.StateId
+    );
+    return filteredCity;
+  }, [changeValue.city, changeValue.State, changeValue.Country]);
+
+  // console.log('changeValue..', changeValue);
 
   const columns = [
     {
@@ -130,8 +196,8 @@ const CruiseCompany = () => {
                 <Model
                   heading={"Add Cruise Company"}
                   apiurl={"addupdatecruisecompany"}
-                  initialValues={countryInitialValue}
-                  validationSchema={countryValidationSchema}
+                  initialValues={cruiseCompanyInitialValue}
+                  // validationSchema={countryValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -146,7 +212,7 @@ const CruiseCompany = () => {
                         <label>Cruise Company Name</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="CruiseCompanyName"
                           placeholder="Cruise Company"
                           className="form-control"
                         />
@@ -154,61 +220,69 @@ const CruiseCompany = () => {
                       <div className="col-sm-4">
                         <label>Destination</label>
                         <Field
-                          name="SetDefault"
+                          name="Destination"
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Noida</option>
-                          <option value={2}>Mumbai</option>
-                          <option value={3}>Delhi</option>
-                          <option value={4}>Gurgaon</option>
-                          <option value={5}>Kolkata</option>
+                          <option value="">Select Destination</option>
+                          {
+                            destinationList.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
+                          
                         </Field>
                       </div>
                       <div className="col-sm-4">
                         <label>Country</label>
                         <Field
-                          name="SetDefault"
+                          name="Country"
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Inida</option>
-                          <option value={1}>Sri-Lanka</option>
-                          <option value={1}>Pakistan</option>
-                          <option value={2}>Nepal</option>
+                          <option value="">Select Country</option>
+                          {
+                            countryList.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">
                         <label>State</label>
                         <Field
-                          name="SetDefault"
+                          name="State"
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Kolkata</option>
-                          <option value={1}>Delhi</option>
-                          <option value={1}>Noida</option>
-                          <option value={2}>Haryana</option>
+                          <option value="">Select State</option>
+                          {
+                            stateFiltered.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">
                         <label>City</label>
                         <Field
-                          name="SetDefault"
+                          name="City"
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Gurgoan</option>
-                          <option value={1}>Delhi</option>
-                          <option value={1}>Noida</option>
-                          <option value={2}>Hydrabad</option>
+                          <option value="">Select City</option>
+                          {
+                            cityFiltered.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">
                         <label>Pin Code</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="PinCode"
                           placeholder="Pin Code"
                           className="form-control"
                         />
@@ -217,7 +291,7 @@ const CruiseCompany = () => {
                         <label>Address</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="Address"
                           placeholder="Address"
                           className="form-control"
                         />
@@ -226,7 +300,7 @@ const CruiseCompany = () => {
                         <label>Website</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="Website"
                           placeholder="Website"
                           className="form-control"
                         />
@@ -235,7 +309,7 @@ const CruiseCompany = () => {
                         <label>GST</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="GST"
                           placeholder="GST"
                           className="form-control"
                         />
@@ -243,7 +317,7 @@ const CruiseCompany = () => {
                       <div className="col-sm-4">
                         <label>Self Supplier</label>
                         <Field
-                          name="SetDefault"
+                          name="SelfSupplier"
                           className="form-control"
                           component={"select"}
                         >
@@ -254,7 +328,7 @@ const CruiseCompany = () => {
                       <div className="col-sm-4">
                         <label>Contact Person Division</label>
                         <Field
-                          name="SetDefault"
+                          name="ContactPersonDivision"
                           className="form-control"
                           component={"select"}
                         >
@@ -273,7 +347,7 @@ const CruiseCompany = () => {
                         <label>Contact Person</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="ContactPerson"
                           placeholder="Contact Person"
                           className="form-control"
                         />
@@ -285,7 +359,7 @@ const CruiseCompany = () => {
                         <label>Designation</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="Designation"
                           placeholder="Designation"
                           className="form-control"
                         />
@@ -293,7 +367,7 @@ const CruiseCompany = () => {
                           <ErrorMessage name="ShortName" />
                         </span>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Country Code</label>
                         <Field
                           type="text"

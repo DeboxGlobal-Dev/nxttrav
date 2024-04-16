@@ -18,6 +18,22 @@ const TransferMaster = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [destinationList, setDestinationList] = useState([]);
+
+  const getDataToServer = async () => {
+    try {
+      const destination = await axiosOther.post("destinationlist", {
+        Search: "",
+        Status: 1,
+      });
+      setDestinationList(destination.data.DataList);
+    } catch (err) {
+      console.log("Erro Occured", err);
+    }
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -160,14 +176,17 @@ const TransferMaster = () => {
                       <div className="col-sm-4">
                         <label>Destination</label>
                         <Field
-                          type="text"
-                          name="ShortName"
-                          placeholder="Destination"
+                          name="Destination"
                           className="form-control"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
+                          component={"select"}
+                        >
+                          <option value="0">ALL</option>
+                          {
+                            destinationList.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
+                        </Field>
                       </div>
                       <div className="col-sm-3">
                         <label>Status</label>
@@ -180,7 +199,7 @@ const TransferMaster = () => {
                           <option value={0}>Inactive</option>
                         </Field>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Transfer Type</label>
                         <Field
                           name="Status"
@@ -194,8 +213,8 @@ const TransferMaster = () => {
                           <option value={5}>Normal</option>
                         </Field>
                       </div>
-                      <div className="col-sm-3">
-                        <label className="font-size-10">Default For Proposal</label>
+                      <div className="col-sm-4">
+                        <label>Default For Proposal</label>
                         <Field
                           name="SetDefault"
                           className="form-control"
@@ -205,7 +224,7 @@ const TransferMaster = () => {
                           <option value={1}>Yes</option>
                         </Field>
                       </div>
-                      <div className="col-sm-6">
+                      <div className="col-sm-4">
                         <label>Detail</label>
                         <Field
                           as="textarea"

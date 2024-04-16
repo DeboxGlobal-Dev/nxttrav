@@ -21,6 +21,23 @@ const AdditionalRequirement = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [destinationList, setDestinationList] = useState([]);
+  
+  const getDataToServer = async () => {
+    try {
+      const destination = await axiosOther.post("destinationlist", {
+        Search: "",
+        Status: 1,
+      });
+      setDestinationList(destination.data.DataList);
+    } catch (err) {
+      console.log("Erro Occured", err);
+    }
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
+
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -205,8 +222,11 @@ const AdditionalRequirement = () => {
                           name="DestinationId"
                         >
                           <option value={1}>Delhi</option>
-                          <option value={2}>Agra</option>
-                          <option value={3}>Mumbai</option>
+                          {
+                            destinationList.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">

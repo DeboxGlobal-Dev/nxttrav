@@ -21,6 +21,24 @@ const FerryCompany = () => {
   });
   const [updateData, setUpdateData] = useState(false);
   const [changeValue, setChangeValue] = useState("");
+  const [destinationList, setDestinationList] = useState([]);
+  
+  const getDataToServer = async () => {
+    try {
+      const destination = await axiosOther.post("destinationlist", {
+        Search: "",
+        Status: 1,
+      });
+      setDestinationList(destination.data.DataList);
+    } catch (err) {
+      console.log("Erro Occured", err);
+    }
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
+
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -153,15 +171,16 @@ const FerryCompany = () => {
                       <div className="col-sm-4">
                         <label>Destination</label>
                         <Field
-                          name="SetDefault"
+                          name="Destination"
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Noida</option>
-                          <option value={1}>Mumbai</option>
-                          <option value={1}>Delhi</option>
-                          <option value={2}>Gurgaon</option>
-                          <option value={2}>Kolkata</option>
+                          <option value="0">ALL</option>
+                          {
+                            destinationList.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">
