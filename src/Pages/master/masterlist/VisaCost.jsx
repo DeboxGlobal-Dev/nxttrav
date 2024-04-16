@@ -15,7 +15,7 @@ const VisaCost = () => {
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
-  }); 
+  });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [countryList, setCountryList] = useState([]);
@@ -90,14 +90,14 @@ const VisaCost = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Country}
+          {row.CountryName}
         </span>
       ),
       sortable: true,
     },
     {
       name: "Visa Type",
-      selector: (row) => row.VisaType,
+      selector: (row) => row.VisaTypeName,
       sortable: true,
     },
     {
