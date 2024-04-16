@@ -91,7 +91,7 @@ const InsuranceCost = () => {
     },
     {
       name: "Insurance Type",
-      selector: (row) => row.InsuranceType,
+      selector: (row) => row.InsuranceTypeName,
       sortable: true,
     },
     {
@@ -105,7 +105,7 @@ const InsuranceCost = () => {
       sortable: true
     }
   ];
-  
+
   return (
     <>
       <Layout>
