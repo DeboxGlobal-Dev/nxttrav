@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
@@ -143,6 +143,31 @@ const TourEscort = () => {
     setIsEditing(true);
   };
 
+  function filtering(){
+    // const data = cityList.filter((value)=> changeValue.State==value.);
+    // console.log('FilteredValue',data);
+    console.log('StateValue', cityList);
+  }
+
+  filtering();
+
+  const stateFiltered = useMemo(() => {
+    const filteredState = stateList.filter(
+      (value) => changeValue.Country==value.CountryId
+    );
+    return filteredState;
+  }, [changeValue.Country, changeValue.StateId]);
+
+
+
+  const cityFiltered = useMemo(() => {
+    const filteredCity = cityList.filter(
+      (value) => changeValue.State == value.StateId
+    );
+    return filteredCity;
+  }, [changeValue.city, changeValue.State, changeValue.Country]);
+
+  console.log('ChangeValue', changeValue);
   const columns = [
     {
       name: "Image",
@@ -428,7 +453,7 @@ const TourEscort = () => {
                         >
                           <option value={0}>Select</option>
                           {
-                            stateList.map((value, index)=>{
+                            stateFiltered.map((value, index)=>{
                               return <option value={value.Id} key={index+1}>{value.Name}</option>
                             })
                           }
@@ -443,7 +468,7 @@ const TourEscort = () => {
                         >
                           <option value={0}>Select</option>
                           {
-                            cityList.map((value, index)=>{
+                            cityFiltered.map((value, index)=>{
                               return <option value={value.Id} key={index+1}>{value.Name}</option>
                             })
                           }
