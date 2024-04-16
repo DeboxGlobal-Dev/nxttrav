@@ -286,8 +286,8 @@ export const insuranceCostInitialValue = {
 };
 export const tourEscortPriceInitialValue = {
   id: "",
-  ServiceType: "1",
-  Destination: "2",
+  ServiceType: "",
+  Destination: "",
   TourEscortService: "",
   Status: 1,
   Default: 0,

@@ -23,6 +23,23 @@ const Monument = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [destinationList, setDestinationList] = useState([]);
+
+  const getDataToServer = async () => {
+    try {
+      const destination = await axiosOther.post("destinationlist", {
+        Search: "",
+        Status: 1,
+      });
+      setDestinationList(destination.data.DataList);
+    } catch (err) {
+      console.log("Erro Occured", err);
+    }
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -155,7 +172,7 @@ const Monument = () => {
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Monument Name</label>
                         <Field
                           type="text"
@@ -167,21 +184,22 @@ const Monument = () => {
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Destination</label>
                         <Field
                           name="Destination"
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Delhi</option>
-                          <option value={2}>Gujarat</option>
-                          <option value={3}>Agra</option>
-                          <option value={4}>Jaipur</option>
-                          <option value={5}>Kashmir</option>
+                          <option value="">Select Destination</option>
+                          {
+                            destinationList.map((value, index)=>{
+                              return  <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Transfer Type</label>
                         <Field
                           name="TransferType"
@@ -194,7 +212,7 @@ const Monument = () => {
                           <option value={0}>PVT</option>
                         </Field>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Status</label>
                         <Field
                           name="Status"
@@ -205,7 +223,7 @@ const Monument = () => {
                           <option value={0}>Inactive</option>
                         </Field>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Closed On Days</label>
                         <Field
                           name="ClosedOnDays"
@@ -221,8 +239,8 @@ const Monument = () => {
                           <option value={7}>Saturday</option>
                         </Field>
                       </div>
-                      <div className="col-sm-3">
-                        <label className="font-size-10">
+                      <div className="col-sm-4">
+                        <label>
                           SetDefault for Qoutation
                         </label>
                         <Field
@@ -234,8 +252,8 @@ const Monument = () => {
                           <option value={1}>Yes</option>
                         </Field>
                       </div>
-                      <div className="col-sm-3">
-                        <label className="font-size-10">
+                      <div className="col-sm-6">
+                        <label>
                           SetDefault for Proposal
                         </label>
                         <Field
@@ -247,7 +265,7 @@ const Monument = () => {
                           <option value={1}>Yes</option>
                         </Field>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-6">
                         <label>Weekend Days</label>
                         <Field
                           name="WeekendDays"

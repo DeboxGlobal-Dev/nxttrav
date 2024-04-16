@@ -23,6 +23,73 @@ const TourEscort = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [destinationList, setDestinationList] = useState([]);
+  const [languageList, setLanguageList] = useState([]);
+
+  const getDataToServer = async () => {
+    console.log('First Action');
+    try {
+      const countryData = await axiosOther.post("countrylist", {
+        Search: "",
+        Status: 1,
+      });
+      setCountryList(countryData.data.DataList);
+     
+    } catch (err) {
+      console.log(err);
+    }
+
+    try {
+      const stateData = await axiosOther.post("statelist", {
+        Search: "",
+        Status: 1,
+      });
+      setStateList(stateData.data.DataList);
+      
+    } catch (err) {
+      console.log(err);
+    }
+
+    try {
+      const cityData = await axiosOther.post("citylist", {
+        Search: "",
+        Status: 1,
+      });
+      setCityList(cityData.data.DataList);
+      
+    } catch (err) {
+      console.log(err);
+    }
+
+    try {
+      const destination = await axiosOther.post("destinationlist", {
+        Search: "",
+        Status: 1,
+      });
+      setDestinationList(destination.data.DataList);
+      
+    } catch (err) {
+      console.log(err);
+    }
+
+    try {
+      const language = await axiosOther.post("languagelist", {
+        Search: "",
+        Status: 1,
+      });
+      setLanguageList(language.data.DataList);  
+    } catch (err) {
+      console.log(err);
+    }
+
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -262,25 +329,34 @@ const TourEscort = () => {
                       <div className="col-sm-4">
                         <label>Destination</label>
                         <Field
-                          type="text"
                           name="Destination"
-                          placeholder="Destination"
                           className="form-control"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Destination" />
-                        </span>
+                          component={"select"}
+                        >
+                          <option value="">Select Destination</option>
+                          {
+                            destinationList.map((value, index)=>{
+                              return  <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
+                        </Field>
                       </div>
                       <div className="col-sm-4">
                         <label>Language</label>
                         <Field
-                          type="text"
                           name="Language"
-                          placeholder="Language"
                           className="form-control"
-                        />
+                          component={"select"}
+                        >
+                          <option value="">Select Language</option>
+                          {
+                            languageList.map((value, index)=>{
+                              return  <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
+                        </Field>
                       </div>
-                      {/* <div className="col-sm-4">
+                      <div className="col-sm-4">
                         <label className="font-size-10">
                           Tour Escort / Tour Manager Image
                         </label>
@@ -289,7 +365,7 @@ const TourEscort = () => {
                           name="TourEscortImageData"
                           className="form-control"
                         />
-                      </div> */}
+                      </div>
                       <div className="col-sm-4">
                         <label>Supplier</label>
                         <Field
@@ -336,11 +412,11 @@ const TourEscort = () => {
                           component={"select"}
                         >
                           <option value={0}>Select</option>
-                          <option value={1}>India</option>
-                          <option value={1}>Pakistan</option>
-                          <option value={1}>Nepal</option>
-                          <option value={1}>Bangaldesh</option>
-                          <option value={1}>Shri Lanka</option>
+                          {
+                            countryList.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -351,11 +427,11 @@ const TourEscort = () => {
                           component={"select"}
                         >
                           <option value={0}>Select</option>
-                          <option value={1}>Delhi</option>
-                          <option value={1}>Hydrabad</option>
-                          <option value={1}>Haryana</option>
-                          <option value={1}>Bihar</option>
-                          <option value={1}>West Bangal</option>
+                          {
+                            stateList.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -366,11 +442,11 @@ const TourEscort = () => {
                           component={"select"}
                         >
                           <option value={0}>Select</option>
-                          <option value={1}>Delhi</option>
-                          <option value={1}>Gurgaon</option>
-                          <option value={1}>Noida</option>
-                          <option value={1}>Lucknow</option>
-                          <option value={1}>Munger</option>
+                          {
+                            cityList.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">

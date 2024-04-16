@@ -185,7 +185,7 @@ const TourEscortPrice = () => {
                         <Field
                           type="text"
                           name="TourEscortService"
-                          placeholder="Monument Name"
+                          placeholder="Tour Escort Service"
                           className="form-control"
                         />
                         <span className="font-size-10 text-danger">
@@ -199,8 +199,8 @@ const TourEscortPrice = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
+                          <option value="1">Active</option>
+                          <option value="0">Inactive</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -210,8 +210,8 @@ const TourEscortPrice = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={0}>No</option>
-                          <option value={1}>Yes</option>
+                          <option value="0">No</option>
+                          <option value="1">Yes</option>
                         </Field>
                       </div>
                     </div>
@@ -243,8 +243,8 @@ const TourEscortPrice = () => {
                     }
                   >
                     <option>Select Status</option>
-                    <option value={0}>Inactive</option>
-                    <option value={1}>Active</option>
+                    <option value="0">Inactive</option>
+                    <option value="1">Active</option>
                   </select>
                 </div>
                 <div className="col-lg-2 col-md-3 mt-2 mt-md-0">

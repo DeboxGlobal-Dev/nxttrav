@@ -149,7 +149,7 @@ const InsuranceCost = () => {
                         <Field
                           type="text"
                           name="InsuranceName"
-                          placeholder="Insurance Cost"
+                          placeholder="Insurance Name"
                           className="form-control"
                         />
                         <span className="font-size-10 text-danger">
