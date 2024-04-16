@@ -130,7 +130,7 @@ const ResturantMealPlan = () => {
                 >
                   <div className="card-body">
                     <div className="row">
-                      <div className="col-sm-4">
+                      <div className="col-sm-6">
                         <label htmlFor="mealplan">Meal Plan</label>
                         <Field
                           type="text"
@@ -143,7 +143,7 @@ const ResturantMealPlan = () => {
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
+                      <div className="col-sm-6">
                         <label>Status</label>
                         <Field
                           className="form-control"

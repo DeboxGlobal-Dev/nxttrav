@@ -75,7 +75,7 @@ const FerryCompany = () => {
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Ferry Country",
       selector: (row) => (
         <span>
           <i
@@ -84,27 +84,47 @@ const FerryCompany = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.FerryCompanyName}
         </span>
       ),
       sortable: true,
     },
     {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
+      name: "Destination",
+      selector: (row) => row.Destination,
       sortable: true,
     },
     {
-      name: "Status Name",
-      selector: (row) => row.Status,
+      name: "Ferry Website",
+      selector: (row) => row.Website,
       sortable: true,
+    },
+    {
+      name: "Self Supplier",
+      selector: (row) => {
+        return (
+          <span>
+            Admin <br /> {row.SelfSupplier}
+          </span>
+        );
+      },
+    },
+    {
+      name: "Cont..Person",
+      selector: (row) => {
+        return (
+          <span>
+            Admin <br /> {row.ContactPers}
+          </span>
+        );
+      },
     },
     {
       name: "Added By",
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -114,7 +134,17 @@ const FerryCompany = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
+          </span>
+        );
+      },
+    },
+    {
+      name: "Status",
+      selector: (row) => {
+        return (
+          <span>
+            {row.Status}
           </span>
         );
       },

@@ -192,7 +192,7 @@ const Sightseeing = () => {
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Sightseeing Name</label>
                         <Field
                           type="text"
@@ -204,7 +204,7 @@ const Sightseeing = () => {
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Destination</label>
                         <Field
                           name="Destinatin"
@@ -219,7 +219,7 @@ const Sightseeing = () => {
                           }
                         </Field>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Transfer Type</label>
                         <Field
                           name="TransferType"
@@ -232,7 +232,7 @@ const Sightseeing = () => {
                           <option value={0}>PVT</option>
                         </Field>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label className="font-size-10">
                           SetDefault for Qoutation
                         </label>
@@ -245,7 +245,7 @@ const Sightseeing = () => {
                           <option value={1}>Yes</option>
                         </Field>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Status</label>
                         <Field
                           name="Status"
@@ -256,8 +256,8 @@ const Sightseeing = () => {
                           <option value={0}>Inactive</option>
                         </Field>
                       </div>
-                      <div className="col-sm-3">
-                        <label className="font-size-10">
+                      <div className="col-sm-4">
+                        <label>
                           SetDefault for Proposal
                         </label>
                         <Field
@@ -269,7 +269,7 @@ const Sightseeing = () => {
                           <option value={1}>Yes</option>
                         </Field>
                       </div>
-                      <div className="col-sm-6">
+                      <div className="col-sm-4">
                         <label>Description</label>
                         <Field
                           name="Description"
@@ -278,20 +278,22 @@ const Sightseeing = () => {
                           style={{ height: "38px" }}
                         />
                       </div>
-                      <div className="col-sm-6">
-                        <label>Inclusion / Exclusion & Timing</label>
+                      <div className="col-sm-4">
+                        <label className="font-size-10">Inclusion / Exclusion & Timing</label>
                         <Field
                           name="InclusionsExclusionsTiming"
                           as="textarea"
                           className="form-control"
+                          style={{height:'40px'}}
                         />
                       </div>
-                      <div className="col-sm-6">
+                      <div className="col-sm-4">
                         <label>Important Note</label>
                         <Field
                           name="ImportantNote"
                           as="textarea"
                           className="form-control"
+                          style={{height:'40px'}}
                         />
                       </div>
                     </div>

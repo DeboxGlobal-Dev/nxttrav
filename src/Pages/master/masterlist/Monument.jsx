@@ -24,8 +24,10 @@ const Monument = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [destinationList, setDestinationList] = useState([]);
+  const [weekendList, setWeekendList] = useState([]);
 
   const getDataToServer = async () => {
+
     try {
       const destination = await axiosOther.post("destinationlist", {
         Search: "",
@@ -35,7 +37,19 @@ const Monument = () => {
     } catch (err) {
       console.log("Erro Occured", err);
     }
+
+    try {
+      const weekend = await axiosOther.post("weekendlist", {
+        Search: "",
+        Status: 1,
+      });
+      setWeekendList(weekend.data.DataList);
+    } catch (err) {
+      console.log("Erro Occured", err);
+    }
+
   };
+
   useEffect(() => {
     getDataToServer();
   }, []);
@@ -72,7 +86,7 @@ const Monument = () => {
       DefaultProposal: rowValue.DefaultProposal,
       WeekendDays: rowValue.WeekendDays,
       Details: rowValue.Details,
-      Status: rowValue.Status ==="Active" ? 1:0,
+      Status: rowValue.Status === "Active" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
       UpdatedBy: rowValue.UpdatedBy,
     });
@@ -131,7 +145,7 @@ const Monument = () => {
       sortable: true,
     },
   ];
-  
+
   return (
     <>
       <Layout>
@@ -192,11 +206,13 @@ const Monument = () => {
                           component={"select"}
                         >
                           <option value="">Select Destination</option>
-                          {
-                            destinationList.map((value, index)=>{
-                              return  <option value={value.Id} key={index+1}>{value.Name}</option>
-                            })
-                          }
+                          {destinationList.map((value, index) => {
+                            return (
+                              <option value={value.Id} key={index + 1}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -240,9 +256,7 @@ const Monument = () => {
                         </Field>
                       </div>
                       <div className="col-sm-4">
-                        <label>
-                          SetDefault for Qoutation
-                        </label>
+                        <label>SetDefault for Qoutation</label>
                         <Field
                           name="DefaultQuotation"
                           className="form-control"
@@ -252,10 +266,8 @@ const Monument = () => {
                           <option value={1}>Yes</option>
                         </Field>
                       </div>
-                      <div className="col-sm-6">
-                        <label>
-                          SetDefault for Proposal
-                        </label>
+                      <div className="col-sm-4">
+                        <label>SetDefault for Proposal</label>
                         <Field
                           name="DefaultProposal"
                           className="form-control"
@@ -265,27 +277,30 @@ const Monument = () => {
                           <option value={1}>Yes</option>
                         </Field>
                       </div>
-                      <div className="col-sm-6">
+                      <div className="col-sm-4">
                         <label>Weekend Days</label>
                         <Field
                           name="WeekendDays"
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>SAT-SUN</option>
-                          <option value={2}>Saturday</option>
-                          <option value={3}>SUNDAY</option>
-                          <option value={4}>FRI</option>
-                          <option value={5}>Special Weekend</option>
-                          <option value={6}>None</option>
+                          <option value="">Select Weekend</option>
+                          {
+                            weekendList.map((value, index)=>{
+                              console.log('Weeks', value);
+                              return <option value={value.Id} key={index+1}>{value.WeekendDays}</option>
+                            })
+                          }
+                         
                         </Field>
                       </div>
-                      <div className="col-sm-12">
+                      <div className="col-sm-4">
                         <label>Description</label>
                         <Field
                           name="Description"
                           as="textarea"
                           className="form-control"
+                          style={{height:'38px'}}
                         />
                       </div>
                     </div>
