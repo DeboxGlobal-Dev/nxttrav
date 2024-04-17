@@ -6,8 +6,8 @@ import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
-  countryInitialValue,
-  countryValidationSchema,
+  taxMasterInitialValue,
+  taxMasterValidationSchema,
 } from "./MasterValidations";
 
 const TaxMaster = () => {
@@ -25,7 +25,7 @@ const TaxMaster = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("tasmasterlist", postData);
+        const { data } = await axiosOther.post("taxmasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -46,19 +46,20 @@ const TaxMaster = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       id: rowValue.Id,
-      Name: rowValue.Name,
-      ShortName: rowValue.ShortName,
-      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
+      ServiceType: rowValue.ServiceType,
+      TaxSlabName: rowValue.TaxSlabName,
+      TaxValue:rowValue.TaxValue,
       Status: rowValue.Status === "Active" ? 1 : 0,
+      SetDefault : rowValue.SetDefault === "Yes"?1:0,
       AddedBy: rowValue.AddedBy,
-      UpdatedBy: rowValue.UpdatedBy,
+      UpdatedBy:rowValue.UpdatedBy
     });
     setIsEditing(true);
   };
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Service Type",
       selector: (row) => (
         <span>
           <i
@@ -67,19 +68,19 @@ const TaxMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.ServiceType}
         </span>
       ),
       sortable: true,
     },
     {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
+      name: "Slab Name",
+      selector: (row) => row.TaxSlabName,
       sortable: true,
     },
     {
-      name: "Status Name",
-      selector: (row) => row.Status,
+      name: "Tax Rate",
+      selector: (row) => row.TaxValue,
       sortable: true,
     },
     {
@@ -87,17 +88,17 @@ const TaxMaster = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
     },
     {
-      name: "Updated By",
+      name: "Status",
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+             {row.Status}
           </span>
         );
       },
@@ -129,9 +130,9 @@ const TaxMaster = () => {
                 </NavLink>
                 <Model
                   heading={"Add TAX Master"}
-                  apiurl={"addupdatetaxmaster"}
-                  initialValues={countryInitialValue}
-                  validationSchema={countryValidationSchema}
+                  apiurl={"addupdatetax"}
+                  initialValues={taxMasterInitialValue}
+                  validationSchema={taxMasterValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -144,24 +145,24 @@ const TaxMaster = () => {
                       <div className="col-sm-4">
                         <label>Service Type</label>
                         <Field
-                          name="SetDefault"
+                          name="ServiceType"
                           className="form-control"
                           component={"select"}
                         >
                           <option value={1}>Service Type</option>
-                          <option value={1}>Hotel</option>
-                          <option value={1}>Guide</option>
-                          <option value={1}>Activity</option>
-                          <option value={1}>Entrance</option>
-                          <option value={1}>Transfer</option>
+                          <option value={2}>Hotel</option>
+                          <option value={3}>Guide</option>
+                          <option value={4}>Activity</option>
+                          <option value={5}>Entrance</option>
+                          <option value={6}>Transfer</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
                         <label>TAX Slab Name</label>
                         <Field
                           type="text"
-                          name="Color"
-                          placeholder="Currency Code"
+                          name="TaxSlabName"
+                          placeholder="Tax Slab"
                           className="form-control"
                         />
                       </div>
@@ -169,8 +170,8 @@ const TaxMaster = () => {
                         <label>TAX Value (in %)</label>
                         <Field
                           type="text"
-                          name="Color"
-                          placeholder="Currency Name"
+                          name="TaxValue"
+                          placeholder="Tax Value"
                           className="form-control"
                         />
                       </div>
@@ -188,12 +189,12 @@ const TaxMaster = () => {
                       <div className="col-sm-4">
                         <label>Set Default</label>
                         <Field
-                          name="Status"
+                          name="SetDefault"
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={0}>No</option>
                           <option value={1}>Yes</option>
+                          <option value={0}>No</option>
                         </Field>
                       </div>
                     </div>

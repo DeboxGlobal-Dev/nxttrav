@@ -8,6 +8,8 @@ import { Field, ErrorMessage } from "formik";
 import {
   countryInitialValue,
   countryValidationSchema,
+  expenseHeadInitialValue,
+  expenseHeadValidationSchema,
 } from "./MasterValidations";
 
 const ExpenseHead = () => {
@@ -25,7 +27,7 @@ const ExpenseHead = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("addupdateexpensehead", postData);
+        const { data } = await axiosOther.post("expenseheadmasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -46,9 +48,7 @@ const ExpenseHead = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       id: rowValue.Id,
-      Name: rowValue.Name,
-      ShortName: rowValue.ShortName,
-      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
+      ExpenseHead: rowValue.ExpenseHead,
       Status: rowValue.Status === "Active" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
       UpdatedBy: rowValue.UpdatedBy,
@@ -58,7 +58,7 @@ const ExpenseHead = () => {
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Head Name",
       selector: (row) => (
         <span>
           <i
@@ -67,19 +67,9 @@ const ExpenseHead = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.ExpenseHead}
         </span>
       ),
-      sortable: true,
-    },
-    {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
-      sortable: true,
-    },
-    {
-      name: "Status Name",
-      selector: (row) => row.Status,
       sortable: true,
     },
     {
@@ -87,7 +77,7 @@ const ExpenseHead = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -97,10 +87,15 @@ const ExpenseHead = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
           </span>
         );
       },
+    },
+    {
+      name: "Status",
+      selector: (row) => row.Status,
+      sortable: true,
     },
   ];
   return (
@@ -130,8 +125,8 @@ const ExpenseHead = () => {
                 <Model
                   heading={"Add Expense Head"}
                   apiurl={"addupdateexpensehead"}
-                  initialValues={countryInitialValue}
-                  validationSchema={countryValidationSchema}
+                  initialValues={expenseHeadInitialValue}
+                  validationSchema={expenseHeadValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -145,7 +140,7 @@ const ExpenseHead = () => {
                         <label>Expense Head</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="ExpenseHead"
                           placeholder="Expense Head"
                           className="form-control"
                         />

@@ -6,8 +6,8 @@ import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
-  countryInitialValue,
-  countryValidationSchema,
+  ferryCompanyInitialValue,
+  ferryCompanyValidationSchema
 } from "./MasterValidations";
 
 const FerryCompany = () => {
@@ -177,8 +177,8 @@ const FerryCompany = () => {
                 <Model
                   heading={"Add Ferry Company"}
                   apiurl={"addupdateferrycompany"}
-                  initialValues={countryInitialValue}
-                  validationSchema={countryValidationSchema}
+                  initialValues={ferryCompanyInitialValue}
+                  validationSchema={ferryCompanyValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -193,7 +193,7 @@ const FerryCompany = () => {
                         <label>Ferry Company Name</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="FerryCompanyName"
                           placeholder="Cruise Company"
                           className="form-control"
                         />
@@ -217,7 +217,7 @@ const FerryCompany = () => {
                         <label>Website</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="Website"
                           placeholder="Website"
                           className="form-control"
                         />
@@ -225,7 +225,7 @@ const FerryCompany = () => {
                       <div className="col-sm-4">
                         <label>Self Supplier</label>
                         <Field
-                          name="SetDefault"
+                          name="SelfSupplier"
                           className="form-control"
                           component={"select"}
                         >
@@ -236,7 +236,7 @@ const FerryCompany = () => {
                       <div className="col-sm-4">
                         <label>Contact Person Division</label>
                         <Field
-                          name="SetDefault"
+                          name="ContactPersonDivision"
                           className="form-control"
                           component={"select"}
                         >
@@ -255,7 +255,7 @@ const FerryCompany = () => {
                         <label>Contact Person</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="ContactPers"
                           placeholder="Contact Person"
                           className="form-control"
                         />
@@ -267,7 +267,7 @@ const FerryCompany = () => {
                         <label>Designation</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="Designation"
                           placeholder="Designation"
                           className="form-control"
                         />

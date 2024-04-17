@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import ExpenseType from "./ExpenseType";
 
 export const countryInitialValue = {
   id: "",
@@ -393,7 +394,7 @@ export const ferryMasterInitialValue = {
 export const currencyMasterInitialValue = {
   id: "",
   CountryId: 1,
-  CurrencyCode: "",
+  CountryCode: "",
   CurrencyName: "",
   Status: 1,
   SetDefault: "",
@@ -428,6 +429,56 @@ export const cruiseCompanyInitialValue = {
   Email: "",
   Status: "",
   UpdatedBy: 1,
+};
+export const ferryCompanyInitialValue = {
+  id: "",
+  FerryCompanyName: "",
+  Destination: "",
+  Website: "",
+  SelfSupplier: "",
+  Type: "",
+  ContactPers: "",
+  Designation: "",
+  Phone: "",
+  Email: "",
+  Status: "0",
+  UpdatedBy: "1",
+};
+export const letterMasterInitialValue = {
+  id: "",
+  FromDestination: "",
+  ToDestination: "",
+  TransferMode: "",
+  Name: "",
+  GreetingNote: "",
+  WelcomeNote: "",
+  Status: "",
+  AddedBy: "1",
+};
+export const taxMasterInitialValue = {
+  id: "",
+  ServiceType: "",
+  TaxSlabName: "",
+  TaxValue: "",
+  Status: "0",
+  SetDefault: "1",
+  AddedBy: "1",
+  UpdatedBy: "0",
+};
+export const expenseTypeInitialValue = {
+  id: "",
+  ExpenseHead: "",
+  ExpenseType: "",
+  Status: "0",
+  AddedBy: "1",
+  UpdatedBy: "0",
+};
+export const expenseHeadInitialValue = {
+  id: "",
+  ExpenseHead: "",
+  Status: "1",
+  AddedBy: "1",
+  UpdatedBy: "0",
 };
 // ------------------------VALIDATION SCHEMAS-------------------------- //
 
@@ -583,8 +634,24 @@ export const ferryMasterValidationSchema = yup.object().shape({
   ImageData: yup.string().required("Required"),
 });
 export const currencyMasterValidationSchema = yup.object().shape({
-  CurrencyCode: yup.string().required("Required"),
+  CountryCode: yup.string().required("Required"),
   CurrencyName: yup.string().required("Required"),
+});
+export const ferryCompanyValidationSchema = yup.object().shape({
+  FerryCompanyName: yup.string().required("Required"),
+  Destination: yup.string().required("Required"),
+});
+export const taxMasterValidationSchema = yup.object().shape({
+  ServiceType: yup.string().required("Required"),
+  TaxSlabName: yup.string().required("Required"),
+  TaxValue: yup.string().required("Required"),
+});
+export const expenseTypeValidationSchema = yup.object().shape({
+  ExpenseType: yup.string().required("Required"),
+  ExpenseHead: yup.string().required("Required"),
+});
+export const expenseHeadValidationSchema = yup.object().shape({
+  ExpenseHead: yup.string().required("Required"),
 });
 
 // Hotel Master Table Value in JSON-----------------------------------

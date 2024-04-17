@@ -61,11 +61,12 @@ const CurrencyMaster = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+    console.log('Row Value', rowValue);
     setEditData({
       id: rowValue.rowValue,
       CountryId: rowValue.CountryId,
-      CurrencyCode: rowValue.CurrencyCode,
-      CurrencyName: rowValue.CurrencyName,
+      CountryCode: rowValue.CountryCode,
+      Currencyname: rowValue.Currencyname,
       Status: rowValue.Status === "Active" ? 1 : 0,
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
@@ -85,19 +86,19 @@ const CurrencyMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.CountryId}
+          {row?.CountryName}
         </span>
       ),
       sortable: true,
     },
     {
       name: "Currency Code",
-      selector: (row) => row.CurrencyCode,
+      selector: (row) => row.CountryCode,
       sortable: true,
     },
     {
       name: "Currency Name",
-      selector: (row) => row.CurrencyName,
+      selector: (row) => row.Currencyname,
       sortable: true,
     },
     {
@@ -175,14 +176,14 @@ const CurrencyMaster = () => {
                       </div>
                       <div className="col-sm-4">
                         <div className="d-flex justify-content-between">
-                          <label className="">Currency Code</label>
+                          <label className="">Country Code</label>
                           <span className="font-size-10 text-danger pt-1">
-                            <ErrorMessage name="CurrencyCode" />
+                            <ErrorMessage name="CountryCode" />
                           </span>
                         </div>
                         <Field
                           type="text"
-                          name="CurrencyCode"
+                          name="CountryCode"
                           placeholder="Currency Code"
                           className="form-control"
                         />
@@ -191,12 +192,12 @@ const CurrencyMaster = () => {
                         <div className="d-flex justify-content-between">
                           <label className="">Currency Name</label>
                           <span className="font-size-10 text-danger pt-1">
-                            <ErrorMessage name="CurrencyName" />
+                            <ErrorMessage name="Currencyname" />
                           </span>
                         </div>
                         <Field
                           type="text"
-                          name="CurrencyName"
+                          name="Currencyname"
                           placeholder="Currency Name"
                           className="form-control"
                         />
@@ -210,6 +211,17 @@ const CurrencyMaster = () => {
                         >
                           <option value={1}>Active</option>
                           <option value={0}>Inactive</option>
+                        </Field>
+                      </div>
+                      <div className="col-sm-4">
+                        <label>Set Default</label>
+                        <Field
+                          name="SetDefault"
+                          className="form-control"
+                          component={"select"}
+                        >
+                          <option value={1}>Yes</option>
+                          <option value={0}>No</option>
                         </Field>
                       </div>
                     </div>

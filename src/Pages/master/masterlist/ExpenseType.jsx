@@ -6,8 +6,8 @@ import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
-  countryInitialValue,
-  countryValidationSchema,
+  expenseTypeInitialValue,
+  expenseTypeValidationSchema,
 } from "./MasterValidations";
 
 const ExpenseType = () => {
@@ -24,7 +24,7 @@ const ExpenseType = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("expensetypelist", postData);
+        const { data } = await axiosOther.post("expensetypemasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -45,9 +45,8 @@ const ExpenseType = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       id: rowValue.Id,
-      Name: rowValue.Name,
-      ShortName: rowValue.ShortName,
-      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
+      ExpenseHead: rowValue.ExpenseHead,
+      ExpenseType: rowValue.ExpenseType,
       Status: rowValue.Status === "Active" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
       UpdatedBy: rowValue.UpdatedBy,
@@ -57,7 +56,7 @@ const ExpenseType = () => {
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Expense Type",
       selector: (row) => (
         <span>
           <i
@@ -66,19 +65,14 @@ const ExpenseType = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.ExpenseType}
         </span>
       ),
       sortable: true,
     },
     {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
-      sortable: true,
-    },
-    {
-      name: "Status Name",
-      selector: (row) => row.Status,
+      name: "Expense Head",
+      selector: (row) => row.ExpenseHead,
       sortable: true,
     },
     {
@@ -86,7 +80,7 @@ const ExpenseType = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -96,10 +90,15 @@ const ExpenseType = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
           </span>
         );
       },
+    },
+    {
+      name: "Status",
+      selector: (row) => row.Status,
+      sortable: true,
     },
   ];
   return (
@@ -129,8 +128,8 @@ const ExpenseType = () => {
                 <Model
                   heading={"Add Expense Type"}
                   apiurl={"addupdateexpensetype"}
-                  initialValues={countryInitialValue}
-                  validationSchema={countryValidationSchema}
+                  initialValues={expenseTypeInitialValue}
+                  validationSchema={expenseTypeValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -143,7 +142,7 @@ const ExpenseType = () => {
                       <div className="col-sm-4">
                         <label>Expense Head</label>
                         <Field
-                          name="SetDefault"
+                          name="ExpenseHead"
                           className="form-control"
                           component={"select"}
                         >
@@ -156,7 +155,7 @@ const ExpenseType = () => {
                         <label>Expense Type</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="ExpenseType"
                           placeholder="Expense Type"
                           className="form-control"
                         />
