@@ -136,6 +136,16 @@ a {
 .height-30{
   height: 30px;
 }
+.height-20{
+  height: 20px;
+}
+.width-120{
+  width: 120px;
+}
+.image-hw{
+  height: 40px;
+  width: 40px;
+}
 .borderNone {
   border: none;
 }
@@ -415,6 +425,26 @@ a {
 .nav-link{
   padding: 5px 12px;
 }
-.view-nav-item{
-  border: 1px solid rgb(153, 151, 151);
+.top-border-radius{
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.px-100{
+  padding: 0 100px;
+}
+.light-primary-bg{
+  background-color: rgb(211, 232, 255);
+}
+.icon-img{
+  height: 25px;
+  width: 25px;
+}
+.text-flow{
+  /* width: 200px; Adjust width as needed */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.box-width-80{
+  width: 80px;
 }

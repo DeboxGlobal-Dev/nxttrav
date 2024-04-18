@@ -1,45 +1,202 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { NavLink, useLocation, Outlet } from "react-router-dom";
 
 const Quotation = () => {
+  const {pathname} = useLocation();
+  // console.log()
   return (
     <>
       <div className="container-fluid mt-3 mb-5">
         <div className="row">
-          <div className="col-2 bg-dark">
-              <div className="row">
-                <div className="col-12">
-                  <p className="m-0">3 APRIL 2024  <i className="fa-solid fa-clock"></i> 12:06 PM</p>
-                  <h2 className="m-0">DB24-25/000015</h2>
-                  <h6 className="m-0">TourId - 24/04/0003/001</h6>
+          <div className="col-12 p-0">
+            <div className="row ">
+              <div className="col-12 col-md-3">
+                <p>
+                  Lead Pax Name :{" "}
+                  <span className="pl-2 text-success">
+                    <i className="fa-solid fa-pen-to-square"></i> Rahul Kumar
+                  </span>
+                </p>
+              </div>
+              <div className="col-12 col-md-7 d-flex gap-2 flex-column flex-md-row">
+                <p>
+                  <span className="font-weight-bold">
+                    Define Pax Slab (Min Pax: 10 | Max PAX: 10)
+                  </span>{" "}
+                  | Single Hotel Categoy
+                </p>
+                <div className="width-120 height-20 bg-primary d-flex justify-content-center align-items-center gap-2 p-1">
+                  <i className="fa-solid fa-square-plus"></i> Tour Log
                 </div>
-                <div className="col-12 bg-light text-dark py-2">
-                  <div className="d-flex">
-                    <div className="d-flex justify-content-center align-items-center bg-dark rounded-circle">
-                        <i className="fa-solid fa-user text-light fs-5 px-2 rounded-circle"></i>
-                    </div>
-                    <div className="pl-2">
-                      <p className="m-0">Shubham Tivari</p>
-                      <p className="m-0">9876543445</p>
-                    </div>
-                  </div>
-                  <div className="mt-1 p-1 border">
-                    <div >Market Type : General</div>
-                    <div>Query Type : FIT</div>
-                  </div>
+                <div className="width-120 height-20 bg-primary d-flex justify-content-center align-items-center gap-2 p-1">
+                  <i className="fa-solid fa-square-plus"></i> Tour Change
                 </div>
-                <div className="col-12">
-                  <div className="d-flex justify-content-between">
-                    <span>From</span>
-                    <span><i className="fa-solid fa-arrow-right-long"></i></span>
-                    <span>To</span>
+              </div>
+              <div className="col-12 col-md-2 d-flex justify-content-end">
+                <button className="height-20 btn border rounded-pill d-flex justify-content-center align-items-center">
+                  Back
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="col-12 p-0 mt-2">
+            <div className="row justify-content-center">
+              <div className="col-11 border rounded-pill shadow">
+                <div className="row px-2 py-1">
+                  <div className="col d-flex flex-column align-items-center pt-1">
+                    <img
+                      className="image-hw"
+                      src="\public\global_assets\images\qoutation\itenary.png"
+                      alt="activity"
+                    />
+                    <span>Itenary Info</span>
+                  </div>
+                  <div className="col d-flex flex-column align-items-center pt-1">
+                    <img
+                      className="image-hw"
+                      src="\public\global_assets\images\qoutation\flight.png"
+                      alt="activity"
+                    />
+                    <span>Flight</span>
+                  </div>
+                  <div className="col d-flex flex-column align-items-center pt-1">
+                    <img
+                      className="image-hw"
+                      src="\public\global_assets\images\qoutation\hotel.png"
+                      alt="activity"
+                    />
+                    <span>Hotel</span>
+                  </div>
+                  <div className="col d-flex flex-column align-items-center pt-1">
+                    <img
+                      className="image-hw"
+                      src="\public\global_assets\images\qoutation\transfer.png"
+                      alt="activity"
+                    />
+                    <span>Transfer</span>
+                  </div>
+                  <div className="col d-flex flex-column align-items-center pt-1">
+                    <img
+                      className="image-hw"
+                      src="\public\global_assets\images\qoutation\monument.png"
+                      alt="activity"
+                    />
+                    <span>Monument</span>
+                  </div>
+                  <div className="col d-flex flex-column align-items-center pt-1">
+                    <img
+                      className="image-hw"
+                      src="\public\global_assets\images\qoutation\enroute.png"
+                      alt="activity"
+                    />
+                    <span>Enroute</span>
+                  </div>
+                  <div className="col d-flex flex-column align-items-center pt-1">
+                    <img
+                      className="image-hw"
+                      src="\public\global_assets\images\qoutation\restaurant.png"
+                      alt="activity"
+                    />
+                    <span>Restaurant</span>
+                  </div>
+                  <div className="col d-flex flex-column align-items-center pt-1">
+                    <img
+                      className="image-hw"
+                      src="\public\global_assets\images\qoutation\activity.png"
+                      alt="activity"
+                    />
+                    <span>Activity</span>
+                  </div>
+                  <div className="col d-flex flex-column align-items-center pt-1">
+                    <img
+                      className="image-hw"
+                      src="\public\global_assets\images\qoutation\guide.png"
+                      alt="activity"
+                    />
+                    <span>Guide</span>
+                  </div>
+                  <div className="col d-flex flex-column align-items-center pt-1">
+                    <img
+                      className="image-hw"
+                      src="\public\global_assets\images\qoutation\transportation.png"
+                      alt="activity"
+                    />
+                    <span>Tranportation</span>
+                  </div>
+                  <div className="col d-flex flex-column align-items-center pt-1">
+                    <img
+                      className="image-hw"
+                      src="\public\global_assets\images\qoutation\train.png"
+                      alt="activity"
+                    />
+                    <span>Trains</span>
+                  </div>
+                  <div className="col d-flex flex-column align-items-center pt-1">
+                    <img
+                      className="image-hw"
+                      src="\public\global_assets\images\qoutation\add.png"
+                      alt="activity"
+                    />
+                    <span>Add Ons</span>
                   </div>
                 </div>
               </div>
+            </div>
           </div>
-          <div className="col-10 bg-light">
-              this is ten column
+          <div className="col-12 mt-3">
+            <ul className="nav nav-pills-toolbar d-flex justify-content-between border top-border-radius px-100 py-1">
+              <li className="nav-item view-nav-item rounded-pill">
+                <NavLink
+                  to="/querylist/queryview/quotation/"
+                  className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
+                    pathname === "/querylist/queryview/quotation/"
+                      ? "Active"
+                      : "text-primary"
+                  }`}
+                >
+                  Itineraries
+                </NavLink>
+              </li>
+              <li className="nav-item view-nav-item rounded-pill">
+                <NavLink
+                  to="policies"
+                  className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
+                    pathname === "/querylist/queryview/quotation/policies"
+                      ? "Active"
+                      : "text-primary"
+                  }`}
+                >
+                  Policies
+                </NavLink>
+              </li>
+              <li className="nav-item view-nav-item rounded-pill">
+                <NavLink
+                  to="commission"
+                  className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
+                    pathname === "/querylist/queryview/quotation/commission"
+                      ? "Active"
+                      : "text-primary"
+                  }`}
+                >
+                  Commission & Mark up
+                </NavLink>
+              </li>
+              <li className="nav-item view-nav-item rounded-pill">
+                <NavLink
+                  to="summary"
+                  className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
+                    pathname === "/querylist/queryview/quotation/summary"
+                      ? "Active"
+                      : "text-primary"
+                  }`}
+                >
+                  Summary
+                </NavLink>
+              </li>
+            </ul>
+            <Outlet />
           </div>
         </div>
       </div>

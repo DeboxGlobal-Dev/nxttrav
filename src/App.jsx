@@ -98,6 +98,10 @@ import ItenaryRequirement from "./Pages/master/masterList/ItenaryRequirement.jsx
 import Proposal from "./Pages/query/Proposal.jsx";
 import Vouchers from "./Pages/query/Vouchers.jsx";
 import Invoices from "./Pages/query/Invoices.jsx";
+import Itineraries from "./Pages/query/Itineraries.jsx";
+import Polocies from "./Pages/query/Policies.jsx";
+import Commission from "./Pages/query/Commission.jsx";
+import Summary from "./Pages/query/Summary.jsx";
 
 
 const App = () => {
@@ -111,7 +115,12 @@ const App = () => {
           <Route path="/querylist" element={ <Protected>  <QueryList />  </Protected>}/>
           <Route path="/querylist/queryview" element={<Protected><QueryView /></Protected>}>
             <Route index element={<Protected><Query/></Protected>}></Route>
-            <Route path="quotation" element={<Protected><Quotation/></Protected>}></Route>
+            <Route path="quotation" element={<Protected><Quotation/></Protected>}>
+              <Route index element={<Protected><Itineraries/></Protected>}></Route>
+              <Route path="policies" element={<Protected><Polocies/></Protected>}></Route>
+              <Route path="commission" element={<Protected><Commission/></Protected>}></Route>
+              <Route path="summary" element={<Protected><Summary/></Protected>}></Route>
+            </Route>
             <Route path="costsheet" element={<Protected><QueryDetails/></Protected>}></Route>
             <Route path="tourextension" element={<Protected><TourExtension/></Protected>}></Route>
             <Route path="clientcomm" element={<Protected><ClientComm/></Protected>}></Route>
@@ -120,6 +129,7 @@ const App = () => {
             <Route path="vouchers" element={<Protected><Vouchers/></Protected>}></Route>
             <Route path="invoices" element={<Protected><Invoices/></Protected>}></Route>
           </Route>
+          {/* <Route path="/queylist/queryview/quotation"element={<Protected><QueryView/></Protected>}></Route> */}
 
           <Route path="/master" element={ <Protected> <Master/> </Protected>}/>
           <Route path="/master/country" element={ <Protected> <CountryMaster /></Protected>}/>
