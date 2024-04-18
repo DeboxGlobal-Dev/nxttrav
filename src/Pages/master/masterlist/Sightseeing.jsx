@@ -179,7 +179,7 @@ const Sightseeing = () => {
                   Back
                 </NavLink>
                 <Model
-                  heading={"Add Sigh  tseeing"}
+                  heading={"Add Sightseeing"}
                   apiurl={"addupdatesightseeingmaster"}
                   initialValues={sightseeingInitialValue}
                   validationSchema={sightseeingValidationSchema}
@@ -233,7 +233,7 @@ const Sightseeing = () => {
                         </Field>
                       </div>
                       <div className="col-sm-4">
-                        <label className="font-size-10">
+                        <label>
                           SetDefault for Qoutation
                         </label>
                         <Field

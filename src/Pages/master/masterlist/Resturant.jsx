@@ -22,6 +22,7 @@ const Resturant = () => {
   const [stateList, setStateList] = useState([]);
   const [cityList, setCityList] = useState([]);
   const [destinationList, setDestinationList] = useState([]);
+  const [divisionList, setDivisionList] = useState([]);
 
   const getDataToServer = async () => {
     try {
@@ -60,6 +61,15 @@ const Resturant = () => {
         Status: 1,
       });
       setDestinationList(destination.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const division = await axiosOther.post("divisionlist", {
+        Search: "",
+        Status: 1,
+      });
+      setDivisionList(division.data.DataList);
     } catch (err) {
       console.log(err);
     }
@@ -167,7 +177,7 @@ const Resturant = () => {
               style={{ padding: "10px" }}
             >
               <div className="col-xl-10 d-flex align-items-center">
-                <h5 className="card-title d-none d-sm-block">Resturant</h5>
+                <h5 className="card-title d-none d-sm-block">Restaurant</h5>
               </div>
               <div className="col-xl-2 d-flex justify-content-end">
                 {/* Bootstrap Modal */}
@@ -179,7 +189,7 @@ const Resturant = () => {
                   Back
                 </NavLink>
                 <Model
-                  heading={"Add Resturant"}
+                  heading={"Add Restaurant"}
                   apiurl={"addupdaterestaurantmaster"}
                   initialValues={resturantInitialValue}
                   validationSchema={resturantValidationSchema}
@@ -193,10 +203,10 @@ const Resturant = () => {
                   <div className="card-body">
                     <div className="row row-gap-3">
                       <div className="col-sm-4">
-                        <label>Resturant Name</label>
+                        <label>Restaurant Name</label>
                         <Field
                           type="text"
-                          placeholder="Hotel Chain Name"
+                          placeholder="Restaurant Name"
                           className="form-control"
                           name="Name"
                         />
@@ -355,15 +365,12 @@ const Resturant = () => {
                           component={"select"}
                           name="ContactType"
                         >
-                          <option value={""}>Select Division</option>
-                          <option value={"2"}>Accounts</option>
-                          <option value={"4"}>FIT Reservation</option>
-                          <option value={"5"}>GIT Reservation</option>
-                          <option value={"6"}>HR</option>
-                          <option value={"7"}>Operation</option>
-                          <option value={"7"}>Other</option>
-                          <option value={"7"}>Sales</option>
-                          <option value={"7"}>Software Developer</option>
+                          <option value={""}>Select Contact</option>
+                          {
+                            divisionList.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-3 px-1">

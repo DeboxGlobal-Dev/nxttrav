@@ -22,7 +22,9 @@ const AdditionalRequirement = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [destinationList, setDestinationList] = useState([]);
-  
+  const [taxSlabList, setTaxSlabList] = useState([]);
+  const [currencyList, setCurrencyList] = useState([]);
+
   const getDataToServer = async () => {
     try {
       const destination = await axiosOther.post("destinationlist", {
@@ -30,6 +32,27 @@ const AdditionalRequirement = () => {
         Status: 1,
       });
       setDestinationList(destination.data.DataList);
+    } catch (err) {
+      console.log("Erro Occured", err);
+    }
+    
+    try {
+      const taxslab = await axiosOther.post("taxmasterlist", {
+        Search: "",
+        Status: 1,
+      });
+      setTaxSlabList(taxslab.data.DataList);
+      console.log('TaxSlab', taxslab);
+    } catch (err) {
+      console.log("Erro Occured", err);
+    }
+
+    try {
+      const currency = await axiosOther.post("currencymasterlist", {
+        Search: "",
+        Status: 1,
+      });
+      setCurrencyList(currency.data.DataList);
     } catch (err) {
       console.log("Erro Occured", err);
     }
@@ -221,10 +244,10 @@ const AdditionalRequirement = () => {
                           component={"select"}
                           name="DestinationId"
                         >
-                          <option value={1}>Delhi</option>
+                          <option value={1}>Select Destination</option>
                           {
-                            destinationList.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            destinationList?.map((value, index)=>{
+                              return <option value={value?.Id} key={index+1}>{value?.Name}</option>
                             })
                           }
                         </Field>
@@ -236,8 +259,13 @@ const AdditionalRequirement = () => {
                           component={"select"}
                           name="TaxSlab"
                         >
-                          <option value={1}>GST Inclusive(0)</option>
-                          <option value={2}>Slab(5)</option>
+                          <option value={1}>Select Tax Slab</option>
+                          {
+                            taxSlabList?.map((value, index)=>{
+                              return <option value={value?.Id} key={index+1}>{value?.TaxSlabName}</option>
+                            })
+                          }
+                         
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -258,14 +286,13 @@ const AdditionalRequirement = () => {
                           component={"select"}
                           name="CurrencyId"
                         >
-                          <option value={1}>AED</option>
-                          <option value={2}>AUD</option>
-                          <option value={3}>GBP</option>
-                          <option value={3}>INR</option>
-                          <option value={3}>JPY</option>
-                          <option value={3}>NPR</option>
-                          <option value={3}>THB</option>
-                          <option value={3}>USD</option>
+                          <option value={1}>Select Currency</option>
+                          {
+                            currencyList.map((value, index)=>{
+
+                              return  <option value={value?.Id} key={index+1}>{value?.Currencyname}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">

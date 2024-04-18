@@ -21,6 +21,27 @@ const ExpenseType = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData]= useState(false);
+  const [expenseHeadList, setExpenseHeadList] = useState([]);
+
+  const getDataToServer = async () => {
+   
+    try {
+      const expenseHead = await axiosOther.post("expenseheadmasterlist", {
+        Search: "",
+        Status: 1,
+      });
+      setExpenseHeadList(expenseHead.data.DataList);
+      console.log('expensehead',expenseHead)
+     
+    } catch (err) {
+      console.log(err);
+    }
+
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -146,9 +167,12 @@ const ExpenseType = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Account Manager</option>
-                          <option value={2}>Marketing</option>
-                          <option value={3}>Sales</option>
+                          <option value={1}>Select Head</option>
+                          {
+                            expenseHeadList?.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.ExpenseHead}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">

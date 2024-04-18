@@ -22,6 +22,7 @@ const FerryCompany = () => {
   const [updateData, setUpdateData] = useState(false);
   const [changeValue, setChangeValue] = useState("");
   const [destinationList, setDestinationList] = useState([]);
+  const [devisioinList, setDevisionList] = useState([]);
   
   const getDataToServer = async () => {
     try {
@@ -30,6 +31,16 @@ const FerryCompany = () => {
         Status: 1,
       });
       setDestinationList(destination.data.DataList);
+    } catch (err) {
+      console.log("Erro Occured", err);
+    }
+
+    try {
+      const devision = await axiosOther.post("devisionlist", {
+        Search: "",
+        Status: 1,
+      });
+      setDevisionList(devision.data.DataList);
     } catch (err) {
       console.log("Erro Occured", err);
     }
@@ -241,14 +252,12 @@ const FerryCompany = () => {
                           component={"select"}
                         >
                           <option value={1}>Select Division</option>
-                          <option value={2}>Accounts</option>
-                          <option value={3}>FIT Reserveration</option>
-                          <option value={4}>GIT Reserveration</option>
-                          <option value={5}>HR</option>
-                          <option value={6}>Operations</option>
-                          <option value={7}>Others</option>
-                          <option value={8}>Sales</option>
-                          <option value={9}>Software Developer</option>
+                          
+                          {
+                            devisioinList?.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">

@@ -24,6 +24,7 @@ const CruiseCompany = () => {
   const [stateList, setStateList] = useState([]);
   const [cityList, setCityList] = useState([]);
   const [destinationList, setDestinationList] = useState([]);
+  const [devisionList, setDeivionsList] = useState([]);
 
   const getDataToServer = async () => {
     try {
@@ -62,6 +63,15 @@ const CruiseCompany = () => {
         Status: 1,
       });
       setDestinationList(destination.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const devision = await axiosOther.post("divisionlist", {
+        Search: "",
+        Status: 1,
+      });
+      setDeivionsList(devision.data.DataList);
     } catch (err) {
       console.log(err);
     }
@@ -333,14 +343,11 @@ const CruiseCompany = () => {
                           component={"select"}
                         >
                           <option value={1}>Select Division</option>
-                          <option value={2}>Accounts</option>
-                          <option value={3}>FIT Reserveration</option>
-                          <option value={4}>GIT Reserveration</option>
-                          <option value={5}>HR</option>
-                          <option value={6}>Operations</option>
-                          <option value={7}>Others</option>
-                          <option value={8}>Sales</option>
-                          <option value={9}>Software Developer</option>
+                          {
+                            devisionList?.map((value, index)=>{
+                              return  <option value={value.Id} key={index+1}>{value.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">

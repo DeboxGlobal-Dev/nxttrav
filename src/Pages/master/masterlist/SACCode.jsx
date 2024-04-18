@@ -8,6 +8,8 @@ import { Field, ErrorMessage } from "formik";
 import {
   countryInitialValue,
   countryValidationSchema,
+  sacCodeInitialValue,
+  sacCodeValidationSchema,
 } from "./MasterValidations";
 
 const SACCode = () => {
@@ -25,6 +27,7 @@ const SACCode = () => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("saccodelist", postData);
+        console.log(data.DataList);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -45,8 +48,8 @@ const SACCode = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       id: rowValue.Id,
-      Name: rowValue.Name,
-      ShortName: rowValue.ShortName,
+      ServiceType: rowValue.ServiceType,
+      SacCode: rowValue.SacCode,
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
       Status: rowValue.Status === "Active" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
@@ -57,7 +60,7 @@ const SACCode = () => {
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Service Type",
       selector: (row) => (
         <span>
           <i
@@ -66,19 +69,14 @@ const SACCode = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.ServiceType}
         </span>
       ),
       sortable: true,
     },
     {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
-      sortable: true,
-    },
-    {
-      name: "Status Name",
-      selector: (row) => row.Status,
+      name: "SAC Code",
+      selector: (row) => row.SacCode,
       sortable: true,
     },
     {
@@ -86,7 +84,7 @@ const SACCode = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -96,11 +94,12 @@ const SACCode = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
           </span>
         );
       },
     },
+    
   ];
   return (
     <>
@@ -128,9 +127,9 @@ const SACCode = () => {
                 </NavLink>
                 <Model
                   heading={"Add SAC Code"}
-                  apiurl={"addupdatecsaccode"}
-                  initialValues={countryInitialValue}
-                  validationSchema={countryValidationSchema}
+                  apiurl={"addupdatesaccode"}
+                  initialValues={sacCodeInitialValue}
+                  validationSchema={sacCodeValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -143,22 +142,22 @@ const SACCode = () => {
                       <div className="col-sm-4">
                         <label>Service Type</label>
                         <Field
-                          name="SetDefault"
+                          name="ServiceType"
                           className="form-control"
                           component={"select"}
                         >
                           <option value={0}>Select</option>
-                          <option value={2}>Hotel</option>
+                          <option value={1}>Hotel</option>
                           <option value={2}>Transport</option>
-                          <option value={2}>Guid</option>
-                          <option value={3}>Tour</option>
+                          <option value={3}>Guid</option>
+                          <option value={4}>Tour</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
                         <label>SAC Code</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="SacCode"
                           placeholder="SAC Code"
                           className="form-control"
                         />
@@ -177,7 +176,7 @@ const SACCode = () => {
                       <div className="col-sm-4">
                         <label>Set Default</label>
                         <Field
-                          name="Status"
+                          name="SetDefault"
                           className="form-control"
                           component={"select"}
                         >

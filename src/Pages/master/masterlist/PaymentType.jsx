@@ -6,8 +6,8 @@ import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
-  countryInitialValue,
-  countryValidationSchema,
+  paymentTypeInitialValue,
+  paymentTypeValidationSchema,
 } from "./MasterValidations";
 
 const PaymentType = () => {
@@ -45,9 +45,7 @@ const PaymentType = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       id: rowValue.Id,
-      Name: rowValue.Name,
-      ShortName: rowValue.ShortName,
-      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
+      PaymentTypeName: rowValue.PaymentTypeName,
       Status: rowValue.Status === "Active" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
       UpdatedBy: rowValue.UpdatedBy,
@@ -57,7 +55,7 @@ const PaymentType = () => {
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Payment Type Name",
       selector: (row) => (
         <span>
           <i
@@ -66,19 +64,9 @@ const PaymentType = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.PaymentTypeName}
         </span>
       ),
-      sortable: true,
-    },
-    {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
-      sortable: true,
-    },
-    {
-      name: "Status Name",
-      selector: (row) => row.Status,
       sortable: true,
     },
     {
@@ -86,7 +74,7 @@ const PaymentType = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -96,10 +84,15 @@ const PaymentType = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
           </span>
         );
       },
+    },
+    {
+      name: "Status Name",
+      selector: (row) => row.Status,
+      sortable: true,
     },
   ];
   return (
@@ -129,8 +122,8 @@ const PaymentType = () => {
                 <Model
                   heading={"Add Payment Type"}
                   apiurl={"addupdatepaymenttype"}
-                  initialValues={countryInitialValue}
-                  validationSchema={countryValidationSchema}
+                  initialValues={paymentTypeInitialValue}
+                  validationSchema={paymentTypeValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -141,11 +134,11 @@ const PaymentType = () => {
                   <div className="card-body">
                     <div className="row row-gap-3">
                       <div className="col-sm-6">
-                        <label>Payement Type</label>
+                        <label>Payment Type</label>
                         <Field
                           type="text"
-                          name="Color"
-                          placeholder="SAC Code"
+                          name="PaymentTypeName"
+                          placeholder="Payment Type"
                           className="form-control"
                         />
                       </div>

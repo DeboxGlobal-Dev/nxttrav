@@ -480,6 +480,23 @@ export const expenseHeadInitialValue = {
   AddedBy: "1",
   UpdatedBy: "0",
 };
+export const sacCodeInitialValue = {
+  id: "",
+  ServiceType: "",
+  SacCode: "",
+  Status: "1",
+  SetDefault: "0",
+  AddedBy: "1",
+  UpdatedBy: "0",
+};
+export const paymentTypeInitialValue = {
+  id: "",
+  PaymentTypeName: "",
+  Status: "1",
+  AddedBy: "1",
+  UpdatedBy: "0",
+};
+
 // ------------------------VALIDATION SCHEMAS-------------------------- //
 
 export const countryValidationSchema = yup.object().shape({
@@ -652,6 +669,13 @@ export const expenseTypeValidationSchema = yup.object().shape({
 });
 export const expenseHeadValidationSchema = yup.object().shape({
   ExpenseHead: yup.string().required("Required"),
+});
+export const sacCodeValidationSchema = yup.object().shape({
+  ServiceType: yup.string().required("Required"),
+  SacCode: yup.string().required("Required"),
+});
+export const paymentTypeValidationSchema = yup.object().shape({
+  PaymentTypeName : yup.string().required('Required')
 });
 
 // Hotel Master Table Value in JSON-----------------------------------

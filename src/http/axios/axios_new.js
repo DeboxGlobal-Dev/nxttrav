@@ -18,5 +18,3 @@ export {
   axiosNew,
   axiosOther
 };
-
-

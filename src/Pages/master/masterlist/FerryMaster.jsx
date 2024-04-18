@@ -21,6 +21,25 @@ const FerryMaster = () => {
   });
   const [updateData, setUpdateData] = useState(false);
   const [changeValue, setChangeValue] = useState("");
+  const [ferryCompanyList, setFerryCompanyList] = useState([]);
+
+  const getDataToServer = async () => {
+    try {
+      const ferryCompany = await axiosOther.post("ferrycompanylist", {
+        Search: "",
+        Status: 1,
+      });
+      setFerryCompanyList(ferryCompany.data.DataList);
+    } catch (err) {
+      console.log("Erro Occured", err);
+    }
+
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
+
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -164,12 +183,13 @@ const FerryMaster = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>ABC Company</option>
-                          <option value={1}>ABC Company</option>
-                          <option value={1}>ABC Company</option>
-                          <option value={1}>ABC Company</option>
-                          <option value={1}>ABC Company</option>
-                          <option value={1}>ABC Company</option>
+                          <option value="">Select Company</option>
+                          {
+                            ferryCompanyList?.map((value, index)=>{
+                              return <option value={value.Id} key={index+1}>{value.FerryCompanyName}</option>
+                            })
+                          }
+                          
                         </Field>
                       </div>
                       <div className="col-sm-4">
