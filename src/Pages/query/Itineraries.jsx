@@ -133,7 +133,8 @@ const Itineraries = () => {
                   </p>
                   <p className="font-size-10 font-weight-bold">INR 1200</p>
                 </div>
-                <div className="col d-flex flex-column align-items-end">
+                <div className="col d-flex justify-content-end">
+                  <div className="d-flex flex-column">
                   <p className="font-size-10 font-weight-bold text-flow">
                     Action
                   </p>
@@ -142,10 +143,10 @@ const Itineraries = () => {
                       <i className="fa-solid fa-trash font-size-11 pr-1"></i>
                     </span>
                     <span className=" text-success cursor-pointer">
-                      {" "}
                       <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
                     </span>
                   </p>
+                  </div>
                 </div>
               </div>
               {/* row */}
@@ -218,23 +219,26 @@ const Itineraries = () => {
                     INR 1200
                   </p>
                 </div>
-                <div className="col d-flex flex-column align-items-end">
-                  <p className="font-size-10 font-weight-bold">Action</p>
-                  <p className="font-size-10 font-weight-bold">
-                    <span className="p1-2 text-danger cursor-pointer">
-                      <i class="fa-solid fa-trash font-size-11 pr-1"></i>
-                    </span>
-                    <span className=" text-success cursor-pointer">
-                      {" "}
-                      <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
-                    </span>
-                  </p>
+                <div className="col  d-flex justify-content-end">
+                  <div className="d-flex flex-column">
+                    <p className="font-size-10 font-weight-bold">Action</p>
+                    <p className="font-size-10 font-weight-bold">
+                      <span className="p1-2 text-danger cursor-pointer">
+                        <i class="fa-solid fa-trash font-size-11 pr-1"></i>
+                      </span>
+                      <span className=" text-success cursor-pointer">
+                        <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
               {/* row */}
               <div className="row border-bottom mb-2">
                 <div className="col-1 d-flex flex-column align-items-center">
-                  <p className="font-weight-bold font-size-11 m-0">Monument</p>
+                  <p className="font-weight-bold font-size-11 m-0 text-flow">
+                    Monument
+                  </p>
                   <img
                     className="icon-img"
                     src="\public\global_assets\images\qoutation\monument.png"
@@ -242,43 +246,60 @@ const Itineraries = () => {
                   />
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Monument Name</p>
-                  <p className="font-size-10 font-weight-bold">
+                  <p className="font-size-10 text-secondary text-flow">
+                    Monument Name
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
                     Birla Temple/Laxmi Narayan Temple
                   </p>
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Adult Cost</p>
-                  <p className="font-size-10 font-weight-bold">1200</p>
+                  <p className="font-size-10 text-secondary text-flow">
+                    Adult Cost
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
+                    1200
+                  </p>
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Child Cost</p>
-                  <p className="font-size-10 font-weight-bold">1000</p>
+                  <p className="font-size-10 text-secondary text-flow">
+                    Child Cost
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
+                    1000
+                  </p>
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Start/End Time</p>
-                  <p className="font-size-10 font-weight-bold">
+                  <p className="font-size-10 text-secondary text-flow">
+                    Start/End Time
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
                     10:30 - 05-30
                     <i className="fa-solid fa-pen-to-square text-success font-size-11 pl-2 cursor-pointer"></i>
                   </p>
                 </div>
-                <div className="col d-flex flex-column align-items-end">
-                  <p className="font-size-10 font-weight-bold">Action</p>
-                  <p className="font-size-10 font-weight-bold">
-                    <span className="p1-2 text-danger cursor-pointer">
-                      <i class="fa-solid fa-trash font-size-11 pr-1"></i>
-                    </span>
-                    <span className=" text-success cursor-pointer">
-                      {" "}
-                      <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
-                    </span>
-                  </p>
+                <div className="col d-flex justify-content-end">
+                  <div className="d-flex flex-column">
+                    <p className="font-size-10 font-weight-bold text-flow">
+                      Action
+                    </p>
+                    <p className="font-size-10 font-weight-bold">
+                      <span className="p1-2 text-danger cursor-pointer">
+                        <i class="fa-solid fa-trash font-size-11 pr-1"></i>
+                      </span>
+                      <span className=" text-success cursor-pointer">
+                        <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
               {/* row */}
               <div className="row border-bottom mb-2">
                 <div className="col-1 d-flex flex-column align-items-center">
-                  <p className="font-weight-bold font-size-11 m-0">Monument</p>
+                  <p className="font-weight-bold font-size-11 m-0 text-flow">
+                    Monument
+                  </p>
                   <img
                     className="icon-img"
                     src="\public\global_assets\images\qoutation\monument.png"
@@ -286,43 +307,60 @@ const Itineraries = () => {
                   />
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Monument Name</p>
-                  <p className="font-size-10 font-weight-bold">
+                  <p className="font-size-10 text-secondary text-flow">
+                    Monument Name
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
                     Birla Temple/Laxmi Narayan Temple
                   </p>
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Adult Cost</p>
-                  <p className="font-size-10 font-weight-bold">1200</p>
+                  <p className="font-size-10 text-secondary text-flow">
+                    Adult Cost
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
+                    1200
+                  </p>
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Child Cost</p>
-                  <p className="font-size-10 font-weight-bold">1000</p>
+                  <p className="font-size-10 text-secondary text-flwo">
+                    Child Cost
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
+                    1000
+                  </p>
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Start/End Time</p>
-                  <p className="font-size-10 font-weight-bold">
+                  <p className="font-size-10 text-secondary text-flow">
+                    Start/End Time
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
                     10:30 - 05-30
                     <i className="fa-solid fa-pen-to-square text-success font-size-11 pl-2 cursor-pointer"></i>
                   </p>
                 </div>
-                <div className="col d-flex flex-column align-items-end">
-                  <p className="font-size-10 font-weight-bold">Action</p>
-                  <p className="font-size-10 font-weight-bold">
-                    <span className="p1-2 text-danger cursor-pointer">
-                      <i class="fa-solid fa-trash font-size-11 pr-1"></i>
-                    </span>
-                    <span className=" text-success cursor-pointer">
-                      {" "}
-                      <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
-                    </span>
-                  </p>
+                <div className="col d-flex justify-content-end">
+                  <div className="d-flex flex-column">
+                    <p className="font-size-10 font-weight-bold text-flow">
+                      Action
+                    </p>
+                    <p className="font-size-10 font-weight-bold">
+                      <span className="p1-2 text-danger cursor-pointer">
+                        <i class="fa-solid fa-trash font-size-11 pr-1"></i>
+                      </span>
+                      <span className=" text-success cursor-pointer">
+                        <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
               {/* row */}
               <div className="row border-bottom mb-2">
                 <div className="col-1 d-flex flex-column align-items-center">
-                  <p className="font-weight-bold font-size-11 m-0">Hotel</p>
+                  <p className="font-weight-bold font-size-11 m-0 text-flow">
+                    Hotel
+                  </p>
                   <img
                     className="icon-img"
                     src="\public\global_assets\images\qoutation\hotel.png"
@@ -330,50 +368,67 @@ const Itineraries = () => {
                   />
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Hotel Name</p>
-                  <p className="font-size-10 font-weight-bold">
+                  <p className="font-size-10 text-secondary text-flow">
+                    Hotel Name
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
                     Africa Avenue 5 Star
                   </p>
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Service Type</p>
-                  <p className="font-size-10 font-weight-bold">Guest</p>
+                  <p className="font-size-10 text-secondary text-flow">
+                    Service Type
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
+                    Guest
+                  </p>
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Meal Plan</p>
-                  <p className="font-size-10 font-weight-bold">CP</p>
+                  <p className="font-size-10 text-secondary text-flow">
+                    Meal Plan
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">CP</p>
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Tariff Type</p>
-                  <p className="font-size-10 font-weight-bold">
+                  <p className="font-size-10 text-secondary text-flow">
+                    Tariff Type
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
                     Normal
                     <i className="fa-solid fa-pen-to-square text-success font-size-11 pl-2 cursor-pointer"></i>
                   </p>
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Double</p>
-                  <p className="font-size-10 font-weight-bold">
+                  <p className="font-size-10 text-secondary text-flow">
+                    Double
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
                     INR 8300*5
                     <i className="fa-solid fa-pen-to-square text-success font-size-11 pl-2 cursor-pointer"></i>
                   </p>
                 </div>
-                <div className="col d-flex flex-column align-items-end">
-                  <p className="font-size-10 font-weight-bold">Action</p>
-                  <p className="font-size-10 font-weight-bold">
-                    <span className="p1-2 text-danger cursor-pointer">
-                      <i className="fa-solid fa-trash font-size-11 pr-1"></i>
-                    </span>
-                    <span className=" text-success cursor-pointer">
-                      {" "}
-                      <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
-                    </span>
-                  </p>
+                <div className="col d-flex justify-content-end">
+                  <div className="d-flex flex-column">
+                    <p className="font-size-10 font-weight-bold text-flow">
+                      Action
+                    </p>
+                    <p className="font-size-10 font-weight-bold">
+                      <span className="p1-2 text-danger cursor-pointer">
+                        <i className="fa-solid fa-trash font-size-11 pr-1"></i>
+                      </span>
+                      <span className=" text-success cursor-pointer">
+                        <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
-
+              {/* row */}
               <div className="row border-bottom mb-2">
                 <div className="col-1 d-flex flex-column align-items-center">
-                  <p className="font-weight-bold font-size-11 m-0">Activity</p>
+                  <p className="font-weight-bold font-size-11 m-0 text-flow">
+                    Activity
+                  </p>
                   <img
                     className="icon-img"
                     src="\public\global_assets\images\qoutation\activity.png"
@@ -381,60 +436,82 @@ const Itineraries = () => {
                   />
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Activity Name</p>
-                  <p className="font-size-10 font-weight-bold">
+                  <p className="font-size-10 text-secondary text-flow">
+                    Activity Name
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
                     Africa Avenue 5 Star
                   </p>
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Pax Slab</p>
-                  <p className="font-size-10 font-weight-bold">10 Pax</p>
+                  <p className="font-size-10 text-secondary text-flow">
+                    Pax Slab
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
+                    10 Pax
+                  </p>
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Per Pax Cost</p>
-                  <p className="font-size-10 font-weight-bold">INR 1200</p>
+                  <p className="font-size-10 text-secondary text-flow">
+                    Per Pax Cost
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
+                    INR 1200
+                  </p>
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">
+                  <p className="font-size-10 text-secondary text-flwo">
                     Arrival Date/Time
                   </p>
-                  <p className="font-size-10 font-weight-bold">
+                  <p className="font-size-10 font-weight-bold text-flow">
                     10:30
                     <i className="fa-solid fa-pen-to-square text-success font-size-11 pl-2 cursor-pointer"></i>
                   </p>
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">
+                  <p className="font-size-10 text-secondary text-flow">
                     Departure Date/Time
                   </p>
-                  <p className="font-size-10 font-weight-bold">
+                  <p className="font-size-10 font-weight-bold text-flow">
                     11:35
                     <i className="fa-solid fa-pen-to-square text-success font-size-11 pl-2 cursor-pointer"></i>
                   </p>
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Adult Cost</p>
-                  <p className="font-size-10 font-weight-bold">INR 1500</p>
+                  <p className="font-size-10 text-secondary text-flow">
+                    Adult Cost
+                  </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
+                    INR 1500
+                  </p>
                 </div>
                 <div className="col">
-                  <p className="font-size-10 text-secondary">Child Cost</p>
-                  <p className="font-size-10 font-weight-bold">INR 1200</p>
-                </div>
-                <div className="col d-flex flex-column align-items-end">
-                  <p className="font-size-10 font-weight-bold">Action</p>
-                  <p className="font-size-10 font-weight-bold">
-                    <span className="p1-2 text-danger cursor-pointer">
-                      <i className="fa-solid fa-trash font-size-11 pr-1"></i>
-                    </span>
-                    <span className=" text-success cursor-pointer">
-                      <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
-                    </span>
+                  <p className="font-size-10 text-secondary text-flow">
+                    Child Cost
                   </p>
+                  <p className="font-size-10 font-weight-bold text-flow">
+                    INR 1200
+                  </p>
+                </div>
+                <div className="col d-flex justify-content-end">
+                  <div className="d-flex flex-column">
+                    <p className="font-size-10 font-weight-bold text-flow">
+                      Action
+                    </p>
+                    <p className="font-size-10 font-weight-bold">
+                      <span className="p1-2 text-danger cursor-pointer">
+                        <i className="fa-solid fa-trash font-size-11 pr-1"></i>
+                      </span>
+                      <span className=" text-success cursor-pointer">
+                        <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
             {/* --------------------------DAY-2----------------------------- */}
-            <div className="light-primary-bg mt-2 d-inline-block p-1 rounded">
+            {/* <div className="light-primary-bg mt-2 d-inline-block p-1 rounded">
               Day 2 | Delhi 06 Apr'24 | Sat
             </div>
             <div className="col-12 border mt-1 p-0">
@@ -448,10 +525,10 @@ const Itineraries = () => {
                 impedit eaque unde est a, ut nihil consectetur! Ratione dicta
                 ullam molestiae dolor quis totam enim esse adipisci
               </p>
-            </div>
+            </div> */}
             <div className="col-12 p-0 mt-2">
               {/* row */}
-              <div className="row border-bottom mb-2">
+              {/* <div className="row border-bottom mb-2">
                 <div className="col-1 d-flex flex-column align-items-center">
                   <p className="font-weight-bold font-size-11 m-0">Arrival</p>
                   <img
@@ -528,9 +605,9 @@ const Itineraries = () => {
                     </span>
                   </p>
                 </div>
-              </div>
+              </div> */}
               {/* row */}
-              <div className="row border-bottom mb-2">
+              {/* <div className="row border-bottom mb-2">
                 <div className="col-1 d-flex flex-column align-items-center">
                   <p className="font-weight-bold font-size-11 m-0 text-flow">
                     Departure
@@ -610,12 +687,12 @@ const Itineraries = () => {
                     </span>
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* ---------------------------DAY-3------------------------------- */}
 
-            <div className="light-primary-bg mt-2 d-inline-block p-1 rounded">
+            {/* <div className="light-primary-bg mt-2 d-inline-block p-1 rounded">
               Day 3 | Delhi 07 Apr'24 | Sun
             </div>
             <div className="col-12 border mt-1 p-0">
@@ -629,10 +706,10 @@ const Itineraries = () => {
                 impedit eaque unde est a, ut nihil consectetur! Ratione dicta
                 ullam molestiae dolor quis totam enim esse adipisci
               </p>
-            </div>
+            </div> */}
             <div className="col-12 p-0 mt-2">
               {/* row */}
-              <div className="row border-bottom mb-2">
+              {/* <div className="row border-bottom mb-2">
                 <div className="col-1 d-flex flex-column align-items-center">
                   <p className="font-weight-bold font-size-11 m-0">Arrival</p>
                   <img
@@ -709,9 +786,9 @@ const Itineraries = () => {
                     </span>
                   </p>
                 </div>
-              </div>
+              </div> */}
               {/* row */}
-              <div className="row border-bottom mb-2">
+              {/* <div className="row border-bottom mb-2">
                 <div className="col-1 d-flex flex-column align-items-center">
                   <p className="font-weight-bold font-size-11 m-0 text-flow">
                     Departure
@@ -953,7 +1030,7 @@ const Itineraries = () => {
                     </span>
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
