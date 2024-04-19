@@ -53,7 +53,6 @@ const Itineraries = () => {
               </div>
             </div>
           </div>
-
           <div className="col-12 col-lg-10">
             <div className="light-primary-bg mt-2 d-inline-block p-1 rounded">
               Day 1 | Delhi 05 Apr'24 | Fri

@@ -6,8 +6,8 @@ import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
-  countryInitialValue,
-  countryValidationSchema,
+  fitInitialValue,
+  fitValidationSchema
 } from "./MasterValidations";
 
 const FIT = () => {
@@ -41,9 +41,9 @@ const FIT = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("fitlist", postData);
-        setGetData(data.DataList);
-        setFilterData(data.DataList);
+        const { data } = await axiosOther.post("fitmasterlist", postData);
+        setGetData(data.ItineraryInfoMaster);
+        setFilterData(data.ItineraryInfoMaster);
       } catch (error) {
         console.log(error);
       }
@@ -63,7 +63,15 @@ const FIT = () => {
     setEditData({
       id: rowValue.Id,
       Name: rowValue.Name,
-      ShortName: rowValue.ShortName,
+      Destination: rowValue.Destination,
+      Inclusion: rowValue.Inclusion,
+      Exclusion: rowValue.Exclusion,
+      TermsCondition: rowValue.TermsCondition,
+      Cancelation: rowValue.Cancelation,
+      ServiceUpgradation: rowValue.ServiceUpgradation,
+      OptionalTour: rowValue.OptionalTour,
+      PaymentPolicy: rowValue.PaymentPolicy,
+      Remarks: rowValue.Remarks,
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
       Status: rowValue.Status === "Active" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
@@ -74,7 +82,7 @@ const FIT = () => {
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Name",
       selector: (row) => (
         <span>
           <i
@@ -89,8 +97,18 @@ const FIT = () => {
       sortable: true,
     },
     {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
+      name: "Destination",
+      selector: (row) => row.Destination,
+      sortable: true,
+    },
+    {
+      name: "Inclusion",
+      selector: (row) => row.Inclusion,
+      sortable: true,
+    },
+    {
+      name: "Exclusion",
+      selector: (row) => row.Exclusion,
       sortable: true,
     },
     {
@@ -148,8 +166,8 @@ const FIT = () => {
                 <Model
                   heading={"Add FIT Inculsions I Exculsions"}
                   apiurl={"addupdatefit"}
-                  initialValues={countryInitialValue}
-                  validationSchema={countryValidationSchema}
+                  initialValues={fitInitialValue}
+                  validationSchema={fitValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -163,10 +181,13 @@ const FIT = () => {
                         <label>Name</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="Name"
                           placeholder="Name"
                           className="form-control"
                         />
+                      <span className="font-size-10 text-danger">
+                          <ErrorMessage name="Name" />
+                        </span>
                       </div>
                       <div className="col-sm-6">
                         <label>Destination</label>
@@ -175,29 +196,35 @@ const FIT = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value="0">ALL</option>
+                          <option value="">ALL</option>
                           {
                             destinationList.map((value, index)=>{
                               return <option value={value.Id} key={index+1}>{value.Name}</option>
                             })
                           }
                         </Field>
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="Destination" />
+                        </span>
                       </div>
                       <div className="col-sm-6">
                         <label>Inclusion</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="Inclusion"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}
                         />
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="Inclusion" />
+                        </span>
                       </div>
                       <div className="col-sm-6">
                         <label>Exclusion</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="Exclusion"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}
@@ -207,7 +234,7 @@ const FIT = () => {
                         <label>Terms Condition</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="TermsCondition"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}
@@ -217,17 +244,17 @@ const FIT = () => {
                         <label>Cancelation</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="Cancelation"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}
                         />
                       </div>
                       <div className="col-sm-6">
-                        <label>Service Upgration</label>
+                        <label>Service Upgradation</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="ServiceUpgradation"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}
@@ -237,7 +264,7 @@ const FIT = () => {
                         <label>Optional Tour</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="OptionalTour"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}
@@ -247,7 +274,7 @@ const FIT = () => {
                         <label>Payment Policy</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="PaymentPolicy"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}
@@ -257,7 +284,7 @@ const FIT = () => {
                         <label>Remarks</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="Remarks"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}
@@ -270,19 +297,19 @@ const FIT = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
+                          <option value="1">Active</option>
+                          <option value="0">Inactive</option>
                         </Field>
                       </div>
                       <div className="col-sm-6">
-                        <label>Default</label>
+                        <label>Set Default</label>
                         <Field
-                          name="Status"
+                          name="SetDefault"
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={0}>No</option>
-                          <option value={1}>Yes</option>
+                          <option value="0">No</option>
+                          <option value="1">Yes</option>
                         </Field>
                       </div>
                     </div>
@@ -314,8 +341,8 @@ const FIT = () => {
                     }
                   >
                     <option>Select Status</option>
-                    <option value={0}>Inactive</option>
-                    <option value={1}>Active</option>
+                    <option value="0">Inactive</option>
+                    <option value="1">Active</option>
                   </select>
                 </div>
                 <div className="col-lg-2 col-md-3 mt-2 mt-md-0">
