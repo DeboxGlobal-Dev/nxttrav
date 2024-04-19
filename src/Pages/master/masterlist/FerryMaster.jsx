@@ -25,7 +25,7 @@ const FerryMaster = () => {
 
   const getDataToServer = async () => {
     try {
-      const ferryCompany = await axiosOther.post("ferrycompanylist", {
+      const ferryCompany = await axiosOther.post("ferrynamelist", {
         Search: "",
         Status: 1,
       });

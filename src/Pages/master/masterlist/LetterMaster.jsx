@@ -8,6 +8,8 @@ import { Field, ErrorMessage } from "formik";
 import {
   countryInitialValue,
   countryValidationSchema,
+  letterMasterInitialValue,
+  letterMasterValidationSchema,
 } from "./MasterValidations";
 
 const LetterMaster = () => {
@@ -129,8 +131,8 @@ const LetterMaster = () => {
                 <Model
                   heading={"Add Letter"}
                   apiurl={"addupdatelettermaster"}
-                  initialValues={countryInitialValue}
-                  validationSchema={countryValidationSchema}
+                  initialValues={letterMasterInitialValue}
+                  validationSchema={letterMasterValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -144,7 +146,7 @@ const LetterMaster = () => {
                         <label>Name</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="Name"
                           placeholder="Name"
                           className="form-control"
                         />
@@ -153,7 +155,7 @@ const LetterMaster = () => {
                         <label>Greetings Note</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="GreetingNote"
                           placeholder="Name"
                           className="form-control"
                         />
@@ -162,7 +164,7 @@ const LetterMaster = () => {
                         <label>Welcome Note</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="WelcomeNote"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}

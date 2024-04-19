@@ -46,6 +46,7 @@ const TourEscortPrice = () => {
         const { data } = await axiosOther.post("tourescortpricelist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
+        console.log('DATA',data.DataList);
       } catch (error) {
         console.log(error);
       }
@@ -161,8 +162,8 @@ const TourEscortPrice = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value="0">Guide</option>
-                          <option value="1">Porter</option>
+                          <option value="10">Guide</option>
+                          <option value="20">Porter</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -204,9 +205,9 @@ const TourEscortPrice = () => {
                         </Field>
                       </div>
                       <div className="col-sm-4">
-                        <label>SetDefault</label>
+                        <label>Set Default</label>
                         <Field
-                          name="SetDefault"
+                          name="Default"
                           className="form-control"
                           component={"select"}
                         >
