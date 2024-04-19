@@ -513,7 +513,23 @@ export const fitInitialValue = {
   AddedBy: "1",
   UpdatedBy: "0",
 };
-
+export const gitInitialValue = {
+  id: "",
+  Name: "",
+  Destination: "",
+  Inclusion: "",
+  Exclusion: "",
+  TermsCondition: "",
+  Cancelation: "",
+  ServiceUpgradation: "",
+  OptionalTour: "",
+  PaymentPolicy: "",
+  Remarks: "",
+  SetDefault: "1",
+  Status: "1",
+  AddedBy: "1",
+  UpdatedBy: "0",
+};
 // ------------------------VALIDATION SCHEMAS-------------------------- //
 
 export const countryValidationSchema = yup.object().shape({
@@ -695,9 +711,14 @@ export const paymentTypeValidationSchema = yup.object().shape({
   PaymentTypeName: yup.string().required("Required"),
 });
 export const fitValidationSchema = yup.object().shape({
-  Name:yup.string().required('Required'),
-  Destination:yup.string().required('Required'),
-  Inclusion:yup.string().required('Required')
+  Name: yup.string().required("Required"),
+  Destination: yup.string().required("Required"),
+  Inclusion: yup.string().required("Required"),
+});
+export const gitValidationSchema = yup.object().shape({
+  Name: yup.string().required("Required"),
+  Destination: yup.string().required("Required"),
+  Inclusion: yup.string().required("Required"),
 });
 // Hotel Master Table Value in JSON-----------------------------------
 

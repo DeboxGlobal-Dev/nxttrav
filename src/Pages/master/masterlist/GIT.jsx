@@ -6,8 +6,8 @@ import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
-  countryInitialValue,
-  countryValidationSchema,
+  gitInitialValue,
+  gitValidationSchema
 } from "./MasterValidations";
 
 const GIT = () => {
@@ -41,9 +41,9 @@ const GIT = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("gitlist", postData);
-        setGetData(data.DataList);
-        setFilterData(data.DataList);
+        const { data } = await axiosOther.post("gitmasterlist", postData);
+        setGetData(data.ItineraryInfoMaster);
+        setFilterData(data.ItineraryInfoMaster);
       } catch (error) {
         console.log(error);
       }
@@ -63,7 +63,15 @@ const GIT = () => {
     setEditData({
       id: rowValue.Id,
       Name: rowValue.Name,
-      ShortName: rowValue.ShortName,
+      Destination: rowValue.Destination,
+      Inclusion: rowValue.Inclusion,
+      Exclusion: rowValue.Exclusion,
+      TermsCondition: rowValue.TermsCondition,
+      Cancelation: rowValue.Cancelation,
+      ServiceUpgradation: rowValue.ServiceUpgradation,
+      OptionalTour: rowValue.OptionalTour,
+      PaymentPolicy: rowValue.PaymentPolicy,
+      Remarks: rowValue.Remarks,
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
       Status: rowValue.Status === "Active" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
@@ -74,7 +82,7 @@ const GIT = () => {
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Name",
       selector: (row) => (
         <span>
           <i
@@ -89,35 +97,30 @@ const GIT = () => {
       sortable: true,
     },
     {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
+      name: "Destination",
+      selector: (row) => row.Destination,
       sortable: true,
     },
     {
-      name: "Status Name",
+      name: "Inclusion",
+      selector: (row) => row.Inclusion,
+      sortable: true,
+    },
+    {
+      name: "Exclusion",
+      selector: (row) => row.Exclusion,
+      sortable: true,
+    },
+    {
+      name: "Language",
+      selector: (row) => row.Language,
+      sortable: true,
+    },
+    {
+      name: "Status",
       selector: (row) => row.Status,
       sortable: true,
-    },
-    {
-      name: "Added By",
-      selector: (row) => {
-        return (
-          <span>
-            Admin <br /> {row.Created_at}
-          </span>
-        );
-      },
-    },
-    {
-      name: "Updated By",
-      selector: (row) => {
-        return (
-          <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
-          </span>
-        );
-      },
-    },
+    }
   ];
   return (
     <>
@@ -148,8 +151,8 @@ const GIT = () => {
                 <Model
                   heading={"Add GIT Inculsions I Exculsions"}
                   apiurl={"addupdategit"}
-                  initialValues={countryInitialValue}
-                  validationSchema={countryValidationSchema}
+                  initialValues={gitInitialValue}
+                  validationSchema={gitValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -163,7 +166,7 @@ const GIT = () => {
                         <label>Name</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="Name"
                           placeholder="Name"
                           className="form-control"
                         />
@@ -187,7 +190,7 @@ const GIT = () => {
                         <label>Inclusion</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="Inclusion"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}
@@ -197,7 +200,7 @@ const GIT = () => {
                         <label>Exclusion</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="Exclusion"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}
@@ -207,7 +210,7 @@ const GIT = () => {
                         <label>Terms Condition</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="TermsCondition"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}
@@ -217,17 +220,17 @@ const GIT = () => {
                         <label>Cancelation</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="Cancelation"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}
                         />
                       </div>
                       <div className="col-sm-6">
-                        <label>Service Upgration</label>
+                        <label>Service Upgradation</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="ServiceUpgradation"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}
@@ -237,7 +240,7 @@ const GIT = () => {
                         <label>Optional Tour</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="OptionalTour"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}
@@ -247,7 +250,7 @@ const GIT = () => {
                         <label>Payment Policy</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="PaymentPolicy"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}
@@ -257,7 +260,7 @@ const GIT = () => {
                         <label>Remarks</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="Remarks"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{ height: "38px" }}
