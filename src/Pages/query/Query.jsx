@@ -1217,7 +1217,7 @@ const Query = () => {
                       >
                         <option value={"1"}>Normal</option>
                         <option value={"2"}>Medium</option>
-                        <option value={"3"}>Hight</option>
+                        <option value={"3"}>High</option>
                       </select>
                     </div>
                     <div className="">
