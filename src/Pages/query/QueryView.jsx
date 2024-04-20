@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "../../Component/Layout/Layout";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import CustomizedSteppers from "./CustomizedSteppers";
+import Stepper from './Stepper';
 
 const QueryView = () => {
   const { pathname } = useLocation();
@@ -57,10 +58,12 @@ const QueryView = () => {
               </div>
             </div>
           </div>
-          {/* <div>
-            <CustomizedSteppers step={2} />
-          </div> */}
-          <div className="col-xl-12 px-4" style={{ padding: 0 }}>
+          <div>
+            {/* <CustomizedSteppers step={2} />
+             */}
+             <Stepper/>
+          </div>
+          <div className="col-xl-12 px-4 mt-4" style={{ padding: 0 }}>
             <ul className="nav nav-pills-toolbar d-flex align-items-center justify-content-between border py-1">
               <li className="nav-item view-nav-item rounded-pill"> 
                 <NavLink

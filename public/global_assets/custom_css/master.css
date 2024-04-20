@@ -440,11 +440,38 @@ a {
   width: 25px;
 }
 .text-flow{
-  /* width: 200px; Adjust width as needed */
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 .box-width-80{
   width: 80px;
+}
+
+/* Stepper css */
+
+.stepper{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 10px;
+}
+.stepper-item{
+  width: 115px;
+  height: 30px;
+  background-color: #cdcbcb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-clip-path: polygon(20px 50%, 0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
+  font-weight: 500;
+}
+.stepper-width{
+  width: 160px;
+}
+.first-stepper{
+  -webkit-clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
+}
+.active-stepper{
+  background-color: rgb(20, 204, 42);
 }
