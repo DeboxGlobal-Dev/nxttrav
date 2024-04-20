@@ -457,8 +457,8 @@ a {
   row-gap: 10px;
 }
 .stepper-item{
-  width: 115px;
-  height: 30px;
+  width: 116px;
+  height: 26px;
   background-color: #cdcbcb;
   display: flex;
   justify-content: center;
