@@ -8,6 +8,8 @@ import { Field } from "formik";
 import {
   countryInitialValue,
   countryValidationSchema,
+  ferrySeatMasterInitialValue,
+  ferrySeatValidationSchema,
 } from "./MasterValidations";
 
 const FerrySeat = () => {
@@ -24,7 +26,7 @@ const FerrySeat = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("ferryseatlist", postData);
+        const { data } = await axiosOther.post("ferrysearlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -45,9 +47,7 @@ const FerrySeat = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       id: rowValue.Id,
-      Name: rowValue.Name,
-      ShortName: rowValue.ShortName,
-      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
+      FerrySeat: rowValue.FerrySeat,
       Status: rowValue.Status === "Active" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
       UpdatedBy: rowValue.UpdatedBy,
@@ -57,7 +57,7 @@ const FerrySeat = () => {
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Ferry Seat",
       selector: (row) => (
         <span>
           <i
@@ -66,19 +66,9 @@ const FerrySeat = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.FerrySeat}
         </span>
       ),
-      sortable: true,
-    },
-    {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
-      sortable: true,
-    },
-    {
-      name: "Status Name",
-      selector: (row) => row.Status,
       sortable: true,
     },
     {
@@ -86,7 +76,7 @@ const FerrySeat = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -96,10 +86,15 @@ const FerrySeat = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
           </span>
         );
       },
+    },
+    {
+      name: "Status",
+      selector: (row) => row.Status,
+      sortable: true,
     },
   ];
   return (
@@ -128,9 +123,9 @@ const FerrySeat = () => {
                 </NavLink>
                 <Model
                   heading={"Add Ferry Seat"}
-                  apiurl={"addupdateferryseat"}
-                  initialValues={countryInitialValue}
-                  validationSchema={countryValidationSchema}
+                  apiurl={"addupdateferrysear"}
+                  initialValues={ferrySeatMasterInitialValue}
+                  validationSchema={ferrySeatValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -144,7 +139,7 @@ const FerrySeat = () => {
                         <label>Ferry Seat</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="FerrySeat"
                           placeholder="Ferry Seat"
                           className="form-control"
                         />

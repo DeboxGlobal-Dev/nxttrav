@@ -25,7 +25,7 @@ const FerryMaster = () => {
 
   const getDataToServer = async () => {
     try {
-      const ferryCompany = await axiosOther.post("ferrynamelist", {
+      const ferryCompany = await axiosOther.post("ferrycompanylist", {
         Search: "",
         Status: 1,
       });
@@ -43,7 +43,7 @@ const FerryMaster = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("ferrymasterlist", postData);
+        const { data } = await axiosOther.post("ferrynamelist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -62,12 +62,13 @@ const FerryMaster = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+    console.log(rowValue);
     setEditData({
       id: rowValue.Id,
       FerryCompany: rowValue.FerryCompany,
       FerryName: rowValue.FerryName,
       Capacity: rowValue.Capacity,
-      Status: rowValue.Status==='Active'?1:0,
+      Status: rowValue.Status === 'Active' ? 1:0,
       ImageName: rowValue.ImageName,
       ImageData: rowValue.ImageData,
       AddedBy: rowValue.AddedBy,
@@ -164,7 +165,7 @@ const FerryMaster = () => {
                 </NavLink>
                 <Model
                   heading={"Add Ferry Name"}
-                  apiurl={"addupdateferrymaster"}
+                  apiurl={"addupdateferryname"}
                   initialValues={ferryMasterInitialValue}
                   validationSchema={ferryMasterValidationSchema}
                   forEdit={editData}

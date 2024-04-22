@@ -1,5 +1,4 @@
 import * as yup from "yup";
-import ExpenseType from "./ExpenseType";
 
 export const countryInitialValue = {
   id: "",
@@ -386,10 +385,17 @@ export const ferryMasterInitialValue = {
   FerryName: "",
   Capacity: "",
   Status: 1,
-  ImageName: "",
+  ImageName: "hhhh.png",
   ImageData: "",
   AddedBy: 1,
   UpdatedBy: 1,
+};
+export const ferrySeatMasterInitialValue = {
+  id: "",
+  FerrySeat: "",
+  Status: 0,
+  UpdatedBy: 1,
+  AddedBy: 1,
 };
 export const currencyMasterInitialValue = {
   id: "",
@@ -435,14 +441,15 @@ export const ferryCompanyInitialValue = {
   FerryCompanyName: "",
   Destination: "",
   Website: "",
-  SelfSupplier: "",
-  Type: "",
+  SelfSupplier: "1",
+  Type: "0",
   ContactPers: "",
   Designation: "",
   Phone: "",
   Email: "",
   Status: "0",
   UpdatedBy: "1",
+  AddedBy: "1",
 };
 export const letterMasterInitialValue = {
   id: "",
@@ -691,6 +698,9 @@ export const ferryCompanyValidationSchema = yup.object().shape({
   FerryCompanyName: yup.string().required("Required"),
   Destination: yup.string().required("Required"),
 });
+export const ferrySeatValidationSchema = yup.object().shape({
+  FerrySeat: yup.string().required('Required')
+});
 export const taxMasterValidationSchema = yup.object().shape({
   ServiceType: yup.string().required("Required"),
   TaxSlabName: yup.string().required("Required"),
@@ -721,9 +731,9 @@ export const gitValidationSchema = yup.object().shape({
   Inclusion: yup.string().required("Required"),
 });
 export const letterMasterValidationSchema = yup.object().shape({
-  Name: yup.string().required('Required'),
-  WelcomeNote: yup.string().required('Required'),
-  GreetingNote: yup.string().required('Required')
+  Name: yup.string().required("Required"),
+  WelcomeNote: yup.string().required("Required"),
+  GreetingNote: yup.string().required("Required"),
 });
 // Hotel Master Table Value in JSON-----------------------------------
 

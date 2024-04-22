@@ -30,6 +30,10 @@ const TourEscort = () => {
   const [destinationList, setDestinationList] = useState([]);
   const [languageList, setLanguageList] = useState([]);
 
+  const imageName = changeValue.TourEscortImageData?.split("\\")
+  console.log("Image Name", imageName);
+
+
   const getDataToServer = async () => {
     try {
       const countryData = await axiosOther.post("countrylist", {
@@ -87,6 +91,7 @@ const TourEscort = () => {
 
   useEffect(() => {
     const postDataToServer = async () => {
+
       try {
         const { data } = await axiosOther.post(
           "tourescortmasterlist",

@@ -7,7 +7,7 @@ import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
   ferryCompanyInitialValue,
-  ferryCompanyValidationSchema
+  ferryCompanyValidationSchema,
 } from "./MasterValidations";
 
 const FerryCompany = () => {
@@ -23,7 +23,7 @@ const FerryCompany = () => {
   const [changeValue, setChangeValue] = useState("");
   const [destinationList, setDestinationList] = useState([]);
   const [devisioinList, setDevisionList] = useState([]);
-  
+
   const getDataToServer = async () => {
     try {
       const destination = await axiosOther.post("destinationlist", {
@@ -49,7 +49,6 @@ const FerryCompany = () => {
     getDataToServer();
   }, []);
 
-
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -72,14 +71,21 @@ const FerryCompany = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+    console.log(rowValue);
     setEditData({
       id: rowValue.Id,
-      Name: rowValue.Name,
-      ShortName: rowValue.ShortName,
-      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
-      Status: rowValue.Status === "Active" ? 1 : 0,
-      AddedBy: rowValue.AddedBy,
+      FerryCompanyName: rowValue.FerryCompanyName,
+      Destination: rowValue.Destination,
+      Website: rowValue.Website,
+      SelfSupplier: rowValue.SelfSupplier ==="Yes"?1:0,
+      Type: rowValue.Type,
+      ContactPers: rowValue.ContactPers,
+      Designation: rowValue.Designation,
+      Phone: rowValue.Phone,
+      Email: rowValue.Email,
+      Status: rowValue.Status ==="Active"?1:0,
       UpdatedBy: rowValue.UpdatedBy,
+      AddedBy: rowValue.AddedBy,
     });
     setIsEditing(true);
   };
@@ -153,11 +159,7 @@ const FerryCompany = () => {
     {
       name: "Status",
       selector: (row) => {
-        return (
-          <span>
-            {row.Status}
-          </span>
-        );
+        return <span>{row.Status}</span>;
       },
     },
   ];
@@ -199,7 +201,6 @@ const FerryCompany = () => {
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
-                      
                       <div className="col-sm-4">
                         <label>Ferry Company Name</label>
                         <Field
@@ -217,11 +218,13 @@ const FerryCompany = () => {
                           component={"select"}
                         >
                           <option value="0">ALL</option>
-                          {
-                            destinationList.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
-                            })
-                          }
+                          {destinationList.map((value, index) => {
+                            return (
+                              <option value={value.Id} key={index + 1}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -240,24 +243,26 @@ const FerryCompany = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Yes</option>
-                          <option value={1}>No</option>
+                          <option value="1">Yes</option>
+                          <option value="0">No</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
                         <label>Contact Person Division</label>
                         <Field
-                          name="ContactPersonDivision"
+                          name="Type"
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Select Division</option>
-                          
-                          {
-                            devisioinList?.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
-                            })
-                          }
+                          <option value="0">Select Division</option>
+
+                          {devisioinList?.map((value, index) => {
+                            return (
+                              <option value={value.Id} key={index + 1}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-4">

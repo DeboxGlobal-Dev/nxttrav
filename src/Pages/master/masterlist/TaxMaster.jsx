@@ -149,12 +149,12 @@ const TaxMaster = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Service Type</option>
-                          <option value={2}>Hotel</option>
-                          <option value={3}>Guide</option>
-                          <option value={4}>Activity</option>
-                          <option value={5}>Entrance</option>
-                          <option value={6}>Transfer</option>
+                          <option value="1">Service Type</option>
+                          <option value="2">Hotel</option>
+                          <option value="3">Guide</option>
+                          <option value="4">Activity</option>
+                          <option value="5">Entrance</option>
+                          <option value="6">Transfer</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -182,8 +182,8 @@ const TaxMaster = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
+                          <option value="1">Active</option>
+                          <option value="0">Inactive</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -193,8 +193,8 @@ const TaxMaster = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Yes</option>
-                          <option value={0}>No</option>
+                          <option value="1">Yes</option>
+                          <option value="0">No</option>
                         </Field>
                       </div>
                     </div>

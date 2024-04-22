@@ -24,6 +24,7 @@ const TourEscortPrice = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+
   
   const getDataToServer = async () => {
     try {

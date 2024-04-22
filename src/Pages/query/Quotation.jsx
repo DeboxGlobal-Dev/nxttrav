@@ -43,7 +43,7 @@ const Quotation = () => {
           </div>
           <div className="col-12 p-0 mt-2">
             <div className="row justify-content-center">
-              <div className="col-11 border rounded-pill shadow">
+              <div className="col-11 border rounded-pill shadow sticky-top">
                 <div className="row px-2 py-1">
                   <div className="col d-flex flex-column align-items-center pt-1">
                     <img
