@@ -15,6 +15,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Counter from "./Counter";
 import toast, { Toaster } from "react-hot-toast";
 
+
 const Query = () => {
   const navigate = useNavigate();
   const [TravelDate, setTravelDate] = useState({
@@ -1216,7 +1217,7 @@ const Query = () => {
                       >
                         <option value={"1"}>Normal</option>
                         <option value={"2"}>Medium</option>
-                        <option value={"3"}>Hight</option>
+                        <option value={"3"}>High</option>
                       </select>
                     </div>
                     <div className="">

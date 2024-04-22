@@ -230,16 +230,16 @@ export const hotelMealInitialValue = {
 export const monumentInitialValue = {
   id: "",
   MonumentName: "",
-  Destination: 1,
-  TransferType: 1,
-  ClosedOnDays: 1,
+  Destination: "",
+  TransferType: "",
+  ClosedOnDays: "",
   DefaultQuotation: "",
   DefaultProposal: "",
   WeekendDays: "",
   Description: "",
-  Status: 1,
-  AddedBy: "",
-  UpdatedBy: "",
+  Status: "0",
+  AddedBy: 1,
+  UpdatedBy: "1",
 };
 export const sightseeingInitialValue = {
   id: "",
@@ -291,7 +291,7 @@ export const tourEscortPriceInitialValue = {
   Destination: "",
   TourEscortService: "",
   Status: 1,
-  Default: 0,
+  Default: "0",
   AddedBy: 1,
   UpdatedBy: 0,
 };
@@ -307,8 +307,8 @@ export const tourEscortInitialValue = {
   LicenseExpiry: "",
   Destination: "",
   Language: "",
-  // TourEscortImageName: "",
-  // TourEscortImageData: "",
+  TourEscortImageName: "",
+  TourEscortImageData: "",
   Supplier: 1,
   TourEscortLicenseTwo: "",
   ContactPerson: "",
@@ -719,6 +719,11 @@ export const gitValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
   Destination: yup.string().required("Required"),
   Inclusion: yup.string().required("Required"),
+});
+export const letterMasterValidationSchema = yup.object().shape({
+  Name: yup.string().required('Required'),
+  WelcomeNote: yup.string().required('Required'),
+  GreetingNote: yup.string().required('Required')
 });
 // Hotel Master Table Value in JSON-----------------------------------
 

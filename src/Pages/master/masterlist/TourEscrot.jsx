@@ -263,8 +263,8 @@ const TourEscort = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Tour Escort</option>
-                          <option value={0}>Tour Manager</option>
+                          <option value="1">Tour Escort</option>
+                          <option value="2">Tour Manager</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -389,8 +389,8 @@ const TourEscort = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Yes</option>
-                          <option value={0}>No</option>
+                          <option value="1">Yes</option>
+                          <option value="0">No</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -427,7 +427,7 @@ const TourEscort = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={0}>Select</option>
+                          <option value="">Select</option>
                           {countryList.map((value, index) => {
                             return (
                               <option value={value.Id} key={index + 1}>
@@ -444,7 +444,7 @@ const TourEscort = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={0}>Select</option>
+                          <option value="">Select</option>
                           {stateFiltered.map((value, index) => {
                             return (
                               <option value={value.Id} key={index + 1}>
@@ -461,7 +461,7 @@ const TourEscort = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={0}>Select</option>
+                          <option value="">Select</option>
                           {cityFiltered.map((value, index) => {
                             return (
                               <option value={value.Id} key={index + 1}>
@@ -510,8 +510,8 @@ const TourEscort = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Active</option>
-                          <option value={0}>InActive</option>
+                          <option value="1">Active</option>
+                          <option value="0">InActive</option>
                         </Field>
                       </div>
                     </div>
@@ -543,8 +543,8 @@ const TourEscort = () => {
                     }
                   >
                     <option>Select Status</option>
-                    <option value={0}>Inactive</option>
-                    <option value={1}>Active</option>
+                    <option value="0">Inactive</option>
+                    <option value="1">Active</option>
                   </select>
                 </div>
                 <div className="col-lg-2 col-md-3 mt-2 mt-md-0">

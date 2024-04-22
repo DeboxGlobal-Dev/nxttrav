@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "../../Component/Layout/Layout";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import CustomizedSteppers from "./CustomizedSteppers";
+import Stepper from "./Stepper";
 
 const QueryView = () => {
   const { pathname } = useLocation();
@@ -29,40 +30,49 @@ const QueryView = () => {
             >
               <div className="d-flex align-items-center mb-3 mb-sm-0">
                 <div className="ml-3">
-                  {/* <span className="badge badge-mark border-success mr-1"></span>  */}
-                  <span className="text-muted">Query#: DB123/00788</span>
+                  <span>Query#: DB123/00788</span>
                 </div>
               </div>
               <div className="d-flex align-items-center mb-3 mb-sm-0">
                 <div className="ml-3">
-                  <span className="text-muted">
-                    Subject: 02-11-2023 DeBox Global Pvt. Ltd.
-                  </span>
+                  <span>TourId: 02-11-2023/AD& R20240589</span>
                 </div>
               </div>
               <div className="d-flex align-items-center mb-3 mb-sm-0">
                 <div className="ml-3">
-                  <span className="text-muted">
-                    Status{" "}
-                    <span className="badge bg-warning-400 ml-auto">
-                      Pending
-                    </span>
-                  </span>
+                  <span>Subject: 02-11-2023 DeBox Global Pvt. Ltd.</span>
                 </div>
               </div>
               <div className="d-flex align-items-center mb-3 mb-sm-0">
                 <div className="ml-3">
-                  <span className="text-muted">Date: Jun 4, 4:00 am</span>
+                  <span>Date: Jun 4, 4:00 am</span>
+                </div>
+              </div>
+
+              <div className="d-flex align-items-center mb-3 mb-sm-0">
+                <div className="ml-3">
+                  <img
+                    src="\public\global_assets\images\qoutation\Bell.png"
+                    alt="remainder"
+                    style={{ height: "30px", width: "30px" }}
+                  />
+                </div>
+                <div className="ml-3">
+                  <img
+                    src="\public\global_assets\images\qoutation\remainder.png"
+                    alt="remainder"
+                    style={{ height: "30px", width: "80px" }}
+                  />
                 </div>
               </div>
             </div>
           </div>
-          {/* <div>
-            <CustomizedSteppers step={2} />
-          </div> */}
-          <div className="col-xl-12 px-4" style={{ padding: 0 }}>
+          <div className="d-flex m-0">
+              <Stepper />
+          </div>
+          <div className="col-xl-12 px-4 mt-2" style={{ padding: 0 }}>
             <ul className="nav nav-pills-toolbar d-flex align-items-center justify-content-between border py-1">
-              <li className="nav-item view-nav-item rounded-pill"> 
+              <li className="nav-item view-nav-item rounded-pill">
                 <NavLink
                   to="/querylist/queryview/"
                   className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
@@ -107,7 +117,6 @@ const QueryView = () => {
                       : "text-primary"
                   }`}
                 >
-                  
                   Proposal
                 </NavLink>
               </li>

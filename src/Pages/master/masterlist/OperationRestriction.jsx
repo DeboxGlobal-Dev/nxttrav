@@ -7,7 +7,6 @@ import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import { countryInitialValue, countryValidationSchema } from "./MasterValidations";
 
-
 const AdditionalRestriction= () => {
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
@@ -25,6 +24,7 @@ const AdditionalRestriction= () => {
         const { data } = await axiosOther.post("operationlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -56,7 +56,7 @@ const AdditionalRestriction= () => {
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Guide/Porter Service",
       selector: (row) => (
         <span>
           <i
@@ -71,35 +71,30 @@ const AdditionalRestriction= () => {
       sortable: true,
     },
     {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
+      name: "Destination",
+      selector: (row) => row.Destination,
       sortable: true,
     },
     {
-      name: "Status Name",
-      selector: (row) => row.Status,
+      name: "Service Type",
+      selector: (row) => row.ServiceType,
       sortable: true,
     },
     {
-      name: "Added By",
-      selector: (row) => {
-        return (
-          <span>
-            Admin <br /> {row.Created_at}
-          </span>
-        );
-      },
+      name: "Rate Sheet",
+      selector: (row) => row.RateSheet,
+      sortable: true,
     },
     {
-      name: "Updated By",
+      name: "Status",
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+             {row.Status}
           </span>
         );
       },
-    },
+    }
   ];
   return (
     <>

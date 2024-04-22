@@ -78,14 +78,14 @@ const Monument = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       id: rowValue.Id,
-      Name: rowValue.Name,
-      DestinationId: rowValue.DestinationId,
+      MonumentName: rowValue.MonumentName,
+      Destination: rowValue.Destination,
       TransferType: rowValue.TransferType,
-      DayId: rowValue.DayId,
+      ClosedOnDays: rowValue.ClosedOnDays,
       DefaultQuotation: rowValue.DefaultQuotation,
       DefaultProposal: rowValue.DefaultProposal,
       WeekendDays: rowValue.WeekendDays,
-      Details: rowValue.Details,
+      Description: rowValue.Description,
       Status: rowValue.Status === "Active" ? 1 : 0,
       AddedBy: rowValue.AddedBy,
       UpdatedBy: rowValue.UpdatedBy,
@@ -222,10 +222,10 @@ const Monument = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Ticket Only</option>
-                          <option value={0}>ALL</option>
-                          <option value={0}>SIC</option>
-                          <option value={0}>PVT</option>
+                          <option value="1">Ticket Only</option>
+                          <option value="2">ALL</option>
+                          <option value="3">SIC</option>
+                          <option value="4">PVT</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -235,8 +235,8 @@ const Monument = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
+                          <option value="1">Active</option>
+                          <option value="0">Inactive</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -246,13 +246,13 @@ const Monument = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Sunday</option>
-                          <option value={2}>Monday</option>
-                          <option value={3}>Tuesday</option>
-                          <option value={4}>Wednesday</option>
-                          <option value={5}>Thirsday</option>
-                          <option value={6}>Friday</option>
-                          <option value={7}>Saturday</option>
+                          <option value="1">Sunday</option>
+                          <option value="2">Monday</option>
+                          <option value="3">Tuesday</option>
+                          <option value="4">Wednesday</option>
+                          <option value="5">Thirsday</option>
+                          <option value="6">Friday</option>
+                          <option value="7">Saturday</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -262,8 +262,8 @@ const Monument = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={0}>No</option>
-                          <option value={1}>Yes</option>
+                          <option value="1">Yes</option>
+                          <option value="0">No</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -273,8 +273,8 @@ const Monument = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={0}>No</option>
-                          <option value={1}>Yes</option>
+                          <option value="0">No</option>
+                          <option value="1">Yes</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
