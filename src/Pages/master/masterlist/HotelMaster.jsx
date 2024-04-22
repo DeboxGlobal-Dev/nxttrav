@@ -80,7 +80,6 @@ const HotelMaster = () => {
         console.log("Diffrenece array length: ",difference.length);
         if(difference.length>0){
           setErrorMessage("Header Name: [ "+difference+" ] is not matched with template. Please upload correct one.");
-
         }else{
           toast.success("Template Matched");
           setExcelToJson(JSON.stringify(json, null, 2));
@@ -104,13 +103,13 @@ const HotelMaster = () => {
       setLinearStatus(true);
 
       try{
-        const response = await axiosOther.post('importhotel', excelToJson);
+        const response = await axiosOther.post('uploaddata', excelToJson);
         if (response) {
           setTimeout(() => {
             setLinearStatus(false);
+            console.log(response);
             toast.success("Data uploaded sucessfully");
           },5000)
-
         } else {
 
         }
