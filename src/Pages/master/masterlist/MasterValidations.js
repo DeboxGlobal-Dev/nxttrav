@@ -306,8 +306,6 @@ export const tourEscortInitialValue = {
   LicenseExpiry: "",
   Destination: "",
   Language: "",
-  TourEscortImageName: "",
-  TourEscortImageData: "",
   Supplier: 1,
   TourEscortLicenseTwo: "",
   ContactPerson: "",

@@ -29,18 +29,14 @@ const TourEscort = () => {
   const [cityList, setCityList] = useState([]);
   const [destinationList, setDestinationList] = useState([]);
   const [languageList, setLanguageList] = useState([]);
+  const [imageValue, setImageValue] = useState({
+    TourEscortImageData:'',
+    TourEscortImageName:''
+  });
+  
+  // console.log('...image-value', imageValue);
 
-  const imageName = changeValue.TourEscortImageData?.split("\\")
-  // console.log("Image Name", imageName);
-  // const reader = new FileReader();
-  // reader.onload = () =>{
-  //   const base64 = reader.result;
-  //   console.log('Base64Data', base64);
-  // }
-  // reader.readAsDataURL(values.TourEscortImageData);
-  // const blob = new Blob([changeValue.TourEscortImageData], { type: changeValue.TourEscortImageData.type });
-  // console.log('blob file', blob);
-
+  console.log('changevalue', changeValue.TourEscortImageData)
   const getDataToServer = async () => {
     try {
       const countryData = await axiosOther.post("countrylist", {
@@ -121,6 +117,20 @@ const TourEscort = () => {
     setFilterData(result);
   }, [postData]);
 
+  const handleEscortImage = (e) =>{
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload =()=>{
+      const base24String = reader.result
+      setImageValue({
+        TourEscortImageData:base24String,
+        TourEscortImageName:file.name
+      });
+    };
+    reader.readAsDataURL(file);
+    console.log(file);
+  };
+
   const handleEditClick = (rowValue) => {
     setEditData({
       id: rowValue.Id,
@@ -134,8 +144,8 @@ const TourEscort = () => {
       LicenseExpiry: rowValue.LicenseExpiry,
       Destination: rowValue.Destination,
       Language: rowValue.Language,
-      // TourEscortImageName: rowValue.TourEscortImageName,
-      // TourEscortImageData: rowValue.TourEscortImageData,
+      TourEscortImageName: rowValue.TourEscortImageName,
+      TourEscortImageData: rowValue.TourEscortImageData,
       Supplier: rowValue.Supplier,
       TourEscortLicenseTwo: rowValue.TourEscortLicenseTwo,
       ContactPerson: rowValue.ContactPerson,
@@ -257,7 +267,7 @@ const TourEscort = () => {
                 <Model
                   heading={"Add Tour Escort / Tour Manager"}
                   apiurl={"addupdatetourescortmaster"}
-                  initialValues={tourEscortInitialValue}
+                  initialValues={{...tourEscortInitialValue}}
                   validationSchema={tourEscortValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
@@ -388,10 +398,11 @@ const TourEscort = () => {
                         <label className="font-size-10">
                           Tour Escort / Tour Manager Image
                         </label>
-                        <Field
+                        <input
                           type="file"
                           name="TourEscortImageData"
                           className="form-control"
+                          onChange={handleEscortImage}
                         />
                       </div>
                       <div className="col-sm-4">

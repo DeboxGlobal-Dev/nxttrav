@@ -22,7 +22,7 @@ const Model = ({
   };
 
   const handleSubmit = async (values, { resetForm }) => {
-    console.log('Modal Value', values);
+    console.log('Submit Modal Value', values);
 
     try {
       const response = await axiosOther.post(apiurl, values);
@@ -86,7 +86,7 @@ const Model = ({
                 handleSubmit(values, { resetForm });
               }}
             >
-              {({ values, handleChange, handleBlur }) => {
+              {({ values, handleChange, handleBlur, setFieldValue }) => {
                 // console.log('change value in modal', values);
                 {
                   useEffect(() => {

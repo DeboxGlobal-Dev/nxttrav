@@ -21,7 +21,7 @@ const MasterMenu = () => {
            />
         </div>
       </div>
-      <div className="card w-100 shadow-none border">
+      <div className="card w-100 shadow-none border" >
         <div className="card-body p-2 ">
           <p className="text-primary fw-500 m-0 mb-1 d-block master-head">
             GENERAL
