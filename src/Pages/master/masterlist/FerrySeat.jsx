@@ -6,10 +6,8 @@ import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field } from "formik";
 import {
-  countryInitialValue,
-  countryValidationSchema,
   ferrySeatMasterInitialValue,
-  ferrySeatValidationSchema,
+  ferrySeatValidationSchema
 } from "./MasterValidations";
 
 const FerrySeat = () => {
@@ -23,6 +21,8 @@ const FerrySeat = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {

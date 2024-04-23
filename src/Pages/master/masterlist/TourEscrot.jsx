@@ -31,8 +31,15 @@ const TourEscort = () => {
   const [languageList, setLanguageList] = useState([]);
 
   const imageName = changeValue.TourEscortImageData?.split("\\")
-  console.log("Image Name", imageName);
-
+  // console.log("Image Name", imageName);
+  // const reader = new FileReader();
+  // reader.onload = () =>{
+  //   const base64 = reader.result;
+  //   console.log('Base64Data', base64);
+  // }
+  // reader.readAsDataURL(values.TourEscortImageData);
+  // const blob = new Blob([changeValue.TourEscortImageData], { type: changeValue.TourEscortImageData.type });
+  // console.log('blob file', blob);
 
   const getDataToServer = async () => {
     try {
