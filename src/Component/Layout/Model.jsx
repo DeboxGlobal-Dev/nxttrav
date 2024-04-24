@@ -14,7 +14,8 @@ const Model = ({
   setIsEditing,
   setChangeValue,
   setUpdateData,
-  updateData
+  updateData,
+  imageValue
 }) => {
   
   const closeModel = () => {
@@ -22,10 +23,10 @@ const Model = ({
   };
 
   const handleSubmit = async (values, { resetForm }) => {
-    console.log('Submit Modal Value', values);
+    console.log('Submit Modal Value', {...values, ...imageValue});
 
     try {
-      const response = await axiosOther.post(apiurl, values);
+      const response = await axiosOther.post(apiurl, {...values, ...imageValue});
       if (response.data.Status) {
         toast.success(response.data.Message);
         setUpdateData(!updateData);
@@ -87,7 +88,6 @@ const Model = ({
               }}
             >
               {({ values, handleChange, handleBlur, setFieldValue }) => {
-                // console.log('change value in modal', values);
                 {
                   useEffect(() => {
                     setChangeValue(values);

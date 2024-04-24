@@ -33,7 +33,9 @@ const TourEscort = () => {
     TourEscortImageData:'',
     TourEscortImageName:''
   });
-  
+  console.log(imageValue);
+  // let merged = Object.assign({}, tourEscortInitialValue, imageValue);
+  // console.log('MergedObject', merged);
   // console.log('...image-value', imageValue);
 
   console.log('changevalue', changeValue.TourEscortImageData)
@@ -100,6 +102,7 @@ const TourEscort = () => {
           "tourescortmasterlist",
           postData
         );
+        console.log('TourEscortAPI-Data',data.DataList)
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -121,17 +124,22 @@ const TourEscort = () => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onload =()=>{
-      const base24String = reader.result
+      const base64 = reader.result;
+      const base64String = base64.split(',')[1]
       setImageValue({
-        TourEscortImageData:base24String,
+        TourEscortImageData:base64String,
         TourEscortImageName:file.name
       });
     };
     reader.readAsDataURL(file);
-    console.log(file);
+
+    console.log('file',file);
   };
 
   const handleEditClick = (rowValue) => {
+
+    console.log('RowValue', rowValue);
+
     setEditData({
       id: rowValue.Id,
       ServiceType: rowValue.ServiceType,
@@ -188,7 +196,7 @@ const TourEscort = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Image}
+          {<img src={row.TourEscortImageData} alt='image' style={{height:'30px', width:'30px'}}></img>}
         </span>
       ),
       sortable: true,
@@ -267,7 +275,7 @@ const TourEscort = () => {
                 <Model
                   heading={"Add Tour Escort / Tour Manager"}
                   apiurl={"addupdatetourescortmaster"}
-                  initialValues={{...tourEscortInitialValue}}
+                  initialValues={tourEscortInitialValue}
                   validationSchema={tourEscortValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
@@ -275,6 +283,7 @@ const TourEscort = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  imageValue={imageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
