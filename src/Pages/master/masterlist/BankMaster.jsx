@@ -21,6 +21,10 @@ const BankMaster = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [imageValue, setImageValue] = useState({
+    BankImageData:'',
+  });
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -54,6 +58,22 @@ const BankMaster = () => {
     });
     setIsEditing(true);
   };
+
+  const hanldeBankChange = (e) =>{
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () =>{
+      const base64 = reader.result;
+      const base64String = base64.split(',')[1];
+      setImageValue({
+        BankImageData:base64String
+      })
+    };
+
+    reader.readAsDataURL(file);
+  };
+
 
   const columns = [
     {
@@ -137,6 +157,7 @@ const BankMaster = () => {
                   setChangeValue={setChangeValue}
                   updateData={updateData}
                   setUpdateData={setUpdateData}
+                  imageValue={imageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
@@ -218,8 +239,9 @@ const BankMaster = () => {
                         <label>Attach QR Code Image</label>
                         <Field
                           type="file"
-                          name="Color"
+                          name="BankImageData"
                           className="form-control"
+                          onChange={hanldeBankChange}
                         />
                       </div>
                       <div className="col-sm-4">

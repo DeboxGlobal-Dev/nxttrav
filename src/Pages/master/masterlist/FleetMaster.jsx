@@ -19,6 +19,10 @@ const FleetMaster = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [imageValue, setImageValue] = useState({
+    CarPhotoData:'',
+    CarPhotoName:''
+  });
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -54,6 +58,21 @@ const FleetMaster = () => {
     });
     setIsEditing(true);
   };
+
+  const handleFleetChange = (e) =>{
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () =>{
+      const base64 = reader.result;
+      const base64String = base64.split(',')[1];
+      setImageValue({
+        CarPhotoData:base64String,
+        CarPhotoName:file.name
+      });
+    }
+    reader.readAsDataURL(file);
+  }
 
   const columns = [
     {
@@ -137,6 +156,7 @@ const FleetMaster = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  imageValue={imageValue}
                 >
                   <div className="card-body">
                   <div className="row row-gap-3">
@@ -383,8 +403,9 @@ const FleetMaster = () => {
                         <label>Car Photo</label>
                         <Field
                           type="file"
-                          name="ShortName"
+                          name="CarPhotoData"
                           className="form-control"
+                          onChange={handleFleetChange}
                         />
                       </div>
                       <div className="col-sm-4">

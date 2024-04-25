@@ -22,6 +22,9 @@ const FerryMaster = () => {
   const [updateData, setUpdateData] = useState(false);
   const [changeValue, setChangeValue] = useState("");
   const [ferryCompanyList, setFerryCompanyList] = useState([]);
+  const [imageValue, setImageValue] = useState({
+    FerryImageData:'',
+  })
 
   const getDataToServer = async () => {
     try {
@@ -77,6 +80,20 @@ const FerryMaster = () => {
     setIsEditing(true);
   };
 
+  const handleFerryChange = (e) =>{
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () =>{
+      const base64 = reader.result;
+      const base64String = base64.split(',')[1];
+      setImageValue({
+        FerryImageData:base64String
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+  
   const columns = [
     {
       name: "Image",
@@ -139,6 +156,8 @@ const FerryMaster = () => {
       },
     },
   ];
+
+
   return (
     <>
       <Layout>
@@ -174,6 +193,7 @@ const FerryMaster = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  imageValue={imageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
@@ -237,9 +257,10 @@ const FerryMaster = () => {
                         </div>
                         <Field
                           type="file"
-                          name="ImageData"
+                          name="FerryImageData"
                           placeholder="Capacity"
                           className="form-control"
+                          onChange={handleFerryChange}
                         />
                       </div>
                     </div>

@@ -18,6 +18,9 @@ const CruiseNameCompany = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [imageValue, setImageValue] = useState({
+    CruiseImageData:'',
+  });
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -53,6 +56,20 @@ const CruiseNameCompany = () => {
       UpdatedBy: rowValue.UpdatedBy,
     });
     setIsEditing(true);
+  };
+
+  const handleCruiseImage = (e) =>{
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () =>{
+      const base64 = reader.result;
+      const base64String = base64.split(',')[1];
+      setImageValue({
+        CruiseImageData:base64String
+      });
+    };
+    reader.readAsDataURL(file);
   };
 
   const columns = [
@@ -140,6 +157,7 @@ const CruiseNameCompany = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  imageValue={imageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
@@ -183,7 +201,8 @@ const CruiseNameCompany = () => {
                         <Field
                           type="file"
                           className="form-control"
-                          name="CruiseImage"
+                          name="CruiseImageData"
+                          onChange={handleCruiseImage}
                         />
                       </div>
                     </div>

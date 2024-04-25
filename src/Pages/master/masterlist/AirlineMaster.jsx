@@ -21,6 +21,10 @@ const AirlineMaster = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [imageValue, setImageValue] = useState({
+    ImageData:'',
+    ImageName:''
+  });
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -82,6 +86,23 @@ const AirlineMaster = () => {
       sortable: true,
     },
   ];
+
+  const hanldeAirlineChange = (e) =>{
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload =()=>{
+      const base64 = reader.result;
+      const base64String = base64.split(',')[1];
+      setImageValue({
+        ImageData:base64String,
+        ImageName:file.name
+      });
+    }
+    reader.readAsDataURL(file);
+
+  };
+
   return (
     <>
       <Layout>
@@ -117,6 +138,7 @@ const AirlineMaster = () => {
                   setChangeValue={setChangeValue}
                   updateData={updateData}
                   setUpdateData={setUpdateData}
+                  imageValue={imageValue}
                 >
                   <div className="card-body">
                     <div className="row">
@@ -133,11 +155,12 @@ const AirlineMaster = () => {
                         </span>
                       </div>
                       <div className="col-sm-4">
-                        <label>Short Name</label>
-                        <Field
+                        <label>Photo</label>
+                        <input
                           type="file"
                           name="ImageData"
                           className="form-control"
+                          onChange={hanldeAirlineChange}
                         />
                       </div>
                       <div className="col-sm-4">

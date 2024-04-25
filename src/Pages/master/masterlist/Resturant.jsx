@@ -23,6 +23,9 @@ const Resturant = () => {
   const [cityList, setCityList] = useState([]);
   const [destinationList, setDestinationList] = useState([]);
   const [divisionList, setDivisionList] = useState([]);
+  const [imageValue, setImageValue] = useState({
+    Image:''
+  });
 
   const getDataToServer = async () => {
     try {
@@ -166,6 +169,18 @@ const Resturant = () => {
     return filteredCity;
   }, [changeValue.city, changeValue.State, changeValue.Country]);
 
+  const handleRestaurantImage = (e) =>{
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () =>{
+      const base64 = reader.result;
+      const base64String = base64.split(',')[1];
+      setImageValue({
+        Image:base64String
+      });
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <>
@@ -199,6 +214,7 @@ const Resturant = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  imageValue={imageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
@@ -332,11 +348,12 @@ const Resturant = () => {
                       </div>
                       <div className="col-sm-4">
                         <label>Image Upload</label>
-                        <Field
+                        <input
                           type="file"
                           id="file"
                           name="Image"
                           className="form-control"
+                          onChange={handleRestaurantImage}
                         />
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Image"/>

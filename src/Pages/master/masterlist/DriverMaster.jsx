@@ -22,6 +22,10 @@ const DriverMaster = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [countryList, setCountryList] = useState([]);
+  const [imageValue, setImageValue] = useState({
+    LicenseData:'',
+    LicenseName:''
+  });
 
   const getDataToServer = async () => {
     try {
@@ -80,6 +84,21 @@ const DriverMaster = () => {
     });
     setIsEditing(true);
   };
+
+  const handleDriverChange = (e) =>{
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () =>{
+      const base64 = reader.result;
+      const base64String = base64.split(',')[1];
+      setImageValue({
+        LicenseData:base64String,
+        LicenseName:file.name
+      });
+    };  
+    reader.readAsDataURL(file);
+  }
 
   const columns = [
     {
@@ -193,6 +212,7 @@ const DriverMaster = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  imageValue={imageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
@@ -306,8 +326,9 @@ const DriverMaster = () => {
                         <label>Upload License</label>
                         <Field
                           type="file"
-                          name="LicenseName"
+                          name="LicenseData"
                           className="form-control"
+                          onChange={handleDriverChange}
                         />
                       </div>
                       <div className="col-sm-4">
