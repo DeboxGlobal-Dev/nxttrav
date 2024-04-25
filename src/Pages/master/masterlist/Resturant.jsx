@@ -24,7 +24,8 @@ const Resturant = () => {
   const [destinationList, setDestinationList] = useState([]);
   const [divisionList, setDivisionList] = useState([]);
   const [imageValue, setImageValue] = useState({
-    Image:''
+    ImageData:'',
+    ImageName:''
   });
 
   const getDataToServer = async () => {
@@ -176,7 +177,8 @@ const Resturant = () => {
       const base64 = reader.result;
       const base64String = base64.split(',')[1];
       setImageValue({
-        Image:base64String
+        ImageData:base64String,
+        ImageName:file.name
       });
       reader.readAsDataURL(file);
     }
@@ -351,7 +353,7 @@ const Resturant = () => {
                         <input
                           type="file"
                           id="file"
-                          name="Image"
+                          name="ImageData"
                           className="form-control"
                           onChange={handleRestaurantImage}
                         />

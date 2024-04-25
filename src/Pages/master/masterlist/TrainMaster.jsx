@@ -21,6 +21,11 @@ const TrainMaster = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [imageValue, setImageValue] = useState({
+    ImageData:'',
+    ImageName:''
+  });
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -53,6 +58,22 @@ const TrainMaster = () => {
     });
     setIsEditing(true);
   };
+
+  const handleImageChange = (e) =>{
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () =>{
+      const base64 = reader.result;
+      const base64String = base64.split(',')[1];
+      setImageValue({
+        ImageData:base64String,
+        ImageName:file.name
+      });
+    };
+
+    reader.readAsDataURL(file);
+  }
 
   const columns = [
     {
@@ -126,6 +147,7 @@ const TrainMaster = () => {
                   setChangeValue = {setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  imageValue={imageValue}
                 >
                   <div className="card-body">
                     <div className="row">
@@ -143,10 +165,11 @@ const TrainMaster = () => {
                       </div>
                       <div className="col-sm-4">
                         <label>Image</label>
-                        <Field
+                        <input
                           type="file"
                           name="ImageData"
                           className="form-control"
+                          onChange={handleImageChange}
                         />
                       </div>
                       <div className="col-sm-4">

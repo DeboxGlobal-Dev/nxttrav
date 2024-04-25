@@ -24,6 +24,10 @@ const AdditionalRequirement = () => {
   const [destinationList, setDestinationList] = useState([]);
   const [taxSlabList, setTaxSlabList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
+  const [imageValue, setImageValue] = useState({
+    ImageData:'',
+    ImageName:''
+  })
 
   const getDataToServer = async () => {
     try {
@@ -107,6 +111,22 @@ const AdditionalRequirement = () => {
     });
     setIsEditing(true);
   };
+
+  const handleImageChange = (e) =>{
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () =>{
+      const base64 = reader.result;
+      const base64String = base64.split(',')[1];
+      setImageValue({
+        ImageData:base64String,
+        ImageName:file.name
+      })
+    }
+
+    reader.readAsDataURL(file);
+  }
 
   const columns = [
     {
@@ -222,6 +242,7 @@ const AdditionalRequirement = () => {
                   setChangeValue={setChangeValue}
                   updateData={updateData}
                   setUpdateData={setUpdateData}
+                  imageValue={imageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
@@ -361,6 +382,7 @@ const AdditionalRequirement = () => {
                           name="ImageData"
                           className="form-control"
                           type="file"
+                          onChange={handleImageChange}
                         ></Field>
                       </div>
                       <div className="col-sm-12">

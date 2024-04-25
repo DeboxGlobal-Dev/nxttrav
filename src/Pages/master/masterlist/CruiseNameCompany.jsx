@@ -19,7 +19,8 @@ const CruiseNameCompany = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [imageValue, setImageValue] = useState({
-    CruiseImageData:'',
+    ImageData:'',
+    ImageName:''
   });
 
   useEffect(() => {
@@ -66,7 +67,8 @@ const CruiseNameCompany = () => {
       const base64 = reader.result;
       const base64String = base64.split(',')[1];
       setImageValue({
-        CruiseImageData:base64String
+        ImageData:base64String,
+        ImageName:file.name
       });
     };
     reader.readAsDataURL(file);
@@ -201,7 +203,7 @@ const CruiseNameCompany = () => {
                         <Field
                           type="file"
                           className="form-control"
-                          name="CruiseImageData"
+                          name="ImageData"
                           onChange={handleCruiseImage}
                         />
                       </div>

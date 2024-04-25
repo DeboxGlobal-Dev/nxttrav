@@ -21,6 +21,10 @@ const Amenties = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [imageValue, setImageValue] = useState({
+    ImageData:'',
+    ImageName:''
+  });
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -28,6 +32,7 @@ const Amenties = () => {
         const { data } = await axiosOther.post("amenitieslist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
+        console.log(data.DataList);
       } catch (error) {
         console.log(error);
       }
@@ -59,6 +64,21 @@ const Amenties = () => {
     setIsEditing(true);
   };
 
+  const handleImageChange = (e) =>{
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload =()=>{
+      const base64 = reader.result;
+      const base64String = base64.split(',')[1];
+      setImageValue({
+        ImageData:base64String,
+        ImageName:file.name
+      });
+    }
+    reader.readAsDataURL(file);
+  }
+
   const columns = [
     {
       name: "Aminity Image",
@@ -70,7 +90,7 @@ const Amenties = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.AmenityImage}
+         <img src={row.ImageData} alt="image" style={{height:'30px', height:'30px'}}></img>
         </span>
       ),
       sortable: true,
@@ -136,6 +156,7 @@ const Amenties = () => {
                   setChangeValue={setChangeValue}
                   updateData={updateData}
                   setUpdateData={setUpdateData}
+                  imageValue={imageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-2">
@@ -164,10 +185,11 @@ const Amenties = () => {
                       </div>
                       <div className="col-sm-4">
                         <label>Amenty Image</label>
-                        <Field
+                        <input
                           type="file"
                           name="AmentyImage"
                           className="form-control"
+                          onChange={handleImageChange}
                         />
                       </div>
                       <div className="col-sm-2">

@@ -360,6 +360,7 @@ export const driverMasterInitialValue = {
   LicenseData: "",
   Address: "",
   UpdatedBy: 1,
+  AddedBy:0
 };
 export const trainMasterInitialValue = {
   id: "",
@@ -686,7 +687,6 @@ export const airlineMasterValidationSchema = yup.object().shape({
 });
 export const ferryMasterValidationSchema = yup.object().shape({
   FerryName: yup.string().required("Required"),
-  ImageData: yup.string().required("Required"),
 });
 export const currencyMasterValidationSchema = yup.object().shape({
   CountryCode: yup.string().required("Required"),

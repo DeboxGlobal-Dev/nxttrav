@@ -26,7 +26,12 @@ const DriverMaster = () => {
     LicenseData:'',
     LicenseName:''
   });
+  const [anotherImage, setAnotherImage] = useState({
+    ImageData:'',
+    ImageName:''
+  });
 
+  
   const getDataToServer = async () => {
     try {
       const destination = await axiosOther.post("countrylist", {
@@ -85,7 +90,7 @@ const DriverMaster = () => {
     setIsEditing(true);
   };
 
-  const handleDriverChange = (e) =>{
+  const handleDriverChange1 = (e) =>{
     const file = e.target.files[0];
     const reader = new FileReader();
 
@@ -95,11 +100,27 @@ const DriverMaster = () => {
       setImageValue({
         LicenseData:base64String,
         LicenseName:file.name
-      });
+      })
     };  
     reader.readAsDataURL(file);
   }
 
+  const handleDriverChange2 = (e) =>{
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () =>{
+      const base64 = reader.result;
+      const base64String = base64.split(',')[1];
+      setAnotherImage({
+        ImageData:base64String,
+        ImageName:file.name
+      })
+    };  
+    reader.readAsDataURL(file);
+  }
+
+  // console.log('image-value', imageValue);
   const columns = [
     {
       name: "Profile",
@@ -111,14 +132,14 @@ const DriverMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Profile}
+          <img src={row.ImageData} style={{height:'30PX', width:'30px'}} alt={row.ImageName}></img>
         </span>
       ),
       sortable: true,
     },
     {
       name: "Document",
-      selector: (row) => row.Document,
+      selector: (row) => <img src={row.LicenseData} style={{height:'30PX', width:'30px'}} alt={row.LicenseName}></img>,
       sortable: true,
     },
     {
@@ -212,7 +233,7 @@ const DriverMaster = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
-                  imageValue={imageValue}
+                  imageValue={{...imageValue,...anotherImage}}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
@@ -259,7 +280,7 @@ const DriverMaster = () => {
                         <label>WhatsApp Number</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="WhatsappNumber"
                           placeholder="WhatsAppNumber"
                           className="form-control"
                         />
@@ -314,7 +335,7 @@ const DriverMaster = () => {
                         <label>Address</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="Address"
                           placeholder="Address"
                           className="form-control"
                         />
@@ -324,19 +345,21 @@ const DriverMaster = () => {
                       </div>
                       <div className="col-sm-4">
                         <label>Upload License</label>
-                        <Field
+                        <input
                           type="file"
                           name="LicenseData"
                           className="form-control"
-                          onChange={handleDriverChange}
+                          onChange={handleDriverChange1}
+                          // value={imageValue.LicenseData}
                         />
                       </div>
                       <div className="col-sm-4">
                         <label>Image</label>
-                        <Field
+                        <input
                           type="file"
-                          name="LicenseData"
+                          name="ImageData"
                           className="form-control"
+                          onChange={handleDriverChange2}
                         />
                       </div>
                       <div className="col-sm-4">

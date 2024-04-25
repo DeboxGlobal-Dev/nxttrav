@@ -6,6 +6,7 @@ import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
 import { hotelAdditonalInitialValue, hotelAdditionalValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
+import { InputAdornment } from "@mui/material";
 
 const HotelAdditional = () => {
   const [getData, setGetData] = useState([]);
@@ -18,6 +19,10 @@ const HotelAdditional = () => {
   });
  const [changeValue, setChangeValue] = useState("");
  const [updateData, setUpdateData] = useState(false);
+ const [imageValue, setImageValue] = useState({
+  ImageData:''
+ });
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -53,6 +58,21 @@ const HotelAdditional = () => {
     })
     setIsEditing(true);
   };
+
+  const handleImageChange = (e) =>{
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () =>{
+      const base64 = reader.result;
+      const base64String = base64.split(',')[1];
+      setImageValue({
+        ImageData:base64String
+      });
+    };
+    reader.readAsDataURL(file);
+
+  }
 
   const columns = [
     {
@@ -131,6 +151,7 @@ const HotelAdditional = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  imageValue={imageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
@@ -148,11 +169,12 @@ const HotelAdditional = () => {
                       </div>
                       <div className="col-sm-4">
                         <label>Image</label>
-                        <Field
+                        <input
                           type="file"
                           id="file"
-                          name="Image"
+                          name="ImageData"
                           className="form-control"
+                          onChange={handleImageChange}
                         />
                       </div>
                       <div className="col-sm-4">

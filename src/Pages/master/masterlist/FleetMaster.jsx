@@ -20,8 +20,8 @@ const FleetMaster = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [imageValue, setImageValue] = useState({
-    CarPhotoData:'',
-    CarPhotoName:''
+    ImageData:'',
+    ImageName:''
   });
 
   useEffect(() => {
@@ -67,8 +67,8 @@ const FleetMaster = () => {
       const base64 = reader.result;
       const base64String = base64.split(',')[1];
       setImageValue({
-        CarPhotoData:base64String,
-        CarPhotoName:file.name
+        ImageData:base64String,
+        ImageName:file.name
       });
     }
     reader.readAsDataURL(file);
@@ -403,7 +403,7 @@ const FleetMaster = () => {
                         <label>Car Photo</label>
                         <Field
                           type="file"
-                          name="CarPhotoData"
+                          name="ImageData"
                           className="form-control"
                           onChange={handleFleetChange}
                         />

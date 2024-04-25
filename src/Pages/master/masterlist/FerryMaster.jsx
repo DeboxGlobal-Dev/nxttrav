@@ -23,7 +23,8 @@ const FerryMaster = () => {
   const [changeValue, setChangeValue] = useState("");
   const [ferryCompanyList, setFerryCompanyList] = useState([]);
   const [imageValue, setImageValue] = useState({
-    FerryImageData:'',
+    ImageData:'',
+    ImageName:''
   })
 
   const getDataToServer = async () => {
@@ -49,6 +50,7 @@ const FerryMaster = () => {
         const { data } = await axiosOther.post("ferrynamelist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
+        console.log(data.DataList);
       } catch (error) {
         console.log(error);
       }
@@ -88,7 +90,8 @@ const FerryMaster = () => {
       const base64 = reader.result;
       const base64String = base64.split(',')[1];
       setImageValue({
-        FerryImageData:base64String
+        ImageData:base64String,
+        ImageName:file.name
       });
     };
     reader.readAsDataURL(file);
@@ -105,7 +108,7 @@ const FerryMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.ImageName}
+          <img src={row.ImageData} alt="image" style={{height:'30px', width:'30px'}}></img>
         </span>
       ),
       sortable: true,
@@ -255,9 +258,9 @@ const FerryMaster = () => {
                             <ErrorMessage name="ImageData" />
                           </span>
                         </div>
-                        <Field
+                        <input
                           type="file"
-                          name="FerryImageData"
+                          name="ImageData"
                           placeholder="Capacity"
                           className="form-control"
                           onChange={handleFerryChange}

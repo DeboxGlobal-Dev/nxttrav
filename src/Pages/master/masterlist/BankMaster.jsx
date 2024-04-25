@@ -22,7 +22,8 @@ const BankMaster = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [imageValue, setImageValue] = useState({
-    BankImageData:'',
+    ImageData:'',
+    ImageName:''
   });
 
   useEffect(() => {
@@ -67,7 +68,8 @@ const BankMaster = () => {
       const base64 = reader.result;
       const base64String = base64.split(',')[1];
       setImageValue({
-        BankImageData:base64String
+        ImageData:base64String,
+        ImageName:file.name
       })
     };
 
@@ -239,7 +241,7 @@ const BankMaster = () => {
                         <label>Attach QR Code Image</label>
                         <Field
                           type="file"
-                          name="BankImageData"
+                          name="ImageData"
                           className="form-control"
                           onChange={hanldeBankChange}
                         />
