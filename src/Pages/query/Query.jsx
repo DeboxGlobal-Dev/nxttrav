@@ -14,7 +14,7 @@ import "select2";
 import { NavLink, useNavigate } from "react-router-dom";
 import Counter from "./Counter";
 import toast, { Toaster } from "react-hot-toast";
-
+import LeadSource from "../master/masterlist/LeadSource";
 
 const Query = () => {
   const navigate = useNavigate();
@@ -116,31 +116,45 @@ const Query = () => {
 
   // Getting data to server for Dropdown
   useEffect(() => {
-    const getDataToServer = async () => {
+    const gettingDataForDropdown = async () =>{
+
       try {
-        const type = await axiosOther.post(
-          "hoteltypelist",
-          hotelTypeInitialValue
-        );
-        const meal = await axiosOther.post(
-          "hotelmealplanlist",
-          hotelMealInitialValue
-        );
-        const lead = await axiosOther.post("leadlist", leadSourceInitialValue);
-        // const tour = await axiosOther.post(
-        //   "tourlist",
-        //   tourtypeInitialValue
-        // );
-        // console.log('TourType', tour);
-        setHotelType(type.data.DataList);
-        setHotelMeal(meal.data.DataList);
-        setLeadList(lead.data.DataList);
-        // setTourType(tour.data.DataList);
-      } catch (error) {
-        console.log(error);
+        const {data} = await axiosOther.post('leadlist', {
+          Search:'',
+          Status:''
+        })
+        console.log('LeadListData',data.DataList);
+        setLeadList(data.DataList);
+      } catch (err) {
+        console.log(err);
       }
-    };
-    getDataToServer();
+
+      try {
+        const {data} = await axiosOther.post('hoteltypelist', {
+          Search:'',
+          Status:''
+        })
+        console.log('LeadListData',data.DataList);
+        setHotelType(data.DataList);
+      } catch (err) {
+        console.log(err);
+      }
+
+      try {
+        const {data} = await axiosOther.post('tourlist', {
+          Search:'',
+          Status:''
+        })
+        console.log('LeadListData',data.DataList);
+        setTourType(data.DataList);
+      } catch (err) {
+        console.log(err);
+      }
+
+
+
+    }
+    gettingDataForDropdown();
   }, []);
 
   // Handling Submit Query Data
@@ -1233,6 +1247,11 @@ const Query = () => {
                         onChange={handleChange}
                       >
                         <option>All</option>
+                        {
+                          hotelType.map((value, index)=>{
+                            return <option value={value.Id} key={index+1}>{value.Name}</option>
+                          })
+                        }
                       </select>
                     </div>
                     <div className="">
@@ -1253,7 +1272,12 @@ const Query = () => {
                         value={queryFields.TourType}
                         onChange={handleChange}
                       >
-                        <option>Adventure Tour</option>
+                        <option>Select Tour</option>
+                        {
+                          tourType.map((value, index)=>{
+                            return <option value={value.Id} key={index+1}>{value.Name}</option>
+                          })
+                        }
                       </select>
                     </div>
                     <div className="">
@@ -1283,8 +1307,12 @@ const Query = () => {
                         value={queryFields.LeadSource}
                         onChange={handleChange}
                       >
-                        <option>Instagram</option>
-                        <option>Facebook</option>
+                        <option>Select Source</option>
+                        {
+                          leadList.map((value, index)=>{
+                            return <option value={value.Id} key={index+1}>{value.Name}</option>
+                          })
+                        }
                       </select>
                     </div>
                     <div className="">
@@ -1449,18 +1477,18 @@ const Query = () => {
                     Description
                   </label>
                   <textarea
-                    className="form-input-2" 
+                    className="form-input-2"
                     id="exampleFormControlTextarea1"
                     rows="3"
-                    style={{height:'100px'}}
+                    style={{ height: "100px" }}
                   ></textarea>
                 </div>
               </div>
               <div className="col-12 p-0 d-flex justify-content-end">
-                    <div className="p-0">
-                      <button className="blue-button">Save</button>
-                      <button className="green-button">Submit</button>
-                    </div>
+                <div className="p-0">
+                  <button className="blue-button">Save</button>
+                  <button className="green-button">Submit</button>
+                </div>
               </div>
             </div>
           </form>
