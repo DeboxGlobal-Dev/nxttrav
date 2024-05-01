@@ -102,6 +102,7 @@ import Itineraries from "./Pages/query/Itineraries.jsx";
 import Polocies from "./Pages/query/Policies.jsx";
 import Commission from "./Pages/query/Commission.jsx";
 import Summary from "./Pages/query/Summary.jsx";
+import Preview from "./Pages/query/Preview.jsx";
 
 
 const App = () => {
@@ -114,6 +115,7 @@ const App = () => {
           <Route path="/mail" element={  <Protected><Mail /></Protected>}/>
           <Route path="/querylist" element={ <Protected>  <QueryList />  </Protected>}/>
           <Route path="/querylist/queryview" element={<Protected><QueryView /></Protected>}>
+          <Route path="/querylist/queryview/preview" element={<Protected><Preview/></Protected>}></Route>
             <Route index element={<Protected><Query/></Protected>}></Route>
             <Route path="quotation" element={<Protected><Quotation/></Protected>}>
               <Route index element={<Protected><Itineraries/></Protected>}></Route>

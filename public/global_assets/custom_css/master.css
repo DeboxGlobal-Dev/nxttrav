@@ -476,3 +476,13 @@ a {
   background-color: rgb(20, 204, 42);
   color: white;
 }
+
+.red-bg{
+  background-color: red;
+}
+.gray-bg{
+  background-color: rgb(147, 145, 145);
+}
+.pink-bg{
+  background-color: rgb(244, 71, 129);
+}
