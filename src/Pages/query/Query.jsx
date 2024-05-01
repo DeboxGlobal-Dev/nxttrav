@@ -304,7 +304,6 @@ const Query = () => {
   // Data Set into input field from localstorage and remove on Submit and Clear;
   const handleUnSubmittedQuery  = () =>{
     console.log('LocalStorageData', storedData);
-    alert('Yes I am working')
         const {
           QueryId,FDCode,PackageCode,PackageName,ClientType,AgentId,
           LeadPax,Subject,AddEmail,AdditionalInfo,QueryType,Priority,TAT,
@@ -1767,7 +1766,10 @@ const Query = () => {
                         </div>
                         <div className="modal-body">
                           <ul><li onClick={handleUnSubmittedQuery} 
-                            className="cursor-pointer"
+                            className="cursor-pointer close d-block"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                            style={{marginRight:'440px'}}
                           >First List</li></ul>
                         </div>
                       </div>
