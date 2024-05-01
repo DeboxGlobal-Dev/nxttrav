@@ -65,11 +65,11 @@ const Query = () => {
     LeadSource: "",
     LeadReferencedId: "",
     HotelPreference: "",
-    VehiclePrefrence:"",
+    VehiclePrefrence: "",
     HotelType: "",
     MealPlan: "",
-    TravelInfo:"",
-    PaxType:"",
+    TravelInfo: "",
+    PaxType: "",
     AddedBy: "1",
     UpdatedBy: "0",
   });
@@ -161,13 +161,13 @@ const Query = () => {
     e.preventDefault();
 
     if (document.activeElement.name === "SaveButton") {
-      // localStorage.setItem(
-      //   "Query",
-      //   JSON.stringify({ ...queryFields, TravelDate:[{...TravelDate}], RoomInfo:[{...RoomInfo}], 
-      //     PaxInfo:[{...PaxInfo}], ValueAddServices:[{...valueAddServices}]})
-      // );
+      localStorage.setItem(
+        "Query",
+        JSON.stringify({ ...queryFields, TravelDate:[{...TravelDate}], RoomInfo:[{...RoomInfo}],
+          PaxInfo:[{...PaxInfo}], ValueAddServices:[{...valueAddServices}]})
+      );
       navigate("/querylist");
-    } else if (document.activeElement.name === "ClearButton"){
+    } else if (document.activeElement.name === "ClearButton") {
       localStorage.removeItem("Query");
       toast.success("Query Form Cleared !");
       setEmptyData(!emptyData);
@@ -181,10 +181,15 @@ const Query = () => {
         // console.log({ ...queryFields, TravelDate, PaxInfo, RoomInfo });
         const response = await axios.post(
           "http://20.197.55.39/api/addupdatequerymaster",
-          { ...queryFields, TravelDate:[{...TravelDate}], RoomInfo:[{...RoomInfo}], 
-          PaxInfo:[{...PaxInfo}], ValueAddServices:[{...valueAddServices}]}
+          {
+            ...queryFields,
+            TravelDate: [{ ...TravelDate }],
+            RoomInfo: [{ ...RoomInfo }],
+            PaxInfo: [{ ...PaxInfo }],
+            ValueAddServices: [{ ...valueAddServices }],
+          }
         );
-        console.log('SubmitingQueryForm',response);
+        console.log("SubmitingQueryForm", response);
         toast.success("Query Submitted Successfully!");
         localStorage.removeItem("Query");
       } catch (err) {
@@ -210,17 +215,22 @@ const Query = () => {
   const handleChange = (e) => {
     setQueryFields({ ...queryFields, [e.target.name]: e.target.value });
   };
-  
-  const handleRoomInfo = (e) =>{
+
+  const handleRoomInfo = (e) => {
     setRoomInfo({ ...RoomInfo, [e.target.name]: e.target.value });
-  }
-  
-  const handleDateChange = (e) =>{
+  };
+
+  const handleDateChange = (e) => {
     setTravelDate({ ...TravelDate, [e.target.name]: e.target.value });
   };
 
-  console.log('QueryValues',{ ...queryFields, TravelDate:[{...TravelDate}], RoomInfo:[{...RoomInfo}], 
-    PaxInfo:[{...PaxInfo}], ValueAddServices:[{...valueAddServices}]});
+  // console.log("QueryValues", {
+  //   ...queryFields,
+  //   TravelDate: [{ ...TravelDate }],
+  //   RoomInfo: [{ ...RoomInfo }],
+  //   PaxInfo: [{ ...PaxInfo }],
+  //   ValueAddServices: [{ ...valueAddServices }],
+  // });
 
   // Looping date & stored into array
   function createDateArray() {
@@ -292,63 +302,57 @@ const Query = () => {
   }, [state]);
 
   // Data Set into input field from localstorage and remove on Submit and Clear;
-  // useEffect(() => {
-  //   const {
-  //     TravelDate,
-  //     PaxInfo,
-  //     RoomInfo,
-  //     CompanyInfo,
-  //     AddEmail,
-  //     LeadPax,
-  //     Subject,
-  //     AdditionalInfo,
-  //     SearchPackage,
-  //     OperationPerson,
-  //     ContractPerson,
-  //     Priority,
-  //     TAT,
-  //     TourType,
-  //     LeadSource,
-  //     HotelCategory,
-  //     LeadReferenced,
-  //     HotelType,
-  //     MealPlan,
-  //   } = storedData ?? {};
-  //   const { Type, FromDate, ToDate, TotalNights, SeasonType, SeasonYear } =
-  //     TravelDate ?? {};
-  //   const { Adult, Child, Infant } = PaxInfo ?? {};
-  //   const { Single, Double, Twin, Triple, ExtraBed } = RoomInfo ?? {};
-  //   setTravelDate({
-  //     Type: Type ? Type : "",
-  //     FromDate: FromDate ? FromDate : "",
-  //     ToDate: ToDate ? ToDate : "",
-  //     TotalNights: TotalNights ? TotalNights : "",
-  //     SeasonType: SeasonType ? SeasonType : "",
-  //     SeasonYear: SeasonType ? SeasonYear : "",
-  //   });
-  //   dispatch({ type: "SET", value: Adult ? Adult : 0, counter: "counter1" });
-  //   dispatch({ type: "SET", value: Child ? Child : 0, counter: "counter2" });
-  //   dispatch({ type: "SET", value: Infant ? Infant : 0, counter: "counter3" });
+  const handleUnSubmittedQuery  = () =>{
+    console.log('LocalStorageData', storedData);
+    alert('Yes I am working')
+        const {
+          QueryId,FDCode,PackageCode,PackageName,ClientType,AgentId,
+          LeadPax,Subject,AddEmail,AdditionalInfo,QueryType,Priority,TAT,
+          TourType,LeadSource,LeadReferencedId,HotelPreference,VehiclePrefrence,
+          HotelType,MealPlan,TravelInfo,PaxType,AddedBy,UpdatedBy,
+    } = storedData ?? {};
+    const { Type, FromDate, ToDate, TotalNights, SeasonType, SeasonYear } = storedData.TravelDate[0] ?? {};
+    const { Adult, Child, Infant } = storedData.PaxInfo[0] ?? {};
+    const { Single, Double, Twin, Triple, ExtraBed } = storedData.RoomInfo[0] ?? {};
+    setTravelDate({
+      Type: Type ? Type : "",
+      FromDate: FromDate ? FromDate : "",
+      ToDate: ToDate ? ToDate : "",
+      TotalNights: TotalNights ? TotalNights : "",
+      SeasonType: SeasonType ? SeasonType : "",
+      SeasonYear: SeasonType ? SeasonYear : "",
+    });
+    dispatch({ type: "SET", value: Adult ? Adult : 0, counter: "counter1" });
+    dispatch({ type: "SET", value: Child ? Child : 0, counter: "counter2" });
+    dispatch({ type: "SET", value: Infant ? Infant : 0, counter: "counter3" });
 
-  //   setQueryFields({
-  //     CompanyInfo: CompanyInfo ? CompanyInfo : "",
-  //     AddEmail: AddEmail ? AddEmail : "",
-  //     LeadPax: LeadPax ? LeadPax : "",
-  //     Subject: Subject ? Subject : "",
-  //     AdditionalInfo: AdditionalInfo ? AdditionalInfo : "",
-  //     SearchPackage: SearchPackage ? SearchPackage : "",
-  //     OperationPerson: OperationPerson ? OperationPerson : "",
-  //     ContractPerson: ContractPerson ? ContractPerson : "",
-  //     Priority: Priority ? Priority : "",
-  //     TAT: TAT ? TAT : "",
-  //     TourType: TourType ? TourType : "",
-  //     LeadSource: LeadSource ? LeadSource : "",
-  //     HotelCategory: HotelCategory ? HotelCategory : "",
-  //     LeadReferenced: LeadReferenced ? LeadReferenced : "",
-  //     HotelType: HotelType ? HotelType : "",
-  //     MealPlan: MealPlan ? MealPlan : "",
-  //   });
-  // }, [emptyData]);
+    setQueryFields({
+      QueryId: QueryId ? QueryId : "",
+      FDCode: FDCode ? FDCode : "",
+      PackageCode: PackageCode ? PackageCode : "",
+      PackageName: PackageName ? PackageName : "",
+      ClientType: ClientType ? ClientType : "",
+      AgentId: AgentId ? AgentId : "",
+      LeadPax: LeadPax ? LeadPax : "Ansar",
+      Subject: Subject ? Subject : "",
+      AddEmail: AddEmail ? AddEmail : "",
+      AdditionalInfo: AdditionalInfo ? AdditionalInfo : "",
+      QueryType: QueryType ? QueryType : "",
+      Priority: Priority ? Priority : "",
+      TAT: TAT ? TAT : "",
+      TourType: TourType ? TourType : "",
+      LeadSource: LeadSource ? LeadSource : "",
+      LeadReferencedId: LeadReferencedId ? LeadReferencedId : "",
+      HotelPreference: HotelPreference ? HotelPreference : "",
+      VehiclePrefrence: VehiclePrefrence ?   VehiclePrefrence : "",
+      HotelType: HotelType ?   HotelType : "",
+      MealPlan: MealPlan ?   MealPlan : "",
+      TravelInfo: TravelInfo ?   TravelInfo : "",
+      PaxType: PaxType ?   PaxType : "",
+      AddedBy: AddedBy ?   AddedBy : "1",
+      UpdatedBy :UpdatedBy ? UpdatedBy:  "0",
+    });
+  };
 
   //DayWise TravelInformation
   useEffect(() => {
@@ -372,7 +376,7 @@ const Query = () => {
           > */}
           <form onSubmit={handleSubmit}>
             {/* <div className=""> */}
-            <Toaster/>
+            <Toaster />
             <div className="row">
               <div className="col-12 col-md-8">
                 <div className="row py-1 column-gap-2 row-gap-2">
@@ -1732,6 +1736,43 @@ const Query = () => {
               </div>
               <div className="col-12 p-0 d-flex justify-content-end">
                 <div className="p-0">
+                  <button
+                    type="button"
+                    className="orange-button"
+                    data-toggle="modal"
+                    data-target="#modal_form_vertical"
+                  >
+                    <span>Un-Submited Query</span>
+                  </button>
+                  <div
+                    className="modal fade"
+                    id="modal_form_vertical"
+                    data-bs-backdrop="static"
+                    data-bs-keyboard="false"
+                  >
+                    <div className="modal-dialog" role="document">
+                      <div className="modal-content">
+                        <div className="modal-header  bg-info-700">
+                          <h5 className="modal-title" id="exampleModalLabel">
+                            Un-Submitted Query List
+                          </h5>
+                          <button
+                            type="button"
+                            className="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div className="modal-body">
+                          <ul><li onClick={handleUnSubmittedQuery} 
+                            className="cursor-pointer"
+                          >First List</li></ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <button className="blue-button" name="SaveButton">
                     Save
                   </button>
