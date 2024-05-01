@@ -8,6 +8,7 @@ import { login } from "../../reducer/authReducers";
 import { axiosNew } from "../../http/axios/axios_new";
 
 const Login = () => {
+
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -24,7 +25,6 @@ const Login = () => {
     try {
       if (user.username != "" && user.password != "") {
         setLoading(true);
-
         const { data } = await axiosNew.post("/auth/login", {
           username: user.username,
           password: user.password,
@@ -126,8 +126,6 @@ const Login = () => {
                   <div className="form-group d-flex align-items-center">
                     <div className="form-check mb-0" style={{ padding: "0px" }}>
                       <Checkbox defaultChecked size="small" value="2" />
-                      {/* <input type="checkbox" name="remember" className="form-input-styled" 
-                      checked data-fouc readOnly value="1"  /> */}
                       Remember
                       <label className="form-check-label"></label>
                     </div>
@@ -139,14 +137,14 @@ const Login = () => {
 
                   <div className="form-group">
                     <button type="submit" className="btn btn-primary btn-block">
-                      {isLoading ? "Loading.." : "Sign In"}{" "}
+                      {isLoading ? "Loading.." : "Sign In"}
                       <i className="icon-circle-right2 ml-2"></i>
                     </button>
                   </div>
 
                   <span className="form-text text-center text-muted">
-                    By continuing, you're confirming that you've read our{" "}
-                    <a href="#">Terms &amp; Conditions</a> and{" "}
+                    By continuing, you're confirming that you've read our
+                    <a href="#">Terms &amp; Conditions</a> and
                     <a href="#">Cookie Policy</a>
                   </span>
                 </div>
@@ -182,7 +180,7 @@ const Login = () => {
         </div>
         <div className="navbar-collapse collapse" id="navbar-footer">
           <span className="navbar-text">
-            &copy; 2024. Powered By{" "}
+            &copy; 2024. Powered By
             <a href="https://www.deboxglobal.com/">
               <img
                 src="https://shivdvn.com/staging/global_assets/images/debox-logo.png"

@@ -68,6 +68,10 @@ const FerryMaster = () => {
 
   const handleEditClick = (rowValue) => {
     console.log(rowValue);
+    setImageValue({
+      ImageData:rowValue.ImageData,
+      ImageName:rowValue.ImageName
+    });
     setEditData({
       id: rowValue.Id,
       FerryCompany: rowValue.FerryCompany,

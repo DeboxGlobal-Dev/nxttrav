@@ -103,6 +103,11 @@ const Resturant = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+    
+    setImageValue({
+      ImageData:rowValue.ImageData,
+      ImageName:rowValue.ImageName
+    });
     setValueForEdit({
       Name:rowValue.Name,
       Destination:rowValue.Destination,

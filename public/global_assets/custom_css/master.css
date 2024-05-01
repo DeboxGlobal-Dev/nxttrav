@@ -241,7 +241,7 @@ a {
   transition: 0.6s;
 }
 .green-hover:hover {
-  background-color: green;
+  background-color: rgb(22, 155, 215);
   color: white;
 }
 .bg-gray {

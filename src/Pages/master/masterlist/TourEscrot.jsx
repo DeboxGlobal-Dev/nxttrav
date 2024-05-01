@@ -33,12 +33,7 @@ const TourEscort = () => {
     TourEscortImageData:'',
     TourEscortImageName:''
   });
-  console.log(imageValue);
-  // let merged = Object.assign({}, tourEscortInitialValue, imageValue);
-  // console.log('MergedObject', merged);
-  // console.log('...image-value', imageValue);
 
-  console.log('changevalue', changeValue.TourEscortImageData)
   const getDataToServer = async () => {
     try {
       const countryData = await axiosOther.post("countrylist", {
@@ -132,14 +127,17 @@ const TourEscort = () => {
       });
     };
     reader.readAsDataURL(file);
-
-    console.log('file',file);
+    console.log('image-boject-', URL.createObjectURL(e.target.files[0]));
   };
+  
 
   const handleEditClick = (rowValue) => {
-
     console.log('RowValue', rowValue);
 
+    setImageValue({
+      TourEscortImageName: rowValue.TourEscortImageName,
+      TourEscortImageData: rowValue.TourEscortImageData,
+    })
     setEditData({
       id: rowValue.Id,
       ServiceType: rowValue.ServiceType,
@@ -152,8 +150,6 @@ const TourEscort = () => {
       LicenseExpiry: rowValue.LicenseExpiry,
       Destination: rowValue.Destination,
       Language: rowValue.Language,
-      TourEscortImageName: rowValue.TourEscortImageName,
-      TourEscortImageData: rowValue.TourEscortImageData,
       Supplier: rowValue.Supplier,
       TourEscortLicenseTwo: rowValue.TourEscortLicenseTwo,
       ContactPerson: rowValue.ContactPerson,
@@ -412,6 +408,8 @@ const TourEscort = () => {
                           name="TourEscortImageData"
                           className="form-control"
                           onChange={handleEscortImage}
+                          // value={imageValue.TourEscortImageName}
+                          accept="image/*"
                         />
                       </div>
                       <div className="col-sm-4">

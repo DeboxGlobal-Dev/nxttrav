@@ -20,7 +20,8 @@ const HotelAdditional = () => {
  const [changeValue, setChangeValue] = useState("");
  const [updateData, setUpdateData] = useState(false);
  const [imageValue, setImageValue] = useState({
-  ImageData:''
+  ImageData:'',
+  ImageName:''
  });
 
   useEffect(() => {
@@ -46,6 +47,10 @@ const HotelAdditional = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+    setImageValue({
+      ImageData:rowValue.ImageData,
+      ImageName:rowValue.ImageName
+    })
     setEditData({
       id: rowValue.Id,
       Name: rowValue.Name,

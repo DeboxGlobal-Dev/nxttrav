@@ -47,6 +47,10 @@ const CruiseNameCompany = () => {
   
   const handleEditClick = (rowValue) => {
     console.log(rowValue);
+    setImageValue({
+      ImageData:rowValue.ImageData,
+      ImageName:rowValue.ImageName
+    });
     setEditData({
       id: rowValue.Id,
       CountryId: rowValue.CountryName === "India" ? "1" : "2",

@@ -32,6 +32,7 @@ const BankMaster = () => {
         const { data } = await axiosOther.post("banklist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
+        
       } catch (error) {
         console.log(error);
       }
@@ -48,6 +49,10 @@ const BankMaster = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+    setImageValue({
+      ImageData:rowValue.ImageData,
+      ImageName:rowValue.ImageName
+    });
     setEditData({
       id: rowValue.Id,
       Name: rowValue.Name,

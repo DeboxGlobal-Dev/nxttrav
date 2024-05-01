@@ -11,5 +11,4 @@ const Protected = ({ children }) => {
     return <Navigate to="/login" state={{ from: location }}/>
   }
 };
-
 export default Protected;

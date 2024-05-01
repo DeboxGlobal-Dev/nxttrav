@@ -48,6 +48,10 @@ const AirlineMaster = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+    setImageValue({
+      ImageData:rowValue.ImageData,
+      ImageName:rowValue.ImageName
+    });
     setEditData({
       id: rowValue.Id,
       Name: rowValue.Name,

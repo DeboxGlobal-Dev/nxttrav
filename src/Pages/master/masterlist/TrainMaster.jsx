@@ -48,6 +48,10 @@ const TrainMaster = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+    setImageValue({
+      ImageData:rowValue.ImageData,
+      imageValue:rowValue.ImageName
+    });
     setEditData({
       id: rowValue.Id,
       Name: rowValue.Name,

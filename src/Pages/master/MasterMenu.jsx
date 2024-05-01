@@ -8,13 +8,14 @@ const MasterMenu = () => {
   const handleSearch = (e) =>{
     setSearch(e.target.value);
   }
+  
   return(
     <>
       {/* General Master Menu List */}
       <div className="card w-100 shadow-none border">
-        <div className="card-body p-2 ">
+        <div className="card-body p-2">
           <input type="text"
-           placeholder="Search Master" 
+           placeholder="Search Master"
            className="form-input"
            name="Search"
            onChange={handleSearch}
@@ -165,7 +166,7 @@ const MasterMenu = () => {
                   <NavLink to="/master/amenties">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
                       <img src="assets/icons/amenities.png" alt="image" />
-                      <span className={`pl-1 ${'amentiesmaster'.includes(search?.toLowerCase()?.replace(/\s/g,'')) && search !==''? 'bg-primary pr-1':""}`}>Amenties Master</span>
+                      <span className={`pl-1 ${'amentiesmaster'.includes(search?.toLowerCase()?.replace(/\s/g,'')) && search !==''? 'bg-primary pr-1':""}`}>Amenities Master</span>
                     </div>
                   </NavLink>
                   <NavLink to="/master/room_master">
@@ -532,7 +533,7 @@ const MasterMenu = () => {
                   <NavLink to="/master/cruisecompany">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
                       <img src="assets/icons/enterprise.png" alt="image" />
-                      <span className={`pl-1 ${'cruisecompany'.includes(search?.toLowerCase()?.replace(/\s/g,'')) && search !==''? 'bg-primary pr-1':""}`}>Cruise Componey</span>
+                      <span className={`pl-1 ${'cruisecompany'.includes(search?.toLowerCase()?.replace(/\s/g,'')) && search !==''? 'bg-primary pr-1':""}`}>Cruise Company</span>
                     </div>
                   </NavLink>
 
@@ -595,7 +596,7 @@ const MasterMenu = () => {
                   <NavLink to="/master/ferrycompany">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
                       <img src="assets/icons/ferry.png" alt="image" />
-                      <span className={`pl-1 ${'ferrycompany'.includes(search?.toLowerCase()?.replace(/\s/g,'')) && search !==''? 'bg-primary pr-1':""}`}>Ferry Componey</span>
+                      <span className={`pl-1 ${'ferrycompany'.includes(search?.toLowerCase()?.replace(/\s/g,'')) && search !==''? 'bg-primary pr-1':""}`}>Ferry Company</span>
                     </div>
                   </NavLink>
 
@@ -651,7 +652,7 @@ const MasterMenu = () => {
                   <NavLink to="/master/itenaryrequirement">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
                       <img src="assets/icons/destination.png" alt="image" />
-                      <span className={`pl-1 ${'itenararyrequirements'.includes(search?.toLowerCase()?.replace(/\s/g,'')) && search !==''? 'bg-primary pr-1':""}`}>Itenarary Requirement</span>
+                      <span className={`pl-1 ${'itenararyrequirements'.includes(search?.toLowerCase()?.replace(/\s/g,'')) && search !==''? 'bg-primary pr-1':""}`}>Itinerary Requirement</span>
                     </div>
                   </NavLink>
                   <NavLink to="/master/lettermaster">
@@ -666,7 +667,7 @@ const MasterMenu = () => {
                   <NavLink to="/master/itenararyoverview">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
                       <img src="assets/icons/itinerary2.png" alt="image" />
-                      <span className={`pl-1 ${'itenararyoverview'.includes(search?.toLowerCase()?.replace(/\s/g,'')) && search !==''? 'bg-primary pr-1':""}`}>Itenarary Overview</span>
+                      <span className={`pl-1 ${'itenararyoverview'.includes(search?.toLowerCase()?.replace(/\s/g,'')) && search !==''? 'bg-primary pr-1':""}`}>Itinerary Overview</span>
                     </div>
                   </NavLink>
                   <NavLink to="/master/proposalsetting">

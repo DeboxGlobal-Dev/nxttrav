@@ -1,5 +1,5 @@
 import React, { useState, useReducer, useEffect } from "react";
-import { axiosOther } from "../../http/axios/axios_new";
+// import { axiosOther } from "../../http/axios/axios_new";
 import { eachDayOfInterval, format } from "date-fns";
 import {
   hotelTypeInitialValue,
@@ -7,6 +7,7 @@ import {
   leadSourceInitialValue,
   tourtypeInitialValue,
 } from "../master/masterlist/MasterValidations";
+import { axiosOther } from "../../http/axios/axios_new";
 import * as Yup from "yup";
 import axios from "axios";
 import "jquery";
@@ -32,47 +33,52 @@ const Query = () => {
     Infant: "",
   });
   const [RoomInfo, setRoomInfo] = useState({
-    Room: "",
-    Single: "",
-    Double: "",
-    Twin: "",
-    Triple: "",
-    ExtraBed: "",
+    Room: 0,
+    Single: 0,
+    Double: 0,
+    Twin: 0,
+    Triple: 0,
+    ExtraBed: 0,
+  });
+  const [valueAddServices, setValueAddServices] = useState({
+    Flight: "NO",
+    Visa: "NO",
+    Insurance: "NO",
+    Train: "NO",
+    Transfer: "NO",
   });
   const [queryFields, setQueryFields] = useState({
-    SalesPerson: "",
-    AssignUser: "",
-    ContractPerson: "",
-    Priority: "",
-    HotelType: "",
-    TourType: "",
-    VehiclePreference: "",
-    LeadSource: "",
-    LeadReferencedId: "",
-    QueryType: "",
-    BusinessType: "",
-    AgentName: "",
-    HotelCategory: "",
-    PaxType: "",
+    QueryId: "",
+    FDCode: "",
     PackageCode: "",
     PackageName: "",
-    QueryId: "",
-    TravelType: "1",
-    TravelSeason: "",
-    TravelYear: "",
-    Budget: "",
-    PackageSearch: "",
+    ClientType: "",
+    AgentId: "",
+    LeadPax: "Ansar",
+    Subject: "its subject field required",
+    AddEmail: "ansar@gmail.com, sanaul@gmail.com",
+    AdditionalInfo: "itsdefaultinfo",
+    QueryType: "",
+    Priority: "",
+    TAT: "23",
+    TourType: "",
+    LeadSource: "",
+    LeadReferencedId: "",
+    HotelPreference: "",
+    VehiclePrefrence:"",
+    HotelType: "",
+    MealPlan: "",
+    TravelInfo:"",
+    PaxType:"",
+    AddedBy: "1",
+    UpdatedBy: "0",
   });
-  // console.log("JSON Values...", {
-  //   ...queryFields,
-  //   TravelDate,
-  //   PaxInfo,
-  //   RoomInfo,
-  // });
+
   const validationSchema = Yup.object().shape({
     CompanyInfo: Yup.string().required("Required"),
     AddEmail: Yup.string().email("Invalid Email").required("Required"),
   });
+
   const [hotelType, setHotelType] = useState([]);
   const [hotelMeal, setHotelMeal] = useState([]);
   const [leadList, setLeadList] = useState([]);
@@ -80,7 +86,7 @@ const Query = () => {
   const [toDate, setToDate] = useState();
   const [dateArray, setDateArray] = useState([]);
   const [emptyData, setEmptyData] = useState(false);
-
+  const [dayWiseNights, setDayWiseNights] = useState([]);
   const initialState = {
     counter1: 0,
     counter2: 0,
@@ -116,44 +122,37 @@ const Query = () => {
 
   // Getting data to server for Dropdown
   useEffect(() => {
-    const gettingDataForDropdown = async () =>{
-
+    const gettingDataForDropdown = async () => {
       try {
-        const {data} = await axiosOther.post('leadlist', {
-          Search:'',
-          Status:''
-        })
-        console.log('LeadListData',data.DataList);
+        const { data } = await axiosOther.post("leadlist", {
+          Search: "",
+          Status: "",
+        });
         setLeadList(data.DataList);
       } catch (err) {
         console.log(err);
       }
 
       try {
-        const {data} = await axiosOther.post('hoteltypelist', {
-          Search:'',
-          Status:''
-        })
-        console.log('LeadListData',data.DataList);
+        const { data } = await axiosOther.post("hoteltypelist", {
+          Search: "",
+          Status: "",
+        });
         setHotelType(data.DataList);
       } catch (err) {
         console.log(err);
       }
 
       try {
-        const {data} = await axiosOther.post('tourlist', {
-          Search:'',
-          Status:''
-        })
-        console.log('LeadListData',data.DataList);
+        const { data } = await axiosOther.post("tourlist", {
+          Search: "",
+          Status: "",
+        });
         setTourType(data.DataList);
       } catch (err) {
         console.log(err);
       }
-
-
-
-    }
+    };
     gettingDataForDropdown();
   }, []);
 
@@ -162,45 +161,41 @@ const Query = () => {
     e.preventDefault();
 
     if (document.activeElement.name === "SaveButton") {
-      localStorage.setItem(
-        "Query",
-        JSON.stringify({
-          ...queryFields,
-          TravelDate,
-          PaxInfo,
-          RoomInfo,
-        })
-      );
-      console.log("SAVE-BUTTON-RENDERED");
+      // localStorage.setItem(
+      //   "Query",
+      //   JSON.stringify({ ...queryFields, TravelDate:[{...TravelDate}], RoomInfo:[{...RoomInfo}], 
+      //     PaxInfo:[{...PaxInfo}], ValueAddServices:[{...valueAddServices}]})
+      // );
       navigate("/querylist");
-    } else if (document.activeElement.name === "ClearButton") {
+    } else if (document.activeElement.name === "ClearButton"){
       localStorage.removeItem("Query");
-      console.log("CLEAR-BUTTON-RENDERED");
       toast.success("Query Form Cleared !");
       setEmptyData(!emptyData);
     } else if (document.activeElement.name === "SubmitButton") {
-      localStorage.removeItem("Query");
-      console.log("SUBMIT-BUTTON-RENDERED");
-      toast.success("Query Submitted Successfully!");
       setEmptyData(!emptyData);
       try {
-        await validationSchema.validate(
-          { ...queryFields, TravelDate, PaxInfo, RoomInfo },
-          { abortEarly: false }
-        );
-        console.log({ ...queryFields, TravelDate, PaxInfo, RoomInfo });
+        // await validationSchema.validate(
+        //   { ...queryFields, TravelDate, PaxInfo, RoomInfo },
+        //   { abortEarly: false }
+        // );
+        // console.log({ ...queryFields, TravelDate, PaxInfo, RoomInfo });
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/addupdatequerymaster",
-          { ...queryFields, TravelDate, PaxInfo, RoomInfo }
+          "http://20.197.55.39/api/addupdatequerymaster",
+          { ...queryFields, TravelDate:[{...TravelDate}], RoomInfo:[{...RoomInfo}], 
+          PaxInfo:[{...PaxInfo}], ValueAddServices:[{...valueAddServices}]}
         );
+        console.log('SubmitingQueryForm',response);
+        toast.success("Query Submitted Successfully!");
         localStorage.removeItem("Query");
-      } catch (validationErrors) {
-        const formattedErrors = {};
-        validationErrors.inner.forEach((error) => {
-          formattedErrors[error.path] = error.message;
-        });
-        setErrors(formattedErrors);
-        console.log("Errors From Yup...", formattedErrors);
+      } catch (err) {
+        // validationErrors : parameter
+        // const formattedErrors = {};
+        // validationErrors.inner.forEach((error) => {
+        //   formattedErrors[error.path] = error.message;
+        // });
+        // setErrors(formattedErrors);
+        // console.log("Errors From Yup...", formattedErrors);
+        console.log(err);
       }
     } else {
       console.log("Hello Console");
@@ -213,11 +208,19 @@ const Query = () => {
 
   // Handling onChange data inside query page
   const handleChange = (e) => {
-    setTravelDate({ ...TravelDate, [e.target.name]: e.target.value });
     setQueryFields({ ...queryFields, [e.target.name]: e.target.value });
-    setRoomInfo({ ...RoomInfo, [e.target.name]: e.target.value });
   };
-  console.log({ ...queryFields, TravelDate, RoomInfo, PaxInfo });
+  
+  const handleRoomInfo = (e) =>{
+    setRoomInfo({ ...RoomInfo, [e.target.name]: e.target.value });
+  }
+  
+  const handleDateChange = (e) =>{
+    setTravelDate({ ...TravelDate, [e.target.name]: e.target.value });
+  };
+
+  console.log('QueryValues',{ ...queryFields, TravelDate:[{...TravelDate}], RoomInfo:[{...RoomInfo}], 
+    PaxInfo:[{...PaxInfo}], ValueAddServices:[{...valueAddServices}]});
 
   // Looping date & stored into array
   function createDateArray() {
@@ -289,64 +292,75 @@ const Query = () => {
   }, [state]);
 
   // Data Set into input field from localstorage and remove on Submit and Clear;
+  // useEffect(() => {
+  //   const {
+  //     TravelDate,
+  //     PaxInfo,
+  //     RoomInfo,
+  //     CompanyInfo,
+  //     AddEmail,
+  //     LeadPax,
+  //     Subject,
+  //     AdditionalInfo,
+  //     SearchPackage,
+  //     OperationPerson,
+  //     ContractPerson,
+  //     Priority,
+  //     TAT,
+  //     TourType,
+  //     LeadSource,
+  //     HotelCategory,
+  //     LeadReferenced,
+  //     HotelType,
+  //     MealPlan,
+  //   } = storedData ?? {};
+  //   const { Type, FromDate, ToDate, TotalNights, SeasonType, SeasonYear } =
+  //     TravelDate ?? {};
+  //   const { Adult, Child, Infant } = PaxInfo ?? {};
+  //   const { Single, Double, Twin, Triple, ExtraBed } = RoomInfo ?? {};
+  //   setTravelDate({
+  //     Type: Type ? Type : "",
+  //     FromDate: FromDate ? FromDate : "",
+  //     ToDate: ToDate ? ToDate : "",
+  //     TotalNights: TotalNights ? TotalNights : "",
+  //     SeasonType: SeasonType ? SeasonType : "",
+  //     SeasonYear: SeasonType ? SeasonYear : "",
+  //   });
+  //   dispatch({ type: "SET", value: Adult ? Adult : 0, counter: "counter1" });
+  //   dispatch({ type: "SET", value: Child ? Child : 0, counter: "counter2" });
+  //   dispatch({ type: "SET", value: Infant ? Infant : 0, counter: "counter3" });
+
+  //   setQueryFields({
+  //     CompanyInfo: CompanyInfo ? CompanyInfo : "",
+  //     AddEmail: AddEmail ? AddEmail : "",
+  //     LeadPax: LeadPax ? LeadPax : "",
+  //     Subject: Subject ? Subject : "",
+  //     AdditionalInfo: AdditionalInfo ? AdditionalInfo : "",
+  //     SearchPackage: SearchPackage ? SearchPackage : "",
+  //     OperationPerson: OperationPerson ? OperationPerson : "",
+  //     ContractPerson: ContractPerson ? ContractPerson : "",
+  //     Priority: Priority ? Priority : "",
+  //     TAT: TAT ? TAT : "",
+  //     TourType: TourType ? TourType : "",
+  //     LeadSource: LeadSource ? LeadSource : "",
+  //     HotelCategory: HotelCategory ? HotelCategory : "",
+  //     LeadReferenced: LeadReferenced ? LeadReferenced : "",
+  //     HotelType: HotelType ? HotelType : "",
+  //     MealPlan: MealPlan ? MealPlan : "",
+  //   });
+  // }, [emptyData]);
+
+  //DayWise TravelInformation
   useEffect(() => {
-    const {
-      TravelDate,
-      PaxInfo,
-      RoomInfo,
-      CompanyInfo,
-      AddEmail,
-      LeadPax,
-      Subject,
-      AdditionalInfo,
-      SearchPackage,
-      OperationPerson,
-      ContractPerson,
-      Priority,
-      TAT,
-      TourType,
-      LeadSource,
-      HotelCategory,
-      LeadReferenced,
-      HotelType,
-      MealPlan,
-    } = storedData ?? {};
-    const { Type, FromDate, ToDate, TotalNights, SeasonType, SeasonYear } =
-      TravelDate ?? {};
-    const { Adult, Child, Infant } = PaxInfo ?? {};
-    const { Single, Double, Twin, Triple, ExtraBed } = RoomInfo ?? {};
-    setTravelDate({
-      Type: Type ? Type : "",
-      FromDate: FromDate ? FromDate : "",
-      ToDate: ToDate ? ToDate : "",
-      TotalNights: TotalNights ? TotalNights : "",
-      SeasonType: SeasonType ? SeasonType : "",
-      SeasonYear: SeasonType ? SeasonYear : "",
-    });
-    dispatch({ type: "SET", value: Adult ? Adult : 0, counter: "counter1" });
-    dispatch({ type: "SET", value: Child ? Child : 0, counter: "counter2" });
-    dispatch({ type: "SET", value: Infant ? Infant : 0, counter: "counter3" });
+    let nights = [];
+    for (let i = 0; i <= TravelDate.TotalNights; i++) {
+      nights.push(TravelDate.TotalNights > 0 ? i + 1 : "");
+      // console.log("NightsConsole", nights);
+    }
+    setDayWiseNights(nights);
+  }, [TravelDate.TotalNights]);
 
-    setQueryFields({
-      CompanyInfo: CompanyInfo ? CompanyInfo : "",
-      AddEmail: AddEmail ? AddEmail : "",
-      LeadPax: LeadPax ? LeadPax : "",
-      Subject: Subject ? Subject : "",
-      AdditionalInfo: AdditionalInfo ? AdditionalInfo : "",
-      SearchPackage: SearchPackage ? SearchPackage : "",
-      OperationPerson: OperationPerson ? OperationPerson : "",
-      ContractPerson: ContractPerson ? ContractPerson : "",
-      Priority: Priority ? Priority : "",
-      TAT: TAT ? TAT : "",
-      TourType: TourType ? TourType : "",
-      LeadSource: LeadSource ? LeadSource : "",
-      HotelCategory: HotelCategory ? HotelCategory : "",
-      LeadReferenced: LeadReferenced ? LeadReferenced : "",
-      HotelType: HotelType ? HotelType : "",
-      MealPlan: MealPlan ? MealPlan : "",
-    });
-  }, [emptyData]);
-
+  // console.log("DayWiseNights", dayWiseNights);
   return (
     <>
       <div className="container-fluid mt-2">
@@ -358,35 +372,7 @@ const Query = () => {
           > */}
           <form onSubmit={handleSubmit}>
             {/* <div className=""> */}
-            <div className="col-xl-12 d-flex align-items-start justify-content-between p-0">
-              {/* <h5 className="card-title d-none d-sm-block m-0 p-0">
-                Query Form
-              </h5>
-              <div className="p-0 m-0">
-                <button className="blue-button" type="submit" name="SaveButton">
-                  Save
-                </button> */}
-              {/* <button
-                  className="orange-button"
-                  type="submit"
-                  name="ClearButton"
-                >
-                  Clear
-                </button> */}
-              {/* <button
-                  className="green-button"
-                  type="submit"
-                  name="SubmitButton"
-                >
-                  Submit
-                </button>
-                <Toaster />
-                <NavLink to="/querylist" className={"gray-button py-2"}>
-                  Back
-                </NavLink> */}
-              {/* </div> */}
-            </div>
-
+            <Toaster/>
             <div className="row">
               <div className="col-12 col-md-8">
                 <div className="row py-1 column-gap-2 row-gap-2">
@@ -485,8 +471,8 @@ const Query = () => {
                             type="text"
                             className="form-input-2"
                             placeholder="Enter Agent/Client Name"
-                            name="AgentName"
-                            value={queryFields.AgentName}
+                            name="ClientType"
+                            value={queryFields.ClientType}
                             onChange={handleChange}
                           />
                           <button
@@ -547,8 +533,8 @@ const Query = () => {
                         <select
                           component={"select"}
                           className="form-input-2"
-                          name="PaxType"
-                          value={queryFields.PaxType}
+                          name="LeadPax"
+                          value={queryFields.LeadPax}
                           onChange={handleChange}
                         >
                           <option value="1">FIT</option>
@@ -623,8 +609,8 @@ const Query = () => {
                             <input
                               className="form-check-input m-0 p-0 ml-3"
                               type="radio"
-                              name="hotelCategory"
-                              value={queryFields.HotelCategory}
+                              name="hotelType"
+                              value="3"
                               onChange={handleChange}
                             />
                           </div>
@@ -635,9 +621,9 @@ const Query = () => {
                             <input
                               className="form-check-input m-0 p-0 ml-3"
                               type="radio"
-                              name="hotelCategory"
+                              name="hotelType"
                               id="four"
-                              value={queryFields.HotelCategory}
+                              value="4"
                               onChange={handleChange}
                             />
                           </div>
@@ -648,9 +634,9 @@ const Query = () => {
                             <input
                               className="form-check-input m-0 p-0 ml-3"
                               type="radio"
-                              name="hotelCategory"
+                              name="hotelType"
                               id="five"
-                              value={queryFields.HotelCategory}
+                              value="5"
                               onChange={handleChange}
                             />
                           </div>
@@ -661,9 +647,9 @@ const Query = () => {
                             <input
                               className="form-check-input m-0 p-0 ml-3"
                               type="radio"
-                              name="hotelCategory"
+                              name="hotelType"
                               id="all"
-                              value={queryFields.HotelCategory}
+                              value="0"
                               onChange={handleChange}
                             />
                           </div>
@@ -678,42 +664,83 @@ const Query = () => {
                             placeholder="0"
                             name="Room"
                             value={RoomInfo.Room}
-                            onChange={handleChange}
+                            onChange={handleRoomInfo}
+                            readOnly
                           />
                         </div>
                         <div className="d-flex justify-content-between align-items-center pt-1">
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Room == 1 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Room: 1,
+                              })
+                            }
                           >
                             1
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x
+                            d-flex justify-content-center align-items-center  ${
+                              RoomInfo.Room == 2 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Room: 2,
+                              })
+                            }
                           >
                             2
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Room == 3 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Room: 3,
+                              })
+                            }
                           >
                             3
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Room == 4 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Room: 4,
+                              })
+                            }
                           >
                             4
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Room == 5 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Room: 5,
+                              })
+                            }
                           >
                             5
                           </div>
@@ -728,42 +755,83 @@ const Query = () => {
                             placeholder="0"
                             name="Single"
                             value={RoomInfo.Single}
-                            onChange={handleChange}
+                            onChange={handleRoomInfo}
+                            readOnly
                           />
                         </div>
                         <div className="d-flex justify-content-between align-items-center pt-1">
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Single == 1 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Single: 1,
+                              })
+                            }
                           >
                             1
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Single == 2 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Single: 2,
+                              })
+                            }
                           >
                             2
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Single == 3 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Single: 3,
+                              })
+                            }
                           >
                             3
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Single == 4 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Single: 4,
+                              })
+                            }
                           >
                             4
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Single == 5 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Single: 5,
+                              })
+                            }
                           >
                             5
                           </div>
@@ -780,42 +848,83 @@ const Query = () => {
                             placeholder="0"
                             name="Double"
                             value={RoomInfo.Double}
-                            onChange={handleChange}
+                            onChange={handleRoomInfo}
+                            readOnly
                           />
                         </div>
                         <div className="d-flex justify-content-between align-items-center pt-1">
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Double == 1 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Double: 1,
+                              })
+                            }
                           >
                             1
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Double == 2 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Double: 2,
+                              })
+                            }
                           >
                             2
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Double == 3 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Double: 3,
+                              })
+                            }
                           >
                             3
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Double == 4 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Double: 4,
+                              })
+                            }
                           >
                             4
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Double == 5 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Double: 5,
+                              })
+                            }
                           >
                             5
                           </div>
@@ -832,42 +941,83 @@ const Query = () => {
                             placeholder="0"
                             name="Twin"
                             value={RoomInfo.Twin}
-                            onChange={handleChange}
+                            onChange={handleRoomInfo}
+                            readOnly
                           />
                         </div>
                         <div className="d-flex justify-content-between align-items-center pt-1">
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Twin == 1 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Twin: 1,
+                              })
+                            }
                           >
                             1
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Twin == 2 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Twin: 2,
+                              })
+                            }
                           >
                             2
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Twin == 3 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Twin: 3,
+                              })
+                            }
                           >
                             3
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Twin == 4 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Twin: 4,
+                              })
+                            }
                           >
                             4
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Twin == 5 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Twin: 5,
+                              })
+                            }
                           >
                             5
                           </div>
@@ -884,42 +1034,83 @@ const Query = () => {
                             placeholder="0"
                             name="TplRoom"
                             value={RoomInfo.Triple}
-                            onChange={handleChange}
+                            onChange={handleRoomInfo}
+                            readOnly
                           />
                         </div>
                         <div className="d-flex justify-content-between align-items-center pt-1">
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Triple == 1 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Triple: 1,
+                              })
+                            }
                           >
                             1
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Triple == 2 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Triple: 2,
+                              })
+                            }
                           >
                             2
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Triple == 3 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Triple: 3,
+                              })
+                            }
                           >
                             3
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Triple == 4 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Triple: 4,
+                              })
+                            }
                           >
                             4
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.Triple == 5 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                Triple: 5,
+                              })
+                            }
                           >
                             5
                           </div>
@@ -936,49 +1127,98 @@ const Query = () => {
                             placeholder="0"
                             name="ExtraBed"
                             value={RoomInfo.ExtraBed}
-                            onChange={handleChange}
+                            onChange={handleRoomInfo}
+                            readOnly
                           />
                         </div>
                         <div className="d-flex justify-content-between align-items-center pt-1">
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.ExtraBed == 1 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                ExtraBed: 1,
+                              })
+                            }
                           >
                             1
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.ExtraBed == 2 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                ExtraBed: 2,
+                              })
+                            }
                           >
                             2
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.ExtraBed == 3 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                ExtraBed: 3,
+                              })
+                            }
                           >
                             3
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.ExtraBed == 4 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                ExtraBed: 4,
+                              })
+                            }
                           >
                             4
                           </div>
                           <div
-                            className="py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center"
+                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo.ExtraBed == 5 ? "Active text-light" : ""
+                            }`}
                             style={{ height: "19px" }}
+                            onClick={() =>
+                              setRoomInfo({
+                                ...RoomInfo,
+                                ExtraBed: 5,
+                              })
+                            }
                           >
                             5
                           </div>
                         </div>
                       </div>
                       <div className="col-6 col-md-6 col-lg-6 d-flex align-items-center">
-                        <p className="font-weight-bold">Total Rooms : 0</p>
+                        <p className="font-weight-bold">
+                          Total Rooms :{" "}
+                          {RoomInfo?.Room +
+                            RoomInfo?.Single +
+                            RoomInfo?.Double +
+                            RoomInfo?.Triple +
+                            RoomInfo?.Twin +
+                            RoomInfo?.ExtraBed}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -996,18 +1236,18 @@ const Query = () => {
                           className="form-input-2"
                           name="Budget"
                           placeholder="Budget"
-                          value={queryFields.Budget}
-                          onChange={handleChange}
+                          // value={queryFields.Budget}
+                          // onChange={handleChange}
                         />
                       </div>
                       <div className="col-6 col-md-6 col-lg-4 form-check">
                         <input
                           className="form-check-input"
                           type="radio"
-                          name="TravelType"
+                          name="Type"
                           id="typedateorday"
-                          value={queryFields.TravelType}
-                          onChange={handleChange}
+                          value="1"
+                          onChange={handleDateChange}
                         />
                         <label
                           className="form-check-label m-0"
@@ -1020,10 +1260,10 @@ const Query = () => {
                         <input
                           className="form-check-input"
                           type="radio"
-                          name="TravelType"
+                          name="Type"
                           id="daywise"
-                          value={queryFields.TravelType}
-                          onChange={handleChange}
+                          value="2"
+                          onChange={handleDateChange}
                         />
                         <label
                           className="form-check-label m-0"
@@ -1038,9 +1278,9 @@ const Query = () => {
                             <select
                               type="select"
                               className="form-input-2"
-                              name="TravelSeason"
-                              value={queryFields.TravelSeason}
-                              onChange={handleChange}
+                              name="SeasonType"
+                              value={queryFields.SeasonType}
+                              onChange={handleDateChange}
                             >
                               <option value="1">Winter</option>
                               <option value="2">Summer</option>
@@ -1051,9 +1291,9 @@ const Query = () => {
                             <select
                               type="select"
                               className="form-input-2"
-                              name="TravelYear"
-                              value={queryFields.TravelYear}
-                              onChange={handleChange}
+                              name="SeasonYear"
+                              value={queryFields.SeasonYear}
+                              onChange={handleDateChange}
                             >
                               <option value="1">2024</option>
                               <option value="2">2025</option>
@@ -1076,7 +1316,7 @@ const Query = () => {
                             className="form-input-2"
                             name="FromDate"
                             value={TravelDate.FromDate}
-                            onChange={handleChange}
+                            onChange={handleDateChange}
                           ></input>
                         </div>
                       )}
@@ -1096,7 +1336,7 @@ const Query = () => {
                           placeholder="0"
                           name="TotalNights"
                           value={TravelDate.TotalNights}
-                          onChange={handleChange}
+                          onChange={handleDateChange}
                         />
                       </div>
                       <div className={"col-4 col-md-6 col-lg-2 mt-3"}>
@@ -1148,7 +1388,7 @@ const Query = () => {
                                     <td>
                                       <i
                                         className="fa-solid fa-trash pr-1
-                                   text-danger cursor-pointer"
+                                                text-danger cursor-pointer"
                                         onClick={dateDeleting}
                                       ></i>
                                     </td>
@@ -1247,11 +1487,13 @@ const Query = () => {
                         onChange={handleChange}
                       >
                         <option>All</option>
-                        {
-                          hotelType.map((value, index)=>{
-                            return <option value={value.Id} key={index+1}>{value.Name}</option>
-                          })
-                        }
+                        {hotelType.map((value, index) => {
+                          return (
+                            <option value={value.Id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                     <div className="">
@@ -1273,11 +1515,13 @@ const Query = () => {
                         onChange={handleChange}
                       >
                         <option>Select Tour</option>
-                        {
-                          tourType.map((value, index)=>{
-                            return <option value={value.Id} key={index+1}>{value.Name}</option>
-                          })
-                        }
+                        {tourType.map((value, index) => {
+                          return (
+                            <option value={value.Id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                     <div className="">
@@ -1288,7 +1532,7 @@ const Query = () => {
                         type="select"
                         id="vehicle"
                         className="form-input-3"
-                        name="VehiclePreference"
+                        name="VehiclePrefrence"
                         value={queryFields.VehiclePreference}
                         onChange={handleChange}
                       >
@@ -1308,11 +1552,13 @@ const Query = () => {
                         onChange={handleChange}
                       >
                         <option>Select Source</option>
-                        {
-                          leadList.map((value, index)=>{
-                            return <option value={value.Id} key={index+1}>{value.Name}</option>
-                          })
-                        }
+                        {leadList.map((value, index) => {
+                          return (
+                            <option value={value.Id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                     <div className="">
@@ -1486,8 +1732,12 @@ const Query = () => {
               </div>
               <div className="col-12 p-0 d-flex justify-content-end">
                 <div className="p-0">
-                  <button className="blue-button">Save</button>
-                  <button className="green-button">Submit</button>
+                  <button className="blue-button" name="SaveButton">
+                    Save
+                  </button>
+                  <button className="green-button" name="SubmitButton">
+                    Submit
+                  </button>
                 </div>
               </div>
             </div>

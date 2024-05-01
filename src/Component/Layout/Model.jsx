@@ -21,7 +21,7 @@ const Model = ({
   const closeModel = () => {
     document.getElementById("cancel").click();
   };
-
+ 
   const handleSubmit = async (values, { resetForm }) => {
     console.log('Submit Modal Value', {...values, ...imageValue});
 
