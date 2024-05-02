@@ -16,6 +16,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Counter from "./Counter";
 import toast, { Toaster } from "react-hot-toast";
 import LeadSource from "../master/masterlist/LeadSource";
+import { Value } from "sass";
 
 const Query = () => {
   const navigate = useNavigate();
@@ -87,6 +88,8 @@ const Query = () => {
   const [hotelMeal, setHotelMeal] = useState([]);
   const [leadList, setLeadList] = useState([]);
   const [tourType, setTourType] = useState([]);
+  const [countryList, setCountryList] = useState([]);
+  const [cityList, setCityList] = useState([]);
   const [toDate, setToDate] = useState();
   const [dateArray, setDateArray] = useState([]);
   const [emptyData, setEmptyData] = useState(false);
@@ -153,6 +156,26 @@ const Query = () => {
           Status: "",
         });
         setTourType(data.DataList);
+      } catch (err) {
+        console.log(err);
+      }
+
+      try {
+        const { data } = await axiosOther.post("countrylist", {
+          Search: "",
+          Status: "",
+        });
+        setCountryList(data.DataList);
+      } catch (err) {
+        console.log(err);
+      }
+
+      try {
+        const { data } = await axiosOther.post("citylist", {
+          Search: "",
+          Status: "",
+        });
+        setCityList(data.DataList);
       } catch (err) {
         console.log(err);
       }
@@ -384,7 +407,7 @@ const Query = () => {
     setDayWiseNights(nights);
   }, [TravelDate.TotalNights]);
 
-  // console.log("DayWiseNights", dayWiseNights);
+  console.log("DayWiseNights", dayWiseNights);
   return (
     <>
       <div className="container-fluid mt-2">
@@ -1291,7 +1314,7 @@ const Query = () => {
                           Day Wise
                         </label>
                       </div>
-                      {queryFields.TravelType == "2" && (
+                      {TravelDate.Type == "2" && (
                         <>
                           <div className="col-6 col-md-12 col-lg-6">
                             <select
@@ -1325,7 +1348,7 @@ const Query = () => {
                           </div>
                         </>
                       )}
-                      {queryFields.TravelType == "2" ? (
+                      {TravelDate.Type == "2" ? (
                         ""
                       ) : (
                         <div className="col-6 col-md-12 col-lg-6">
@@ -1341,7 +1364,7 @@ const Query = () => {
                       )}
                       <div
                         className={
-                          queryFields.TravelType == "2"
+                          TravelDate.Type == "2"
                             ? "col-6"
                             : "col-4 col-md-6 col-lg-3"
                         }
@@ -1364,7 +1387,7 @@ const Query = () => {
                         </button>
                       </div>
                       {TravelDate.TotalNights !== "" &&
-                      TravelDate.FromDate !== "" ? (
+                      TravelDate.FromDate !== "" && TravelDate.Type !=="2" ? (
                         <div className="row p-2">
                           <table className="table">
                             <thead>
@@ -1389,7 +1412,11 @@ const Query = () => {
                                       >
                                         <option value="1">Select</option>
                                         <option value="2">Inida</option>
-                                        <option value="3">Australia</option>
+                                        {
+                                          countryList.map((value, index)=>{
+                                            return <option value={value.Id} key={index+1}>{value.Name}</option>
+                                          })
+                                        }
                                       </select>
                                     </td>
                                     <td className="p-1">
@@ -1401,7 +1428,11 @@ const Query = () => {
                                       >
                                         <option value="1">Select</option>
                                         <option value="2">Delhi</option>
-                                        <option value="3">Dubai</option>
+                                        {
+                                          cityList.map((value, index)=>{
+                                            return <option value={value.Id} key={index+1}>{value.Name}</option>
+                                          })
+                                        }
                                       </select>
                                     </td>
                                     <td>
@@ -1420,6 +1451,70 @@ const Query = () => {
                       ) : (
                         ""
                       )}
+                      {
+                        TravelDate.Type=="2" && TravelDate.TotalNights !=="" && (
+                          <div className="row p-2">
+                          <table className="table">
+                            <thead>
+                              <tr>
+                                <th>Date/Day</th>
+                                <th>Country</th>
+                                <th>Destination</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {dayWiseNights.map((value, index) => {
+                                return (
+                                  <tr key={index + 1}>
+                                    <td className="p-0 text-center">Day {value}</td>
+                                    <td className="p-1">
+                                      <select
+                                        type="select"
+                                        className="form-input-1"
+                                        style={{ height: "30px" }}
+                                        name={`Country${index}`}
+                                      >
+                                        <option value="1">Select</option>
+                                        <option value="2">Inida</option>
+                                        {
+                                          countryList.map((value, index)=>{
+                                            return <option value={value.Id} key={index+1}>{value.Name}</option>
+                                          })
+                                        }
+                                      </select>
+                                    </td>
+                                    <td className="p-1">
+                                      <select
+                                        type="select"
+                                        className="form-input-1"
+                                        style={{ height: "30px" }}
+                                        name={`Destination${index}`}
+                                      >
+                                        <option value="1">Select</option>
+                                        <option value="2">Delhi</option>
+                                        {
+                                          cityList.map((value, index)=>{
+                                            return <option value={value.Id} key={index+1}>{value.Name}</option>
+                                          })
+                                        }
+                                      </select>
+                                    </td>
+                                    <td>
+                                      <i
+                                        className="fa-solid fa-trash pr-1
+                                                text-danger cursor-pointer"
+                                        onClick={dateDeleting}
+                                      ></i>
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
+                        )
+                      }
                     </div>
                   </div>
                 </div>
