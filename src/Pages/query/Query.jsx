@@ -33,13 +33,14 @@ const Query = () => {
     Infant: "",
   });
   const [RoomInfo, setRoomInfo] = useState({
-    Room: 0,
-    Single: 0,
-    Double: 0,
-    Twin: 0,
-    Triple: 0,
-    ExtraBed: 0,
+    Room: "",
+    Single: "",
+    Double: "",
+    Twin: "",
+    Triple: "",
+    ExtraBed: "",
   });
+  const {Room, Single, Double, Twin,Triple,ExtraBed} = RoomInfo;
   const [valueAddServices, setValueAddServices] = useState({
     Flight: "NO",
     Visa: "NO",
@@ -1052,7 +1053,7 @@ const Query = () => {
                             type="text"
                             className="form-input-2 text-center p-0"
                             placeholder="0"
-                            name="TplRoom"
+                            name="Triple"
                             value={RoomInfo.Triple}
                             onChange={handleRoomInfo}
                             // readOnly
@@ -1231,18 +1232,13 @@ const Query = () => {
                       </div>
                       <div className="col-6 col-md-6 col-lg-6 d-flex align-items-center">
                         <p className="font-weight-bold">
-                          Total Rooms :{" "}
-                          {RoomInfo?.Room +
-                            RoomInfo?.Single +
-                            RoomInfo?.Double +
-                            RoomInfo?.Triple +
-                            RoomInfo?.Twin +
-                            RoomInfo?.ExtraBed}
+                          Total Rooms : {(Number(Room==""?0:Room)) + (Number(Single==""?0:Single))+(Number(Double==""?
+                          0:Double))+(Number(Twin==""?0:Twin))+(Number(Triple==""?0:Triple))+(Number(ExtraBed==""?0:ExtraBed))}
                         </p>
                       </div>
                     </div>
                   </div>
-
+                            
                   <div className="col-12 col-sm border rounded py-1">
                     <div className="row row-gap-2 p-0 pt-1 pb-2">
                       <div className="col-12 col-md-6 col-lg-8 d-flex align-items-center">
