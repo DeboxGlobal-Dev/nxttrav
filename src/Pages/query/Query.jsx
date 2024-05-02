@@ -269,6 +269,7 @@ const Query = () => {
     });
   };
 
+
   //Adding Date fromDate + Days = ToDate
   useEffect(() => {
     const dateStr = TravelDate.FromDate;
@@ -287,15 +288,17 @@ const Query = () => {
     const finalToDate = `${toDateYear}-${
       toDateMonth.length == 2 ? toDateMonth : "0" + toDateMonth
     }-${toDateDay.length == 2 ? toDateDay : "0" + toDateDay}`;
-    setTravelDate({ ...TravelDate, ToDate: finalToDate });
+    setTravelDate({ ...TravelDate, ToDate:TravelDate.TotalNights!=""?finalToDate:""});
     createDateArray();
+    // console.log('Debugging-Date', finalToDate);
   }, [TravelDate.FromDate, TravelDate.TotalNights, TravelDate.ToDate]);
-
   // Update Total Values in Pax and Rooms
   const updateTotal = () => {
     const { counter1, counter2, counter3 } = state;
     setPaxTotal(counter1 + counter2 + counter3);
   };
+
+  
 
   // Set counter value into json
   useEffect(() => {
@@ -1238,7 +1241,7 @@ const Query = () => {
                       </div>
                     </div>
                   </div>
-                            
+
                   <div className="col-12 col-sm border rounded py-1">
                     <div className="row row-gap-2 p-0 pt-1 pb-2">
                       <div className="col-12 col-md-6 col-lg-8 d-flex align-items-center">
