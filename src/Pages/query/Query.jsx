@@ -59,7 +59,7 @@ const Query = () => {
     AddEmail: "ansar@gmail.com, sanaul@gmail.com",
     AdditionalInfo: "itsdefaultinfo",
     QueryType: "",
-    Priority: "",
+    Priority: "1",
     TAT: "23",
     TourType: "",
     LeadSource: "",
@@ -70,6 +70,9 @@ const Query = () => {
     MealPlan: "",
     TravelInfo: "",
     PaxType: "",
+    SalesPerson:"",
+    AssignUser:"",
+    ContractPerson:"",
     AddedBy: "1",
     UpdatedBy: "0",
   });
@@ -190,7 +193,7 @@ const Query = () => {
           }
         );
         console.log("SubmitingQueryForm", response);
-        toast.success("Query Submitted Successfully!");
+        toast.success(response.data.Message);
         localStorage.removeItem("Query");
       } catch (err) {
         // validationErrors : parameter
@@ -224,13 +227,15 @@ const Query = () => {
     setTravelDate({ ...TravelDate, [e.target.name]: e.target.value });
   };
 
-  // console.log("QueryValues", {
-  //   ...queryFields,
-  //   TravelDate: [{ ...TravelDate }],
-  //   RoomInfo: [{ ...RoomInfo }],
-  //   PaxInfo: [{ ...PaxInfo }],
-  //   ValueAddServices: [{ ...valueAddServices }],
-  // });
+  console.log("inputsData", {
+    ...queryFields,
+    TravelDate: [{ ...TravelDate }],
+    RoomInfo: [{ ...RoomInfo }],
+    PaxInfo: [{ ...PaxInfo }],
+    ValueAddServices: [{ ...valueAddServices }],
+  });
+
+  console.log('StoredData', storedData?.RoomInfo[0]);
 
   // Looping date & stored into array
   function createDateArray() {
@@ -303,16 +308,17 @@ const Query = () => {
 
   // Data Set into input field from localstorage and remove on Submit and Clear;
   const handleUnSubmittedQuery  = () =>{
-    console.log('LocalStorageData', storedData);
+    // console.log('LocalStorageData', storedData);
         const {
           QueryId,FDCode,PackageCode,PackageName,ClientType,AgentId,
           LeadPax,Subject,AddEmail,AdditionalInfo,QueryType,Priority,TAT,
           TourType,LeadSource,LeadReferencedId,HotelPreference,VehiclePrefrence,
-          HotelType,MealPlan,TravelInfo,PaxType,AddedBy,UpdatedBy,
+          HotelType,MealPlan,TravelInfo,PaxType, SalesPerson, AssignUser,AddedBy,UpdatedBy,
+          ContractPerson
     } = storedData ?? {};
     const { Type, FromDate, ToDate, TotalNights, SeasonType, SeasonYear } = storedData.TravelDate[0] ?? {};
     const { Adult, Child, Infant } = storedData.PaxInfo[0] ?? {};
-    const { Single, Double, Twin, Triple, ExtraBed } = storedData.RoomInfo[0] ?? {};
+    const { Room, Single, Double, Twin, Triple, ExtraBed } = storedData.RoomInfo[0] ?? {};
     setTravelDate({
       Type: Type ? Type : "",
       FromDate: FromDate ? FromDate : "",
@@ -320,6 +326,14 @@ const Query = () => {
       TotalNights: TotalNights ? TotalNights : "",
       SeasonType: SeasonType ? SeasonType : "",
       SeasonYear: SeasonType ? SeasonYear : "",
+    });
+    setRoomInfo({
+      Room: Room > 0 ? Room : 0,
+      Single: Single > 0 ? Single : 0,
+      Double: Double > 0 ? Double : 0,
+      Twin: Twin > 0 ? Twin : 0,
+      Triple: Triple > 0 ? Triple : 0,
+      ExtraBed: ExtraBed > 0 ? ExtraBed : 0,
     });
     dispatch({ type: "SET", value: Adult ? Adult : 0, counter: "counter1" });
     dispatch({ type: "SET", value: Child ? Child : 0, counter: "counter2" });
@@ -348,6 +362,9 @@ const Query = () => {
       MealPlan: MealPlan ?   MealPlan : "",
       TravelInfo: TravelInfo ?   TravelInfo : "",
       PaxType: PaxType ?   PaxType : "",
+      SalesPerson: SalesPerson? SalesPerson  : "",
+      AssignUser: AssignUser? AssignUser : "",
+      ContractPerson : ContractPerson ? ContractPerson : "",
       AddedBy: AddedBy ?   AddedBy : "1",
       UpdatedBy :UpdatedBy ? UpdatedBy:  "0",
     });
@@ -668,7 +685,7 @@ const Query = () => {
                             name="Room"
                             value={RoomInfo.Room}
                             onChange={handleRoomInfo}
-                            readOnly
+                            // readOnly
                           />
                         </div>
                         <div className="d-flex justify-content-between align-items-center pt-1">
@@ -759,7 +776,7 @@ const Query = () => {
                             name="Single"
                             value={RoomInfo.Single}
                             onChange={handleRoomInfo}
-                            readOnly
+                            // readOnly
                           />
                         </div>
                         <div className="d-flex justify-content-between align-items-center pt-1">
@@ -852,7 +869,7 @@ const Query = () => {
                             name="Double"
                             value={RoomInfo.Double}
                             onChange={handleRoomInfo}
-                            readOnly
+                            // readOnly
                           />
                         </div>
                         <div className="d-flex justify-content-between align-items-center pt-1">
@@ -945,7 +962,7 @@ const Query = () => {
                             name="Twin"
                             value={RoomInfo.Twin}
                             onChange={handleRoomInfo}
-                            readOnly
+                            // readOnly
                           />
                         </div>
                         <div className="d-flex justify-content-between align-items-center pt-1">
@@ -1038,7 +1055,7 @@ const Query = () => {
                             name="TplRoom"
                             value={RoomInfo.Triple}
                             onChange={handleRoomInfo}
-                            readOnly
+                            // readOnly
                           />
                         </div>
                         <div className="d-flex justify-content-between align-items-center pt-1">
@@ -1131,7 +1148,7 @@ const Query = () => {
                             name="ExtraBed"
                             value={RoomInfo.ExtraBed}
                             onChange={handleRoomInfo}
-                            readOnly
+                            // readOnly
                           />
                         </div>
                         <div className="d-flex justify-content-between align-items-center pt-1">
@@ -1536,7 +1553,7 @@ const Query = () => {
                         id="vehicle"
                         className="form-input-3"
                         name="VehiclePrefrence"
-                        value={queryFields.VehiclePreference}
+                        value={queryFields.VehiclePrefrence}
                         onChange={handleChange}
                       >
                         <option>Select Vehicle</option>
@@ -1750,7 +1767,7 @@ const Query = () => {
                     data-bs-keyboard="false"
                   >
                     <div className="modal-dialog" role="document">
-                      <div className="modal-content">
+                       <div className="modal-content">
                         <div className="modal-header  bg-info-700">
                           <h5 className="modal-title" id="exampleModalLabel">
                             Un-Submitted Query List
@@ -1764,15 +1781,38 @@ const Query = () => {
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
-                        <div className="modal-body">
-                          <ul><li onClick={handleUnSubmittedQuery} 
-                            className="cursor-pointer close d-block"
+                        {storedData? <div className="modal-body">
+                          <div className="border rounded p-1 d-flex gap-3 cursor-pointer"
                             data-dismiss="modal"
                             aria-label="Close"
-                            style={{marginRight:'440px'}}
-                          >First List</li></ul>
-                        </div>
-                      </div>
+                           onClick={handleUnSubmittedQuery}>
+                            <div className="border rounded px-2 d-flex align-items-center">
+                              {storedData?.PackageCode}
+                            </div>
+                            <div className="d-flex gap-3">
+                              <div>
+                                  <span className="text-secondary">Package Name</span>
+                                  <p className="">
+                                    {storedData?.PackageName}
+                                  </p>
+                              </div>
+                              <div>
+                                  <span className="text-secondary">Lead RerfrencedId</span>
+                                  <p className="">
+                                    {storedData?.LeadReferencedId}
+                                  </p>
+                              </div>
+                              <div>
+                                  <span className="text-secondary">Contracting Person</span>
+                                  <p className="">
+                                    {storedData?.ContractPerson}
+                                  </p>
+                              </div>
+                            </div>
+                          </div>
+              
+                        </div> : <h1 className="my-3 text-center display-6 font-weight-bold text-secondary">No Query Available</h1>}
+                      </div> 
                     </div>
                   </div>
                   <button className="blue-button" name="SaveButton">

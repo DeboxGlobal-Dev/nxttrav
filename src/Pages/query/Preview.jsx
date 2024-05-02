@@ -142,9 +142,9 @@ const Preview = () => {
           </div>
         </div>
 
-        <div className="row mt-2 m-0">
-          <div className="col-4">
-            <table class="table table-bordered rounded">
+        <div className="row column-gap-2 mt-2 m-0">
+          <div className="col p-0">
+            <table class="table table-bordered">
               <thead>
                 <tr>
                   <th scope="col">S.N</th>
@@ -171,7 +171,7 @@ const Preview = () => {
               </tbody>
             </table>
           </div>
-          <div className="col-4 border rounded d-flex flex-column justify-content-around">
+          <div className="col border rounded d-flex flex-column justify-content-around">
             <div className="row">
               <div className="col-4">
                 <span className="font-size-12">Query Type</span>
@@ -219,7 +219,7 @@ const Preview = () => {
               </div>
             </div>
           </div>
-          <div className="col-4 px-2 border">
+          <div className="col border rounded d-flex flex-column justify-content-around">
             <div className="row">
               <div className="col-4">
                 <span className="font-size-12">Tour Type</span>
@@ -264,6 +264,7 @@ const Preview = () => {
             </div>
           </div>
         </div>
+        
       </div>
     </>
   );
