@@ -21,7 +21,7 @@ import { Value } from "sass";
 const Query = () => {
   const navigate = useNavigate();
   const [TravelDate, setTravelDate] = useState({
-    Type: "",
+    Type: "1",
     FromDate: "",
     ToDate: "",
     TotalNights: "",
@@ -68,7 +68,7 @@ const Query = () => {
     LeadReferencedId: "",
     HotelPreference: "",
     VehiclePrefrence: "",
-    HotelType: "",
+    HotelType: "3",
     MealPlan: "",
     TravelInfo: "",
     PaxType: "",
@@ -77,6 +77,10 @@ const Query = () => {
     ContractPerson:"",
     AddedBy: "1",
     UpdatedBy: "0",
+  });
+  const [travelsDestination, setTravelDestination] = useState({
+    Country:"",
+    Destination:""
   });
 
   const validationSchema = Yup.object().shape({
@@ -94,12 +98,15 @@ const Query = () => {
   const [dateArray, setDateArray] = useState([]);
   const [emptyData, setEmptyData] = useState(false);
   const [dayWiseNights, setDayWiseNights] = useState([]);
+  const [filteredCity, setFilteredCity] = useState([]);
   const initialState = {
     counter1: 0,
     counter2: 0,
     counter3: 0,
   };
 
+  // console.log('CityList',cityList);
+  // console.log('CountryList',countryList);
   const reducer = (state, action) => {
     switch (action.type) {
       case "INCREMENT":
@@ -251,15 +258,15 @@ const Query = () => {
     setTravelDate({ ...TravelDate, [e.target.name]: e.target.value });
   };
 
-  console.log("inputsData", {
-    ...queryFields,
-    TravelDate: [{ ...TravelDate }],
-    RoomInfo: [{ ...RoomInfo }],
-    PaxInfo: [{ ...PaxInfo }],
-    ValueAddServices: [{ ...valueAddServices }],
-  });
+  // console.log("inputsData", {
+  //   ...queryFields,
+  //   TravelDate: [{ ...TravelDate }],
+  //   RoomInfo: [{ ...RoomInfo }],
+  //   PaxInfo: [{ ...PaxInfo }],
+  //   ValueAddServices: [{ ...valueAddServices }],
+  // });
 
-  console.log('StoredData', storedData?.RoomInfo[0]);
+  // console.log('StoredData', storedData?.RoomInfo[0]);
 
   // Looping date & stored into array
   function createDateArray() {
@@ -407,7 +414,28 @@ const Query = () => {
     setDayWiseNights(nights);
   }, [TravelDate.TotalNights]);
 
-  console.log("DayWiseNights", dayWiseNights);
+  // console.log("DayWiseNights", dayWiseNights);
+  
+  //City Filtering For Dropdown
+  const handleDateDestination =(e) =>{
+    setTravelDestination({...travelsDestination, [e.target.name]:e.target.value}); 
+  };
+  
+  useEffect(()=>{
+    const filtered = cityList.filter((value)=> {
+      const a = value.CountryId == travelsDestination.Country;
+      return a;
+    });
+    // console.log('Filtering', filtered);
+    setFilteredCity(filtered);
+  },[travelsDestination]);
+  
+  // console.log('Date-Country-Id', travelsDestination);
+  // console.log(filtered); 
+  // console.log('FilteredCity-----',filteredCity);
+  // console.log('Country-List', countryList);
+  // console.log('City-List', cityList);
+
   return (
     <>
       <div className="container-fluid mt-2">
@@ -659,6 +687,7 @@ const Query = () => {
                               name="hotelType"
                               value="3"
                               onChange={handleChange}
+                              defaultChecked
                             />
                           </div>
                           <div className="col form-div d-flex justify-content-center align-items-center">
@@ -1290,6 +1319,7 @@ const Query = () => {
                           id="typedateorday"
                           value="1"
                           onChange={handleDateChange}
+                          defaultChecked
                         />
                         <label
                           className="form-check-label m-0"
@@ -1408,10 +1438,10 @@ const Query = () => {
                                         type="select"
                                         className="form-input-1"
                                         style={{ height: "30px" }}
-                                        name={`Country${index}`}
+                                        name='Country'
+                                        onChange={handleDateDestination}
                                       >
                                         <option value="1">Select</option>
-                                        <option value="2">Inida</option>
                                         {
                                           countryList.map((value, index)=>{
                                             return <option value={value.Id} key={index+1}>{value.Name}</option>
@@ -1424,12 +1454,12 @@ const Query = () => {
                                         type="select"
                                         className="form-input-1"
                                         style={{ height: "30px" }}
-                                        name={`Destination${index}`}
+                                        name='Destination'
+                                        onChange={handleDateDestination}
                                       >
                                         <option value="1">Select</option>
-                                        <option value="2">Delhi</option>
                                         {
-                                          cityList.map((value, index)=>{
+                                          filteredCity.map((value, index)=>{
                                             return <option value={value.Id} key={index+1}>{value.Name}</option>
                                           })
                                         }
@@ -1476,7 +1506,6 @@ const Query = () => {
                                         name={`Country${index}`}
                                       >
                                         <option value="1">Select</option>
-                                        <option value="2">Inida</option>
                                         {
                                           countryList.map((value, index)=>{
                                             return <option value={value.Id} key={index+1}>{value.Name}</option>
