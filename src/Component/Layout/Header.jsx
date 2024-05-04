@@ -4,17 +4,21 @@ import logo from "../../../public/global_assets/images/logo_light.png";
 import placeholder from "../../../public/global_assets/images/placeholders/placeholder.jpg";
 
 const Header = () => {
-  const [user, setUserData] = useState([]);
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("auth"));
-    if (user) {
-      setUserData(user);
-      console.log("get from local", user.firstName);
+  const [username, setUsername] = useState('');
+  const [image, setImage] = useState('');
+
+  const data = localStorage.getItem("persist:root");
+  useEffect(()=>{
+    if(data){
+      const user = JSON.parse(data);
+      const {username,image} = JSON.parse(user?.auth)?.value?.user;
+      setUsername(username);
+      setImage(image);
     }
-  }, []);
+  }, [data]);
 
-  return (
+  return(
     <>
       {/* // <!-- Main navbar --> */}
       <div className="navbar navbar-expand-md navbar-dark border-transparent">
@@ -39,7 +43,7 @@ const Header = () => {
           <span className="navbar-text ml-md-3 mr-md-auto">
             <span className="badge bg-success">Online</span>
           </span>
-          <ul className="navbar-nav">
+          <ul className="navbar-nav d-flex align-items-center">
             <li className="nav-item dropdown">
               <a
                 href="/#"
@@ -59,7 +63,7 @@ const Header = () => {
                   </a>
                 </div>
 
-                <div className="dropdown-content-body dropdown-scrollable">
+                {/* <div className="dropdown-content-body dropdown-scrollable">
                   <ul className="media-list">
                     <li className="media">
                       <div className="mr-3">
@@ -113,16 +117,16 @@ const Header = () => {
                       </div>
                     </li>
                   </ul>
-                </div>
+                </div> */}
 
-                <div className="dropdown-content-footer bg-light">
+                {/* <div className="dropdown-content-footer bg-light">
                   <a href="/#" className="text-grey mr-auto">
                     All users
                   </a>
                   <a href="/#" className="text-grey">
                     <i className="icon-gear"></i>
                   </a>
-                </div>
+                </div> */}
               </div>
             </li>
 
@@ -133,21 +137,20 @@ const Header = () => {
                 data-toggle="dropdown"
               >
                 <i className="icon-bubbles4"></i>
-                <span className="d-md-none ml-2">Messages</span>
                 <span className="badge badge-pill bg-warning-400 ml-auto ml-md-0">
                   2
                 </span>
               </a>
 
               <div className="dropdown-menu dropdown-menu-right dropdown-content wmin-md-350">
-                <div className="dropdown-content-header">
+                {/* <div className="dropdown-content-header">
                   <span className="font-weight-semibold">Messages</span>
                   <a href="/#" className="text-default">
                     <i className="icon-compose"></i>
                   </a>
-                </div>
+                </div> */}
 
-                <div className="dropdown-content-body dropdown-scrollable">
+                {/* <div className="dropdown-content-body dropdown-scrollable">
                   <ul className="media-list">
                     <li className="media">
                       <div className="mr-3 position-relative">
@@ -207,8 +210,8 @@ const Header = () => {
                       </div>
                     </li>
                   </ul>
-                </div>
-                <div className="dropdown-content-footer justify-content-center p-0">
+                </div> */}
+                {/* <div className="dropdown-content-footer justify-content-center p-0">
                   <a
                     href="/#"
                     className="bg-light text-grey w-100 py-2"
@@ -218,7 +221,7 @@ const Header = () => {
                   >
                     <i className="icon-menu7 d-block top-0"></i>
                   </a>
-                </div>
+                </div> */}
               </div>
             </li>
             <li className="nav-item dropdown dropdown-user">
@@ -228,12 +231,12 @@ const Header = () => {
                 data-toggle="dropdown"
                 aria-expanded="false"
               >
-                <img
-                  src="https://deboxglobal.in/salescrm/profilepic/1597303900iifa.PNG"
+                {image !=''? <img
+                  src={image!='' && image}
                   className="rounded-circle"
                   alt="user"
-                />
-                <span>Satendra Gurjar</span>
+                /> : <i className="fa-solid fa-circle-user rounded-circle"></i>}
+                <span>{username!='' ? username : 'UserName'}</span>
               </a>
 
               <div className="dropdown-menu dropdown-menu-right">

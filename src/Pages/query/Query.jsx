@@ -8,77 +8,19 @@ import "select2";
 import { useNavigate } from "react-router-dom";
 import Counter from "./Counter";
 import toast, { Toaster } from "react-hot-toast";
-
+import { queryInitial, travelInitial, paxInitial, roomInitial, valueAddInitial } from "./QuerySchema";
 
 const Query = () => {
-  const [TravelDate, setTravelDate] = useState({
-    Type: "1",
-    FromDate: "",
-    ToDate: "",
-    TotalNights: "",
-    SeasonType: "",
-    SeasonYear: "",
-  });
-  const [PaxInfo, setPaxInfo] = useState({
-    Adult: "",
-    Child: "",
-    Infant: "",
-  });
-  const [RoomInfo, setRoomInfo] = useState({
-    Room: "",
-    Single: "",
-    Double: "",
-    Twin: "",
-    Triple: "",
-    ExtraBed: "",
-  });
+  const [TravelDate, setTravelDate] = useState({...travelInitial});
+  const [PaxInfo, setPaxInfo] = useState({...paxInitial});
+  const [RoomInfo, setRoomInfo] = useState({...roomInitial});
   const {Room, Single, Double, Twin,Triple,ExtraBed} = RoomInfo;
-  const [valueAddServices, setValueAddServices] = useState({
-    Flight: "NO",
-    Visa: "NO",
-    Insurance: "NO",
-    Train: "NO",
-    Transfer: "NO",
-  });
-  const [queryFields, setQueryFields] = useState({
-    QueryId: "",
-    FDCode: "",
-    PackageCode: "",
-    PackageName: "",
-    ClientType: "",
-    AgentId: "",
-    LeadPax: "Ansar",
-    Subject: "its subject field required",
-    AddEmail: "ansar@gmail.com, sanaul@gmail.com",
-    AdditionalInfo: "itsdefaultinfo",
-    QueryType: "",
-    Priority: "1",
-    TAT: "23",
-    TourType: "",
-    LeadSource: "",
-    LeadReferencedId: "",
-    HotelPreference: "",
-    VehiclePrefrence: "",
-    HotelType: "3",
-    MealPlan: "",
-    TravelInfo: "",
-    PaxType: "",
-    SalesPerson:"",
-    AssignUser:"",
-    ContractPerson:"",
-    AddedBy: "1",
-    UpdatedBy: "0",
-  });
+  const [valueAddServices, setValueAddServices] = useState({...valueAddInitial});
+  const [queryFields, setQueryFields] = useState({...queryInitial});
   const [travelsDestination, setTravelDestination] = useState({
     Country:"",
     Destination:""
   });
-
-  const validationSchema = Yup.object().shape({
-    CompanyInfo: Yup.string().required("Required"),
-    AddEmail: Yup.string().email("Invalid Email").required("Required"),
-  });
-
   const [hotelType, setHotelType] = useState([]);
   const [hotelMeal, setHotelMeal] = useState([]);
   const [leadList, setLeadList] = useState([]);
@@ -96,8 +38,7 @@ const Query = () => {
     counter3: 0,
   };
 
-  // console.log('CityList',cityList);
-  // console.log('CountryList',countryList);
+  //reducer for pax information
   const reducer = (state, action) => {
     switch (action.type) {
       case "INCREMENT":
@@ -117,6 +58,15 @@ const Query = () => {
     }
   };
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  //form validation using yup library
+  const validationSchema = Yup.object().shape({
+    CompanyInfo: Yup.string().required("Required"),
+    AddEmail: Yup.string().email("Invalid Email").required("Required"),
+  });
+
+  console.log('QueryOnChangeValue', { ...queryFields, TravelDate:[{...TravelDate}], RoomInfo:[{...RoomInfo}],
+  PaxInfo:[{...PaxInfo}], ValueAddServices:[{...valueAddServices}]});
 
   const [PaxTotal, setPaxTotal] = useState(0);
   const [RoomsTotal, setRoomsTotal] = useState(0);
@@ -214,6 +164,10 @@ const Query = () => {
         );
         console.log("SubmitingQueryForm", response);
         toast.success(response.data.Message);
+        setQueryFields({...queryInitial});
+        setTravelDate({...travelInitial});
+        setPaxInfo({...paxInitial});
+        
         localStorage.removeItem("Query");
       } catch (err) {
         // validationErrors : parameter
@@ -1404,7 +1358,7 @@ const Query = () => {
                                         type="select"
                                         className="form-input-1"
                                         style={{ height: "30px" }}
-                                        name='Country'
+                                        name={`Country${value.Id}`}
                                         onChange={handleDateDestination}
                                       >
                                         <option value="1">Select</option>
@@ -1420,7 +1374,7 @@ const Query = () => {
                                         type="select"
                                         className="form-input-1"
                                         style={{ height: "30px" }}
-                                        name='Destination'
+                                        name={`Destination${value.Id}`}
                                         onChange={handleDateDestination}
                                       >
                                         <option value="1">Select</option>

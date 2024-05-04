@@ -12,7 +12,7 @@ const CityMaster = () => {
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
-  const [countryList, setCountryList] = useState([]);
+  const [countryList,  setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [postData, setPostData] = useState({
     Search: "",
