@@ -22,7 +22,6 @@ const Amenties = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [imageValue, setImageValue] = useState({
-    ImageData:'',
     ImageName:''
   });
 
@@ -51,10 +50,10 @@ const Amenties = () => {
 
   const handleEditClick = (rowValue) => {
     console.log('Row Value....', rowValue);
-    setImageValue({
-      ImageData:rowValue.ImageData,
-      ImageName:rowValue.ImageName
-    });
+    // setImageValue({
+    //   ImageData:rowValue.ImageData,
+    //   ImageName:rowValue.ImageName
+    // });
     setEditData({
       id: rowValue.Id,
       Name: rowValue.Name,
