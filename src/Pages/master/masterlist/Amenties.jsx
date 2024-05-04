@@ -93,7 +93,7 @@ const Amenties = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-         <img src={row.ImageData} alt="image" style={{height:'30px', height:'30px'}}></img>
+         <img src={row.ImageName} alt="image" style={{height:'30px', height:'30px'}}></img>
         </span>
       ),
       sortable: true,
