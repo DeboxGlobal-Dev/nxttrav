@@ -5,14 +5,13 @@ import DataTable from "react-data-table-component";
 import axios from "axios";
 
 const QueryList = () => {
+  
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
   });
-  const data = localStorage.getItem("Query");
-  const storedData = JSON.parse(data);
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -153,19 +152,6 @@ const QueryList = () => {
                 <h5 className="card-title d-none d-sm-block">Query</h5>
               </div>
               <div className="col-xl-4 d-flex justify-content-end">
-                {storedData && <div className="progress-container col-5 ml-auto p-0 mr-3 mt-1" style={{height:'35px'}}>
-                  <div className="progress-bar p-0">
-                    <div className="progress-text">
-                      <NavLink
-                        to="/querylist/queryview/"
-                        style={{ color: "white" }}
-                      >
-                        Un-Submitted Query
-                      </NavLink>
-                    </div>
-                  </div>
-                </div>}
-                
                   <NavLink
                     to="/querylist/queryview/"
                     className="blue-button"

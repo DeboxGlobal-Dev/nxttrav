@@ -1,25 +1,16 @@
 import React, { useState, useReducer, useEffect } from "react";
-// import { axiosOther } from "../../http/axios/axios_new";
 import { eachDayOfInterval, format } from "date-fns";
-import {
-  hotelTypeInitialValue,
-  hotelMealInitialValue,
-  leadSourceInitialValue,
-  tourtypeInitialValue,
-} from "../master/masterlist/MasterValidations";
 import { axiosOther } from "../../http/axios/axios_new";
 import * as Yup from "yup";
 import axios from "axios";
 import "jquery";
 import "select2";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Counter from "./Counter";
 import toast, { Toaster } from "react-hot-toast";
-import LeadSource from "../master/masterlist/LeadSource";
-import { Value } from "sass";
+
 
 const Query = () => {
-  const navigate = useNavigate();
   const [TravelDate, setTravelDate] = useState({
     Type: "1",
     FromDate: "",
@@ -200,7 +191,6 @@ const Query = () => {
         JSON.stringify({ ...queryFields, TravelDate:[{...TravelDate}], RoomInfo:[{...RoomInfo}],
           PaxInfo:[{...PaxInfo}], ValueAddServices:[{...valueAddServices}]})
       );
-      navigate("/querylist");
     } else if (document.activeElement.name === "ClearButton") {
       localStorage.removeItem("Query");
       toast.success("Query Form Cleared !");
@@ -212,7 +202,6 @@ const Query = () => {
         //   { ...queryFields, TravelDate, PaxInfo, RoomInfo },
         //   { abortEarly: false }
         // );
-        // console.log({ ...queryFields, TravelDate, PaxInfo, RoomInfo });
         const response = await axios.post(
           "http://20.197.55.39/api/addupdatequerymaster",
           {
@@ -258,15 +247,6 @@ const Query = () => {
     setTravelDate({ ...TravelDate, [e.target.name]: e.target.value });
   };
 
-  // console.log("inputsData", {
-  //   ...queryFields,
-  //   TravelDate: [{ ...TravelDate }],
-  //   RoomInfo: [{ ...RoomInfo }],
-  //   PaxInfo: [{ ...PaxInfo }],
-  //   ValueAddServices: [{ ...valueAddServices }],
-  // });
-
-  // console.log('StoredData', storedData?.RoomInfo[0]);
 
   // Looping date & stored into array
   function createDateArray() {
@@ -342,7 +322,6 @@ const Query = () => {
 
   // Data Set into input field from localstorage and remove on Submit and Clear;
   const handleUnSubmittedQuery  = () =>{
-    // console.log('LocalStorageData', storedData);
         const {
           QueryId,FDCode,PackageCode,PackageName,ClientType,AgentId,
           LeadPax,Subject,AddEmail,AdditionalInfo,QueryType,Priority,TAT,
@@ -413,8 +392,6 @@ const Query = () => {
     }
     setDayWiseNights(nights);
   }, [TravelDate.TotalNights]);
-
-  // console.log("DayWiseNights", dayWiseNights);
   
   //City Filtering For Dropdown
   const handleDateDestination =(e) =>{
@@ -426,25 +403,14 @@ const Query = () => {
       const a = value.CountryId == travelsDestination.Country;
       return a;
     });
-    // console.log('Filtering', filtered);
     setFilteredCity(filtered);
   },[travelsDestination]);
   
-  // console.log('Date-Country-Id', travelsDestination);
-  // console.log(filtered); 
-  // console.log('FilteredCity-----',filteredCity);
-  // console.log('Country-List', countryList);
-  // console.log('City-List', cityList);
 
   return (
     <>
       <div className="container-fluid mt-2">
         <div className="">
-          {/* <Formik
-            initialValues={QueryinputInitialValue}
-            // validationSchema={QueryInputSchema}
-            onSubmit={handleSubmit}
-          > */}
           <form onSubmit={handleSubmit}>
             {/* <div className=""> */}
             <Toaster />
