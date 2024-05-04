@@ -141,7 +141,17 @@ const Query = () => {
         JSON.stringify({ ...queryFields, TravelDate:[{...TravelDate}], RoomInfo:[{...RoomInfo}],
           PaxInfo:[{...PaxInfo}], ValueAddServices:[{...valueAddServices}]})
       );
-    } else if (document.activeElement.name === "ClearButton") {
+      const data = localStorage.getItem('Query');
+      if(data){
+        setQueryFields({...queryInitial});
+        setTravelDate({...travelInitial});
+        setPaxInfo({...paxInitial});
+        setRoomInfo({...roomInitial});
+        dispatch({ type: "SET", value: 0, counter: "counter1" });
+        dispatch({ type: "SET", value: 0, counter: "counter2" });
+        dispatch({ type: "SET", value: 0, counter: "counter3" });
+      }
+    } else if (document.activeElement.name === "ClearButton"){
       localStorage.removeItem("Query");
       toast.success("Query Form Cleared !");
       setEmptyData(!emptyData);
@@ -167,8 +177,13 @@ const Query = () => {
         setQueryFields({...queryInitial});
         setTravelDate({...travelInitial});
         setPaxInfo({...paxInitial});
-        
+        setRoomInfo({...roomInitial});
+        dispatch({ type: "SET", value: 0, counter: "counter1" });
+        dispatch({ type: "SET", value: 0, counter: "counter2" });
+        dispatch({ type: "SET", value: 0, counter: "counter3" });
+
         localStorage.removeItem("Query");
+
       } catch (err) {
         // validationErrors : parameter
         // const formattedErrors = {};
