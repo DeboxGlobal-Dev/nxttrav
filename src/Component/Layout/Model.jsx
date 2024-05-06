@@ -15,16 +15,18 @@ const Model = ({
   setChangeValue,
   setUpdateData,
   updateData,
-  imageValue
+  imageValue,
+  setImageValue
 }) => {
   
   const closeModel = () => {
     document.getElementById("cancel").click();
   };
- 
+  
+
   const handleSubmit = async (values, { resetForm }) => {
     console.log('Submit Modal Value', {...values, ...imageValue});
-
+    
     try {
       const response = await axiosOther.post(apiurl, {...values, ...imageValue});
       if (response.data.Status) {
@@ -33,6 +35,7 @@ const Model = ({
         resetForm();
         closeModel();
         console.log(response);
+        imageValue != undefined && setImageValue({ImageName:""});
       } else {
         toast.error(response.data.Name);
         console.log(response.data.Name);

@@ -24,6 +24,7 @@ const Amenties = () => {
   const [imageValue, setImageValue] = useState({
     ImageName:''
   });
+  const [showImage, setShowImage] = useState('');
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -50,10 +51,9 @@ const Amenties = () => {
 
   const handleEditClick = (rowValue) => {
     console.log('Row Value....', rowValue);
-    // setImageValue({
-    //   ImageData:rowValue.ImageData,
-    //   ImageName:rowValue.ImageName
-    // });
+    setImageValue({
+      ImageName:""
+    });
     setEditData({
       id: rowValue.Id,
       Name: rowValue.Name,
@@ -65,6 +65,7 @@ const Amenties = () => {
       Updated_at: rowValue.Updated_at,
     });
     setIsEditing(true);
+    setShowImage(rowValue.ImageName);
   };
 
   const handleImageChange = (e) =>{
@@ -75,8 +76,7 @@ const Amenties = () => {
       const base64 = reader.result;
       const base64String = base64.split(',')[1];
       setImageValue({
-        ImageData:base64String,
-        ImageName:file.name
+        ImageName:base64String
       });
     }
     reader.readAsDataURL(file);
@@ -160,6 +160,7 @@ const Amenties = () => {
                   updateData={updateData}
                   setUpdateData={setUpdateData}
                   imageValue={imageValue}
+                  setImageValue={setImageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-2">
@@ -194,6 +195,7 @@ const Amenties = () => {
                           className="form-control"
                           onChange={handleImageChange}
                         />
+                        {isEditing && <img src={showImage} alt="" style={{height:'50px', width:'50px', marginTop:'5px'}}/>}
                       </div>
                       <div className="col-sm-2">
                         <label>Set Default</label>

@@ -30,7 +30,6 @@ const TourEscort = () => {
   const [destinationList, setDestinationList] = useState([]);
   const [languageList, setLanguageList] = useState([]);
   const [imageValue, setImageValue] = useState({
-    TourEscortImageData:'',
     TourEscortImageName:''
   });
 
@@ -122,8 +121,7 @@ const TourEscort = () => {
       const base64 = reader.result;
       const base64String = base64.split(',')[1]
       setImageValue({
-        TourEscortImageData:base64String,
-        TourEscortImageName:file.name
+        TourEscortImageName:base64String,
       });
     };
     reader.readAsDataURL(file);
@@ -135,8 +133,7 @@ const TourEscort = () => {
     console.log('RowValue', rowValue);
 
     setImageValue({
-      TourEscortImageName: rowValue.TourEscortImageName,
-      TourEscortImageData: rowValue.TourEscortImageData,
+      TourEscortImageName: "",
     })
     setEditData({
       id: rowValue.Id,
@@ -280,6 +277,7 @@ const TourEscort = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                   imageValue={imageValue}
+                  setImageValue={setImageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
@@ -405,7 +403,7 @@ const TourEscort = () => {
                         </label>
                         <input
                           type="file"
-                          name="TourEscortImageData"
+                          name="TourEscortImageName"
                           className="form-control"
                           onChange={handleEscortImage}
                           // value={imageValue.TourEscortImageName}
