@@ -85,7 +85,7 @@ export const tourtypeInitialValue = {
 };
 export const seasonTypeInitialValue = {
   id: "",
-  SeasonName: "",
+  SeasonName: "1",
   FromDate: "",
   ToDate: "",
   Status: 1,

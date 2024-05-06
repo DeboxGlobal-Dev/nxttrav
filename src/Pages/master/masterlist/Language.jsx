@@ -46,10 +46,8 @@ const Language = () => {
   const handleEditClick = (rowValue) => {
     console.log(rowValue);
     setEditData({
-      id: rowValue.Id,
-      Name: rowValue.Name,
+      ...rowValue,
       Status: rowValue.Status ==="Active" ? 1:0,
-      UpdatedBy: rowValue.UpdatedBy,
     });
     setIsEditing(true);
   };

@@ -49,16 +49,11 @@ const AirlineMaster = () => {
 
   const handleEditClick = (rowValue) => {
     setImageValue({
-      ImageData:rowValue.ImageData,
-      ImageName:rowValue.ImageName
+      ImageData:"",
+      ImageName:""
     });
     setEditData({
-      id: rowValue.Id,
-      Name: rowValue.Name,
-      ImageName: rowValue.ImageName,
-      ImageData: rowValue.ImageData,
-      Status: 1,
-      UpdatedBy: 1,
+      ...rowValue
     });
     setIsEditing(true);
   };

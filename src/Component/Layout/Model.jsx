@@ -90,7 +90,7 @@ const Model = ({
                 handleSubmit(values, { resetForm });
               }}
             >
-              {({ values, handleChange, handleBlur, setFieldValue }) => {
+              {({ values, handleChange, handleBlur, setFieldValue}) => {
                 {
                   useEffect(() => {
                     setChangeValue(values);

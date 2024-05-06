@@ -46,13 +46,9 @@ const HotelMeal = () => {
 
   const handleEditClick = (rowValue) => {
     setEditData({
-      id: rowValue.Id,
-      Name: rowValue.Name,
-      ShortName: rowValue.ShortName,
+      ...rowValue,
       SetDefault: rowValue.SetDefault==="Yes"?1:0,
-      Status: rowValue.Status==="Active"?1:0,
-      UpdatedBy: rowValue.UpdatedBy,
-      Updated_at: rowValue.Updated_at,
+      Status: rowValue.Status==="Active"?1:0
     });
     setIsEditing(true);
   };

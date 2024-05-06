@@ -46,11 +46,8 @@ const TourType = () => {
 
   const handleEditClick = (rowValue) => {
     setEditData({
-      id: rowValue.Id,
-      Name: rowValue.Name,
+      ...rowValue,
       Status: rowValue.Status ==="Active"? 1 : 0,
-      UpdatedBy: rowValue.UpdatedBy,
-      Updated_at: rowValue.Updated_at,
     })
     setIsEditing(true);
   };

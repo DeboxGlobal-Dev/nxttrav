@@ -48,13 +48,10 @@ const SeasonMaster = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+    console.log('row-value', rowValue);
     setEditData({
-      id: rowValue.Id,
-      SeasonName: rowValue.SeasonName,
-      FromDate: rowValue.FromDate,
-      ToDate: rowValue.ToDate,
+      ...rowValue,
       Status: rowValue.Status==="Active" ? 1 : 0,
-      UpdatedBy: rowValue.UpdatedBy,
     });
     setIsEditing(true);
   };
@@ -140,10 +137,9 @@ const SeasonMaster = () => {
                           id="Season"
                           name="SeasonName"
                         >
-                          <option>Select</option>
-                          <option value={"Summer"}>Summer</option>
-                          <option value={"Winter"}>Winter</option>
-                          <option value={"All"}>All</option>
+                          <option value={1}>Summer</option>
+                          <option value={2}>Winter</option>
+                          <option value={3}>All</option>
                         </Field>
                         <span className="font-size-10 text-danger">
                           {<ErrorMessage name="Name" />}

@@ -65,12 +65,8 @@ const ExpenseType = () => {
 
   const handleEditClick = (rowValue) => {
     setEditData({
-      id: rowValue.Id,
-      ExpenseHead: rowValue.ExpenseHead,
-      ExpenseType: rowValue.ExpenseType,
-      Status: rowValue.Status === "Active" ? 1 : 0,
-      AddedBy: rowValue.AddedBy,
-      UpdatedBy: rowValue.UpdatedBy,
+      ...rowValue,
+      Status: rowValue.Status === "Active" ? 1 : 0
     });
     setIsEditing(true);
   };

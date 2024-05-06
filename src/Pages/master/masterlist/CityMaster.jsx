@@ -74,16 +74,10 @@ const CityMaster = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    console.log('Fourth Action');
     console.log("Row Value", rowValue);
     setEditData({
-      id: rowValue.Id,
-      CountryId: rowValue.CountryId,
-      StateId: rowValue.StateId,
-      Name: rowValue.Name,
+      ...rowValue,
       Status: rowValue.Status === "Active" ? 1 : 0,
-      AddedBy: rowValue.AddedBy,
-      UpdatedBy: rowValue.UpdatedBy,
     });
     setIsEditing(true);
   };
@@ -196,7 +190,7 @@ const CityMaster = () => {
                           {countryList.map((value, index) => {
                             // console.log(value);
                             return (
-                              <option value={value.Id} key={index + 1}>
+                              <option value={value.id} key={index + 1}>
                                 {value.Name}
                               </option>
                             );
@@ -214,7 +208,7 @@ const CityMaster = () => {
                           {stateFiltered?.map((value, index) => {
                             console.log(value);
                             return (
-                              <option value={value.Id} key={index + 1}>
+                              <option value={value.id} key={index + 1}>
                                 {value.Name}
                               </option>
                             );

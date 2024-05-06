@@ -46,14 +46,9 @@ const LeadSource = () => {
   const handleEditClick = (rowValue) => {
     console.log('row value',rowValue);
     setEditData({
-      id: rowValue.Id,
-      Name: rowValue.Name,
+      ...rowValue,
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
       Status: rowValue.Status === "Active" ? 1 : 0,
-      AddedBy: rowValue.AddedBy,
-      UpdatedBy: rowValue.UpdatedBy,
-      Created_at: rowValue.Created_at,
-      Updated_at: rowValue.Updated_at,
     });
     setIsEditing(true);
   };
@@ -170,7 +165,7 @@ const LeadSource = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={"0"} selected>
+                          <option value={"0"}>
                             No
                           </option>
                           <option value={"1"}>Yes</option>

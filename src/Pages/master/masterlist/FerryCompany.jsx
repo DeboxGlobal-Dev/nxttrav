@@ -73,19 +73,8 @@ const FerryCompany = () => {
   const handleEditClick = (rowValue) => {
     console.log(rowValue);
     setEditData({
-      id: rowValue.Id,
-      FerryCompanyName: rowValue.FerryCompanyName,
-      Destination: rowValue.Destination,
-      Website: rowValue.Website,
-      SelfSupplier: rowValue.SelfSupplier ==="Yes"?1:0,
-      Type: rowValue.Type,
-      ContactPers: rowValue.ContactPers,
-      Designation: rowValue.Designation,
-      Phone: rowValue.Phone,
-      Email: rowValue.Email,
-      Status: rowValue.Status ==="Active"?1:0,
-      UpdatedBy: rowValue.UpdatedBy,
-      AddedBy: rowValue.AddedBy,
+      ...rowValue,
+      Status: rowValue.Status ==="Active"?1:0
     });
     setIsEditing(true);
   };

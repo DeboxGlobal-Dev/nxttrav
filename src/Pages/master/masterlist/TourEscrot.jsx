@@ -135,32 +135,34 @@ const TourEscort = () => {
     setImageValue({
       TourEscortImageName: "",
     })
-    setEditData({
-      id: rowValue.Id,
-      ServiceType: rowValue.ServiceType,
-      Name: rowValue.Name,
-      MobileNumber: rowValue.MobileNumber,
-      WhatsAppNumber: rowValue.WhatsAppNumber,
-      AlternateNumber: rowValue.AlternateNumber,
-      Email: rowValue.Email,
-      TourEscortLicenseOne: rowValue.TourEscortLicenseOne,
-      LicenseExpiry: rowValue.LicenseExpiry,
-      Destination: rowValue.Destination,
-      Language: rowValue.Language,
-      Supplier: rowValue.Supplier,
-      TourEscortLicenseTwo: rowValue.TourEscortLicenseTwo,
-      ContactPerson: rowValue.ContactPerson,
-      Designation: rowValue.Designation,
-      Country: rowValue.Country,
-      State: rowValue.State,
-      City: rowValue.City,
-      PinCode: rowValue.PinCode,
-      Detail: rowValue.Detail,
-      Address: rowValue.Address,
-      Status: rowValue.Status === "Active" ? 1 : 0,
-      AddedBy: rowValue.AddedBy,
-      UpdatedBy: rowValue.UpdatedBy,
-    });
+    // setEditData({
+    //   id: rowValue.Id,
+    //   ServiceType: rowValue.ServiceType,
+    //   Name: rowValue.Name,
+    //   MobileNumber: rowValue.MobileNumber,
+    //   WhatsAppNumber: rowValue.WhatsAppNumber,
+    //   AlternateNumber: rowValue.AlternateNumber,
+    //   Email: rowValue.Email,
+    //   TourEscortLicenseOne: rowValue.TourEscortLicenseOne,
+    //   LicenseExpiry: rowValue.LicenseExpiry,
+    //   Destination: rowValue.Destination,
+    //   Language: rowValue.Language,
+    //   Supplier: rowValue.Supplier,
+    //   TourEscortLicenseTwo: rowValue.TourEscortLicenseTwo,
+    //   ContactPerson: rowValue.ContactPerson,
+    //   Designation: rowValue.Designation,
+    //   Country: rowValue.Country,
+    //   State: rowValue.State,
+    //   City: rowValue.City,
+    //   PinCode: rowValue.PinCode,
+    //   Detail: rowValue.Detail,
+    //   Address: rowValue.Address,
+    //   Status: rowValue.Status === "Active" ? 1 : 0,
+    //   AddedBy: rowValue.AddedBy,
+    //   UpdatedBy: rowValue.UpdatedBy,
+    // });
+    
+    setEditData({...rowValue});
     setIsEditing(true);
   };
 

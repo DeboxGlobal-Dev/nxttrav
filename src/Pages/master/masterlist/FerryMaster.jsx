@@ -73,15 +73,8 @@ const FerryMaster = () => {
       ImageName:rowValue.ImageName
     });
     setEditData({
-      id: rowValue.Id,
-      FerryCompany: rowValue.FerryCompany,
-      FerryName: rowValue.FerryName,
-      Capacity: rowValue.Capacity,
-      Status: rowValue.Status === 'Active' ? 1:0,
-      ImageName: rowValue.ImageName,
-      ImageData: rowValue.ImageData,
-      AddedBy: rowValue.AddedBy,
-      UpdatedBy: rowValue.UpdatedBy,
+      ...rowValue,
+      Status: rowValue.Status === 'Active' ? 1:0
     });
     setIsEditing(true);
   };

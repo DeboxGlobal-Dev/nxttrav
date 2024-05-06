@@ -43,13 +43,8 @@ const RoomType = () => {
 
   const handleEditClick = (rowValue) => {
     setValueForEdit({
-      Name:rowValue.Name,
-      Size:rowValue.Size,
-      MaximumOccupancy:rowValue.MaxOccupancy,
-      Bedding:rowValue.Bedding,
+      ...rowValue,
       Status:rowValue.Status==="Active"?1:0,
-      AddedBy:rowValue.AddedBy,
-      UpdatedBy:rowValue.UpdatedBy
      });
   };
 

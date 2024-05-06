@@ -63,12 +63,9 @@ const StateMaster = () => {
 
   const handleEditClick = (rowValue) => {
     console.log(rowValue);
-    setEditData({
-      id: rowValue.Id,
-      Name: rowValue.Name,
-      CountryId: rowValue.CountryId,
+    setEditData({ 
+      ...rowValue,
       Status: (rowValue.Status==='Active') ? 1 : 0,
-      UpdatedBy: 1,
     });
     setIsEditing(true);
   };
@@ -166,7 +163,7 @@ const StateMaster = () => {
                         <option value="">Select</option>
                         {country.map((value) => {
                           return (
-                            <option value={value.Id} key={value.Id} >{value.Name}</option>
+                            <option value={value.id} key={value.id} >{value.Name}</option>
                           )
                         })}
                         </Field>

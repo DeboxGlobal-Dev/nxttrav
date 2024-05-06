@@ -46,9 +46,7 @@ const InsuranceType = () => {
     setEditData({
       id: rowValue.Id,
       InsuranceType: rowValue.InsuranceType,
-      Status: rowValue.Status === "Active" ? 1:0,
-      AddedBy: rowValue.AddedBy,
-      UpdatedBy: rowValue.UpdatedBy,
+      Status: rowValue.Status === "Active" ? 1:0
     });
     setIsEditing(true);
   };

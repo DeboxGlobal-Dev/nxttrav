@@ -52,14 +52,8 @@ const HotelAdditional = () => {
       ImageName:rowValue.ImageName
     })
     setEditData({
-      id: rowValue.Id,
-      Name: rowValue.Name,
-      Details: rowValue.Details,
-      Status: rowValue.Status==="Active"?1:0,
-      AddedBy: rowValue.AddedBy,
-      UpdatedBy: rowValue.UpdatedBy,
-      Created_at: rowValue.Created_at,
-      Updated_at: rowValue.Updated_at,
+      ...rowValue,
+      Status: rowValue.Status==="Active"?1:0
     })
     setIsEditing(true);
   };

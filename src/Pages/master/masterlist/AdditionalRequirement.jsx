@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
@@ -9,6 +9,9 @@ import {
   additionalRequiremntInitialValue,
   additionaRequirementValidationSchema,
 } from "./MasterValidations";
+
+
+const SendingProps =  createContext();
 
 const AdditionalRequirement = () => {
   const [getData, setGetData] = useState([]);
@@ -92,26 +95,10 @@ const AdditionalRequirement = () => {
 
   const handleEditClick = (rowValue) => {
     setImageValue({
-      ImageData:rowValue.ImageData,
-      ImageName:rowValue.ImageName
+      ImageName:""
     });
     setEditData({
-      id: rowValue.Id,
-      Name: rowValue.Name,
-      DestinationId: rowValue.DestinationId,
-      CurrencyId: rowValue.CurrencyId,
-      CostType: rowValue.CostType,
-      TaxSlab: rowValue.TaxSlab,
-      MarkupApply: rowValue.MarkupApply,
-      ShowInProposal: rowValue.ShowInProposal,
-      AdultCost: rowValue.AdultCost,
-      ChildCost: rowValue.ChildCost,
-      InfantCost: rowValue.InfantCost,
-      ImageName: rowValue.ImageName,
-      Details: rowValue.Details,
-      Status: rowValue.Status,
-      AddedBy: rowValue.AddedBy,
-      ImageData: rowValue.ImageData,
+      ...rowValue
     });
     setIsEditing(true);
   };

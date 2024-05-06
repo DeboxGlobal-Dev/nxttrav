@@ -68,26 +68,15 @@ const DestinationMaster = () => {
     const result = getData.filter((item) => {
       return item.Name.toLowerCase().match(postData.Search.toLowerCase());
     });
-
     setFilterData(result);
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
     console.log(rowValue);
     setEditData({
-      id: rowValue.Id,
-      Name: rowValue.Name,
-      StateName: rowValue.StateName,
-      CountryName: rowValue.CountryName,
-      CountryId: rowValue.CountryId,
-      StateId: rowValue.StateId,
-      Description: rowValue.Description,
+      ...rowValue,
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
       Status: rowValue.Status === "Active" ? 1 : 0,
-      AddedBy: rowValue.AddedBy,
-      UpdatedBy: rowValue.UpdatedBy,
-      Created_at: rowValue.Created_at,
-      Updated_at: rowValue.Updated_at,
     });
     setIsEditing(true);
   };
@@ -219,7 +208,7 @@ const DestinationMaster = () => {
                           <option value={""}>Select Country</option>
                           {countryList.map((value, index) => {
                             return (
-                              <option value={value.Id} key={index + 1}>
+                              <option value={value.id} key={index + 1}>
                                 {value.Name}
                               </option>
                             );
@@ -236,7 +225,7 @@ const DestinationMaster = () => {
                           <option value="">Select State</option>
                           {stateFiltered.map((value, index) => {
                             return (
-                              <option value={value.Id} key={index + 1}>
+                              <option value={value.id} key={index + 1}>
                                 {value.Name}
                               </option>
                             );
@@ -275,7 +264,7 @@ const DestinationMaster = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={0} selected>
+                          <option value={0}>
                             No
                           </option>
                           <option value={1}>Yes</option>
