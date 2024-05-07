@@ -55,7 +55,8 @@ const Amenties = () => {
   const handleEditClick = (rowValue) => {
     console.log('Row Value....', rowValue);
     setImageValue({
-      ImageName:""
+      ImageName:"",
+      ImageData:""
     });
     setEditData({
       ...rowValue,
