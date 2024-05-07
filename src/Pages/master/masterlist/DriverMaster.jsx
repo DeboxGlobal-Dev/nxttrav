@@ -71,8 +71,12 @@ const DriverMaster = () => {
 
   const handleEditClick = (rowValue) => {
     setImageValue({
-      ImageData:rowValue.ImageData,
-      ImageName:rowValue.ImageName
+      ImageData:"",
+      ImageName:""
+    });
+    setAnotherImage({
+      LicenseData:"",
+      LicenseName:""
     });
     setEditData({
       ...rowValue,
@@ -214,7 +218,7 @@ const DriverMaster = () => {
                   Back
                 </NavLink>
                 <Model
-                  heading={"Add Airline"}
+                  heading={"Add Driver"}
                   apiurl={"addupdatedrivermaster"}
                   initialValues={driverMasterInitialValue}
                   validationSchema={driverMasterValidationSchema}
@@ -225,6 +229,7 @@ const DriverMaster = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                   imageValue={{...imageValue,...anotherImage}}
+                  setImageValue={setImageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
@@ -238,7 +243,7 @@ const DriverMaster = () => {
                           <option value={1}>Select Country</option>
                           {
                             countryList.map((value, index)=>{
-                              return <option value={value.Id} key={index + 1}>{value.Name}</option>
+                              return <option value={value.id} key={index + 1}>{value.Name}</option>
                             })
                           }
                         </Field>

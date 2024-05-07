@@ -6,8 +6,8 @@ import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
-  countryInitialValue,
-  countryValidationSchema,
+  bankInitialValue,
+  bankMasterValidationSchema
 } from "./MasterValidations";
 
 const BankMaster = () => {
@@ -29,7 +29,7 @@ const BankMaster = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("banklist", postData);
+        const { data } = await axiosOther.post("bankmasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
         
@@ -50,8 +50,8 @@ const BankMaster = () => {
 
   const handleEditClick = (rowValue) => {
     setImageValue({
-      ImageData:rowValue.ImageData,
-      ImageName:rowValue.ImageName
+      ImageData:"",
+      ImageName:""
     });
     setEditData({
       ...rowValue,
@@ -80,7 +80,7 @@ const BankMaster = () => {
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Bank Name",
       selector: (row) => (
         <span>
           <i
@@ -89,19 +89,34 @@ const BankMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.BankName}
         </span>
       ),
       sortable: true,
     },
     {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
+      name: "Account Type",
+      selector: (row) => row.AccountType,
       sortable: true,
     },
     {
-      name: "Status Name",
-      selector: (row) => row.Status,
+      name: "Account Number",
+      selector: (row) => row.AccountNumber,
+      sortable: true,
+    },
+    {
+      name: "Benificiary Name",
+      selector: (row) => row.BeneficiaryName,
+      sortable: true,
+    },
+    {
+      name: "IFSC Code",
+      selector: (row) => row.BranchIfsc,
+      sortable: true,
+    },
+    {
+      name: "Branch Address",
+      selector: (row) => row.BranchAddress,
       sortable: true,
     },
     {
@@ -123,6 +138,11 @@ const BankMaster = () => {
           </span>
         );
       },
+    },
+    {
+      name: "Status",
+      selector: (row) => row.Status,
+      sortable: true,
     },
   ];
   return (
@@ -151,9 +171,9 @@ const BankMaster = () => {
                 </NavLink>
                 <Model
                   heading={"Add Bank"}
-                  apiurl={"addupdatebankmaster"}
-                  initialValues={countryInitialValue}
-                  validationSchema={countryValidationSchema}
+                  apiurl={"addupdatebank"}
+                  initialValues={bankInitialValue}
+                  validationSchema={bankMasterValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -168,7 +188,7 @@ const BankMaster = () => {
                         <label>Bank Name</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="BankName"
                           placeholder="SAC Code"
                           className="form-control"
                         />
@@ -176,7 +196,7 @@ const BankMaster = () => {
                       <div className="col-sm-4">
                         <label>Account Type</label>
                         <Field
-                          name="Status"
+                          name="AccountType"
                           className="form-control"
                           component={"select"}
                         >
@@ -188,8 +208,8 @@ const BankMaster = () => {
                         <label>Account Number</label>
                         <Field
                           type="text"
-                          name="Color"
-                          placeholder="SAC Code"
+                          name="AccountNumber"
+                          placeholder="Account Number"
                           className="form-control"
                         />
                       </div>
@@ -197,8 +217,8 @@ const BankMaster = () => {
                         <label>Branch IFSC</label>
                         <Field
                           type="text"
-                          name="Color"
-                          placeholder="SAC Code"
+                          name="BranchIfsc"
+                          placeholder="Branch IFSC"
                           className="form-control"
                         />
                       </div>
@@ -206,8 +226,8 @@ const BankMaster = () => {
                         <label>Benificiary Name</label>
                         <Field
                           type="text"
-                          name="Color"
-                          placeholder="SAC Code"
+                          name="BeneficiaryName"
+                          placeholder="Benificiary Name"
                           className="form-control"
                         />
                       </div>
@@ -215,8 +235,8 @@ const BankMaster = () => {
                         <label>Branch Address</label>
                         <Field
                           type="text"
-                          name="Color"
-                          placeholder="SAC Code"
+                          name="BranchAddress"
+                          placeholder="Branch Address"
                           className="form-control"
                         />
                       </div>
@@ -224,8 +244,8 @@ const BankMaster = () => {
                         <label>Branch Swift Code</label>
                         <Field
                           type="text"
-                          name="Color"
-                          placeholder="SAC Code"
+                          name="BranchSwiftCode"
+                          placeholder="Branch Swift Code"
                           className="form-control"
                         />
                       </div>
@@ -233,14 +253,14 @@ const BankMaster = () => {
                         <label>UPI ID</label>
                         <Field
                           type="text"
-                          name="Color"
-                          placeholder="SAC Code"
+                          name="UpiId"
+                          placeholder="UPI ID"
                           className="form-control"
                         />
                       </div>
                       <div className="col-sm-4">
                         <label>Attach QR Code Image</label>
-                        <Field
+                        <input
                           type="file"
                           name="ImageData"
                           className="form-control"
@@ -261,18 +281,18 @@ const BankMaster = () => {
                       <div className="col-sm-4">
                         <label>Set Default</label>
                         <Field
-                          name="Status"
+                          name="SetDefault"
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={0}>No</option>
                           <option value={1}>Yes</option>
+                          <option value={0}>No</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">
                         <label>Show/Hide</label>
                         <Field
-                          name="Status"
+                          name="ShowHide"
                           className="form-control"
                           component={"select"}
                         >

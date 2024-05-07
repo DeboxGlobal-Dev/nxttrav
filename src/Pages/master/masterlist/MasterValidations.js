@@ -181,9 +181,9 @@ export const resturantInitialValue = {
   Phone2: "",
   Phone3: "",
   ContactEmail: "",
-  Image: "",
   Status: 1,
   AddedBy: 1,
+  updatedBy: 1,
 };
 export const restaurantMealInitialValue = {
   id: "",
@@ -318,7 +318,7 @@ export const tourEscortInitialValue = {
   Address: "",
   Status: 1,
   AddedBy: 1,
-  UpdatedBy: 0,
+  UpdatedBy: 1,
 };
 export const vehicleTypeInitialValue = {
   id: "",
@@ -360,7 +360,7 @@ export const driverMasterInitialValue = {
   LicenseData: "",
   Address: "",
   UpdatedBy: 1,
-  AddedBy:0
+  AddedBy: 0,
 };
 export const trainMasterInitialValue = {
   id: "",
@@ -368,6 +368,7 @@ export const trainMasterInitialValue = {
   ImageName: "",
   ImageData: "",
   Status: 1,
+  AddedBy: 1,
   UpdatedBy: 1,
 };
 export const airlineMasterInitialValue = {
@@ -536,6 +537,26 @@ export const gitInitialValue = {
   AddedBy: "1",
   UpdatedBy: "0",
 };
+
+export const bankInitialValue = {
+  id: "",
+  BankName: "",
+  AccountNumber: "",
+  BranchAddress: "",
+  UpiId: "",
+  AccountType: "1",
+  BeneficiaryName: "",
+  BranchIfsc: "",
+  BranchSwiftCode: "",
+  ImageName: "",
+  ImageData:"",
+  ShowHide: "1",
+  SetDefault: "1",
+  Status: "1",
+  AddedBy: "1",
+  UpdatedBy: "1",
+};
+
 // ------------------------VALIDATION SCHEMAS-------------------------- //
 
 export const countryValidationSchema = yup.object().shape({
@@ -615,14 +636,6 @@ export const resturantValidationSchema = yup.object().shape({
   GSTN: yup.string().required("Required"),
   ContactName: yup.string().required("Required"),
   ContactDesignation: yup.string().required("Required"),
-  CountryCode: yup
-    .string()
-    .matches(/^\+[1-9]\d{0,3}$/, "Invalid-Code")
-    .required("Required"),
-  Phone1: yup.string().required("Required"),
-  Phone2: yup.string().required("Required"),
-  Phone3: yup.string().required("Required"),
-  ContactEmail: yup.string().email("Invalid Email").required("Required"),
 });
 export const restaurantMealValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
@@ -697,7 +710,7 @@ export const ferryCompanyValidationSchema = yup.object().shape({
   Destination: yup.string().required("Required"),
 });
 export const ferrySeatValidationSchema = yup.object().shape({
-  FerrySeat: yup.string().required('Required')
+  FerrySeat: yup.string().required("Required"),
 });
 export const taxMasterValidationSchema = yup.object().shape({
   ServiceType: yup.string().required("Required"),
@@ -733,6 +746,10 @@ export const letterMasterValidationSchema = yup.object().shape({
   WelcomeNote: yup.string().required("Required"),
   GreetingNote: yup.string().required("Required"),
 });
+export const bankMasterValidationSchema = yup.object().shape({
+  BankName: yup.string().required('Required'),
+  AccountNumber: yup.string().required('Required')
+})
 // Hotel Master Table Value in JSON-----------------------------------
 
 export const hotelMasterValue = [

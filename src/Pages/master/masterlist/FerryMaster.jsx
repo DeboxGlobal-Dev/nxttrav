@@ -69,8 +69,8 @@ const FerryMaster = () => {
   const handleEditClick = (rowValue) => {
     console.log(rowValue);
     setImageValue({
-      ImageData:rowValue.ImageData,
-      ImageName:rowValue.ImageName
+      ImageData:"",
+      ImageName:""
     });
     setEditData({
       ...rowValue,
@@ -194,6 +194,7 @@ const FerryMaster = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                   imageValue={imageValue}
+                  setImageValue={setImageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
@@ -207,10 +208,9 @@ const FerryMaster = () => {
                           <option value="">Select Company</option>
                           {
                             ferryCompanyList?.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.FerryCompanyName}</option>
+                              return <option value={value.id} key={index+1}>{value.FerryCompanyName}</option>
                             })
                           }
-                          
                         </Field>
                       </div>
                       <div className="col-sm-4">

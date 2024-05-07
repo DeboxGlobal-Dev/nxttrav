@@ -103,16 +103,12 @@ const Resturant = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    
     setImageValue({
-      ImageData:rowValue.ImageData,
-      ImageName:rowValue.ImageName
+      ImageData:"",
+      ImageName:""
     });
     setValueForEdit({
-      Name:rowValue.Name,
-      Destination:rowValue.Destination,
-      Address:rowValue.Address,
-      RateSheet:rowValue.RateSheet,
+      ...rowValue,
       Status:rowValue.Status==="Active"? 1:0
     });
     setIsEditing(true);
@@ -129,7 +125,7 @@ const Resturant = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Image}
+          {row.ImageName}
         </span>
       ),
       sortable: true,
@@ -185,9 +181,11 @@ const Resturant = () => {
         ImageData:base64String,
         ImageName:file.name
       });
-      reader.readAsDataURL(file);
-    }
+    };
+    reader.readAsDataURL(file);
   };
+
+  // console.log('ImageValue', imageValue);
 
   return (
     <>
@@ -247,7 +245,7 @@ const Resturant = () => {
                           <option value={"0"}>Select Destination</option>
                           {
                             destinationList.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                              return <option value={value.id} key={index+1}>{value.Name}</option>
                             })
                           }
                         </Field>
@@ -267,14 +265,14 @@ const Resturant = () => {
                       <div className="col-sm-4">
                         <label>Country</label>
                         <Field
-                          name="Country"
+                          name="CountryId"
                           className="form-control"
                           component={"select"}
                         >
                           <option value={0}>Select</option>
                           {countryList.map((value, index) => {
                             return (
-                              <option value={value.Id} key={index + 1}>
+                              <option value={value.id} key={index + 1}>
                                 {value.Name}
                               </option>
                             );
@@ -284,14 +282,14 @@ const Resturant = () => {
                       <div className="col-sm-4">
                         <label>State</label>
                         <Field
-                          name="State"
+                          name="StateId"
                           className="form-control"
                           component={"select"}
                         >
                           <option value={0}>Select</option>
                           {stateFiltered.map((value, index) => {
                             return (
-                              <option value={value.Id} key={index + 1}>
+                              <option value={value.id} key={index + 1}>
                                 {value.Name}
                               </option>
                             );
@@ -302,14 +300,14 @@ const Resturant = () => {
                       <div className="col-sm-4">
                         <label>City</label>
                         <Field
-                          name="City"
+                          name="CityId"
                           className="form-control"
                           component={"select"}
                         >
                           <option value={0}>Select</option>
                           {cityFiltered.map((value, index) => {
                             return (
-                              <option value={value.Id} key={index + 1}>
+                              <option value={value.id} key={index + 1}>
                                 {value.Name}
                               </option>
                             );
@@ -357,7 +355,6 @@ const Resturant = () => {
                         <label>Image Upload</label>
                         <input
                           type="file"
-                          id="file"
                           name="ImageData"
                           className="form-control"
                           onChange={handleRestaurantImage}

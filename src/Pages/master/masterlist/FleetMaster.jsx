@@ -48,8 +48,8 @@ const FleetMaster = () => {
 
   const handleEditClick = (rowValue) => {
     setImageValue({
-      ImageData:rowValue.ImageData,
-      ImageName:rowValue.ImageName
+      ImageData:"",
+      ImageName:""
     });
     setEditData({
       ...rowValue,
@@ -157,6 +157,7 @@ const FleetMaster = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                   imageValue={imageValue}
+                  setImageValue={setImageValue}
                 >
                   <div className="card-body">
                   <div className="row row-gap-3">
@@ -168,120 +169,59 @@ const FleetMaster = () => {
                           component={"select"}
                         >
                           <option value={1}>12 Seater</option>
-                          <option value={1}>12 Seater Traveller</option>
-                          <option value={1}>14 Seater Traveller</option>
-                          <option value={2}>18 Seater Mini Coach</option>
-                          <option value={2}>26 Seater Mini Coach</option>
-                          <option value={2}>30 Seater Bus</option>
-                          <option value={2}>34 Seater Large Coach</option>
-                          <option value={2}>35 Seater</option>
-                          <option value={2}>6 Seater Luxury Traveller</option>
-                          <option value={2}>9 Seater Traveller</option>
-                          <option value={2}>Default</option>
-                          <option value={2}>Hatchback</option>
-                          <option value={2}>Luxury Sedan</option>
-                          <option value={2}>Sadan</option>
-                          <option value={2}>Sadan</option>
-                          <option value={2}>SUV-Crysta</option>
-                          <option value={2}>SUV-Innova</option>
-                          <option value={2}>SUV-Luxury</option>
-                          <option value={2}>Vovlo-Large-Coach</option>
+                          <option value={2}>12 Seater Traveller</option>
+                          <option value={3}>14 Seater Traveller</option>
                         </Field>
                     </div>
                     <div className="col-sm-4">
                         <label>Chassis Number</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="ChassisNumber"
                           placeholder="Chassis"
                           className="form-control"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
                     </div>
                     <div className="col-sm-4">
                         <label>Brand</label>
                         <Field
-                          name="SetDefault"
+                          name="Brand"
                           className="form-control"
                           component={"select"}
                         >
                           <option value={1}>None</option>
-                          <option value={1}>Toyota</option>
-                          <option value={1}>Tempo Traveller</option>
-                          <option value={2}>AC Innova</option>
-                          <option value={2}>AC Mini Coach</option>
-                          <option value={2}>AC Tempo</option>
-                          <option value={2}>AC Volvo Coach</option>
-                          <option value={2}>VolksWagen</option>
-                          <option value={2}>BMW</option>
-                          <option value={2}>Maruti</option>
-                          <option value={2}>Innova</option>
-                          <option value={2}>SUV-Innova</option>
-                          <option value={2}>9 Seater Traveller</option>
-                          <option value={2}>Sadan</option>
-                          <option value={2}>Sadan</option>
-                          <option value={2}>SUV-Crysta</option>
-                          <option value={2}>SUV-Innova</option>
-                          <option value={2}>SUV-Luxury</option>
-                          <option value={2}>Vovlo-Large-Coach</option>
+                          <option value={2}>Toyota</option>
+                          <option value={3}>Tempo Traveller</option>
                         </Field>
                     </div>
                     <div className="col-sm-4">
                         <label>Engine Number</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="EngineNumber"
                           placeholder="Engine"
                           className="form-control"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
                     </div>
                     <div className="col-sm-4">
                         <label>Vehicle</label>
                         <Field
-                          name="SetDefault"
+                          name="Vehicle"
                           className="form-control"
                           component={"select"}
                         >
                           <option value={1}>Select Vehicle</option>
-                          <option value={1}>Volvo Bus</option>
-                          <option value={1}>Volvo</option>
-                          <option value={2}>BMW X5</option>
-                          <option value={2}>Bolero Amaze</option>
-                          <option value={2}>AC Tempo</option>
-                          <option value={2}>Polo GT</option>
-                          <option value={2}>Vento</option>
-                          <option value={2}>New Taigon</option>
-                          <option value={2}>The T-Roc 2021</option>
-                          <option value={2}>Maruti Suzuki Slerio</option>
-                          <option value={2}>Maruti Suzuki Dzire</option>
-                          <option value={2}>Maruti Suzuki Alto</option>
-                          <option value={2}>Maruti Suzuki Ciaz</option>
-                          <option value={2}>Range Rover</option>
-                          <option value={2}>BMW C CLASS</option>
-                          <option value={2}>New Taigun</option>
-                          <option value={2}>Benza</option>
-                          <option value={2}>Amaze</option>
-                          <option value={2}>Swift</option>
-                          <option value={2}>Hatchback</option>
-                          <option value={2}>Ertiga</option>
+                          <option value={2}>Volvo Bus</option>
                         </Field>
                     </div>
                     <div className="col-sm-4">
                         <label>Company Name</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="CompanyName"
                           placeholder="Company Name"
                           className="form-control"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
                     </div>
                     <div className="col-sm-4">
                         <label>Color</label>
@@ -296,32 +236,29 @@ const FleetMaster = () => {
                         <label>Policy Number</label>
                         <Field
                           type="text"
-                          name="BirthDate"
+                          name="PolicyNumber"
                           placeholder="Policy Number"
                           className="form-control"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
                     </div>
                     <div className="col-sm-4">
                         <label>Fuel Type</label>
                         <Field
-                          name="SetDefault"
+                          name="FuelType"
                           className="form-control"
                           component={"select"}
                         >
                           <option value={1}>Petrol</option>
-                          <option value={1}>Diesel</option>
-                          <option value={1}>CNG</option>
-                          <option value={2}>Electric</option>
+                          <option value={2}>Diesel</option>
+                          <option value={3}>CNG</option>
+                          <option value={4}>Electric</option>
                         </Field>
                     </div>
                     <div className="col-sm-4">
                         <label>Issue Date</label>
                         <Field
                           type="date"
-                          name="ShortName"
+                          name="IssueDate"
                           className="form-control"
                         />
                     </div>
@@ -329,18 +266,15 @@ const FleetMaster = () => {
                         <label className="font-size-10">Seating Capacity (Including Driver)</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="SeatingCapacity"
                           placeholder="Capacity"
                           className="form-control"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
                     </div>
                       <div className="col-sm-4">
                         <label>Assigned Driver</label>
                         <Field
-                          name="SetDefault"
+                          name="AssignedDriver"
                           className="form-control"
                           component={"select"}
                         >
@@ -351,43 +285,34 @@ const FleetMaster = () => {
                         <label>Category Vehicle-Group</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="CategoryVehicle"
                           placeholder="Vehicle-Group"
                           className="form-control"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
                       </div>
                       <div className="col-sm-4">
                         <label>Registration Number</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="RegistrationNumber"
                           placeholder="Vehicle-Group"
                           className="form-control"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
                       </div>
                       <div className="col-sm-4">
                         <label>Registered Owner Name</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="RegisteredOwnerName"
                           placeholder="Vehicle-Group"
                           className="form-control"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
                       </div>
                       <div className="col-sm-4">
                         <label>Pollution Permits Expire</label>
                         <Field
                           type="date"
-                          name="ShortName"
+                          name="PollutionPermitsExpire"
                           className="form-control"
                         />
                       </div>
@@ -395,7 +320,7 @@ const FleetMaster = () => {
                         <label>Registration Date</label>
                         <Field
                           type="date"
-                          name="ShortName"
+                          name="RegistrationDate"
                           className="form-control"
                         />
                       </div>
@@ -412,7 +337,7 @@ const FleetMaster = () => {
                         <label>Due Date</label>
                         <Field
                           type="date"
-                          name="ShortName"
+                          name="DueDate"
                           className="form-control"
                         />
                       </div>
@@ -420,43 +345,34 @@ const FleetMaster = () => {
                         <label>Premium Amount</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="PremiumAmount"
                           placeholder="Premium Amount"
                           className="form-control"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
                       </div>
                       <div className="col-sm-4">
                         <label>Cover Amount</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="CoverAmount"
                           placeholder="Cover Amount"
                           className="form-control"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
                       </div>
                       <div className="col-sm-4">
                         <label>Address</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="Address"
                           placeholder="Address"
                           className="form-control"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
                       </div>
                       <div className="col-sm-4">
                         <label>Expiry Date</label>
                         <Field
                           type="date"
-                          name="ShortName"
+                          name="ExpiryDate"
                           className="form-control"
                         />
                       </div>
@@ -464,19 +380,16 @@ const FleetMaster = () => {
                         <label>Type</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="Type"
                           placeholder="Premium Amount"
                           className="form-control"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
                       </div>
                       <div className="col-sm-4">
                         <label>Expiry Date</label>
                         <Field
                           type="date"
-                          name="ShortName"
+                          name="ExpiryDate"
                           className="form-control"
                         />
                       </div>

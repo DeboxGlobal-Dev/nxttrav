@@ -30,7 +30,8 @@ const TourEscort = () => {
   const [destinationList, setDestinationList] = useState([]);
   const [languageList, setLanguageList] = useState([]);
   const [imageValue, setImageValue] = useState({
-    TourEscortImageName:''
+    TourEscortImageName:'',
+    TourEscortImageData:''
   });
 
   const getDataToServer = async () => {
@@ -121,7 +122,8 @@ const TourEscort = () => {
       const base64 = reader.result;
       const base64String = base64.split(',')[1]
       setImageValue({
-        TourEscortImageName:base64String,
+        TourEscortImageData:base64String,
+        TourEscortImageName:file.name,
       });
     };
     reader.readAsDataURL(file);
@@ -133,36 +135,12 @@ const TourEscort = () => {
     console.log('RowValue', rowValue);
 
     setImageValue({
-      TourEscortImageName: "",
+      TourEscortImageName:"",
+      TourEscortImageData:""
     })
-    // setEditData({
-    //   id: rowValue.Id,
-    //   ServiceType: rowValue.ServiceType,
-    //   Name: rowValue.Name,
-    //   MobileNumber: rowValue.MobileNumber,
-    //   WhatsAppNumber: rowValue.WhatsAppNumber,
-    //   AlternateNumber: rowValue.AlternateNumber,
-    //   Email: rowValue.Email,
-    //   TourEscortLicenseOne: rowValue.TourEscortLicenseOne,
-    //   LicenseExpiry: rowValue.LicenseExpiry,
-    //   Destination: rowValue.Destination,
-    //   Language: rowValue.Language,
-    //   Supplier: rowValue.Supplier,
-    //   TourEscortLicenseTwo: rowValue.TourEscortLicenseTwo,
-    //   ContactPerson: rowValue.ContactPerson,
-    //   Designation: rowValue.Designation,
-    //   Country: rowValue.Country,
-    //   State: rowValue.State,
-    //   City: rowValue.City,
-    //   PinCode: rowValue.PinCode,
-    //   Detail: rowValue.Detail,
-    //   Address: rowValue.Address,
-    //   Status: rowValue.Status === "Active" ? 1 : 0,
-    //   AddedBy: rowValue.AddedBy,
-    //   UpdatedBy: rowValue.UpdatedBy,
-    // });
-    
-    setEditData({...rowValue});
+    setEditData({...rowValue,
+      Status:rowValue.Status==="Active"?1:0
+    });
     setIsEditing(true);
   };
 
@@ -375,7 +353,7 @@ const TourEscort = () => {
                           <option value="">Select Destination</option>
                           {destinationList.map((value, index) => {
                             return (
-                              <option value={value.Id} key={index + 1}>
+                              <option value={value.id} key={index + 1}>
                                 {value.Name}
                               </option>
                             );
@@ -392,7 +370,7 @@ const TourEscort = () => {
                           <option value="">Select Language</option>
                           {languageList.map((value, index) => {
                             return (
-                              <option value={value.Id} key={index + 1}>
+                              <option value={value.id} key={index + 1}>
                                 {value.Name}
                               </option>
                             );
@@ -405,10 +383,9 @@ const TourEscort = () => {
                         </label>
                         <input
                           type="file"
-                          name="TourEscortImageName"
+                          name="TourEscortImageData"
                           className="form-control"
                           onChange={handleEscortImage}
-                          // value={imageValue.TourEscortImageName}
                           accept="image/*"
                         />
                       </div>
@@ -460,7 +437,7 @@ const TourEscort = () => {
                           <option value="">Select</option>
                           {countryList.map((value, index) => {
                             return (
-                              <option value={value.Id} key={index + 1}>
+                              <option value={value.id} key={index + 1}>
                                 {value.Name}
                               </option>
                             );
@@ -477,7 +454,7 @@ const TourEscort = () => {
                           <option value="">Select</option>
                           {stateFiltered.map((value, index) => {
                             return (
-                              <option value={value.Id} key={index + 1}>
+                              <option value={value.id} key={index + 1}>
                                 {value.Name}
                               </option>
                             );
@@ -494,7 +471,7 @@ const TourEscort = () => {
                           <option value="">Select</option>
                           {cityFiltered.map((value, index) => {
                             return (
-                              <option value={value.Id} key={index + 1}>
+                              <option value={value.id} key={index + 1}>
                                 {value.Name}
                               </option>
                             );

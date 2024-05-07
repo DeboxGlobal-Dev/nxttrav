@@ -11,8 +11,6 @@ import {
 } from "./MasterValidations";
 
 
-const SendingProps =  createContext();
-
 const AdditionalRequirement = () => {
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
@@ -259,7 +257,7 @@ const AdditionalRequirement = () => {
                           <option value={1}>Select Destination</option>
                           {
                             destinationList?.map((value, index)=>{
-                              return <option value={value?.Id} key={index+1}>{value?.Name}</option>
+                              return <option value={value?.id} key={index+1}>{value?.Name}</option>
                             })
                           }
                         </Field>
@@ -274,7 +272,7 @@ const AdditionalRequirement = () => {
                           <option value={1}>Select Tax Slab</option>
                           {
                             taxSlabList?.map((value, index)=>{
-                              return <option value={value?.Id} key={index+1}>{value?.TaxSlabName}</option>
+                              return <option value={value?.id} key={index+1}>{value?.TaxSlabName}</option>
                             })
                           }
                          
@@ -302,7 +300,7 @@ const AdditionalRequirement = () => {
                           {
                             currencyList.map((value, index)=>{
 
-                              return  <option value={value?.Id} key={index+1}>{value?.Currencyname}</option>
+                              return  <option value={value?.id} key={index+1}>{value?.Currencyname}</option>
                             })
                           }
                         </Field>
@@ -369,12 +367,12 @@ const AdditionalRequirement = () => {
                       </div>
                       <div className="col-sm-4">
                         <label>Add Image</label>
-                        <Field
+                        <input
                           name="ImageData"
                           className="form-control"
                           type="file"
                           onChange={handleImageChange}
-                        ></Field>
+                        />
                       </div>
                       <div className="col-sm-12">
                         <label>Details</label>
