@@ -24,7 +24,8 @@ const Amenties = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [imageValue, setImageValue] = useState({
-    ImageName:''
+    ImageName:"",
+    ImageData:""
   });
   const [showImage, setShowImage] = useState('');
 
@@ -73,7 +74,8 @@ const Amenties = () => {
       const base64 = reader.result;
       const base64String = base64.split(',')[1];
       setImageValue({
-        ImageName:base64String
+        ImageName:file.name,
+        ImageData:base64String
       });
     }
     reader.readAsDataURL(file);
