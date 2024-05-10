@@ -271,7 +271,7 @@ const Query = () => {
     }-${toDateDay.length == 2 ? toDateDay : "0" + toDateDay}`;
     setTravelDate({ ...TravelDate, ToDate:TravelDate.TotalNights!=""?finalToDate:""});
     createDateArray();
-    // console.log('Debugging-Date', finalToDate);
+
   }, [TravelDate.FromDate, TravelDate.TotalNights, TravelDate.ToDate]);
   // Update Total Values in Pax and Rooms
   const updateTotal = () => {
@@ -279,7 +279,6 @@ const Query = () => {
     setPaxTotal(counter1 + counter2 + counter3);
   };
 
-  console.log('Reducer-State', state);
 
   // Data Set into input field from localstorage and remove on Submit and Clear;
   const handleUnSubmittedQuery  = () =>{
@@ -322,8 +321,8 @@ const Query = () => {
     let nights = [];
     for (let i = 0; i <= TravelDate.TotalNights; i++) {
       nights.push(TravelDate.TotalNights > 0 ? i + 1 : "");
-      // console.log("NightsConsole", nights);
     }
+
     setDayWiseNights(nights);
   }, [TravelDate.TotalNights]);
   
@@ -368,10 +367,13 @@ const Query = () => {
   };
   
   const handleSearchSuggestedPackage = (e) => {
+
     setSuggestedPackage(e.target.value);
+  
   };
 
   useEffect(()=>{
+    
     if(suggestedPackage !==""){
       const filtered = suggestedPackageData.filter((value)=>{
         return value.PackageName.toLowerCase().includes(suggestedPackage.toLowerCase());
@@ -380,6 +382,7 @@ const Query = () => {
     }else{
       setFilteredPackage(suggestedPackageData);
     }
+
   }, [suggestedPackage]);
 
   return (
