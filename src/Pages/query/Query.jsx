@@ -5,12 +5,12 @@ import * as Yup from "yup";
 import axios from "axios";
 import "jquery";
 import "select2";
-import { useNavigate } from "react-router-dom";
 import Counter from "./Counter";
 import toast, { Toaster } from "react-hot-toast";
 import { queryInitial, travelInitial, paxInitial, roomInitial, valueAddInitial, suggestedPackageData } from "./QuerySchema";
 
 const Query = () => {
+
   const [TravelDate, setTravelDate] = useState({...travelInitial});
   const [PaxInfo, setPaxInfo] = useState({...paxInitial});
   const [RoomInfo, setRoomInfo] = useState({...roomInitial});
@@ -273,6 +273,7 @@ const Query = () => {
     createDateArray();
 
   }, [TravelDate.FromDate, TravelDate.TotalNights, TravelDate.ToDate]);
+
   // Update Total Values in Pax and Rooms
   const updateTotal = () => {
     const { counter1, counter2, counter3 } = state;
@@ -367,9 +368,7 @@ const Query = () => {
   };
   
   const handleSearchSuggestedPackage = (e) => {
-
     setSuggestedPackage(e.target.value);
-  
   };
 
   useEffect(()=>{
