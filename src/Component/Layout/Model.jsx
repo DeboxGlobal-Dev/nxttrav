@@ -17,7 +17,6 @@ const Model = ({
   updateData,
   imageValue,
   setImageValue,
-  setAnotherImage
 }) => {
   
   const closeModel = () => {

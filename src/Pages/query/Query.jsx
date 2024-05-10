@@ -8,7 +8,7 @@ import "select2";
 import { useNavigate } from "react-router-dom";
 import Counter from "./Counter";
 import toast, { Toaster } from "react-hot-toast";
-import { queryInitial, travelInitial, paxInitial, roomInitial, valueAddInitial } from "./QuerySchema";
+import { queryInitial, travelInitial, paxInitial, roomInitial, valueAddInitial, suggestedPackageData } from "./QuerySchema";
 
 const Query = () => {
   const [TravelDate, setTravelDate] = useState({...travelInitial});
@@ -21,6 +21,8 @@ const Query = () => {
     Country:"",
     Destination:""
   });
+  const [suggestedPackage, setSuggestedPackage] = useState("");
+  const [filteredPackage, setFilteredPackage] = useState([]);
   const [hotelType, setHotelType] = useState([]);
   const [hotelMeal, setHotelMeal] = useState([]);
   const [leadList, setLeadList] = useState([]);
@@ -277,8 +279,33 @@ const Query = () => {
     setPaxTotal(counter1 + counter2 + counter3);
   };
 
-  
+  console.log('Reducer-State', state);
 
+  // Data Set into input field from localstorage and remove on Submit and Clear;
+  const handleUnSubmittedQuery  = () =>{
+
+    const queryValue = JSON.parse(JSON.stringify(storedData));
+    delete queryValue.TravelDate;
+    delete queryValue.PaxInfo;
+    delete queryValue.RoomInfo;
+    delete queryValue.ValueAddServices;
+
+    
+    const travelValue = storedData.TravelDate[0];
+    const roomValue = storedData.RoomInfo[0];
+    const { Adult, Child, Infant } = storedData.PaxInfo[0] ?? {};
+    
+    setQueryFields({...queryValue});
+    setTravelDate({...travelValue});
+    setRoomInfo({...roomValue});
+
+    dispatch({ type: "SET", value: Adult ? Adult : 0, counter: "counter1" });
+    dispatch({ type: "SET", value: Child ? Child : 0, counter: "counter2" });
+    dispatch({ type: "SET", value: Infant ? Infant : 0, counter: "counter3" });
+
+  };
+
+  
   // Set counter value into json
   useEffect(() => {
     updateTotal();
@@ -289,68 +316,6 @@ const Query = () => {
     });
   }, [state]);
 
-  // Data Set into input field from localstorage and remove on Submit and Clear;
-  const handleUnSubmittedQuery  = () =>{
-        const {
-          QueryId,FDCode,PackageCode,PackageName,ClientType,AgentId,
-          LeadPax,Subject,AddEmail,AdditionalInfo,QueryType,Priority,TAT,
-          TourType,LeadSource,LeadReferencedId,HotelPreference,VehiclePrefrence,
-          HotelType,MealPlan,TravelInfo,PaxType, SalesPerson, AssignUser,AddedBy,UpdatedBy,
-          ContractPerson
-    } = storedData ?? {};
-    const { Type, FromDate, ToDate, TotalNights, SeasonType, SeasonYear } = storedData.TravelDate[0] ?? {};
-    const { Adult, Child, Infant } = storedData.PaxInfo[0] ?? {};
-    const { Room, Single, Double, Twin, Triple, ExtraBed } = storedData.RoomInfo[0] ?? {};
-    setTravelDate({
-      Type: Type ? Type : "",
-      FromDate: FromDate ? FromDate : "",
-      ToDate: ToDate ? ToDate : "",
-      TotalNights: TotalNights ? TotalNights : "",
-      SeasonType: SeasonType ? SeasonType : "",
-      SeasonYear: SeasonType ? SeasonYear : "",
-    });
-    setRoomInfo({
-      Room: Room > 0 ? Room : 0,
-      Single: Single > 0 ? Single : 0,
-      Double: Double > 0 ? Double : 0,
-      Twin: Twin > 0 ? Twin : 0,
-      Triple: Triple > 0 ? Triple : 0,
-      ExtraBed: ExtraBed > 0 ? ExtraBed : 0,
-    });
-    dispatch({ type: "SET", value: Adult ? Adult : 0, counter: "counter1" });
-    dispatch({ type: "SET", value: Child ? Child : 0, counter: "counter2" });
-    dispatch({ type: "SET", value: Infant ? Infant : 0, counter: "counter3" });
-
-    setQueryFields({
-      QueryId: QueryId ? QueryId : "",
-      FDCode: FDCode ? FDCode : "",
-      PackageCode: PackageCode ? PackageCode : "",
-      PackageName: PackageName ? PackageName : "",
-      ClientType: ClientType ? ClientType : "",
-      AgentId: AgentId ? AgentId : "",
-      LeadPax: LeadPax ? LeadPax : "Ansar",
-      Subject: Subject ? Subject : "",
-      AddEmail: AddEmail ? AddEmail : "",
-      AdditionalInfo: AdditionalInfo ? AdditionalInfo : "",
-      QueryType: QueryType ? QueryType : "",
-      Priority: Priority ? Priority : "",
-      TAT: TAT ? TAT : "",
-      TourType: TourType ? TourType : "",
-      LeadSource: LeadSource ? LeadSource : "",
-      LeadReferencedId: LeadReferencedId ? LeadReferencedId : "",
-      HotelPreference: HotelPreference ? HotelPreference : "",
-      VehiclePrefrence: VehiclePrefrence ?   VehiclePrefrence : "",
-      HotelType: HotelType ?   HotelType : "",
-      MealPlan: MealPlan ?   MealPlan : "",
-      TravelInfo: TravelInfo ?   TravelInfo : "",
-      PaxType: PaxType ?   PaxType : "",
-      SalesPerson: SalesPerson? SalesPerson  : "",
-      AssignUser: AssignUser? AssignUser : "",
-      ContractPerson : ContractPerson ? ContractPerson : "",
-      AddedBy: AddedBy ?   AddedBy : "1",
-      UpdatedBy :UpdatedBy ? UpdatedBy:  "0",
-    });
-  };
 
   //DayWise TravelInformation
   useEffect(() => {
@@ -364,17 +329,58 @@ const Query = () => {
   
   //City Filtering For Dropdown
   const handleDateDestination =(e) =>{
-    setTravelDestination({...travelsDestination, [e.target.name]:e.target.value}); 
+    
+    setTravelDestination({...travelsDestination, [e.target.name]:e.target.value});
+
   };
   
   useEffect(()=>{
-    const filtered = cityList.filter((value)=> {
-      const a = value.CountryId == travelsDestination.Country;
-      return a;
+
+    const filtered = cityList.filter((value)=>{
+      const city = value.CountryId == travelsDestination.Country;
+      return city;
     });
     setFilteredCity(filtered);
+
   },[travelsDestination]);
+
+  const handleSuggestPackage=(value)=>{
+
+    const queryValue = JSON.parse(JSON.stringify(value));
+    
+    delete queryValue.RoomInfo;
+    delete queryValue.PaxInfo;
+    delete queryValue.TravelDate;
+    delete queryValue.ValueAddedServices;
+
+    const {Adult, Child, Infant} = value.PaxInfo[0];
+    const roomValue = value.RoomInfo[0];
+    const dateValue = value.TravelDate[0];
+
+    setQueryFields({...queryValue});
+    setRoomInfo({...roomValue});
+    setTravelDate({...dateValue});
+
+    dispatch({ type: "SET", value: Number(Adult) , counter: "counter1" });
+    dispatch({ type: "SET", value: Number(Child) , counter: "counter2" });
+    dispatch({ type: "SET", value: Number(Infant), counter: "counter3" });
+
+  };
   
+  const handleSearchSuggestedPackage = (e) => {
+    setSuggestedPackage(e.target.value);
+  };
+
+  useEffect(()=>{
+    if(suggestedPackage !==""){
+      const filtered = suggestedPackageData.filter((value)=>{
+        return value.PackageName.toLowerCase().includes(suggestedPackage.toLowerCase());
+      });
+      setFilteredPackage(filtered);
+    }else{
+      setFilteredPackage(suggestedPackageData);
+    }
+  }, [suggestedPackage]);
 
   return (
     <>
@@ -1664,134 +1670,32 @@ const Query = () => {
                         type="text"
                         placeholder="Search Packages "
                         className="form-input-3 rounded-pill"
-                        name="PackageSearch"
-                        value={queryFields.PackageSearch}
-                        onChange={handleChange}
+                        name="SuggestedPackage"
+                        onChange={handleSearchSuggestedPackage}
+
                       />
                       <label htmlFor="" className="font-size-12">
                         Click to select the packages
                       </label>
                     </div>
-                    <div className="padding-2 d-flex align-items-center border rounded cursor-pointer mt-1">
+                    {filteredPackage?.map((value, index)=>{
+                     return <div className="padding-2 d-flex align-items-center border rounded cursor-pointer mt-1"
+                      key={index+1}
+                      onClick={()=>handleSuggestPackage(value)}>
                       <div>
                         <img
-                          src="https://media.cntraveller.com/photos/617936a2a8f76267fba5d115/master/w_1600%2Cc_limit/The%2520Burj%2520Khalifa-GettyImages-1084264582.jpeg"
-                          alt=""
+                          src={value.PackageImage}
+                          alt={value.PackageName}
                           style={{ height: "35px", width: "35px" }}
                           className="rounded"
                         />
                       </div>
                       <div className="pl-2">
                         <p className="font-size-12 font-weight-bold m-0 p-0">
-                          Discover Dubai 5 days
+                          {value.PackageName}
                         </p>
                       </div>
-                    </div>
-                    <div className="padding-2 d-flex align-items-center border rounded cursor-pointer mt-1">
-                      <div>
-                        <img
-                          src="https://i.natgeofe.com/n/483e77f7-f52b-432a-a0f5-d9cd1489a95a/madinat-jumeirah-dubai-uae_3x4.jpg"
-                          alt=""
-                          style={{ height: "35px", width: "35px" }}
-                          className="rounded"
-                        />
-                      </div>
-                      <div className="pl-2">
-                        <p className="font-size-12 font-weight-bold m-0 p-0">
-                          Dubai Odessey 6 days
-                        </p>
-                      </div>
-                    </div>
-                    <div className="padding-2 d-flex align-items-center border rounded cursor-pointer mt-1">
-                      <div>
-                        <img
-                          src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/377486240.jpg?k=956825fb96b0ccd1d754e9b01d3f8fa33d83eb47c44b171bee406d9ae7b78c5e&o=&hp=1"
-                          alt=""
-                          style={{ height: "35px", width: "35px" }}
-                          className="rounded"
-                        />
-                      </div>
-                      <div className="pl-2">
-                        <p className="font-size-12 font-weight-bold m-0 p-0">
-                          Dubai Unleashed 5 days
-                        </p>
-                      </div>
-                    </div>
-                    <div className="padding-2 d-flex align-items-center border rounded cursor-pointer mt-1">
-                      <div>
-                        <img
-                          src="https://r1imghtlak.mmtcdn.com/a271073a79ca11eca91e0a58a9feac02.jpg?&output-quality=75&downsize=520:350&crop=520:350;2,0&output-format=jpg&downsize=192:224.4&crop=192:224.4"
-                          alt=""
-                          style={{ height: "35px", width: "35px" }}
-                          className="rounded margin-l"
-                        />
-                      </div>
-                      <div className="pl-2">
-                        <p className="font-size-12 font-weight-bold m-0 p-0">
-                          Captivating Highlight 7 days
-                        </p>
-                      </div>
-                    </div>
-                    <div className="padding-2 d-flex align-items-center border rounded cursor-pointer mt-1">
-                      <div>
-                        <img
-                          src="https://static.dezeen.com/uploads/2022/02/museum-of-the-future-killa-design-dubai_dezeen_2364_col_20-scaled.jpg"
-                          alt=""
-                          style={{ height: "35px", width: "35px" }}
-                          className="rounded margin-l"
-                        />
-                      </div>
-                      <div className="pl-2">
-                        <p className="font-size-12 font-weight-bold m-0 p-0">
-                          Enhancing Dubai Delight 6 days
-                        </p>
-                      </div>
-                    </div>
-                    <div className="padding-2 d-flex align-items-center border rounded cursor-pointer mt-1">
-                      <div>
-                        <img
-                          src="https://akm-img-a-in.tosshub.com/sites/visualstory/stories/2021_06/story_1330/assets/46.jpeg?time=1624977644&size=*:900"
-                          alt=""
-                          style={{ height: "35px", width: "35px" }}
-                          className="rounded margin-l"
-                        />
-                      </div>
-                      <div className="pl-2">
-                        <p className="font-size-12 font-weight-bold m-0 p-0">
-                          Maligcal Dubai 5 days
-                        </p>
-                      </div>
-                    </div>
-                    <div className="padding-2 d-flex align-items-center border rounded cursor-pointer mt-1">
-                      <div>
-                        <img
-                          src="https://media.architecturaldigest.com/photos/6032b3c9a0b9bd2edd5510d1/1:1/w_2880,h_2880,c_limit/Hero_Soneva%20Jani%20Chapter%20Two%20by%20Aksham%20Abdul%20Ghadir.jpg"
-                          alt=""
-                          style={{ height: "35px", width: "35px" }}
-                          className="rounded margin-l"
-                        />
-                      </div>
-                      <div className="pl-2">
-                        <p className="font-size-12 font-weight-bold m-0 p-0">
-                          Maldives Magical 5 days
-                        </p>
-                      </div>
-                    </div>
-                    <div className="padding-2 d-flex align-items-center border rounded cursor-pointer mt-1">
-                      <div>
-                        <img
-                          src="https://assets.vogue.in/photos/63889b741b8712b28236a56b/2:3/w_2560%2Cc_limit/Goa.jpeg"
-                          alt=""
-                          style={{ height: "35px", width: "35px" }}
-                          className="rounded margin-l"
-                        />
-                      </div>
-                      <div className="pl-2">
-                        <p className="font-size-12 font-weight-bold m-0 p-0">
-                          Goa Enhance 5 days
-                        </p>
-                      </div>
-                    </div>
+                    </div>})}
                   </div>
                 </div>
               </div>
