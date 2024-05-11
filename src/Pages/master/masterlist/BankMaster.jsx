@@ -89,7 +89,7 @@ const BankMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.BankName}
+          <img src={row.ImageName} alt="image" style={{height:'30px', width:'30px'}}></img>
         </span>
       ),
       sortable: true,
@@ -181,6 +181,7 @@ const BankMaster = () => {
                   updateData={updateData}
                   setUpdateData={setUpdateData}
                   imageValue={imageValue}
+                  setImageValue={setImageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">

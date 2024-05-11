@@ -1,13 +1,15 @@
 import React, { useState, useReducer, useEffect } from "react";
+import { queryInitial, travelInitial, paxInitial,
+  roomInitial, valueAddInitial, suggestedPackageData } from "./QuerySchema";
 import { eachDayOfInterval, format } from "date-fns";
 import { axiosOther } from "../../http/axios/axios_new";
+import toast, { Toaster } from "react-hot-toast";
+import Counter from "./Counter";
 import * as Yup from "yup";
 import axios from "axios";
-import "jquery";
 import "select2";
-import Counter from "./Counter";
-import toast, { Toaster } from "react-hot-toast";
-import { queryInitial, travelInitial, paxInitial, roomInitial, valueAddInitial, suggestedPackageData } from "./QuerySchema";
+import "jquery";
+
 
 const Query = () => {
 
@@ -250,9 +252,9 @@ const Query = () => {
     });
   };
 
-
   //Adding Date fromDate + Days = ToDate
   useEffect(() => {
+
     const dateStr = TravelDate.FromDate;
     const days = Number(TravelDate.TotalNights);
     let hours = 24,
@@ -280,7 +282,6 @@ const Query = () => {
     setPaxTotal(counter1 + counter2 + counter3);
   };
 
-
   // Data Set into input field from localstorage and remove on Submit and Clear;
   const handleUnSubmittedQuery  = () =>{
 
@@ -290,7 +291,6 @@ const Query = () => {
     delete queryValue.RoomInfo;
     delete queryValue.ValueAddServices;
 
-    
     const travelValue = storedData.TravelDate[0];
     const roomValue = storedData.RoomInfo[0];
     const { Adult, Child, Infant } = storedData.PaxInfo[0] ?? {};
@@ -315,7 +315,6 @@ const Query = () => {
       Infant: state.counter3,
     });
   }, [state]);
-
 
   //DayWise TravelInformation
   useEffect(() => {
@@ -375,10 +374,10 @@ const Query = () => {
     
     if(suggestedPackage !==""){
       const filtered = suggestedPackageData.filter((value)=>{
-        return value.PackageName.toLowerCase().includes(suggestedPackage.toLowerCase());
+        return value.PackageName.toLowerCase().replace(/\s/g, '').includes(suggestedPackage.toLowerCase().replace(/\s/g, ''));
       });
       setFilteredPackage(filtered);
-    }else{
+    }else{ 
       setFilteredPackage(suggestedPackageData);
     }
 

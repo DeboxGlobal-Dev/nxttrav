@@ -127,14 +127,14 @@ const DriverMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          <img src={row.ImageData} style={{height:'30PX', width:'30px'}} alt={row.ImageName}></img>
+          <img src={row.ImageName} style={{height:'30PX', width:'30px'}} alt="profile-image"></img>
         </span>
       ),
       sortable: true,
     },
     {
       name: "Document",
-      selector: (row) => <img src={row.LicenseData} style={{height:'30PX', width:'30px'}} alt={row.LicenseName}></img>,
+      selector: (row) => <img src={row.LicenseName} style={{height:'30PX', width:'30px'}} alt="License-image"></img>,
       sortable: true,
     },
     {
@@ -247,6 +247,9 @@ const DriverMaster = () => {
                             })
                           }
                         </Field>
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="Country" />
+                        </span>
                       </div>
                       <div className="col-sm-4">
                         <label>Driver Name</label>

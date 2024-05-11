@@ -278,6 +278,9 @@ const Resturant = () => {
                             );
                           })}
                         </Field>
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="CountryId" />
+                        </span>
                       </div>
                       <div className="col-sm-4">
                         <label>State</label>
@@ -295,6 +298,9 @@ const Resturant = () => {
                             );
                           })}
                         </Field>
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="StateId"/>
+                        </span>
                       </div>
 
                       <div className="col-sm-4">
@@ -313,6 +319,9 @@ const Resturant = () => {
                             );
                           })}
                         </Field>
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="CityId"/>
+                        </span>
                       </div>
 
                       <div className="col-sm-4">

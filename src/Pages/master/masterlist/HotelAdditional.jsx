@@ -48,8 +48,8 @@ const HotelAdditional = () => {
 
   const handleEditClick = (rowValue) => {
     setImageValue({
-      ImageData:rowValue.ImageData,
-      ImageName:rowValue.ImageName
+      ImageData:"",
+      ImageName:""
     })
     setEditData({
       ...rowValue,
@@ -66,7 +66,8 @@ const HotelAdditional = () => {
       const base64 = reader.result;
       const base64String = base64.split(',')[1];
       setImageValue({
-        ImageData:base64String
+        ImageData:base64String,
+        ImageName:file.name
       });
     };
     reader.readAsDataURL(file);
@@ -84,7 +85,7 @@ const HotelAdditional = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Image}
+          {<img src={row.ImageName} alt="AdditionImage" style={{height:'30px', width:'30px'}}></img>}
         </span>
       ),
       sortable: true,
@@ -96,7 +97,7 @@ const HotelAdditional = () => {
     },
     {
       name: "Information",
-      selector: (row) => row.Information,
+      selector: (row) => row.Details,
       sortable: true,
     },
     {
@@ -141,7 +142,7 @@ const HotelAdditional = () => {
                 </NavLink>
                 <Model
                   heading={"Add Additional"}
-                  apiurl={"addupdatehoteladditional"}
+                  apiurl={"addupdatehoteladdition"}
                   initialValues={hotelAdditonalInitialValue}
                   validationSchema={hotelAdditionalValidationSchema}
                   forEdit={editData}
@@ -151,6 +152,7 @@ const HotelAdditional = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                   imageValue={imageValue}
+                  setImageValue={setImageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">

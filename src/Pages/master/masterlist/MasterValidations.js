@@ -359,8 +359,9 @@ export const driverMasterInitialValue = {
   LicenseName: "",
   LicenseData: "",
   Address: "",
+  Status:1,
   UpdatedBy: 1,
-  AddedBy: 0,
+  AddedBy: 1,
 };
 export const trainMasterInitialValue = {
   id: "",
@@ -631,6 +632,9 @@ export const hotelChainValidationSchema = yup.object().shape({
 });
 export const resturantValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
+  CountryId:yup.string().required("Required"),
+  StateId:yup.string().required("Required"),
+  CityId:yup.string().required("Required"),
   Address: yup.string().required("Required"),
   PinCode: yup.string().required("Required"),
   GSTN: yup.string().required("Required"),
@@ -687,6 +691,7 @@ export const additionaRequirementValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
 });
 export const driverMasterValidationSchema = yup.object().shape({
+  Country:yup.string().required("Required"),
   DriverName: yup.string().required("Required"),
   MobileNumber: yup.number().required("Required"),
   WhatsappNumber: yup.number().required("Required"),

@@ -169,7 +169,7 @@ const TourEscort = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {<img src={row.TourEscortImageData} alt='image' style={{height:'30px', width:'30px'}}></img>}
+          {<img src={row.TourEscortImageName} alt='image' style={{height:'30px', width:'30px'}}></img>}
         </span>
       ),
       sortable: true,
