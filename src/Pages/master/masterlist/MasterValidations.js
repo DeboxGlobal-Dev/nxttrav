@@ -359,7 +359,7 @@ export const driverMasterInitialValue = {
   LicenseName: "",
   LicenseData: "",
   Address: "",
-  Status:1,
+  Status: 1,
   UpdatedBy: 1,
   AddedBy: 1,
 };
@@ -409,14 +409,13 @@ export const currencyMasterInitialValue = {
   UpdatedBy: "0",
 };
 export const roomTypeInitialValue = {
-  // change its initial value it for demo
   id: "",
-  CountryId: 1,
-  CurrencyCode: "",
-  CurrencyName: "",
-  Status: 1,
-  SetDefault: "",
-  AddedBy: 1,
+  Name: "",
+  MaximumOccupancy: "",
+  Bedding: "",
+  Size: "",
+  Status: "1",
+  AddedBy: "1",
   UpdatedBy: "0",
 };
 export const cruiseCompanyInitialValue = {
@@ -550,7 +549,7 @@ export const bankInitialValue = {
   BranchIfsc: "",
   BranchSwiftCode: "",
   ImageName: "",
-  ImageData:"",
+  ImageData: "",
   ShowHide: "1",
   SetDefault: "1",
   Status: "1",
@@ -615,26 +614,22 @@ export const hotelAdditionalValidationSchema = yup.object().shape({
 export const roomMasterValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
 });
+export const roomTypeValidationSchema = yup.object().shape({
+  Name: yup.string().required('Required'),
+  MaximumOccupancy: yup.number('Numeric Value').required('Required'),
+  Bedding: yup.number('Numeric Value').required('Required'),
+  Size: yup.string().required('Required'),
+})
 export const hotelChainValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
   Location: yup.string().required("Required"),
   HotelWebsite: yup.string().required("Required"),
-  SelfSupplier: yup.string().required("Required"),
-  ContactType: yup.string().required("Required"),
-  ContactName: yup.string().required("Required"),
-  ContactDesignation: yup.string().required("Required"),
-  ContactCountryCode: yup
-    .string()
-    .matches(/^\+[1-9]\d{0,3}$/, "Invalid-Code")
-    .required("Required"),
-  ContactMobile: yup.string().required("Required"),
-  ContactEmail: yup.string().email().required("Required"),
 });
 export const resturantValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
-  CountryId:yup.string().required("Required"),
-  StateId:yup.string().required("Required"),
-  CityId:yup.string().required("Required"),
+  CountryId: yup.string().required("Required"),
+  StateId: yup.string().required("Required"),
+  CityId: yup.string().required("Required"),
   Address: yup.string().required("Required"),
   PinCode: yup.string().required("Required"),
   GSTN: yup.string().required("Required"),
@@ -691,7 +686,7 @@ export const additionaRequirementValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
 });
 export const driverMasterValidationSchema = yup.object().shape({
-  Country:yup.string().required("Required"),
+  Country: yup.string().required("Required"),
   DriverName: yup.string().required("Required"),
   MobileNumber: yup.number().required("Required"),
   WhatsappNumber: yup.number().required("Required"),
@@ -752,9 +747,9 @@ export const letterMasterValidationSchema = yup.object().shape({
   GreetingNote: yup.string().required("Required"),
 });
 export const bankMasterValidationSchema = yup.object().shape({
-  BankName: yup.string().required('Required'),
-  AccountNumber: yup.string().required('Required')
-})
+  BankName: yup.string().required("Required"),
+  AccountNumber: yup.string().required("Required"),
+});
 // Hotel Master Table Value in JSON-----------------------------------
 
 export const hotelMasterValue = [

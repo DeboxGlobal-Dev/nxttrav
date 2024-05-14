@@ -9,7 +9,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import "select2";
 import "jquery";
-
+import { act } from "react";
 
 const Query = () => {
 
@@ -25,12 +25,6 @@ const Query = () => {
   });
   const [suggestedPackage, setSuggestedPackage] = useState("");
   const [filteredPackage, setFilteredPackage] = useState([]);
-  const [hotelType, setHotelType] = useState([]);
-  const [hotelMeal, setHotelMeal] = useState([]);
-  const [leadList, setLeadList] = useState([]);
-  const [tourType, setTourType] = useState([]);
-  const [countryList, setCountryList] = useState([]);
-  const [cityList, setCityList] = useState([]);
   const [toDate, setToDate] = useState();
   const [dateArray, setDateArray] = useState([]);
   const [emptyData, setEmptyData] = useState(false);
@@ -41,6 +35,29 @@ const Query = () => {
     counter2: 0,
     counter3: 0,
   };
+
+  const dropdownInitialState = {
+    hotelType   :  [],
+    hotelMeal   :  [],
+    leadList    :  [],
+    tourType    :  [],
+    countryList :  [],
+    cityList    :  [], 
+  }
+
+  const dropdownReducer = (state, action) =>{
+    switch(action.type){
+      case 'HOTEL-TYPE' : return {...state, hotelType:action.payload}
+      case 'HOTEL-MEAL' : return {...state, hotelMeal:action.payload}
+      case 'LEAD-LIST'  : return {...state, leadList:action.payload}
+      case 'TOUR-TYPE'  : return {...state, tourType:action.payload}
+      case 'COUNTRY-LIST': return {...state, countryList:action.payload}
+      case 'CITY-LIST'  : return {...state, cityList:action.payload}
+    }
+    return state;
+  };
+  const [dropdownState, dropdownDispatch] = useReducer(dropdownReducer, dropdownInitialState);
+
 
   //reducer for pax information
   const reducer = (state, action) => {
@@ -69,8 +86,8 @@ const Query = () => {
     AddEmail: Yup.string().email("Invalid Email").required("Required"),
   });
 
-  console.log('QueryOnChangeValue', { ...queryFields, TravelDate:[{...TravelDate}], RoomInfo:[{...RoomInfo}],
-  PaxInfo:[{...PaxInfo}], ValueAddServices:[{...valueAddServices}]});
+  // console.log('QueryOnChangeValue', { ...queryFields, TravelDate:[{...TravelDate}], RoomInfo:[{...RoomInfo}],
+  // PaxInfo:[{...PaxInfo}], ValueAddServices:[{...valueAddServices}]});
 
   const [PaxTotal, setPaxTotal] = useState(0);
   const [RoomsTotal, setRoomsTotal] = useState(0);
@@ -87,7 +104,8 @@ const Query = () => {
           Search: "",
           Status: "",
         });
-        setLeadList(data.DataList);
+        // setLeadList(data.DataList);
+        dropdownDispatch({type:'LEAD-LIST', payload:data.DataList});
       } catch (err) {
         console.log(err);
       }
@@ -97,17 +115,18 @@ const Query = () => {
           Search: "",
           Status: "",
         });
-        setHotelType(data.DataList);
+        // setHotelType(data.DataList);
+        dropdownDispatch({type:'HOTEL-TYPE', payload:data.DataList});
       } catch (err) {
         console.log(err);
       }
-
       try {
         const { data } = await axiosOther.post("tourlist", {
           Search: "",
           Status: "",
         });
-        setTourType(data.DataList);
+        // setTourType(data.DataList);
+        dropdownDispatch({type:'TOUR-TYPE', payload:data.DataList});
       } catch (err) {
         console.log(err);
       }
@@ -117,7 +136,8 @@ const Query = () => {
           Search: "",
           Status: "",
         });
-        setCountryList(data.DataList);
+        // setCountryList(data.DataList);
+        dropdownDispatch({type:'COUNTRY-LIST', payload:data.DataList});
       } catch (err) {
         console.log(err);
       }
@@ -127,7 +147,8 @@ const Query = () => {
           Search: "",
           Status: "",
         });
-        setCityList(data.DataList);
+        // setCityList(data.DataList);
+        dropdownDispatch({type:'CITY-LIST', payload:data.DataList});
       } catch (err) {
         console.log(err);
       }
@@ -335,7 +356,7 @@ const Query = () => {
   
   useEffect(()=>{
 
-    const filtered = cityList.filter((value)=>{
+    const filtered = dropdownState.cityList.filter((value)=>{
       const city = value.CountryId == travelsDestination.Country;
       return city;
     });
@@ -1385,7 +1406,7 @@ const Query = () => {
                                       >
                                         <option value="1">Select</option>
                                         {
-                                          countryList.map((value, index)=>{
+                                          dropdownState.countryList.map((value, index)=>{
                                             return <option value={value.Id} key={index+1}>{value.Name}</option>
                                           })
                                         }
@@ -1449,7 +1470,7 @@ const Query = () => {
                                       >
                                         <option value="1">Select</option>
                                         {
-                                          countryList.map((value, index)=>{
+                                          dropdownState.countryList?.map((value, index)=>{
                                             return <option value={value.Id} key={index+1}>{value.Name}</option>
                                           })
                                         }
@@ -1572,7 +1593,7 @@ const Query = () => {
                         onChange={handleChange}
                       >
                         <option>All</option>
-                        {hotelType.map((value, index) => {
+                        {dropdownState.hotelType?.map((value, index) => {
                           return (
                             <option value={value.Id} key={index + 1}>
                               {value.Name}
@@ -1600,7 +1621,7 @@ const Query = () => {
                         onChange={handleChange}
                       >
                         <option>Select Tour</option>
-                        {tourType.map((value, index) => {
+                        {dropdownState.tourType?.map((value, index) => {
                           return (
                             <option value={value.Id} key={index + 1}>
                               {value.Name}
@@ -1637,7 +1658,7 @@ const Query = () => {
                         onChange={handleChange}
                       >
                         <option>Select Source</option>
-                        {leadList.map((value, index) => {
+                        {dropdownState.leadList?.map((value, index) => {
                           return (
                             <option value={value.Id} key={index + 1}>
                               {value.Name}

@@ -21,7 +21,9 @@ const HotelChain = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+
   useEffect(() => {
+  
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("hotelchainlist", postData);
@@ -79,12 +81,12 @@ const HotelChain = () => {
     },
     {
       name: "Self Supplier",
-      selector: (row) => row.Supplier,
+      selector: (row) => row.SelfSupplier,
       sortable: true,
     },
     {
       name: "Cont.Person",
-      selector: (row) => row.ContractPerson,
+      selector: (row) => row.ContactType,
       sortable: true,
     },
     {
@@ -185,9 +187,6 @@ const HotelChain = () => {
                           className="form-control"
                           name="SelfSupplier"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="SelfSupplier" />
-                        </span>
                       </div>
                       <div className="col-sm-4">
                         <label>Status</label>
@@ -199,9 +198,7 @@ const HotelChain = () => {
                           <option value="1">Active</option>
                           <option value="0">Inactive</option>
                         </Field>
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Status" />
-                        </span>
+                        
                       </div>
 
                       <div className="col-sm-4">
@@ -212,14 +209,14 @@ const HotelChain = () => {
                           name="ContactType"
                         >
                           <option value={""}>Select Division</option>
-                          <option value={"2"}>Accounts</option>
-                          <option value={"4"}>FIT Reservation</option>
-                          <option value={"5"}>GIT Reservation</option>
-                          <option value={"6"}>HR</option>
-                          <option value={"7"}>Operation</option>
-                          <option value={"7"}>Other</option>
+                          <option value={"1"}>Accounts</option>
+                          <option value={"2"}>FIT Reservation</option>
+                          <option value={"3"}>GIT Reservation</option>
+                          <option value={"4"}>HR</option>
+                          <option value={"5"}>Operation</option>
+                          <option value={"6"}>Other</option>
                           <option value={"7"}>Sales</option>
-                          <option value={"7"}>Software Developer</option>
+                          <option value={"8"}>Software Developer</option>
                         </Field>
                       </div>
                       <div className="col-sm-3 px-1">
@@ -229,9 +226,7 @@ const HotelChain = () => {
                           className="form-control"
                           name="ContactName"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ContactName" />
-                        </span>
+                        
                       </div>
                       <div className="col-sm-3 px-1">
                         <Field
@@ -240,9 +235,7 @@ const HotelChain = () => {
                           className="form-control"
                           name="ContactDesignation"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ContactDesignation" />
-                        </span>
+                        
                       </div>
                       <div className="col-sm-1 px-1">
                         <Field
@@ -260,9 +253,7 @@ const HotelChain = () => {
                           className="form-control"
                           name="ContactMobile"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ContactMobile" />
-                        </span>
+                       
                       </div>
                       <div className="col-sm-3 px-1">
                         <Field
@@ -271,9 +262,6 @@ const HotelChain = () => {
                           className="form-control"
                           name="ContactEmail"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ContactEmail" />
-                        </span>
                       </div>
                     </div>
                   </div>

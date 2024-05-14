@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
-import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
+import { cityInitialValue, cityValidationSchema, roomTypeInitialValue, roomTypeValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const RoomType = () => {
@@ -18,11 +18,13 @@ const RoomType = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("roomtypelist", postData);
+        setLoading()
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -42,10 +44,11 @@ const RoomType = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    setValueForEdit({
+    setEditData({
       ...rowValue,
       Status:rowValue.Status==="Active"?1:0,
      });
+     setIsEditing(true);
   };
 
   const columns = [
@@ -71,7 +74,7 @@ const RoomType = () => {
     },
     {
       name: "Maximum Occupancy",
-      selector: (row) => row.MaxOccupancy,
+      selector: (row) => row.MaximumOccupancy,
       sortable: true,
     },
     {
@@ -130,9 +133,9 @@ const RoomType = () => {
                 <Model
                   heading={"Add Room Type"}
                   apiurl={"addupdateroomtype"}
-                  initialValues={cityInitialValue}
-                  validationSchema={cityValidationSchema}
-                  editData={editData}
+                  initialValues={roomTypeInitialValue}
+                  validationSchema={roomTypeValidationSchema}
+                  forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
@@ -159,11 +162,11 @@ const RoomType = () => {
                           as="textarea"
                           placeholder="Max Occupancy"
                           className="form-control"
-                          name="MaxOccupancy"
+                          name="MaximumOccupancy"
                           style={{height:'38px'}}
                         />
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
+                          <ErrorMessage name="MaximumOccupancy" />
                         </span>
                       </div>
                       <div className="col-sm-4">
@@ -247,15 +250,12 @@ const RoomType = () => {
           <div className="card shadow-none border">
             <DataTable
               columns={columns}
-              data={
-                postData.Search !== "" || postData.Status !== ""
-                  ? filterData
-                  : getData
-              }
+              data={filterData}
               pagination
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>
