@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
-import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
+import { cabinCategoryInitialValue, cabinCategoryValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const CabinCategory = () => {
@@ -21,7 +21,7 @@ const CabinCategory = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("cabincategorylist", postData);
+        const { data } = await axiosOther.post("cabincategorymasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -68,21 +68,11 @@ const CabinCategory = () => {
       sortable: true,
     },
     {
-      name: "State Name",
-      selector: (row) => row.StateName,
-      sortable: true,
-    },
-    {
-      name: "Country Name",
-      selector: (row) => row.CountryName,
-      sortable: true,
-    },
-    {
       name: "Added By",
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -92,7 +82,7 @@ const CabinCategory = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
           </span>
         );
       },
@@ -127,9 +117,9 @@ const CabinCategory = () => {
                 </NavLink>
                 <Model
                   heading={"Add Cabin Category"}
-                  apiurl={"addupdatecabincategory"}
-                  initialValues={cityInitialValue}
-                  validationSchema={cityValidationSchema}
+                  apiurl={"addupdatecabincategorymaster"}
+                  initialValues={cabinCategoryInitialValue}
+                  validationSchema={cabinCategoryValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}

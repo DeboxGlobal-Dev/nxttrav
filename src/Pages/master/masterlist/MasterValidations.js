@@ -9,6 +9,7 @@ export const countryInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const stateInitialValue = {
   id: "",
   Name: "",
@@ -17,6 +18,7 @@ export const stateInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const cityInitialValue = {
   id: "",
   CountryId: 1,
@@ -26,6 +28,7 @@ export const cityInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const leadSourceInitialValue = {
   id: "",
   Name: "",
@@ -34,6 +37,7 @@ export const leadSourceInitialValue = {
   AddedBy: 2,
   UpdatedBy: 0,
 };
+
 export const businessTypeInitialValue = {
   id: "",
   Name: "",
@@ -42,6 +46,7 @@ export const businessTypeInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const divisionInitialValue = {
   id: "",
   Name: "",
@@ -49,6 +54,7 @@ export const divisionInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const marketTypeInitialValue = {
   id: "",
   Name: "",
@@ -56,6 +62,7 @@ export const marketTypeInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const languageInitialValue = {
   id: "",
   Name: "",
@@ -63,6 +70,7 @@ export const languageInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const destinationInitialValue = {
   id: "",
   Name: "",
@@ -76,6 +84,7 @@ export const destinationInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const tourtypeInitialValue = {
   id: "",
   Name: "",
@@ -83,6 +92,7 @@ export const tourtypeInitialValue = {
   AddedBy: 1,
   UpdatedBy: 1,
 };
+
 export const seasonTypeInitialValue = {
   id: "",
   SeasonName: "1",
@@ -92,6 +102,7 @@ export const seasonTypeInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const hotelMasterCreateInitialValue = {
   HotelChain: "",
   HotelName: "",
@@ -119,12 +130,12 @@ export const hotelMasterCreateInitialValue = {
   SelfSupplier: 1,
   AddedBy: 1,
   UpdatedBy: 0,
-  Created_at: "2024-03-27 14:35:08",
-  Updated_at: null,
 };
+
 export const hotelMasterInitialValue = {
   HotelExcelFile: undefined,
 };
+
 export const hotelCategoryInitialValue = {
   id: "",
   Name: "",
@@ -132,6 +143,7 @@ export const hotelCategoryInitialValue = {
   Status: 1,
   AddedBy: 1,
 };
+
 export const hotelAdditonalInitialValue = {
   id: "",
   Name: "",
@@ -140,6 +152,7 @@ export const hotelAdditonalInitialValue = {
   AddedBy: 1,
   UpdatedBy: 1,
 };
+
 export const roomMasterInitialValue = {
   id: "",
   Name: "",
@@ -147,6 +160,7 @@ export const roomMasterInitialValue = {
   AddedBy: 0,
   UpdatedBy: 0,
 };
+
 export const hotelChainInitialValue = {
   id: "",
   Name: "",
@@ -162,6 +176,7 @@ export const hotelChainInitialValue = {
   Status: 1,
   AddedBy: 1,
 };
+
 export const resturantInitialValue = {
   id: "",
   Name: "",
@@ -185,6 +200,7 @@ export const resturantInitialValue = {
   AddedBy: 1,
   updatedBy: 1,
 };
+
 export const restaurantMealInitialValue = {
   id: "",
   Name: "",
@@ -192,6 +208,7 @@ export const restaurantMealInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const amentiesInitialValue = {
   id: "",
   Name: "",
@@ -200,6 +217,7 @@ export const amentiesInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const hotelTypeInitialValue = {
   id: "",
   Name: "",
@@ -209,6 +227,7 @@ export const hotelTypeInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const weekendInitialValue = {
   id: "",
   Name: "",
@@ -217,6 +236,7 @@ export const weekendInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const hotelMealInitialValue = {
   id: "",
   Name: "",
@@ -226,6 +246,7 @@ export const hotelMealInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const monumentInitialValue = {
   id: "",
   MonumentName: "",
@@ -240,6 +261,7 @@ export const monumentInitialValue = {
   AddedBy: 1,
   UpdatedBy: "1",
 };
+
 export const sightseeingInitialValue = {
   id: "",
   SightseeingName: "",
@@ -254,6 +276,7 @@ export const sightseeingInitialValue = {
   AddedBy: 1,
   UpdatedBy: 1,
 };
+
 export const visaCostInitialValue = {
   id: "",
   Country: "",
@@ -262,6 +285,7 @@ export const visaCostInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const visaTypeInitialValue = {
   id: "",
   Name: "",
@@ -269,6 +293,7 @@ export const visaTypeInitialValue = {
   AddedBy: 1,
   UpdatedBy: 1,
 };
+
 export const insuranceTypeInitialValue = {
   id: "",
   InsuranceType: "",
@@ -276,6 +301,7 @@ export const insuranceTypeInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const insuranceCostInitialValue = {
   id: "",
   InsuranceName: "",
@@ -284,6 +310,7 @@ export const insuranceCostInitialValue = {
   AddedBy: 1,
   UpdatedBy: 1,
 };
+
 export const tourEscortPriceInitialValue = {
   id: "",
   ServiceType: "",
@@ -294,6 +321,7 @@ export const tourEscortPriceInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+
 export const tourEscortInitialValue = {
   id: "",
   ServiceType: 1,
@@ -320,6 +348,7 @@ export const tourEscortInitialValue = {
   AddedBy: 1,
   UpdatedBy: 1,
 };
+
 export const vehicleTypeInitialValue = {
   id: "",
   Name: "",
@@ -327,6 +356,7 @@ export const vehicleTypeInitialValue = {
   Status: 1,
   AddedBy: 1,
 };
+
 export const additionalRequiremntInitialValue = {
   id: "",
   Name: "",
@@ -345,6 +375,7 @@ export const additionalRequiremntInitialValue = {
   AddedBy: "",
   ImageData: "",
 };
+
 export const driverMasterInitialValue = {
   id: "",
   Country: "",
@@ -363,6 +394,7 @@ export const driverMasterInitialValue = {
   UpdatedBy: 1,
   AddedBy: 1,
 };
+
 export const trainMasterInitialValue = {
   id: "",
   Name: "",
@@ -372,14 +404,17 @@ export const trainMasterInitialValue = {
   AddedBy: 1,
   UpdatedBy: 1,
 };
+
 export const airlineMasterInitialValue = {
   id: "",
   Name: "",
   ImageName: "",
   ImageData: "",
   Status: 1,
+  AddedBy:1,
   UpdatedBy: 1,
 };
+
 export const ferryMasterInitialValue = {
   id: "",
   FerryCompany: 1,
@@ -391,6 +426,7 @@ export const ferryMasterInitialValue = {
   AddedBy: 1,
   UpdatedBy: 1,
 };
+
 export const ferrySeatMasterInitialValue = {
   id: "",
   FerrySeat: "",
@@ -398,6 +434,7 @@ export const ferrySeatMasterInitialValue = {
   UpdatedBy: 1,
   AddedBy: 1,
 };
+
 export const currencyMasterInitialValue = {
   id: "",
   CountryId: 1,
@@ -408,6 +445,7 @@ export const currencyMasterInitialValue = {
   AddedBy: 1,
   UpdatedBy: "0",
 };
+
 export const roomTypeInitialValue = {
   id: "",
   Name: "",
@@ -418,6 +456,7 @@ export const roomTypeInitialValue = {
   AddedBy: "1",
   UpdatedBy: "0",
 };
+
 export const cruiseCompanyInitialValue = {
   id: "",
   CruiseCompanyName: "",
@@ -433,9 +472,20 @@ export const cruiseCompanyInitialValue = {
   Type: "",
   Phone: "",
   Email: "",
-  Status: "",
+  Status: "1",
   UpdatedBy: 1,
 };
+export const cruiseNameCompanyInitialValue = {
+  id: "",
+  CruiseCompany: "",
+  CruiseName: "",
+  Status: "",
+  ImageName: "",
+  ImageData: "",
+  AddedBy: "1",
+  UpdatedBy: "1",
+};
+
 export const ferryCompanyInitialValue = {
   id: "",
   FerryCompanyName: "",
@@ -451,6 +501,7 @@ export const ferryCompanyInitialValue = {
   UpdatedBy: "1",
   AddedBy: "1",
 };
+
 export const letterMasterInitialValue = {
   id: "",
   FromDestination: "",
@@ -462,6 +513,7 @@ export const letterMasterInitialValue = {
   Status: "",
   AddedBy: "1",
 };
+
 export const taxMasterInitialValue = {
   id: "",
   ServiceType: "",
@@ -472,6 +524,7 @@ export const taxMasterInitialValue = {
   AddedBy: "1",
   UpdatedBy: "0",
 };
+
 export const expenseTypeInitialValue = {
   id: "",
   ExpenseHead: "",
@@ -480,6 +533,7 @@ export const expenseTypeInitialValue = {
   AddedBy: "1",
   UpdatedBy: "0",
 };
+
 export const expenseHeadInitialValue = {
   id: "",
   ExpenseHead: "",
@@ -487,6 +541,7 @@ export const expenseHeadInitialValue = {
   AddedBy: "1",
   UpdatedBy: "0",
 };
+
 export const sacCodeInitialValue = {
   id: "",
   ServiceType: "",
@@ -496,6 +551,7 @@ export const sacCodeInitialValue = {
   AddedBy: "1",
   UpdatedBy: "0",
 };
+
 export const paymentTypeInitialValue = {
   id: "",
   PaymentTypeName: "",
@@ -503,6 +559,7 @@ export const paymentTypeInitialValue = {
   AddedBy: "1",
   UpdatedBy: "0",
 };
+
 export const fitInitialValue = {
   id: "",
   Name: "",
@@ -520,6 +577,7 @@ export const fitInitialValue = {
   AddedBy: "1",
   UpdatedBy: "0",
 };
+
 export const gitInitialValue = {
   id: "",
   Name: "",
@@ -555,6 +613,32 @@ export const bankInitialValue = {
   Status: "1",
   AddedBy: "1",
   UpdatedBy: "1",
+};
+export const cabinTypeInitialValue = {
+  id: "",
+  CruiseName: "",
+  CabinType: "",
+  Status: 1,
+  AddedBy: 1,
+  UpdatedBy: 1,
+};
+export const cabinCategoryInitialValue = {
+  id: "",
+  Name: "",
+  Status: 1,
+  AddedBy: 1,
+  UpdatedBy: 1,
+};
+export const itenararyOverviewInitialValue = {
+  id: "",
+  OverviewName: "",
+  OverviewInformation: "",
+  HighlightInformation: "",
+  ItineraryIntroduction: "",
+  ItinerarySummary: "",
+  Status: 1,
+  AddedBy: 1,
+  UpdatedBy: 1
 };
 
 // ------------------------VALIDATION SCHEMAS-------------------------- //
@@ -615,11 +699,11 @@ export const roomMasterValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
 });
 export const roomTypeValidationSchema = yup.object().shape({
-  Name: yup.string().required('Required'),
-  MaximumOccupancy: yup.number('Numeric Value').required('Required'),
-  Bedding: yup.number('Numeric Value').required('Required'),
-  Size: yup.string().required('Required'),
-})
+  Name: yup.string().required("Required"),
+  MaximumOccupancy: yup.number("Numeric Value").required("Required"),
+  Bedding: yup.number("Numeric Value").required("Required"),
+  Size: yup.string().required("Required"),
+});
 export const hotelChainValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
   Location: yup.string().required("Required"),
@@ -750,6 +834,24 @@ export const bankMasterValidationSchema = yup.object().shape({
   BankName: yup.string().required("Required"),
   AccountNumber: yup.string().required("Required"),
 });
+export const cruiseNameCompanyValidationSchema = yup.object().shape({
+  CruiseCompany: yup.string().required("Required"),
+  CruiseName: yup.string().required("Required"),
+});
+export const cruiseCompanyValidationSchema = yup.object().shape({
+  CruiseCompanyName: yup.string().required("Required"),
+});
+export const cabinTypeValidationSchema = yup.object().shape({
+  CruiseName: yup.string().required("Required"),
+  CabinType: yup.string().required("Required"),
+});
+export const cabinCategoryValidationSchema = yup.object().shape({
+  Name: yup.string().required("Required"),
+});
+export const itenararyOverviewValidationSchema = yup.object().shape({
+  OverviewName : yup.string().required("Required"), 
+});
+
 // Hotel Master Table Value in JSON-----------------------------------
 
 export const hotelMasterValue = [

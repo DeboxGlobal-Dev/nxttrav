@@ -6,8 +6,8 @@ import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
-  countryInitialValue,
-  countryValidationSchema,
+  itenararyOverviewInitialValue,
+  itenararyOverviewValidationSchema,
 } from "./MasterValidations";
 
 const ItenaryOverview = () => {
@@ -25,9 +25,10 @@ const ItenaryOverview = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("itenaryoverviewlist", postData);
-        setGetData(data.DataList);
-        setFilterData(data.DataList);
+        const { data } = await axiosOther.post("itineraryoverviewlist", postData);
+        setGetData(data.ItineraryInfoMaster);
+        console.log("datalist", data);
+        setFilterData(data.ItineraryInfoMaster);
       } catch (error) {
         console.log(error);
       }
@@ -54,7 +55,7 @@ const ItenaryOverview = () => {
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Overview Name",
       selector: (row) => (
         <span>
           <i
@@ -63,14 +64,29 @@ const ItenaryOverview = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.OverviewName}
         </span>
       ),
       sortable: true,
     },
     {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
+      name: "Overview Information",
+      selector: (row) => row.OverviewInformation,
+      sortable: true,
+    },
+    {
+      name: "Highlight Information",
+      selector: (row) => row.HighlightInformation,
+      sortable: true,
+    },
+    {
+      name: "Itinerary Introduction",
+      selector: (row) => row.ItineraryIntroduction,
+      sortable: true,
+    },
+    {
+      name: "Itinerary Summary",
+      selector: (row) => row.ItinerarySummary,
       sortable: true,
     },
     {
@@ -83,7 +99,7 @@ const ItenaryOverview = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -93,7 +109,7 @@ const ItenaryOverview = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
           </span>
         );
       },
@@ -125,9 +141,9 @@ const ItenaryOverview = () => {
                 </NavLink>
                 <Model
                   heading={"Add Overview"}
-                  apiurl={"addupdateitenaryoverview"}
-                  initialValues={countryInitialValue}
-                  validationSchema={countryValidationSchema}
+                  apiurl={"addupdateitineraryoverview"}
+                  initialValues={itenararyOverviewInitialValue}
+                  validationSchema={itenararyOverviewValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -141,16 +157,19 @@ const ItenaryOverview = () => {
                         <label>Overview Name</label>
                         <Field
                           type="text"
-                          name="Color"
+                          name="OverviewName"
                           placeholder="Overview Name"
                           className="form-control"
                         />
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="OverviewName"/>
+                        </span>
                       </div>
                       <div className="col-sm-6">
                         <label>Overview Information</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="OverviewInformation"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{height:"38px"}}
@@ -160,17 +179,17 @@ const ItenaryOverview = () => {
                         <label>Highlight Information</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="HighlightInformation"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{height:"38px"}}
                           />
                       </div>
                       <div className="col-sm-6">
-                        <label>Itenarary Introduction</label>
+                        <label>Itinerary Introduction</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="ItineraryIntroduction"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{height:"38px"}}
@@ -180,7 +199,7 @@ const ItenaryOverview = () => {
                         <label>Itenarary Summary</label>
                         <Field
                           as="textarea"
-                          name="Color"
+                          name="ItinerarySummary"
                           placeholder="Write Here..."
                           className="form-control"
                           style={{height:"38px"}}

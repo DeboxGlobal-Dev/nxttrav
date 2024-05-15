@@ -53,7 +53,8 @@ const AirlineMaster = () => {
       ImageName:""
     });
     setEditData({
-      ...rowValue
+      ...rowValue,
+      Status:rowValue.Status==="Active"?1:0
     });
     setIsEditing(true);
   };
@@ -69,7 +70,7 @@ const AirlineMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.ImageData}
+          <img src={row.ImageName} alt="image" style={{height:'30px', height:'30px'}}></img>
         </span>
       ),
       sortable: true,
@@ -78,6 +79,21 @@ const AirlineMaster = () => {
       name: "Airline Name",
       selector: (row) => row.Name,
       sortable: true,
+    },
+    {
+      name: "AddedBy",
+      selector: (row) => <span>Admin <br /> {row.AddedBy}</span>,
+      sortable: true,
+    },
+    {
+      name: "Updated By",
+      selector: (row) => {
+        return (
+          <span>
+            Admin <br /> {row.UpdatedBy}
+          </span>
+        );
+      },
     },
     {
       name: "Status",
@@ -138,6 +154,7 @@ const AirlineMaster = () => {
                   updateData={updateData}
                   setUpdateData={setUpdateData}
                   imageValue={imageValue}
+                  setImageValue={setImageValue}
                 >
                   <div className="card-body">
                     <div className="row">

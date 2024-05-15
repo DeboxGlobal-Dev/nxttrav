@@ -7,6 +7,7 @@ import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
   cruiseCompanyInitialValue,
+  cruiseCompanyValidationSchema
 } from "./MasterValidations";
 
 const CruiseCompany = () => {
@@ -85,7 +86,7 @@ const CruiseCompany = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("cruisecompanylist", postData);
+        const { data } = await axiosOther.post("cruisecompanymasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -130,7 +131,7 @@ const CruiseCompany = () => {
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Cruise Company Name",
       selector: (row) => (
         <span>
           <i
@@ -139,19 +140,49 @@ const CruiseCompany = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.CruiseCompanyName}
         </span>
       ),
       sortable: true,
     },
     {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
+      name: "Destination",
+      selector: (row) => row.Destination,
       sortable: true,
     },
     {
-      name: "Status Name",
+      name: "Country",
+      selector: (row) => row.Country,
+      sortable: true,
+    },
+    {
+      name: "State",
+      selector: (row) => row.State,
+      sortable: true,
+    },
+    {
+      name: "City",
+      selector: (row) => row.City,
+      sortable: true,
+    },
+    {
+      name: "State ",
       selector: (row) => row.Status,
+      sortable: true,
+    },
+    {
+      name: "PinCode",
+      selector: (row) => row.PinCode,
+      sortable: true,
+    },
+    {
+      name: "Address",
+      selector: (row) => row.Address,
+      sortable: true,
+    },
+    {
+      name: "Website",
+      selector: (row) => row.Website,
       sortable: true,
     },
     {
@@ -159,7 +190,7 @@ const CruiseCompany = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -169,7 +200,7 @@ const CruiseCompany = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
           </span>
         );
       },
@@ -201,9 +232,9 @@ const CruiseCompany = () => {
                 </NavLink>
                 <Model
                   heading={"Add Cruise Company"}
-                  apiurl={"addupdatecruisecompany"}
+                  apiurl={"addupdatecruisecompanymaster"}
                   initialValues={cruiseCompanyInitialValue}
-                  // validationSchema={countryValidationSchema}
+                  validationSchema={cruiseCompanyValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -233,7 +264,7 @@ const CruiseCompany = () => {
                           <option value="">Select Destination</option>
                           {
                             destinationList.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                              return <option value={value.id} key={index+1}>{value.Name}</option>
                             })
                           }
                           
@@ -249,7 +280,7 @@ const CruiseCompany = () => {
                           <option value="">Select Country</option>
                           {
                             countryList.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                              return <option value={value.id} key={index+1}>{value.Name}</option>
                             })
                           }
                         </Field>
@@ -264,7 +295,7 @@ const CruiseCompany = () => {
                           <option value="">Select State</option>
                           {
                             stateFiltered.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                              return <option value={value.id} key={index+1}>{value.Name}</option>
                             })
                           }
                         </Field>
@@ -279,7 +310,7 @@ const CruiseCompany = () => {
                           <option value="">Select City</option>
                           {
                             cityFiltered.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                              return <option value={value.id} key={index+1}>{value.Name}</option>
                             })
                           }
                         </Field>
@@ -341,7 +372,7 @@ const CruiseCompany = () => {
                           <option value={1}>Select Division</option>
                           {
                             devisionList?.map((value, index)=>{
-                              return  <option value={value.Id} key={index+1}>{value.Name}</option>
+                              return  <option value={value.id} key={index+1}>{value.Name}</option>
                             })
                           }
                         </Field>

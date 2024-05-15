@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
-import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
+import { cruiseNameCompanyInitialValue, cruiseNameCompanyValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const CruiseNameCompany = () => {
@@ -26,7 +26,7 @@ const CruiseNameCompany = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("cruisenamecompanylist", postData);
+        const { data } = await axiosOther.post("cruisenamemasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -48,8 +48,8 @@ const CruiseNameCompany = () => {
   const handleEditClick = (rowValue) => {
     console.log(rowValue);
     setImageValue({
-      ImageData:rowValue.ImageData,
-      ImageName:rowValue.ImageName
+      ImageData:"",
+      ImageName:""
     });
     setEditData({
       ...rowValue,
@@ -77,7 +77,7 @@ const CruiseNameCompany = () => {
 
   const columns = [
     {
-      name: "Name",
+      name: "Image",
       selector: (row) => (
         <span>
           <i
@@ -86,19 +86,20 @@ const CruiseNameCompany = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          <img src={row.ImageName} 
+          alt="cruise-image" style={{height:'30px', width:'30px'}}></img>
         </span>
       ),
       sortable: true,
     },
     {
-      name: "State Name",
-      selector: (row) => row.StateName,
+      name: "Cruise Company",
+      selector: (row) => row.CruiseCompany,
       sortable: true,
     },
     {
-      name: "Country Name",
-      selector: (row) => row.CountryName,
+      name: "Cruise Name",
+      selector: (row) => row.CruiseName,
       sortable: true,
     },
     {
@@ -106,7 +107,7 @@ const CruiseNameCompany = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -116,7 +117,7 @@ const CruiseNameCompany = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
           </span>
         );
       },
@@ -151,9 +152,9 @@ const CruiseNameCompany = () => {
                 </NavLink>
                 <Model
                   heading={"Add Cruise Name"}
-                  apiurl={"addupdatecruisenamecompany"}
-                  initialValues={cityInitialValue}
-                  validationSchema={cityValidationSchema}
+                  apiurl={"addupdatecruisenamemaster"}
+                  initialValues={cruiseNameCompanyInitialValue}
+                  validationSchema={cruiseNameCompanyValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -161,6 +162,7 @@ const CruiseNameCompany = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                   imageValue={imageValue}
+                  setImageValue={setImageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
@@ -169,12 +171,16 @@ const CruiseNameCompany = () => {
                         <Field
                           className="form-control"
                           component={"select"}
-                          name="countryId"
+                          name="CruiseCompany"
                         >
+                          <option value={""}>Select</option>
                           <option value={"1"}>ABC</option>
                           <option value={"2"}>DEF</option>
                           <option value={"3"}>GHJ</option>
                         </Field>
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="CruiseCompany"/>
+                        </span>
                       </div>
                       <div className="col-sm-6">
                         <label>Cruise Name</label>
@@ -182,10 +188,10 @@ const CruiseNameCompany = () => {
                           type="text"
                           placeholder="Cruise Name"
                           className="form-control"
-                          name="Name"
+                          name="CruiseName"
                         />
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name"/>
+                          <ErrorMessage name="CruiseName"/>
                         </span>
                       </div>
                       <div className="col-sm-6">
@@ -201,7 +207,7 @@ const CruiseNameCompany = () => {
                       </div>
                       <div className="col-sm-6">
                         <label>Cruise Image</label>
-                        <Field
+                        <input
                           type="file"
                           className="form-control"
                           name="ImageData"

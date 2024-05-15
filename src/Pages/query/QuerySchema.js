@@ -162,7 +162,6 @@ export const suggestedPackageData = [
         Transfer: "NO",
       },
     ],
-
     TravelDate:[
       {
         Type: "1",

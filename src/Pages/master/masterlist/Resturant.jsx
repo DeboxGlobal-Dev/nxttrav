@@ -159,17 +159,19 @@ const Resturant = () => {
 
   const stateFiltered = useMemo(() => {
     const filteredState = stateList.filter(
-      (value) => changeValue.Country == value.CountryId
+      (value) => changeValue.CountryId == value.CountryId
     );
     return filteredState;
-  }, [changeValue.Country, changeValue.StateId]);
+  }, [changeValue.CountryId, changeValue.StateId]);
+
 
   const cityFiltered = useMemo(() => {
     const filteredCity = cityList.filter(
-      (value) => changeValue.State == value.StateId
+      (value) => changeValue.StateId == value.StateId
     );
     return filteredCity;
-  }, [changeValue.city, changeValue.State, changeValue.Country]);
+  }, [changeValue.cityId, changeValue.StateId, changeValue.CountryId]);
+
 
   const handleRestaurantImage = (e) =>{
     const file = e.target.files[0];

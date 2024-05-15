@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
-import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
+import { cabinTypeInitialValue, cabinTypeValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const CabinType = () => {
@@ -22,7 +22,7 @@ const CabinType = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("cabintypelist" , postData);
+        const { data } = await axiosOther.post("cabintypemasterlist" , postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -54,7 +54,7 @@ const CabinType = () => {
 
   const columns = [
     {
-      name: "Name",
+      name: "Cruise Name",
       selector: (row) => (
         <span>
           <i
@@ -63,19 +63,14 @@ const CabinType = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.CruiseName}
         </span>
       ),
       sortable: true,
     },
     {
-      name: "State Name",
-      selector: (row) => row.StateName,
-      sortable: true,
-    },
-    {
-      name: "Country Name",
-      selector: (row) => row.CountryName,
+      name: "Cabin Type",
+      selector: (row) => row.CabinType,
       sortable: true,
     },
     {
@@ -83,7 +78,7 @@ const CabinType = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -93,7 +88,7 @@ const CabinType = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
           </span>
         );
       },
@@ -128,9 +123,9 @@ const CabinType = () => {
                 </NavLink>
                 <Model
                   heading={"Add Cabin Type"}
-                  apiurl={"addupdatecabintype"}
-                  initialValues={cityInitialValue}
-                  validationSchema={cityValidationSchema}
+                  apiurl={"addupdatecabintypemaster"}
+                  initialValues={cabinTypeInitialValue}
+                  validationSchema={cabinTypeValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -141,16 +136,19 @@ const CabinType = () => {
                   <div className="card-body">
                     <div className="row row-gap-3">
                       <div className="col-sm-4">
-                        <label htmlFor="country">Cruise Name</label>
+                        <label htmlFor="">Cruise Name</label>
                         <Field
                           className="form-control"
                           component={"select"}
-                          name="countryId"
+                          name="CruiseName"
                         >
-                          <option value={0}>Select Cruise Name</option>
+                          <option value={""}>Cruise Name</option>
                           <option value={1}>DEF</option>
                           <option value={2}>GHJ</option>
                         </Field>
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="CruiseName" />
+                        </span>
                       </div>
                       <div className="col-sm-4">
                         <label>Cabin Type</label>
@@ -158,10 +156,10 @@ const CabinType = () => {
                           type="text"
                           placeholder="Cabin Type"
                           className="form-control"
-                          name="Name"
+                          name="CabinType"
                         />
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
+                          <ErrorMessage name="CabinType" />
                         </span>
                       </div>
                       <div className="col-sm-4">

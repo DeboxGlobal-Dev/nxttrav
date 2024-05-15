@@ -8,7 +8,6 @@ import { Field, ErrorMessage } from "formik";
 import {stateInitialValue, stateValidationSchema} from "./MasterValidations";
 
 const StateMaster = () => {
-  console.log("This is State Master");
 
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
@@ -18,7 +17,7 @@ const StateMaster = () => {
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
-  }); 
+  });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
 
@@ -31,7 +30,6 @@ const StateMaster = () => {
         }
       );
       setCountry(countryData.data.DataList);
-      console.log(country);
     }catch(err){
       console.log(err);
     }

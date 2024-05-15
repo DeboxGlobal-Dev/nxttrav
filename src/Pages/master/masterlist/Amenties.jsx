@@ -10,9 +10,8 @@ import {
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
-
-
 const Amenties = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -28,7 +27,7 @@ const Amenties = () => {
     ImageData:""
   });
   const [showImage, setShowImage] = useState('');
-
+  
   useEffect(() => {
     const postDataToServer = async () => {
       try {
