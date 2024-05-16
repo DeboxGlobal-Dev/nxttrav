@@ -4,10 +4,14 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
-import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
+import {
+  transportMasterInitialValue,
+  transportMasterValidationSchema,
+} from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const TransportMaster = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -17,8 +21,10 @@ const TransportMaster = () => {
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
+  const [updateData, setUpdateData] = useState(false);
 
   useEffect(() => {
+    
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("transportmasterlist", postData);
@@ -30,7 +36,8 @@ const TransportMaster = () => {
     };
 
     postDataToServer();
-  }, [getData]);
+
+  }, [updateData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -39,15 +46,16 @@ const TransportMaster = () => {
 
     setFilterData(result);
   }, [postData]);
-  
+
   const handleEditClick = (rowValue) => {
     console.log(rowValue);
     setEditData({
       ...rowValue,
       CountryId: rowValue.CountryName === "India" ? "1" : "2",
       StateId: rowValue.StateName === "Rajsthan" ? "1" : "2",
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
+
     setIsEditing(true);
   };
 
@@ -68,13 +76,23 @@ const TransportMaster = () => {
       sortable: true,
     },
     {
-      name: "State Name",
-      selector: (row) => row.StateName,
+      name: "Destinations",
+      selector: (row) => row.Destinations,
       sortable: true,
     },
     {
-      name: "Country Name",
-      selector: (row) => row.CountryName,
+      name: "Transfer Type",
+      selector: (row) => row.TransferType,
+      sortable: true,
+    },
+    {
+      name: "Detail",
+      selector: (row) => row.Detail,
+      sortable: true,
+    },
+    {
+      name: "Default",
+      selector: (row) => row.Default,
       sortable: true,
     },
     {
@@ -82,7 +100,7 @@ const TransportMaster = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -92,7 +110,7 @@ const TransportMaster = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
           </span>
         );
       },
@@ -114,7 +132,9 @@ const TransportMaster = () => {
               style={{ padding: "10px" }}
             >
               <div className="col-xl-10 d-flex align-items-center">
-                <h5 className="card-title d-none d-sm-block">Transport Master</h5>
+                <h5 className="card-title d-none d-sm-block">
+                  Transport Master
+                </h5>
               </div>
               <div className="col-xl-2 d-flex justify-content-end">
                 {/* Bootstrap Modal */}
@@ -125,19 +145,22 @@ const TransportMaster = () => {
                 >
                   Back
                 </NavLink>
-                {/* <Model
-                  heading={"Add Transport"}
-                  apiurl={"addupdatetransportmaster"}
-                  initialValues={cityInitialValue}
-                  validationSchema={cityValidationSchema}
+                <Model
+                  heading={"Add Transfer Type"}
+                  apiurl={"addupdatetransfertypemaster"}
+                  initialValues={transportMasterInitialValue}
+                  validationSchema={transportMasterValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  setChangeValue={setChangeValue}
+                  setUpdateData={setUpdateData}
+                  updateData={updateData}
                 >
                   <div className="card-body">
-                  <div className="row row-gap-3">
-                      <div className="col-sm-5">
-                        <label>Transfer/Transportation Name</label>
+                    <div className="row row-gap-3">
+                      <div className="col-sm-4">
+                        <label>Name</label>
                         <Field
                           type="text"
                           name="Name"
@@ -152,7 +175,7 @@ const TransportMaster = () => {
                         <label>Destination</label>
                         <Field
                           type="text"
-                          name="ShortName"
+                          name="Destinations"
                           placeholder="Destination"
                           className="form-control"
                         />
@@ -160,7 +183,42 @@ const TransportMaster = () => {
                           <ErrorMessage name="ShortName" />
                         </span>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
+                        <label>Transfer Type</label>
+                        <Field
+                          name="TransferType"
+                          className="form-control"
+                          component={"select"}
+                        >
+                          <option value="">All</option>
+                          <option value={1}>Arrivale</option>
+                          <option value={2}>Departure</option>
+                          <option value={3}>SightSeeing</option>
+                          <option value={4}>Normal</option>
+                        </Field>
+                      </div>
+                      <div className="col-sm-4">
+                        <label className="font-size-10">Default</label>
+                        <Field
+                          name="Default"
+                          className="form-control"
+                          component={"select"}
+                        >
+                          <option value={0}>No</option>
+                          <option value={1}>Yes</option>
+                        </Field>
+                      </div>
+                      <div className="col-sm-4">
+                        <label>Detail</label>
+                        <Field
+                          as="textarea"
+                          name="Detail"
+                          placeholder="Detail"
+                          className="form-control"
+                          style={{ height: "38px" }}
+                        />
+                      </div>
+                      <div className="col-sm-4">
                         <label>Status</label>
                         <Field
                           name="Status"
@@ -171,44 +229,9 @@ const TransportMaster = () => {
                           <option value={0}>Inactive</option>
                         </Field>
                       </div>
-                      <div className="col-sm-3">
-                        <label>Transfer Type</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>All</option>
-                          <option value={2}>Arrivale</option>
-                          <option value={3}>Departure</option>
-                          <option value={4}>SightSeeing</option>
-                          <option value={5}>Normal</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-3">
-                        <label className="font-size-10">Default For Proposal</label>
-                        <Field
-                          name="SetDefault"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={0}>No</option>
-                          <option value={1}>Yes</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-6">
-                        <label>Detail</label>
-                        <Field
-                          as="textarea"
-                          name="ShortName"
-                          placeholder="Detail"
-                          className="form-control"
-                          style={{height:'38px'}}
-                        />
-                      </div>
                     </div>
                   </div>
-                </Model> */}
+                </Model>
               </div>
             </div>
             <div className="card-body">

@@ -4,7 +4,10 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
-import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
+import {
+  vehicleBrandInitialValue,
+  vehicleBrandValidationSchema,
+} from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const VehicleBrand = () => {
@@ -17,11 +20,12 @@ const VehicleBrand = () => {
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
+  const [updateData, setUpdateData] = useState(false);
 
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("vehiclebrandlist", postData);
+        const { data } = await axiosOther.post("vehiclebrandmasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -30,7 +34,7 @@ const VehicleBrand = () => {
     };
 
     postDataToServer();
-  }, []);
+  }, [updateData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -39,21 +43,21 @@ const VehicleBrand = () => {
 
     setFilterData(result);
   }, [postData]);
-  
+
   const handleEditClick = (rowValue) => {
     console.log(rowValue);
     setEditData({
       ...rowValue,
       CountryId: rowValue.CountryName === "India" ? "1" : "2",
       StateId: rowValue.StateName === "Rajsthan" ? "1" : "2",
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
 
   const columns = [
     {
-      name: "Name",
+      name: "Vehicle Type",
       selector: (row) => (
         <span>
           <i
@@ -62,19 +66,14 @@ const VehicleBrand = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.VehicleType}
         </span>
       ),
       sortable: true,
     },
     {
-      name: "State Name",
-      selector: (row) => row.StateName,
-      sortable: true,
-    },
-    {
-      name: "Country Name",
-      selector: (row) => row.CountryName,
+      name: "Name",
+      selector: (row) => row.Name,
       sortable: true,
     },
     {
@@ -82,7 +81,7 @@ const VehicleBrand = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -92,7 +91,7 @@ const VehicleBrand = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
           </span>
         );
       },
@@ -125,70 +124,58 @@ const VehicleBrand = () => {
                 >
                   Back
                 </NavLink>
-                {/* <Model
-                  heading={"Add Vehicle"}
-                  apiurl={"addupdatevehiclebrand"}
-                  initialValues={cityInitialValue}
-                  validationSchema={cityValidationSchema}
+                <Model
+                  heading={"Add Vehicle Type"}
+                  apiurl={"addupdatevehiclebrandmaster"}
+                  initialValues={vehicleBrandInitialValue}
+                  validationSchema={vehicleBrandValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  setChangeValue={setChangeValue}
+                  setUpdateData={setUpdateData}
+                  updateData={updateData}
                 >
                   <div className="card-body">
                     <div className="row">
-                      <div className="col-sm-3">
-                        <label htmlFor="country">Country</label>
+                      <div className="col-sm-4">
+                        <label>Vehicle Type</label>
                         <Field
+                          type="text"
+                          name="VehicleType"
+                          placeholder="Vehicle Type"
                           className="form-control"
-                          component={"select"}
-                          name="countryId"
-                        >
-                          <option value={"1"}>India</option>
-                          <option value={"2"}>Iran</option>
-                          <option value={"3"}>China</option>
-                        </Field>
+                        />
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="VehicleType" />
+                        </span>
                       </div>
-                      <div className="col-sm-3">
-                        <label>State</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="stateId"
-                        >
-                          <option value={"1"}>Rajsthan</option>
-                          <option value={"2"}>Hryana</option>
-                          <option value={"4"}>Bihar</option>
-                          <option value={"5"}>West Bangal</option>
-                          <option value={"6"}>Banglore</option>
-                          <option value={"7"}>Uttar Pradesh</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Name</label>
                         <Field
                           type="text"
-                          placeholder="City Name"
-                          className="form-control"
                           name="Name"
+                          placeholder="Capacity"
+                          className="form-control"
                         />
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <label>Status</label>
                         <Field
+                          name="Status"
                           className="form-control"
                           component={"select"}
-                          name="Status"
                         >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
+                          <option value={1}>Active</option>
+                          <option value={0}>Inactive</option>
                         </Field>
                       </div>
                     </div>
                   </div>
-                </Model> */}
+                </Model>
               </div>
             </div>
             <div className="card-body">

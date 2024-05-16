@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
-import { Field, ErrorMessage, Formik } from "formik";
+import { Field, ErrorMessage } from "formik";
 import {
   sightseeingInitialValue,
   sightseeingValidationSchema,
@@ -19,7 +19,7 @@ const Sightseeing = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: "",
+    Status: ""
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
@@ -33,7 +33,7 @@ const Sightseeing = () => {
       });
       setDestinationList(destination.data.DataList);
     } catch (err) {
-      console.log("Erro Occured", err);
+      console.log("Error Occured", err);
     }
   };
   useEffect(() => {
@@ -66,18 +66,8 @@ const Sightseeing = () => {
 
   const handleEditClick = (rowValue) => {
     setEditData({
-      id: rowValue.Id,
-      SightseeingName: rowValue.SightseeingName,
-      Destination: rowValue.Destination,
-      TransferType: rowValue.TransferType,
-      DefaultQuotation: rowValue.DefaultQuotation,
-      DefaultProposal: rowValue.DefaultProposal,
-      Description: rowValue.Description,
-      InclusionsExclusionsTiming: rowValue.InclusionsExclusionsTiming,
-      ImportantNote: rowValue.ImportantNote,
-      Status: rowValue.Status==="Active"? 1:0,
-      AddedBy: rowValue.AddedBy,
-      UpdatedBy: rowValue.UpdatedBy,
+      ...rowValue,
+      Status: rowValue.Status==="Active"? 1:0
     });
     setIsEditing(true);
   };
@@ -119,26 +109,11 @@ const Sightseeing = () => {
       sortable: true,
     },
     {
-      name: "Language",
-      selector: (row) => row.Langauge,
-      sortable: true,
-    },
-    {
-      name: "Gallery",
-      selector: (row) => row.Gallery,
-      sortable: true,
-    },
-    {
-      name: "Rate Sheet",
-      selector: (row) => row.Ratesheet,
-      sortable: true,
-    },
-    {
       name: "Added By",
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -148,7 +123,7 @@ const Sightseeing = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
           </span>
         );
       },
@@ -201,20 +176,20 @@ const Sightseeing = () => {
                           className="form-control"
                         />
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
+                          <ErrorMessage name="SightseeingName" />
                         </span>
                       </div>
                       <div className="col-sm-4">
                         <label>Destination</label>
                         <Field
-                          name="Destinatin"
+                          name="Destination"
                           className="form-control"
                           component={"select"}
                         >
                           <option value="">Select Destination</option>
                           {
                             destinationList.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
+                              return <option value={value.id} key={index+1}>{value.Name}</option>
                             })
                           }
                         </Field>
@@ -226,10 +201,10 @@ const Sightseeing = () => {
                           className="form-control"
                           component={"select"}
                         >
-                          <option value={1}>Ticket Only</option>
-                          <option value={0}>ALL</option>
-                          <option value={0}>SIC</option>
-                          <option value={0}>PVT</option>
+                          <option value="">Ticket Only</option>
+                          <option value={1}>ALL</option>
+                          <option value={2}>SIC</option>
+                          <option value={3}>PVT</option>
                         </Field>
                       </div>
                       <div className="col-sm-4">

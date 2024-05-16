@@ -5,24 +5,33 @@ import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
-import { countryInitialValue, countryValidationSchema } from "./MasterValidations";
-
+import {
+  transferTypeInitialValue,
+  transferTypeValidationSchema
+} from "./MasterValidations";
 
 const TransferType = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: "",
+    Status: ""
   });
+
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+
   useEffect(() => {
+  
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("transfertype", postData);
+        const { data } = await axiosOther.post(
+          "transfertypemasterlist",
+          postData
+        );
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -36,23 +45,22 @@ const TransferType = () => {
     const result = getData.filter((item) => {
       return item.Name.toLowerCase().match(postData.Search.toLowerCase());
     });
-
+  
     setFilterData(result);
   }, [postData]);
-
 
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Name",
       selector: (row) => (
         <span>
           <i
@@ -67,12 +75,7 @@ const TransferType = () => {
       sortable: true,
     },
     {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
-      sortable: true,
-    },
-    {
-      name: "Status Name",
+      name: "Status",
       selector: (row) => row.Status,
       sortable: true,
     },
@@ -81,7 +84,7 @@ const TransferType = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -91,7 +94,7 @@ const TransferType = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
           </span>
         );
       },
@@ -123,9 +126,9 @@ const TransferType = () => {
                 </NavLink>
                 <Model
                   heading={"Add Transfer Type"}
-                  apiurl={"addupdatetransfertype"}
-                  initialValues={countryInitialValue}
-                  validationSchema={countryValidationSchema}
+                  apiurl={"addupdatetransfertypemaster"}
+                  initialValues={transferTypeInitialValue}
+                  validationSchema={transferTypeValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -139,7 +142,7 @@ const TransferType = () => {
                         <label>Transfer Type</label>
                         <Field
                           type="text"
-                          name="Transfer Type"
+                          name="Name"
                           placeholder="Enter Name"
                           className="form-control"
                         />
@@ -147,7 +150,6 @@ const TransferType = () => {
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      
                       <div className="col-sm-6">
                         <label>Status</label>
                         <Field

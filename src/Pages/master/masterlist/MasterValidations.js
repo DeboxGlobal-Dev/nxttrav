@@ -266,10 +266,10 @@ export const sightseeingInitialValue = {
   id: "",
   SightseeingName: "",
   Destination: "",
-  TransferType: "",
-  DefaultQuotation: "",
-  DefaultProposal: "",
   Description: "",
+  TransferType: "",
+  DefaultQuotation: 0,
+  DefaultProposal: 0,
   InclusionsExclusionsTiming: "",
   ImportantNote: "",
   Status: 1,
@@ -356,6 +356,14 @@ export const vehicleTypeInitialValue = {
   Status: 1,
   AddedBy: 1,
 };
+export const vehicleBrandInitialValue = {
+  id: "",
+  VehicleType: "",
+  Name: "",
+  Status: 1,
+  AddedBy: 1,
+  UpdatedBy: 1,
+};
 
 export const additionalRequiremntInitialValue = {
   id: "",
@@ -411,7 +419,7 @@ export const airlineMasterInitialValue = {
   ImageName: "",
   ImageData: "",
   Status: 1,
-  AddedBy:1,
+  AddedBy: 1,
   UpdatedBy: 1,
 };
 
@@ -638,7 +646,25 @@ export const itenararyOverviewInitialValue = {
   ItinerarySummary: "",
   Status: 1,
   AddedBy: 1,
-  UpdatedBy: 1
+  UpdatedBy: 1,
+};
+export const transferTypeInitialValue = {
+  id: "",
+  Name: "",
+  Status: 1,
+  AddedBy: 1,
+  UpdatedBy: 0,
+};
+export const transportMasterInitialValue = {
+  id: "",
+  Name: "",
+  Destinations: "",
+  TransferType: "",
+  Detail: "",
+  Default: 0,
+  Status: 1,
+  AddedBy: 1,
+  UpdatedBy: 0,
 };
 
 // ------------------------VALIDATION SCHEMAS-------------------------- //
@@ -766,6 +792,10 @@ export const tourEscortValidationSchema = yup.object().shape({
 export const vehicleTypeValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
 });
+export const vehicleBrandValidationSchema = yup.object().shape({
+  VehicleType: yup.string().required("Required"),
+  Name: yup.string().required("Required"),
+});
 export const additionaRequirementValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
 });
@@ -849,9 +879,14 @@ export const cabinCategoryValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
 });
 export const itenararyOverviewValidationSchema = yup.object().shape({
-  OverviewName : yup.string().required("Required"), 
+  OverviewName: yup.string().required("Required"),
 });
-
+export const transferTypeValidationSchema = yup.object().shape({
+  Name: yup.string().required("Required"),
+});
+export const transportMasterValidationSchema = yup.object().shape({
+  Name: yup.string().required("Required"),
+});
 // Hotel Master Table Value in JSON-----------------------------------
 
 export const hotelMasterValue = [
