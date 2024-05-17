@@ -93,10 +93,12 @@ const AdditionalRequirement = () => {
 
   const handleEditClick = (rowValue) => {
     setImageValue({
-      ImageName:""
+      ImageName:"",
+      ImageData:""
     });
     setEditData({
-      ...rowValue
+      ...rowValue,
+      Status:rowValue.Status==="Active"?1:0
     });
     setIsEditing(true);
   };
@@ -128,7 +130,7 @@ const AdditionalRequirement = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Image}
+          <img src={row.ImageName} alt="image" style={{height:'30px', height:'30px'}}></img>
         </span>
       ),
       sortable: true,
@@ -140,7 +142,7 @@ const AdditionalRequirement = () => {
     },
     {
       name: "Destination",
-      selector: (row) => row.DestinationId,
+      selector: (row) => row.DestinationName,
       sortable: true,
     },
     {
@@ -148,17 +150,7 @@ const AdditionalRequirement = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.PerPaxCost}
-          </span>
-        );
-      },
-    },
-    {
-      name: "Group Cost",
-      selector: (row) => {
-        return (
-          <span>
-            Admin <br /> {row.GroupCost}
+          {row.CostType}
           </span>
         );
       },
@@ -168,17 +160,17 @@ const AdditionalRequirement = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Details}
+           {row.Details}
           </span>
         );
       },
     },
     {
-      name: "Created_By",
+      name: "AddedBy",
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Created_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.AddedBy}
           </span>
         );
       },
@@ -188,7 +180,7 @@ const AdditionalRequirement = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Status}
+            {row.Status}
           </span>
         );
       },
@@ -232,6 +224,7 @@ const AdditionalRequirement = () => {
                   updateData={updateData}
                   setUpdateData={setUpdateData}
                   imageValue={imageValue}
+                  setImageValue={setImageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
@@ -254,7 +247,7 @@ const AdditionalRequirement = () => {
                           component={"select"}
                           name="DestinationId"
                         >
-                          <option value={1}>Select Destination</option>
+                          <option value="">Select Destination</option>
                           {
                             destinationList?.map((value, index)=>{
                               return <option value={value?.id} key={index+1}>{value?.Name}</option>
@@ -269,7 +262,7 @@ const AdditionalRequirement = () => {
                           component={"select"}
                           name="TaxSlab"
                         >
-                          <option value={1}>Select Tax Slab</option>
+                          <option value="">Select Tax Slab</option>
                           {
                             taxSlabList?.map((value, index)=>{
                               return <option value={value?.id} key={index+1}>{value?.TaxSlabName}</option>
@@ -296,7 +289,7 @@ const AdditionalRequirement = () => {
                           component={"select"}
                           name="CurrencyId"
                         >
-                          <option value={1}>Select Currency</option>
+                          <option value="">Select Currency</option>
                           {
                             currencyList.map((value, index)=>{
 

@@ -364,24 +364,36 @@ export const vehicleBrandInitialValue = {
   AddedBy: 1,
   UpdatedBy: 1,
 };
+export const vehicleMasterInitialValue = {
+  id: "",
+  Name: "",
+  VehicleType: "",
+  Capacity: "",
+  VehicleBrand: "",
+  ImageName: "",
+  ImageData: "",
+  Status:1,
+  AddedBy: 1,
+  UpdatedBy: 1,
+};
 
 export const additionalRequiremntInitialValue = {
   id: "",
   Name: "",
-  DestinationId: 1,
-  CurrencyId: 1,
+  DestinationId: "",
+  CurrencyId: "",
   CostType: 1,
   TaxSlab: "",
-  MarkupApply: "",
-  ShowInProposal: "",
+  MarkupApply: 1,
+  ShowInProposal: 1,
   AdultCost: "",
   ChildCost: "",
   InfantCost: "",
   ImageName: "",
-  Details: "",
-  Status: "",
-  AddedBy: "",
   ImageData: "",
+  Details: "",
+  Status: 1,
+  AddedBy: 1,
 };
 
 export const driverMasterInitialValue = {
@@ -887,6 +899,9 @@ export const transferTypeValidationSchema = yup.object().shape({
 export const transportMasterValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
 });
+export const vehicleMasterValidationSchema = yup.object().shape({
+  Name : yup.string().required("Required")
+})
 // Hotel Master Table Value in JSON-----------------------------------
 
 export const hotelMasterValue = [

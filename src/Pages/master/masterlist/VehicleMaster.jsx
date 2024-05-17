@@ -5,7 +5,7 @@ import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
-import { countryInitialValue, countryValidationSchema } from "./MasterValidations";
+import { countryInitialValue, countryValidationSchema, vehicleMasterInitialValue, vehicleMasterValidationSchema } from "./MasterValidations";
 
 
 const VehicleMaster = () => {
@@ -18,7 +18,12 @@ const VehicleMaster = () => {
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
-
+  const [updateData, setUpdateData] = useState(false);
+  const [imageValue, setImageValue] = useState({
+    ImageName:"",
+    ImageData:""
+  });
+  const [showImage, setShowImage] = useState('');
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -30,7 +35,7 @@ const VehicleMaster = () => {
       }
     };
     postDataToServer();
-  }, [getData]);
+  }, [updateData]);
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -42,17 +47,37 @@ const VehicleMaster = () => {
 
 
   const handleEditClick = (rowValue) => {
+    console.log('Row Value....', rowValue);
+    setImageValue({
+      ImageName:"",
+      ImageData:""
+    });
     setEditData({
       ...rowValue,
-      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status:rowValue.Status==="Active"?1:0
     });
     setIsEditing(true);
+    setShowImage(rowValue.ImageName);
   };
+
+  const handleImageChange = (e) =>{
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload =()=>{
+      const base64 = reader.result;
+      const base64String = base64.split(',')[1];
+      setImageValue({
+        ImageName:file.name,
+        ImageData:base64String
+      });
+    }
+    reader.readAsDataURL(file);
+  }
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Image",
       selector: (row) => (
         <span>
           <i
@@ -61,19 +86,29 @@ const VehicleMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          <img src={row.ImageName} alt="image" style={{height:'30px', height:'30px'}}></img>
         </span>
       ),
       sortable: true,
     },
     {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
+      name: "Name",
+      selector: (row) => row.Name,
       sortable: true,
     },
     {
-      name: "Status Name",
-      selector: (row) => row.Status,
+      name: "Vehicle Type",
+      selector: (row) => row.VehicleTypeName,
+      sortable: true,
+    },
+    {
+      name: "Vehicle Brand",
+      selector: (row) => row.VehicleBrandName,
+      sortable: true,
+    },
+    {
+      name: "Capacity",
+      selector: (row) => row.Capacity,
       sortable: true,
     },
     {
@@ -81,7 +116,7 @@ const VehicleMaster = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -91,10 +126,15 @@ const VehicleMaster = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
           </span>
         );
       },
+    },
+    {
+      name: "Status",
+      selector: (row) => row.Status,
+      sortable: true,
     },
   ];
   return (
@@ -121,18 +161,23 @@ const VehicleMaster = () => {
                 >
                   Back
                 </NavLink>
-                {/* <Model
-                  heading={"Add Airline"}
-                  apiurl={"addupdatevehiclemasterlist"}
-                  initialValues={countryInitialValue}
-                  validationSchema={countryValidationSchema}
+                <Model
+                  heading={"Add Amenties"}
+                  apiurl={"addupdatevehiclemaster"}
+                  initialValues={vehicleMasterInitialValue}
+                  validationSchema={vehicleMasterValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  setChangeValue={setChangeValue}
+                  updateData={updateData}
+                  setUpdateData={setUpdateData}
+                  imageValue={imageValue}
+                  setImageValue={setImageValue}
                 >
                   <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-3">
+                    <div className="row row-gap-3">
+                      <div className="col-sm-4">
                         <label>Name</label>
                         <Field
                           type="text"
@@ -144,17 +189,57 @@ const VehicleMaster = () => {
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-3">
-                        <label>Short Name</label>
+                      <div className="col-sm-4">
+                        <label>Vehicle Type</label>
                         <Field
-                          type="text"
-                          name="ShortName"
-                          placeholder="Enter Short Name"
                           className="form-control"
+                          component={"select"}
+                          name="VehicleType"
+                        >
+                          <option value="">Select Vehicle </option>
+                          <option value={1}>TATA</option>
+                          <option value={2}>Maruti</option>
+                          <option value={3}>BMW</option>
+                          <option value={3}>Rolls Royce</option>
+                        </Field>
+                      </div>
+                      <div className="col-sm-4">
+                        <label>Capacity</label>
+                        <Field
+                          className="form-control"
+                          component={"select"}
+                          name="Capacity"
+                        >
+                          <option value="">Select Capacity</option>
+                          <option value={1}>8 Seater</option>
+                          <option value={2}>9 Seater</option>
+                          <option value={3}>10 Seater</option>
+                          <option value={3}>11 Seater</option>
+                        </Field>
+                      </div>
+                      <div className="col-sm-4">
+                        <label>Vehile Brand</label>
+                        <Field
+                          className="form-control"
+                          component={"select"}
+                          name="VehicleBrand"
+                        >
+                          <option value="">Select Brand </option>
+                          <option value={1}>TATA</option>
+                          <option value={2}>Maruti</option>
+                          <option value={3}>BMW</option>
+                          <option value={3}>Rolls Royce</option>
+                        </Field>
+                      </div>
+                      <div className="col-sm-4">
+                        <label>Image</label>
+                        <input
+                          type="file"
+                          name="ImageData"
+                          className="form-control"
+                          onChange={handleImageChange}
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
-                        </span>
+                        {isEditing && <img src={showImage} alt="" style={{height:'50px', width:'50px', marginTop:'5px'}}/>}
                       </div>
                       <div className="col-sm-4">
                         <label>Status</label>
@@ -167,20 +252,9 @@ const VehicleMaster = () => {
                           <option value={0}>Inactive</option>
                         </Field>
                       </div>
-                      <div className="col-sm-2">
-                        <label>Set Default</label>
-                        <Field
-                          name="SetDefault"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={0}>No</option>
-                          <option value={1}>Yes</option>
-                        </Field>
-                      </div>
                     </div>
                   </div>
-                </Model> */}
+                </Model>
               </div>
             </div>
             <div className="card-body">
