@@ -23,6 +23,7 @@ const FerryCompany = () => {
   const [changeValue, setChangeValue] = useState("");
   const [destinationList, setDestinationList] = useState([]);
   const [devisioinList, setDevisionList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getDataToServer = async () => {
     try {
@@ -53,6 +54,7 @@ const FerryCompany = () => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("ferrycompanylist", postData);
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -377,6 +379,7 @@ const FerryCompany = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

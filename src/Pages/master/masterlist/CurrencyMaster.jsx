@@ -22,6 +22,7 @@ const CurrencyMaster = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [countryList, setCountryList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getDataToServer = async () => {
     try {
@@ -43,6 +44,7 @@ const CurrencyMaster = () => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("currencymasterlist", postData);
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -270,6 +272,7 @@ const CurrencyMaster = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

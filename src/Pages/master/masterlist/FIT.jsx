@@ -22,6 +22,7 @@ const FIT = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [destinationList, setDestinationList] = useState([]);
+  const [loading, setLoading] = useState(false);
   
   const getDataToServer = async () => {
     try {
@@ -42,6 +43,7 @@ const FIT = () => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("fitmasterlist", postData);
+        setLoading(false);
         setGetData(data.ItineraryInfoMaster);
         setFilterData(data.ItineraryInfoMaster);
       } catch (error) {
@@ -351,6 +353,7 @@ const FIT = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

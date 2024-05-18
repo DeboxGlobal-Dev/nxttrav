@@ -21,13 +21,14 @@ const ItenaryOverview = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("itineraryoverviewlist", postData);
+        setLoading(false);
         setGetData(data.ItineraryInfoMaster);
-        console.log("datalist", data);
         setFilterData(data.ItineraryInfoMaster);
       } catch (error) {
         console.log(error);
@@ -267,6 +268,7 @@ const ItenaryOverview = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

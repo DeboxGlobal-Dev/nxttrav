@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
-import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
+import { cruiseMasterInitialValue, cruiseMasterValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const CruiseMaster = () => {
@@ -60,8 +60,6 @@ const CruiseMaster = () => {
     console.log(rowValue);
     setEditData({
       ...rowValue,
-      CountryId: rowValue.CountryName === "India" ? "1" : "2",
-      StateId: rowValue.StateName === "Rajsthan" ? "1" : "2",
       Status: rowValue.Status === "Active" ? 1 : 0
     });
     setIsEditing(true);
@@ -69,7 +67,7 @@ const CruiseMaster = () => {
 
   const columns = [
     {
-      name: "Name",
+      name: "Cruise Package Name",
       selector: (row) => (
         <span>
           <i
@@ -78,19 +76,29 @@ const CruiseMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.CruisePackageName}
         </span>
       ),
       sortable: true,
     },
     {
-      name: "State Name",
-      selector: (row) => row.StateName,
+      name: "Destination",
+      selector: (row) => row.Destination,
       sortable: true,
     },
     {
-      name: "Country Name",
-      selector: (row) => row.CountryName,
+      name: "Running Days",
+      selector: (row) => row.RunningDays,
+      sortable: true,
+    },
+    {
+      name: "Arrivale Date",
+      selector: (row) => row.ArrivalTime,
+      sortable: true,
+    },
+    {
+      name: "Departure Date",
+      selector: (row) => row.DepartureTime,
       sortable: true,
     },
     {
@@ -98,7 +106,7 @@ const CruiseMaster = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -108,7 +116,7 @@ const CruiseMaster = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
           </span>
         );
       },
@@ -144,8 +152,8 @@ const CruiseMaster = () => {
                 <Model
                   heading={"Add Cruise Package Name"}
                   apiurl={"addupdatecruisemaster"}
-                  initialValues={cityInitialValue}
-                  validationSchema={cityValidationSchema}
+                  initialValues={cruiseMasterInitialValue}
+                  validationSchema={cruiseMasterValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -164,7 +172,7 @@ const CruiseMaster = () => {
                           name="CruisePackageName"
                         />
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
+                          <ErrorMessage name="CruisePackageName" />
                         </span>
                       </div>
                       <div className="col-sm-4">
@@ -204,22 +212,16 @@ const CruiseMaster = () => {
                         <Field
                           type="date"
                           className="form-control"
-                          name="Name"
+                          name="ArrivalTime"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
                       </div>
                       <div className="col-sm-4">
                         <label>Departure Time</label>
                         <Field
                           type="date"
                           className="form-control"
-                          name="Name"
+                          name="DepartureTime"
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
                       </div>
                       <div className="col-sm-4">
                         <label>Status</label>
@@ -228,8 +230,8 @@ const CruiseMaster = () => {
                           component={"select"}
                           name="Status"
                         >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
+                          <option value={1}>Active</option>
+                          <option value={0}>Inactive</option>
                         </Field>
                       </div>
                       <div className="col-sm-12">
@@ -237,12 +239,9 @@ const CruiseMaster = () => {
                         <Field
                           as="textarea"
                           className="form-control"
-                          name="Name"
+                          name="Details"
                           placeholder="Write Your Detail's Here..."
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
                       </div>
                     </div>
                   </div>

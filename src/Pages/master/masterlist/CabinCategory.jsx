@@ -16,12 +16,14 @@ const CabinCategory = () => {
     Search: "",
     Status: "",
   });
+  const [laoding, setLoading] = useState(true);
   const [updateData, setUpdateData] = useState(false);
   const [changeValue, setChangeValue] = useState("");
   useEffect(() => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("cabincategorymasterlist", postData);
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -206,6 +208,7 @@ const CabinCategory = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

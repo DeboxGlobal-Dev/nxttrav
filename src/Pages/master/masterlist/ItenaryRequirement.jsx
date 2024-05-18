@@ -4,28 +4,32 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
-import { Field, ErrorMessage } from "formik";
-import {
-  countryInitialValue,
-  countryValidationSchema,
-} from "./MasterValidations";
+import { Field } from "formik";
+import { itineraryRequirementInitialValue , 
+  itineraryRequirementValidationSchema } from "./MasterValidations";
 
 const ItenaryRequirement = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: "",
+    Status: ""
   });
+
   const [changeValue, setChangeValue] = useState("");
+  const [updateData, setUpdateData] = useState("");
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("itenararyrequirementlist", postData);
-        setGetData(data.DataList);
-        setFilterData(data.DataList);
+        const { data } = await axiosOther.post("itineraryrequirementmasterlist", postData);
+        setLoading(false);
+        setGetData(data.ItineraryInfoMaster);
+        setFilterData(data.ItineraryInfoMaster);
       } catch (error) {
         console.log(error);
       }
@@ -34,25 +38,28 @@ const ItenaryRequirement = () => {
   }, [getData]);
 
   useEffect(() => {
+
     const result = getData.filter((item) => {
-      return item.Name.toLowerCase().match(postData.Search.toLowerCase());
+      return item?.Name?.toLowerCase()?.match(postData?.Search?.toLowerCase());
     });
 
     setFilterData(result);
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+
     setEditData({
       ...rowValue,
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
       Status: rowValue.Status === "Active" ? 1 : 0
     });
     setIsEditing(true);
+    
   };
 
   const columns = [
     {
-      name: "Country Name",
+      name: "From Destination",
       selector: (row) => (
         <span>
           <i
@@ -61,19 +68,34 @@ const ItenaryRequirement = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.FromDestination}
         </span>
       ),
       sortable: true,
     },
     {
-      name: "Short Name",
-      selector: (row) => row.ShortName,
+      name: "To Destination",
+      selector: (row) => row.ToDestination,
       sortable: true,
     },
     {
-      name: "Status Name",
+      name: "Transfer Mode",
       selector: (row) => row.Status,
+      sortable: true,
+    },
+    {
+      name: "Title",
+      selector: (row) => row.Title,
+      sortable: true,
+    },
+    {
+      name: "Description",
+      selector: (row) => row.Description,
+      sortable: true,
+    },
+    {
+      name: "Driving Distance",
+      selector: (row) => row.DrivingDistance,
       sortable: true,
     },
     {
@@ -81,7 +103,7 @@ const ItenaryRequirement = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row.AddedBy}
           </span>
         );
       },
@@ -91,7 +113,17 @@ const ItenaryRequirement = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
+          </span>
+        );
+      },
+    },
+    {
+      name: "Status",
+      selector: (row) => {
+        return (
+          <span>
+             {row.Status}
           </span>
         );
       },
@@ -121,67 +153,75 @@ const ItenaryRequirement = () => {
                 >
                   Back
                 </NavLink>
-                {/* <Model
-                  heading={"Add Overview"}
-                  apiurl={"addupateitenararyrequirement"}
-                  initialValues={countryInitialValue}
-                  validationSchema={countryValidationSchema}
+                <Model
+                  heading={"Add Itineraray Requirement"}
+                  apiurl={"addupdateitineraryrequirementmaster"}
+                  initialValues={itineraryRequirementInitialValue}
+                  validationSchema={itineraryRequirementValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  setChangeValue={setChangeValue}
+                  updateData={updateData}
+                  setUpdateData={setUpdateData}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
-                      <div className="col-sm-6">
-                        <label>Overview Name</label>
+                      <div className="col-sm-4">
+                        <label>From Destination</label>
                         <Field
                           type="text"
-                          name="Color"
-                          placeholder="Overview Name"
+                          name="FromDestination"
+                          placeholder="From Destination"
                           className="form-control"
                         />
                       </div>
-                      <div className="col-sm-6">
-                        <label>Overview Information</label>
+                      <div className="col-sm-4">
+                        <label>To Destination</label>
                         <Field
-                          as="textarea"
-                          name="Color"
-                          placeholder="Write Here..."
+                          type="text"
+                          name="ToDestination"
+                          placeholder="To Destination"
                           className="form-control"
-                          style={{height:"38px"}}
                           />
                       </div>
-                      <div className="col-sm-6">
-                        <label>Highlight Information</label>
+                      <div className="col-sm-4">
+                        <label>Transfer Mode</label>
                         <Field
-                          as="textarea"
-                          name="Color"
-                          placeholder="Write Here..."
+                          type="text"
+                          name="TransferMode"
+                          placeholder="Transfer Mode"
                           className="form-control"
-                          style={{height:"38px"}}
                           />
                       </div>
-                      <div className="col-sm-6">
-                        <label>Itenarary Introduction</label>
+                      <div className="col-sm-4">
+                        <label>Title</label>
                         <Field
-                          as="textarea"
-                          name="Color"
-                          placeholder="Write Here..."
+                          type="text"
+                          name="Title"
+                          placeholder="Title"
                           className="form-control"
-                          style={{height:"38px"}}
                           />
                       </div>
-                      <div className="col-sm-6">
-                        <label>Itenarary Summary</label>
+                      <div className="col-sm-4">
+                        <label>Description</label>
                         <Field
-                          as="textarea"
-                          name="Color"
-                          placeholder="Write Here..."
+                          type="text"
+                          name="Description"
+                          placeholder="Description"
                           className="form-control"
-                          style={{height:"38px"}}
                           />
                       </div>
-                      <div className="col-sm-6">
+                      <div className="col-sm-4">
+                        <label>Driving Distance</label>
+                        <Field
+                          type="text"
+                          name="DrivingDistance"
+                          placeholder="Driving Distance"
+                          className="form-control"
+                          />
+                      </div>
+                      <div className="col-sm-4">
                         <label>Status</label>
                         <Field
                           name="Status"
@@ -194,7 +234,7 @@ const ItenaryRequirement = () => {
                       </div>
                     </div>
                   </div>
-                </Model> */}
+                </Model>
               </div>
             </div>
             <div className="card-body">
@@ -243,6 +283,7 @@ const ItenaryRequirement = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

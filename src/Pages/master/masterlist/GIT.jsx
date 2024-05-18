@@ -22,6 +22,7 @@ const GIT = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [destinationList, setDestinationList] = useState([]);
+  const [loading, setLoading] = useState(true);
   
   const getDataToServer = async () => {
     try {
@@ -42,6 +43,7 @@ const GIT = () => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("gitmasterlist", postData);
+        setLoading(false);
         setGetData(data.ItineraryInfoMaster);
         setFilterData(data.ItineraryInfoMaster);
       } catch (error) {
@@ -327,6 +329,7 @@ const GIT = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

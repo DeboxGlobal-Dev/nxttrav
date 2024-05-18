@@ -372,7 +372,7 @@ export const vehicleMasterInitialValue = {
   VehicleBrand: "",
   ImageName: "",
   ImageData: "",
-  Status:1,
+  Status: 1,
   AddedBy: 1,
   UpdatedBy: 1,
 };
@@ -504,6 +504,18 @@ export const cruiseNameCompanyInitialValue = {
   ImageData: "",
   AddedBy: "1",
   UpdatedBy: "1",
+};
+export const cruiseMasterInitialValue = {
+  id: "",
+  CruisePackageName: "",
+  Destination: "",
+  RunningDays: "",
+  ArrivalTime: "",
+  DepartureTime: "",
+  Details: "",
+  Status: 1,
+  AddedBy: 1,
+  UpdatedBy: 1,
 };
 
 export const ferryCompanyInitialValue = {
@@ -674,6 +686,18 @@ export const transportMasterInitialValue = {
   TransferType: "",
   Detail: "",
   Default: 0,
+  Status: 1,
+  AddedBy: 1,
+  UpdatedBy: 0,
+};
+export const itineraryRequirementInitialValue = {
+  id: "",
+  FromDestination: "",
+  ToDestination: "",
+  TransferMode: "",
+  Title: "",
+  Description: "",
+  DrivingDistance: "",
   Status: 1,
   AddedBy: 1,
   UpdatedBy: 0,
@@ -900,8 +924,16 @@ export const transportMasterValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
 });
 export const vehicleMasterValidationSchema = yup.object().shape({
-  Name : yup.string().required("Required")
-})
+  Name: yup.string().required("Required"),
+});
+export const cruiseMasterValidationSchema = yup.object().shape({
+  CruisePackageName: yup.string().required("Required"),
+});
+export const itineraryRequirementValidationSchema = yup.object().shape({
+  FromDestination: yup.string().required("Required"),
+  ToDestination: yup.string().required("Required")
+});
+
 // Hotel Master Table Value in JSON-----------------------------------
 
 export const hotelMasterValue = [

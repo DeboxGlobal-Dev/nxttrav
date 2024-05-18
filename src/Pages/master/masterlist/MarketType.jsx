@@ -18,10 +18,13 @@ const MarketType = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("marketlist", postData);
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -227,6 +230,7 @@ const MarketType = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

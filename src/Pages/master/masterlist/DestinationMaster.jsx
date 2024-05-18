@@ -24,6 +24,7 @@ const DestinationMaster = () => {
   const [stateList, setStateList] = useState([]);
   const [countryList, setCountryList] = useState([]);
   const [updateData, setUpdateData] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const getDataToServer = async () => {
     try {
@@ -54,6 +55,7 @@ const DestinationMaster = () => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("destinationlist", postData);
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -335,6 +337,7 @@ const DestinationMaster = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

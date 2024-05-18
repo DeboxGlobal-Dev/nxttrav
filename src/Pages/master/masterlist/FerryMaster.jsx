@@ -26,6 +26,7 @@ const FerryMaster = () => {
     ImageData:'',
     ImageName:''
   })
+  const [loading, setLoading] = useState(true);
 
   const getDataToServer = async () => {
     try {
@@ -48,6 +49,7 @@ const FerryMaster = () => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("ferrynamelist", postData);
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
         console.log(data.DataList);
@@ -314,6 +316,7 @@ const FerryMaster = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

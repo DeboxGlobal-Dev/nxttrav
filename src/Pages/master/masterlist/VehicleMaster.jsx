@@ -5,7 +5,7 @@ import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
-import { countryInitialValue, countryValidationSchema, vehicleMasterInitialValue, vehicleMasterValidationSchema } from "./MasterValidations";
+import { vehicleMasterInitialValue, vehicleMasterValidationSchema } from "./MasterValidations";
 
 
 const VehicleMaster = () => {

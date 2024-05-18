@@ -23,6 +23,8 @@ const InsuranceCost = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [insuranceType, setInsuranceType] = useState([]);
+  const [loading, setLoading] = useState(true);
+
 
   const getDataToServer = async () => {
     try {
@@ -43,6 +45,7 @@ const InsuranceCost = () => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("insurancecostmasterlist", postData);
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
         console.log(data.DataList);
@@ -229,6 +232,7 @@ const InsuranceCost = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

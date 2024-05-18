@@ -22,11 +22,13 @@ const CruiseNameCompany = () => {
     ImageData:'',
     ImageName:''
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("cruisenamemasterlist", postData);
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -268,6 +270,7 @@ const CruiseNameCompany = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

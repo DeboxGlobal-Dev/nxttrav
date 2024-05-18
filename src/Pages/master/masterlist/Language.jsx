@@ -21,6 +21,8 @@ const Language = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -207,6 +209,7 @@ const Language = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

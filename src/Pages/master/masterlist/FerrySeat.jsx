@@ -21,12 +21,14 @@ const FerrySeat = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [loading , setLoading ] = useState(true); 
 
 
   useEffect(() => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("ferrysearlist", postData);
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -203,6 +205,7 @@ const FerrySeat = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

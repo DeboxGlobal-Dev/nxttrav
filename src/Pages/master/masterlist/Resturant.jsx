@@ -222,6 +222,7 @@ const Resturant = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                   imageValue={imageValue}
+                  setImageValue={setImageValue}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">

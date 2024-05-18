@@ -20,6 +20,7 @@ const AdditionalRequirement = () => {
     Search: "",
     Status: "",
   });
+  const [loading, setLoading] = useState(true);
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [destinationList, setDestinationList] = useState([]);
@@ -74,6 +75,7 @@ const AdditionalRequirement = () => {
           "additionalrequirementmasterlist",
           postData
         );
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -427,6 +429,7 @@ const AdditionalRequirement = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

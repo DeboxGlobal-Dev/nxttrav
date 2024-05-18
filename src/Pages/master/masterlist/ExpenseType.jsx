@@ -22,6 +22,7 @@ const ExpenseType = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData]= useState(false);
   const [expenseHeadList, setExpenseHeadList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getDataToServer = async () => {
    
@@ -46,6 +47,7 @@ const ExpenseType = () => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("expensetypemasterlist", postData);
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -242,6 +244,7 @@ const ExpenseType = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

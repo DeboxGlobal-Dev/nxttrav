@@ -26,6 +26,7 @@ const CruiseCompany = () => {
   const [cityList, setCityList] = useState([]);
   const [destinationList, setDestinationList] = useState([]);
   const [devisionList, setDeivionsList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getDataToServer = async () => {
     try {
@@ -87,6 +88,7 @@ const CruiseCompany = () => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("cruisecompanymasterlist", postData);
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -500,6 +502,7 @@ const CruiseCompany = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>

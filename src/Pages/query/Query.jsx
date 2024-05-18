@@ -1,6 +1,12 @@
 import React, { useState, useReducer, useEffect } from "react";
-import { queryInitial, travelInitial, paxInitial,
-  roomInitial, valueAddInitial, suggestedPackageData } from "./QuerySchema";
+import {
+  queryInitial,
+  travelInitial,
+  paxInitial,
+  roomInitial,
+  valueAddInitial,
+  suggestedPackageData,
+} from "./QuerySchema";
 import { eachDayOfInterval, format } from "date-fns";
 import { axiosOther } from "../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
@@ -9,19 +15,20 @@ import * as Yup from "yup";
 import axios from "axios";
 import "select2";
 import "jquery";
-import { act } from "react";
 
 const Query = () => {
 
-  const [TravelDate, setTravelDate] = useState({...travelInitial});
-  const [PaxInfo, setPaxInfo] = useState({...paxInitial});
-  const [RoomInfo, setRoomInfo] = useState({...roomInitial});
-  const {Room, Single, Double, Twin,Triple,ExtraBed} = RoomInfo;
-  const [valueAddServices, setValueAddServices] = useState({...valueAddInitial});
-  const [queryFields, setQueryFields] = useState({...queryInitial});
+  const [TravelDate, setTravelDate] = useState({ ...travelInitial });
+  const [PaxInfo, setPaxInfo] = useState({ ...paxInitial });
+  const [RoomInfo, setRoomInfo] = useState({ ...roomInitial });
+  const { Room, Single, Double, Twin, Triple, ExtraBed } = RoomInfo;
+  const [valueAddServices, setValueAddServices] = useState({
+    ...valueAddInitial,
+  });
+  const [queryFields, setQueryFields] = useState({ ...queryInitial });
   const [travelsDestination, setTravelDestination] = useState({
-    Country:"",
-    Destination:""
+    Country: "",
+    Destination: "",
   });
   const [suggestedPackage, setSuggestedPackage] = useState("");
   const [filteredPackage, setFilteredPackage] = useState([]);
@@ -37,27 +44,35 @@ const Query = () => {
   };
 
   const dropdownInitialState = {
-    hotelType   :  [],
-    hotelMeal   :  [],
-    leadList    :  [],
-    tourType    :  [],
-    countryList :  [],
-    cityList    :  [], 
-  }
+    hotelType: [],
+    hotelMeal: [],
+    leadList: [],
+    tourType: [],
+    countryList: [],
+    cityList: [],
+  };
 
-  const dropdownReducer = (state, action) =>{
-    switch(action.type){
-      case 'HOTEL-TYPE' : return {...state, hotelType:action.payload}
-      case 'HOTEL-MEAL' : return {...state, hotelMeal:action.payload}
-      case 'LEAD-LIST'  : return {...state, leadList:action.payload}
-      case 'TOUR-TYPE'  : return {...state, tourType:action.payload}
-      case 'COUNTRY-LIST': return {...state, countryList:action.payload}
-      case 'CITY-LIST'  : return {...state, cityList:action.payload}
+  const dropdownReducer = (state, action) => {
+    switch (action.type) {
+      case "HOTEL-TYPE":
+        return { ...state, hotelType: action.payload };
+      case "HOTEL-MEAL":
+        return { ...state, hotelMeal: action.payload };
+      case "LEAD-LIST":
+        return { ...state, leadList: action.payload };
+      case "TOUR-TYPE":
+        return { ...state, tourType: action.payload };
+      case "COUNTRY-LIST":
+        return { ...state, countryList: action.payload };
+      case "CITY-LIST":
+        return { ...state, cityList: action.payload };
     }
     return state;
   };
-  const [dropdownState, dropdownDispatch] = useReducer(dropdownReducer, dropdownInitialState);
-
+  const [dropdownState, dropdownDispatch] = useReducer(
+    dropdownReducer,
+    dropdownInitialState
+  );
 
   //reducer for pax information
   const reducer = (state, action) => {
@@ -105,7 +120,7 @@ const Query = () => {
           Status: "",
         });
         // setLeadList(data.DataList);
-        dropdownDispatch({type:'LEAD-LIST', payload:data.DataList});
+        dropdownDispatch({ type: "LEAD-LIST", payload: data.DataList });
       } catch (err) {
         console.log(err);
       }
@@ -116,7 +131,7 @@ const Query = () => {
           Status: "",
         });
         // setHotelType(data.DataList);
-        dropdownDispatch({type:'HOTEL-TYPE', payload:data.DataList});
+        dropdownDispatch({ type: "HOTEL-TYPE", payload: data.DataList });
       } catch (err) {
         console.log(err);
       }
@@ -126,7 +141,7 @@ const Query = () => {
           Status: "",
         });
         // setTourType(data.DataList);
-        dropdownDispatch({type:'TOUR-TYPE', payload:data.DataList});
+        dropdownDispatch({ type: "TOUR-TYPE", payload: data.DataList });
       } catch (err) {
         console.log(err);
       }
@@ -137,7 +152,7 @@ const Query = () => {
           Status: "",
         });
         // setCountryList(data.DataList);
-        dropdownDispatch({type:'COUNTRY-LIST', payload:data.DataList});
+        dropdownDispatch({ type: "COUNTRY-LIST", payload: data.DataList });
       } catch (err) {
         console.log(err);
       }
@@ -148,7 +163,7 @@ const Query = () => {
           Status: "",
         });
         // setCityList(data.DataList);
-        dropdownDispatch({type:'CITY-LIST', payload:data.DataList});
+        dropdownDispatch({ type: "CITY-LIST", payload: data.DataList });
       } catch (err) {
         console.log(err);
       }
@@ -163,20 +178,25 @@ const Query = () => {
     if (document.activeElement.name === "SaveButton") {
       localStorage.setItem(
         "Query",
-        JSON.stringify({ ...queryFields, TravelDate:[{...TravelDate}], RoomInfo:[{...RoomInfo}],
-          PaxInfo:[{...PaxInfo}], ValueAddServices:[{...valueAddServices}]})
+        JSON.stringify({
+          ...queryFields,
+          TravelDate: [{ ...TravelDate }],
+          RoomInfo: [{ ...RoomInfo }],
+          PaxInfo: [{ ...PaxInfo }],
+          ValueAddServices: [{ ...valueAddServices }],
+        })
       );
-      const data = localStorage.getItem('Query');
-      if(data){
-        setQueryFields({...queryInitial});
-        setTravelDate({...travelInitial});
-        setPaxInfo({...paxInitial});
-        setRoomInfo({...roomInitial});
+      const data = localStorage.getItem("Query");
+      if (data) {
+        setQueryFields({ ...queryInitial });
+        setTravelDate({ ...travelInitial });
+        setPaxInfo({ ...paxInitial });
+        setRoomInfo({ ...roomInitial });
         dispatch({ type: "SET", value: 0, counter: "counter1" });
         dispatch({ type: "SET", value: 0, counter: "counter2" });
         dispatch({ type: "SET", value: 0, counter: "counter3" });
       }
-    } else if (document.activeElement.name === "ClearButton"){
+    } else if (document.activeElement.name === "ClearButton") {
       localStorage.removeItem("Query");
       toast.success("Query Form Cleared !");
       setEmptyData(!emptyData);
@@ -199,16 +219,15 @@ const Query = () => {
         );
         console.log("SubmitingQueryForm", response);
         toast.success(response.data.Message);
-        setQueryFields({...queryInitial});
-        setTravelDate({...travelInitial});
-        setPaxInfo({...paxInitial});
-        setRoomInfo({...roomInitial});
+        setQueryFields({ ...queryInitial });
+        setTravelDate({ ...travelInitial });
+        setPaxInfo({ ...paxInitial });
+        setRoomInfo({ ...roomInitial });
         dispatch({ type: "SET", value: 0, counter: "counter1" });
         dispatch({ type: "SET", value: 0, counter: "counter2" });
         dispatch({ type: "SET", value: 0, counter: "counter3" });
 
         localStorage.removeItem("Query");
-
       } catch (err) {
         // validationErrors : parameter
         // const formattedErrors = {};
@@ -240,7 +259,6 @@ const Query = () => {
   const handleDateChange = (e) => {
     setTravelDate({ ...TravelDate, [e.target.name]: e.target.value });
   };
-
 
   // Looping date & stored into array
   function createDateArray() {
@@ -275,7 +293,6 @@ const Query = () => {
 
   //Adding Date fromDate + Days = ToDate
   useEffect(() => {
-
     const dateStr = TravelDate.FromDate;
     const days = Number(TravelDate.TotalNights);
     let hours = 24,
@@ -292,9 +309,11 @@ const Query = () => {
     const finalToDate = `${toDateYear}-${
       toDateMonth.length == 2 ? toDateMonth : "0" + toDateMonth
     }-${toDateDay.length == 2 ? toDateDay : "0" + toDateDay}`;
-    setTravelDate({ ...TravelDate, ToDate:TravelDate.TotalNights!=""?finalToDate:""});
+    setTravelDate({
+      ...TravelDate,
+      ToDate: TravelDate.TotalNights != "" ? finalToDate : "",
+    });
     createDateArray();
-
   }, [TravelDate.FromDate, TravelDate.TotalNights, TravelDate.ToDate]);
 
   // Update Total Values in Pax and Rooms
@@ -304,8 +323,7 @@ const Query = () => {
   };
 
   // Data Set into input field from localstorage and remove on Submit and Clear;
-  const handleUnSubmittedQuery  = () =>{
-
+  const handleUnSubmittedQuery = () => {
     const queryValue = JSON.parse(JSON.stringify(storedData));
     delete queryValue.TravelDate;
     delete queryValue.PaxInfo;
@@ -315,18 +333,16 @@ const Query = () => {
     const travelValue = storedData.TravelDate[0];
     const roomValue = storedData.RoomInfo[0];
     const { Adult, Child, Infant } = storedData.PaxInfo[0] ?? {};
-    
-    setQueryFields({...queryValue});
-    setTravelDate({...travelValue});
-    setRoomInfo({...roomValue});
+
+    setQueryFields({ ...queryValue });
+    setTravelDate({ ...travelValue });
+    setRoomInfo({ ...roomValue });
 
     dispatch({ type: "SET", value: Adult ? Adult : 0, counter: "counter1" });
     dispatch({ type: "SET", value: Child ? Child : 0, counter: "counter2" });
     dispatch({ type: "SET", value: Infant ? Infant : 0, counter: "counter3" });
-
   };
 
-  
   // Set counter value into json
   useEffect(() => {
     updateTotal();
@@ -346,62 +362,59 @@ const Query = () => {
 
     setDayWiseNights(nights);
   }, [TravelDate.TotalNights]);
-  
+
   //City Filtering For Dropdown
-  const handleDateDestination =(e) =>{
-    
-    setTravelDestination({...travelsDestination, [e.target.name]:e.target.value});
-
+  const handleDateDestination = (e) => {
+    setTravelDestination({
+      ...travelsDestination,
+      [e.target.name]: e.target.value,
+    });
   };
-  
-  useEffect(()=>{
 
-    const filtered = dropdownState.cityList.filter((value)=>{
+  useEffect(() => {
+    const filtered = dropdownState.cityList.filter((value) => {
       const city = value.CountryId == travelsDestination.Country;
       return city;
     });
     setFilteredCity(filtered);
+  }, [travelsDestination]);
 
-  },[travelsDestination]);
-
-  const handleSuggestPackage=(value)=>{
-
+  const handleSuggestPackage = (value) => {
     const queryValue = JSON.parse(JSON.stringify(value));
-    
+
     delete queryValue.RoomInfo;
     delete queryValue.PaxInfo;
     delete queryValue.TravelDate;
     delete queryValue.ValueAddedServices;
 
-    const {Adult, Child, Infant} = value.PaxInfo[0];
+    const { Adult, Child, Infant } = value.PaxInfo[0];
     const roomValue = value.RoomInfo[0];
     const dateValue = value.TravelDate[0];
 
-    setQueryFields({...queryValue});
-    setRoomInfo({...roomValue});
-    setTravelDate({...dateValue});
+    setQueryFields({ ...queryValue });
+    setRoomInfo({ ...roomValue });
+    setTravelDate({ ...dateValue });
 
-    dispatch({ type: "SET", value: Number(Adult) , counter: "counter1" });
-    dispatch({ type: "SET", value: Number(Child) , counter: "counter2" });
+    dispatch({ type: "SET", value: Number(Adult), counter: "counter1" });
+    dispatch({ type: "SET", value: Number(Child), counter: "counter2" });
     dispatch({ type: "SET", value: Number(Infant), counter: "counter3" });
-
   };
-  
+
   const handleSearchSuggestedPackage = (e) => {
     setSuggestedPackage(e.target.value);
   };
 
-  useEffect(()=>{
-    
-    if(suggestedPackage !==""){
-      const filtered = suggestedPackageData.filter((value)=>{
-        return value.PackageName.toLowerCase().replace(/\s/g, '').includes(suggestedPackage.toLowerCase().replace(/\s/g, ''));
+  useEffect(() => {
+    if (suggestedPackage !== "") {
+      const filtered = suggestedPackageData.filter((value) => {
+        return value.PackageName.toLowerCase()
+          .replace(/\s/g, "")
+          .includes(suggestedPackage.toLowerCase().replace(/\s/g, ""));
       });
       setFilteredPackage(filtered);
-    }else{ 
+    } else {
       setFilteredPackage(suggestedPackageData);
     }
-
   }, [suggestedPackage]);
 
   return (
@@ -1250,8 +1263,13 @@ const Query = () => {
                       </div>
                       <div className="col-6 col-md-6 col-lg-6 d-flex align-items-center">
                         <p className="font-weight-bold">
-                          Total Rooms : {(Number(Room==""?0:Room)) + (Number(Single==""?0:Single))+(Number(Double==""?
-                          0:Double))+(Number(Twin==""?0:Twin))+(Number(Triple==""?0:Triple))+(Number(ExtraBed==""?0:ExtraBed))}
+                          Total Rooms :{" "}
+                          {Number(Room == "" ? 0 : Room) +
+                            Number(Single == "" ? 0 : Single) +
+                            Number(Double == "" ? 0 : Double) +
+                            Number(Twin == "" ? 0 : Twin) +
+                            Number(Triple == "" ? 0 : Triple) +
+                            Number(ExtraBed == "" ? 0 : ExtraBed)}
                         </p>
                       </div>
                     </div>
@@ -1380,7 +1398,8 @@ const Query = () => {
                         </button>
                       </div>
                       {TravelDate.TotalNights !== "" &&
-                      TravelDate.FromDate !== "" && TravelDate.Type !=="2" ? (
+                      TravelDate.FromDate !== "" &&
+                      TravelDate.Type !== "2" ? (
                         <div className="row p-2">
                           <table className="table">
                             <thead>
@@ -1405,11 +1424,18 @@ const Query = () => {
                                         onChange={handleDateDestination}
                                       >
                                         <option value="1">Select</option>
-                                        {
-                                          dropdownState.countryList.map((value, index)=>{
-                                            return <option value={value.Id} key={index+1}>{value.Name}</option>
-                                          })
-                                        }
+                                        {dropdownState.countryList.map(
+                                          (value, index) => {
+                                            return (
+                                              <option
+                                                value={value.Id}
+                                                key={index + 1}
+                                              >
+                                                {value.Name}
+                                              </option>
+                                            );
+                                          }
+                                        )}
                                       </select>
                                     </td>
                                     <td className="p-1">
@@ -1421,11 +1447,16 @@ const Query = () => {
                                         onChange={handleDateDestination}
                                       >
                                         <option value="1">Select</option>
-                                        {
-                                          filteredCity.map((value, index)=>{
-                                            return <option value={value.Id} key={index+1}>{value.Name}</option>
-                                          })
-                                        }
+                                        {filteredCity.map((value, index) => {
+                                          return (
+                                            <option
+                                              value={value.Id}
+                                              key={index + 1}
+                                            >
+                                              {value.Name}
+                                            </option>
+                                          );
+                                        })}
                                       </select>
                                     </td>
                                     <td>
@@ -1444,69 +1475,84 @@ const Query = () => {
                       ) : (
                         ""
                       )}
-                      {
-                        TravelDate.Type=="2" && TravelDate.TotalNights !=="" && (
+                      {TravelDate.Type == "2" &&
+                        TravelDate.TotalNights !== "" && (
                           <div className="row p-2">
-                          <table className="table">
-                            <thead>
-                              <tr>
-                                <th>Date/Day</th>
-                                <th>Country</th>
-                                <th>Destination</th>
-                                <th></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {dayWiseNights.map((value, index) => {
-                                return (
-                                  <tr key={index + 1}>
-                                    <td className="p-0 text-center">Day {value}</td>
-                                    <td className="p-1">
-                                      <select
-                                        type="select"
-                                        className="form-input-1"
-                                        style={{ height: "30px" }}
-                                        name={`Country${index}`}
-                                      >
-                                        <option value="1">Select</option>
-                                        {
-                                          dropdownState.countryList?.map((value, index)=>{
-                                            return <option value={value.Id} key={index+1}>{value.Name}</option>
-                                          })
-                                        }
-                                      </select>
-                                    </td>
-                                    <td className="p-1">
-                                      <select
-                                        type="select"
-                                        className="form-input-1"
-                                        style={{ height: "30px" }}
-                                        name={`Destination${index}`}
-                                      >
-                                        <option value="1">Select</option>
-                                        <option value="2">Delhi</option>
-                                        {
-                                          cityList.map((value, index)=>{
-                                            return <option value={value.Id} key={index+1}>{value.Name}</option>
-                                          })
-                                        }
-                                      </select>
-                                    </td>
-                                    <td>
-                                      <i
-                                        className="fa-solid fa-trash pr-1
+                            <table className="table">
+                              <thead>
+                                <tr>
+                                  <th>Date/Day</th>
+                                  <th>Country</th>
+                                  <th>Destination</th>
+                                  <th></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {dayWiseNights.map((value, index) => {
+                                  return (
+                                    <tr key={index + 1}>
+                                      <td className="p-0 text-center">
+                                        Day {value}
+                                      </td>
+                                      <td className="p-1">
+                                        <select
+                                          type="select"
+                                          className="form-input-1"
+                                          style={{ height: "30px" }}
+                                          name={`Country${index}`}
+                                        >
+                                          <option value="1">Select</option>
+                                          {dropdownState.countryList?.map(
+                                            (value, index) => {
+                                              return (
+                                                <option
+                                                  value={value.Id}
+                                                  key={index + 1}
+                                                >
+                                                  {value.Name}
+                                                </option>
+                                              );
+                                            }
+                                          )}
+                                        </select>
+                                      </td>
+                                      <td className="p-1">
+                                        <select
+                                          type="select"
+                                          className="form-input-1"
+                                          style={{ height: "30px" }}
+                                          name={`Destination${index}`}
+                                        >
+                                          <option value="1">Select</option>
+                                          <option value="2">Delhi</option>
+                                          {dropdownDispatch.cityList.map(
+                                            (value, index) => {
+                                              return (
+                                                <option
+                                                  value={value.Id}
+                                                  key={index + 1}
+                                                >
+                                                  {value.Name}
+                                                </option>
+                                              );
+                                            }
+                                          )}
+                                        </select>
+                                      </td>
+                                      <td>
+                                        <i
+                                          className="fa-solid fa-trash pr-1
                                                 text-danger cursor-pointer"
-                                        onClick={dateDeleting}
-                                      ></i>
-                                    </td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          </table>
-                        </div>
-                        )
-                      }
+                                          onClick={dateDeleting}
+                                        ></i>
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+                        )}
                     </div>
                   </div>
                 </div>
@@ -1694,30 +1740,34 @@ const Query = () => {
                         className="form-input-3 rounded-pill"
                         name="SuggestedPackage"
                         onChange={handleSearchSuggestedPackage}
-
                       />
                       <label htmlFor="" className="font-size-12">
                         Click to select the packages
                       </label>
                     </div>
-                    {filteredPackage?.map((value, index)=>{
-                     return <div className="padding-2 d-flex align-items-center border rounded cursor-pointer mt-1"
-                      key={index+1}
-                      onClick={()=>handleSuggestPackage(value)}>
-                      <div>
-                        <img
-                          src={value.PackageImage}
-                          alt={value.PackageName}
-                          style={{ height: "35px", width: "35px" }}
-                          className="rounded"
-                        />
-                      </div>
-                      <div className="pl-2">
-                        <p className="font-size-12 font-weight-bold m-0 p-0">
-                          {value.PackageName}
-                        </p>
-                      </div>
-                    </div>})}
+                    {filteredPackage?.map((value, index) => {
+                      return (
+                        <div
+                          className="padding-2 d-flex align-items-center border rounded cursor-pointer mt-1"
+                          key={index + 1}
+                          onClick={() => handleSuggestPackage(value)}
+                        >
+                          <div>
+                            <img
+                              src={value.PackageImage}
+                              alt={value.PackageName}
+                              style={{ height: "35px", width: "35px" }}
+                              className="rounded"
+                            />
+                          </div>
+                          <div className="pl-2">
+                            <p className="font-size-12 font-weight-bold m-0 p-0">
+                              {value.PackageName}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -1751,7 +1801,7 @@ const Query = () => {
                     data-bs-keyboard="false"
                   >
                     <div className="modal-dialog" role="document">
-                       <div className="modal-content">
+                      <div className="modal-content">
                         <div className="modal-header  bg-info-700">
                           <h5 className="modal-title" id="exampleModalLabel">
                             Un-Submitted Query List
@@ -1765,38 +1815,49 @@ const Query = () => {
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
-                        {storedData? <div className="modal-body">
-                          <div className="border rounded p-1 d-flex gap-3 cursor-pointer"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                           onClick={handleUnSubmittedQuery}>
-                            <div className="border rounded px-2 d-flex align-items-center">
-                              {storedData?.PackageCode}
-                            </div>
-                            <div className="d-flex gap-3">
-                              <div>
-                                  <span className="text-secondary">Package Name</span>
-                                  <p className="">
-                                    {storedData?.PackageName}
-                                  </p>
+                        {storedData ? (
+                          <div className="modal-body">
+                            <div
+                              className="border rounded p-1 d-flex gap-3 cursor-pointer"
+                              data-dismiss="modal"
+                              aria-label="Close"
+                              onClick={handleUnSubmittedQuery}
+                            >
+                              <div className="border rounded px-2 d-flex align-items-center">
+                                {storedData?.PackageCode}
                               </div>
-                              <div>
-                                  <span className="text-secondary">Lead RerfrencedId</span>
+                              <div className="d-flex gap-3">
+                                <div>
+                                  <span className="text-secondary">
+                                    Package Name
+                                  </span>
+                                  <p className="">{storedData?.PackageName}</p>
+                                </div>
+                                <div>
+                                  <span className="text-secondary">
+                                    Lead RerfrencedId
+                                  </span>
                                   <p className="">
                                     {storedData?.LeadReferencedId}
                                   </p>
-                              </div>
-                              <div>
-                                  <span className="text-secondary">Contracting Person</span>
+                                </div>
+                                <div>
+                                  <span className="text-secondary">
+                                    Contracting Person
+                                  </span>
                                   <p className="">
                                     {storedData?.ContractPerson}
                                   </p>
+                                </div>
                               </div>
                             </div>
                           </div>
-              
-                        </div> : <h1 className="my-3 text-center display-6 font-weight-bold text-secondary">No Query Available</h1>}
-                      </div> 
+                        ) : (
+                          <h1 className="my-3 text-center display-6 font-weight-bold text-secondary">
+                            No Query Available
+                          </h1>
+                        )}
+                      </div>
                     </div>
                   </div>
                   <button className="blue-button" name="SaveButton">

@@ -20,6 +20,7 @@ const CityMaster = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [loading,setLoading] = useState(true);
 
   const getDataToServer = async () => {
     console.log('First Action');
@@ -54,6 +55,7 @@ const CityMaster = () => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("citylist", postData);
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
         console.log('CityList', data);
@@ -292,6 +294,7 @@ const CityMaster = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>
