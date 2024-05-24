@@ -86,7 +86,7 @@ import QueryDetails from "./Pages/query/QueryDetails.jsx";
 import Quotation from "./Pages/query/Quotation.jsx";
 import ClientComm from "./Pages/query/ClientComm.jsx";
 import SupplierComm from "./Pages/query/SupplierComm.jsx";
-import TourExtension from "./Pages/query/TourExtension.jsx";
+import Payments from "./Pages/query/Payments.jsx";
 import HotelMasterCreate from "./Pages/master/masterList/HotelMasterCreate.jsx";
 import EmergencyDetails from "./Pages/master/masterList/EmergencyDetails.jsx";
 import ProposalSetting from "./Pages/master/masterList/ProposalSetting.jsx";
@@ -103,6 +103,9 @@ import Polocies from "./Pages/query/Policies.jsx";
 import Commission from "./Pages/query/Commission.jsx";
 import Summary from "./Pages/query/Summary.jsx";
 import Preview from "./Pages/query/Preview.jsx";
+import SupplierPayment from "./Pages/query/SupplierPayment.jsx";
+import AgentPayment from "./Pages/query/AgentPayment.jsx";
+import ExpenseEntry from "./Pages/query/ExpenseEntery.jsx";
 
 
 const App = () => {
@@ -124,7 +127,11 @@ const App = () => {
               <Route path="summary" element={<Protected><Summary/></Protected>}></Route>
             </Route>
             <Route path="costsheet" element={<Protected><QueryDetails/></Protected>}></Route>
-            <Route path="tourextension" element={<Protected><TourExtension/></Protected>}></Route>
+            <Route path="payments" element={<Protected><Payments/></Protected>}>
+              <Route index element={<Protected><SupplierPayment/></Protected>}></Route>
+              <Route path="agentpayments" element={<Protected><AgentPayment/></Protected>}></Route>
+              <Route path="expenseentry" element={<Protected><ExpenseEntry/></Protected>}></Route>
+            </Route>
             <Route path="clientcomm" element={<Protected><ClientComm/></Protected>}></Route>
             <Route path="suppliercomm" element={<Protected><SupplierComm/></Protected>}></Route>
             <Route path="proposal" element={<Protected><Proposal/></Protected>}></Route>

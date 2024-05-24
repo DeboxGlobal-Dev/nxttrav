@@ -7,9 +7,8 @@ import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
   additionalRequiremntInitialValue,
-  additionaRequirementValidationSchema,
+  additionaRequirementValidationSchema
 } from "./MasterValidations";
-
 
 const AdditionalRequirement = () => {
   const [getData, setGetData] = useState([]);
@@ -18,8 +17,9 @@ const AdditionalRequirement = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: "",
+    Status: ""
   });
+
   const [loading, setLoading] = useState(true);
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
@@ -29,7 +29,7 @@ const AdditionalRequirement = () => {
   const [imageValue, setImageValue] = useState({
     ImageData:'',
     ImageName:''
-  })
+  });
 
   const getDataToServer = async () => {
     try {
@@ -56,7 +56,7 @@ const AdditionalRequirement = () => {
     try {
       const currency = await axiosOther.post("currencymasterlist", {
         Search: "",
-        Status: 1,
+        Status: 1
       });
       setCurrencyList(currency.data.DataList);
     } catch (err) {
@@ -87,7 +87,7 @@ const AdditionalRequirement = () => {
 
   useEffect(() => {
     const result = getData.filter((item) => {
-      return item.Name.toLowerCase().match(postData.Search.toLowerCase());
+      return item?.Name?.toLowerCase()?.match(postData?.Search?.toLowerCase());
     });
 
     setFilterData(result);
@@ -270,7 +270,6 @@ const AdditionalRequirement = () => {
                               return <option value={value?.id} key={index+1}>{value?.TaxSlabName}</option>
                             })
                           }
-                         
                         </Field>
                       </div>
                       <div className="col-sm-4">

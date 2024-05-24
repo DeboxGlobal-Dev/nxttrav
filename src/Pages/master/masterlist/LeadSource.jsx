@@ -6,18 +6,19 @@ import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
 import {
   leadSourceInitialValue,
-  leadSourceValidationSchema,
+  leadSourceValidationSchema
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const LeadSource = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: "",
+    Status: ""
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);

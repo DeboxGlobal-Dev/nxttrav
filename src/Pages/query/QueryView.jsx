@@ -146,15 +146,15 @@ const QueryView = () => {
               </li>
               <li className="nav-item view-nav-item rounded-pill">
                 <NavLink
-                  to="tourextension"
+                  to="payments"
                   className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
-                    pathname === "/querylist/queryview/tourextension"
+                    pathname === "/querylist/queryview/payments"
                       ? "Active"
                       : "text-primary"
                   }`}
                 >
                   <i className="fa-solid fa-puzzle-piece"></i>
-                  Tour Extension
+                  Payments
                 </NavLink>
               </li>
               <li className="nav-item view-nav-item rounded-pill">
