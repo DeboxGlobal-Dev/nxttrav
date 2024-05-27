@@ -142,6 +142,7 @@ const Preview = () => {
           </div>
         </div>
 
+
         <div className="row column-gap-2 mt-2 m-0">
           <div className="col p-0">
             <table class="table table-bordered">
@@ -264,7 +265,6 @@ const Preview = () => {
             </div>
           </div>
         </div>
-        
       </div>
     </>
   );
