@@ -84,6 +84,9 @@ a {
 .backgroundColor-3 {
   background-color: rgb(127, 212, 252);
 }
+.backgroundColor-4 {
+  background-color: rgb(210, 255, 210);
+}
 /* /master page custom css */
 
 /*  form input custom style*/
@@ -103,7 +106,7 @@ a {
   height: 35px;
   padding-left: 10px;
 }
-.form-input-2{
+.form-input-2 {
   width: 100%;
   outline: none;
   border: 1px solid rgb(163, 161, 161);
@@ -111,7 +114,7 @@ a {
   height: 30px;
   padding-left: 10px;
 }
-.form-input-3{
+.form-input-3 {
   width: 100%;
   outline: none;
   border: 1px solid rgb(163, 161, 161);
@@ -128,32 +131,32 @@ a {
   height: 27px;
   padding-left: 10px;
 }
-.margin-l{
+.margin-l {
   margin-left: 2px;
 }
-.padding-2{
+.padding-2 {
   padding: 2px;
 }
-.padding-3{
+.padding-3 {
   padding: 3px 14px;
 }
-.form-div{
+.form-div {
   width: 100%;
   outline: none;
   border: 1px solid rgb(163, 161, 161);
   border-radius: 3px;
   height: 30px;
 }
-.height-30{
+.height-30 {
   height: 30px;
 }
-.height-20{
+.height-20 {
   height: 20px;
 }
-.width-120{
+.width-120 {
   width: 120px;
 }
-.image-hw{
+.image-hw {
   height: 40px;
   width: 40px;
 }
@@ -262,15 +265,15 @@ a {
   color: gold;
 }
 .green-button {
-  background-image: linear-gradient(-180deg, #00D775, #00BD68);
+  background-image: linear-gradient(-180deg, #00d775, #00bd68);
   border: 0;
   border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, .3) 0 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 5px 15px;
   box-sizing: border-box;
   color: #fff;
   cursor: pointer;
-  font-family: Montserrat,sans-serif;
-  font-size: .9em;
+  font-family: Montserrat, sans-serif;
+  font-size: 0.9em;
   margin: 5px;
   padding: 8px 15px;
   text-align: center;
@@ -284,12 +287,12 @@ a {
   background-image: linear-gradient(#0dccea, #0d70ea);
   border: 0;
   border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, .3) 0 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 5px 15px;
   box-sizing: border-box;
   color: #fff;
   cursor: pointer;
-  font-family: Montserrat,sans-serif;
-  font-size: .9em;
+  font-family: Montserrat, sans-serif;
+  font-size: 0.9em;
   margin: 5px;
   padding: 8px 15px;
   text-align: center;
@@ -303,12 +306,12 @@ a {
   background-image: linear-gradient(rgb(254, 122, 46), rgb(244, 182, 68));
   border: 0;
   border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, .3) 0 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 5px 15px;
   box-sizing: border-box;
   color: #fff;
   cursor: pointer;
-  font-family: Montserrat,sans-serif;
-  font-size: .9em;
+  font-family: Montserrat, sans-serif;
+  font-size: 0.9em;
   margin: 5px;
   padding: 8px 15px;
   text-align: center;
@@ -316,18 +319,18 @@ a {
   -webkit-user-select: none;
   touch-action: manipulation;
   font-weight: 500;
-  height:35px;
+  height: 35px;
 }
 .gray-button {
   background-image: linear-gradient(#aaadad, #b3b5b8);
   border: 0;
   border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, .3) 0 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 5px 15px;
   box-sizing: border-box;
   color: #fff;
   cursor: pointer;
-  font-family: Montserrat,sans-serif;
-  font-size: .9em;
+  font-family: Montserrat, sans-serif;
+  font-size: 0.9em;
   margin: 5px;
   padding: 8px 15px;
   text-align: center;
@@ -341,12 +344,12 @@ a {
   background-image: linear-gradient(#0dccea, #0d70ea);
   border: 0;
   border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, .3) 0 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 5px 15px;
   box-sizing: border-box;
   color: #fff;
   cursor: pointer;
-  font-family: Montserrat,sans-serif;
-  font-size: .9em;
+  font-family: Montserrat, sans-serif;
+  font-size: 0.9em;
   margin: 5px;
   padding: 8px 15px;
   text-align: center;
@@ -361,11 +364,11 @@ a {
   background-color: #fff;
   border: 1px solid #d5d9d9;
   border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, .3) 0 2px 4px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 2px 4px;
   box-sizing: border-box;
   cursor: pointer;
-  font-family: Montserrat,sans-serif;
-  font-size: .9em;
+  font-family: Montserrat, sans-serif;
+  font-size: 0.9em;
   margin: 5px;
   padding: 8px 15px;
   text-align: center;
@@ -383,10 +386,10 @@ a {
 .gray-button:hover {
   color: #ffff;
 }
-.outline-none{
+.outline-none {
   outline: none;
 }
-.padding-x{
+.padding-x {
   padding: 0 3px;
 }
 .progress-container {
@@ -399,7 +402,13 @@ a {
 }
 .progress-bar {
   height: 100%;
-  background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);
+  background-image: linear-gradient(
+    to right,
+    #f78ca0 0%,
+    #f9748f 19%,
+    #fd868c 60%,
+    #fe9a8b 100%
+  );
   width: 0%;
   text-align: center;
   color: #9a9999;
@@ -429,107 +438,168 @@ a {
     width: 0%;
   }
 }
-.nav-link{
+.nav-link {
   padding: 5px 12px;
 }
-.top-border-radius{
+.top-border-radius {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
-.px-100{
+.px-100 {
   padding: 0 100px;
 }
-.light-primary-bg{
+.light-primary-bg {
   background-color: rgb(211, 232, 255);
 }
-.icon-img{
+.icon-img {
   height: 25px;
   width: 25px;
 }
-.text-flow{
+.text-flow {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.box-width-80{
+.box-width-80 {
   width: 80px;
 }
 
 /* Stepper css */
 
-.stepper{
+.stepper {
   display: flex;
   flex-wrap: wrap;
   row-gap: 10px;
 }
-.stepper-item{
+.stepper-item {
   width: 100px;
   height: 26px;
   background-color: #cdcbcb;
   display: flex;
   justify-content: center;
   align-items: center;
-  -webkit-clip-path: polygon(15px 50%, 0% 0%, calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 0% 100%);
+  -webkit-clip-path: polygon(
+    15px 50%,
+    0% 0%,
+    calc(100% - 15px) 0%,
+    100% 50%,
+    calc(100% - 15px) 100%,
+    0% 100%
+  );
   font-weight: 500;
   font-size: 12px;
 }
-.stepper-width{
+.stepper-width {
   width: 140px;
 }
-.first-stepper{
-  -webkit-clip-path: polygon(0% 0%, calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 0% 100%);
+.first-stepper {
+  -webkit-clip-path: polygon(
+    0% 0%,
+    calc(100% - 15px) 0%,
+    100% 50%,
+    calc(100% - 15px) 100%,
+    0% 100%
+  );
 }
-.active-stepper{
+.active-stepper {
   background-color: rgb(20, 204, 42);
   color: white;
 }
 
-.red-bg{
+.red-bg {
   background-color: red;
 }
-.gray-bg{
+.gray-bg {
   background-color: rgb(147, 145, 145);
 }
-.pink-bg{
+.pink-bg {
   background-color: rgb(244, 71, 129);
 }
-.bg-color-1{
-  background-color:#e4fff0;
+.bg-color-1 {
+  background-color: #e4fff0;
 }
-.bg-color-2{
+.bg-color-2 {
   background-color: rgb(255, 255, 229);
 }
-.box-shadow-1{
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+.box-shadow-1 {
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
-.text-yellow-1{
+.text-yellow-1 {
   color: #ffbc13;
 }
-.button-style{
+.button-style {
   border: none;
   margin: 0 3px;
   background-color: rgb(255, 179, 39);
   color: white;
   padding: 2px 10px;
 }
-.button-style-1{
+.button-style-1 {
   border: none;
   margin: 0 3px;
   background-color: #4d9bfb;
   color: white;
   padding: 2px 10px;
 }
-.button-style-2{
+.button-style-2 {
   border: none;
   margin: 0 3px;
-  background-color:#00BD68;
+  background-color: #00bd68;
   color: white;
   padding: 2px 10px;
 }
-.button-style-3{
+.button-style-3 {
   border: none;
   margin: 0 3px;
   background-color: #1c82ff;
   color: white;
   padding: 2px 10px;
-};
+}
+
+.table-input {
+  width: 60px;
+  height: 20px;
+  outline: none;
+  text-align: center;
+  color: #514f4f;
+}
+.table-input-1{
+  width: 80px;
+  height: 20px;
+  outline: none;
+  text-align: center;
+  color: #514f4f;
+}
+.table-select{
+  width: 60px;
+  height: 20px;
+}
+.table-select-1{
+  width: 80px;
+  height: 20px;
+}
+.save-button{
+  height: 20px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 10px;
+  font-size: 12px;
+  color: white;
+  background-color: blue;
+}
+.back-button{
+  height: 20px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 10px;
+  font-size: 12px;
+  background-color: white;
+  border: 1px solid black;
+}

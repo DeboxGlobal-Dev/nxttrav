@@ -4,7 +4,6 @@ import { NavLink, useLocation, Outlet } from "react-router-dom";
 const Payments = () => {
 
   const {pathname} = useLocation();
-  
 
   return (
     <>
