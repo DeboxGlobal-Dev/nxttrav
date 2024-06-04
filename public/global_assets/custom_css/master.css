@@ -157,8 +157,14 @@ a {
   width: 120px;
 }
 .image-hw {
-  height: 40px;
-  width: 40px;
+  height: 2rem;
+  width: 2rem;
+}
+.span-font-size{
+  font-size: 0.7rem;
+}
+.scrolling{
+  overflow: auto;
 }
 .borderNone {
   border: none;

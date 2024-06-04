@@ -66,7 +66,7 @@ const DriverMaster = () => {
 
   useEffect(() => {
     const result = getData.filter((item) => {
-      return item.Name.toLowerCase().match(postData.Search.toLowerCase());
+      return item?.Name?.toLowerCase()?.match(postData?.Search?.toLowerCase());
     });
 
     setFilterData(result);

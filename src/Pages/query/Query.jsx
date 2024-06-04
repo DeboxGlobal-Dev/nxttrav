@@ -5,7 +5,7 @@ import {
   paxInitial,
   roomInitial,
   valueAddInitial,
-  suggestedPackageData,
+  suggestedPackageData
 } from "./QuerySchema";
 import { eachDayOfInterval, format } from "date-fns";
 import { axiosOther } from "../../http/axios/axios_new";
@@ -28,7 +28,7 @@ const Query = () => {
   const [queryFields, setQueryFields] = useState({ ...queryInitial });
   const [travelsDestination, setTravelDestination] = useState({
     Country: "",
-    Destination: "",
+    Destination: ""
   });
   const [suggestedPackage, setSuggestedPackage] = useState("");
   const [filteredPackage, setFilteredPackage] = useState([]);
@@ -40,7 +40,7 @@ const Query = () => {
   const initialState = {
     counter1: 0,
     counter2: 0,
-    counter3: 0,
+    counter3: 0
   };
 
   const dropdownInitialState = {
@@ -49,10 +49,11 @@ const Query = () => {
     leadList: [],
     tourType: [],
     countryList: [],
-    cityList: [],
+    cityList: []
   };
 
   const dropdownReducer = (state, action) => {
+
     switch (action.type) {
       case "HOTEL-TYPE":
         return { ...state, hotelType: action.payload };
@@ -67,7 +68,9 @@ const Query = () => {
       case "CITY-LIST":
         return { ...state, cityList: action.payload };
     }
+
     return state;
+    
   };
   const [dropdownState, dropdownDispatch] = useReducer(
     dropdownReducer,
@@ -117,7 +120,7 @@ const Query = () => {
       try {
         const { data } = await axiosOther.post("leadlist", {
           Search: "",
-          Status: "",
+          Status: ""
         });
         // setLeadList(data.DataList);
         dropdownDispatch({ type: "LEAD-LIST", payload: data.DataList });
@@ -169,13 +172,14 @@ const Query = () => {
       }
     };
     gettingDataForDropdown();
+
   }, []);
 
   // Handling Submit Query Data
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (document.activeElement.name === "SaveButton") {
+    if (document.activeElement.name === "SaveButton"){
       localStorage.setItem(
         "Query",
         JSON.stringify({

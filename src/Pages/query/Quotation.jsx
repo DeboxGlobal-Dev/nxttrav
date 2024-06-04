@@ -14,7 +14,7 @@ const Quotation = () => {
             <div className="row ">
               <div className="col-12 col-md-3">
                 <p>
-                  Lead Pax Name :{" "}
+                  Lead Pax Name :
                   <span className="pl-2 text-success">
                     <i className="fa-solid fa-pen-to-square"></i> Rahul Kumar
                   </span>
@@ -24,7 +24,7 @@ const Quotation = () => {
                 <p>
                   <span className="font-weight-bold">
                     Define Pax Slab (Min Pax: 10 | Max PAX: 10)
-                  </span>{" "}
+                  </span>
                   | Single Hotel Categoy
                 </p>
                 <div className="width-120 height-20 bg-primary d-flex justify-content-center align-items-center gap-2 p-1">
@@ -43,7 +43,7 @@ const Quotation = () => {
           </div>
           <div className="col-12 p-0 mt-2">
             <div className="row justify-content-center">
-              <div className="col-11 border rounded-pill shadow sticky-top">
+             <div className="col-11 border rounded-pill shadow sticky-top scrolling">
                 <div className="row px-2 py-1">
                   <div className="col d-flex flex-column align-items-center pt-1">
                     <img
@@ -51,7 +51,7 @@ const Quotation = () => {
                       src="\public\global_assets\images\qoutation\itenary.png"
                       alt="activity"
                     />
-                    <span>Itenary Info</span>
+                    <span className="span-font-size">Itenary Info</span>
                   </div>
                   <div className="col d-flex flex-column align-items-center pt-1">
                     <img
@@ -59,7 +59,7 @@ const Quotation = () => {
                       src="\public\global_assets\images\qoutation\flight.png"
                       alt="activity"
                     />
-                    <span>Flight</span>
+                    <span className="span-font-size">Flight</span>
                   </div>
                   <div className="col d-flex flex-column align-items-center pt-1">
                     <img
@@ -67,7 +67,7 @@ const Quotation = () => {
                       src="\public\global_assets\images\qoutation\hotel.png"
                       alt="activity"
                     />
-                    <span>Hotel</span>
+                    <span className="span-font-size">Hotel</span>
                   </div>
                   <div className="col d-flex flex-column align-items-center pt-1">
                     <img
@@ -75,7 +75,7 @@ const Quotation = () => {
                       src="\public\global_assets\images\qoutation\transfer.png"
                       alt="activity"
                     />
-                    <span>Transfer</span>
+                    <span className="span-font-size">Transfer</span>
                   </div>
                   <div className="col d-flex flex-column align-items-center pt-1">
                     <img
@@ -83,7 +83,7 @@ const Quotation = () => {
                       src="\public\global_assets\images\qoutation\monument.png"
                       alt="activity"
                     />
-                    <span>Monument</span>
+                    <span className="span-font-size">Monument</span>
                   </div>
                   <div className="col d-flex flex-column align-items-center pt-1">
                     <img
@@ -91,7 +91,7 @@ const Quotation = () => {
                       src="\public\global_assets\images\qoutation\enroute.png"
                       alt="activity"
                     />
-                    <span>Enroute</span>
+                    <span className="span-font-size">Enroute</span>
                   </div>
                   <div className="col d-flex flex-column align-items-center pt-1">
                     <img
@@ -99,7 +99,7 @@ const Quotation = () => {
                       src="\public\global_assets\images\qoutation\restaurant.png"
                       alt="activity"
                     />
-                    <span>Restaurant</span>
+                    <span className="span-font-size">Restaurant</span>
                   </div>
                   <div className="col d-flex flex-column align-items-center pt-1">
                     <img
@@ -107,7 +107,7 @@ const Quotation = () => {
                       src="\public\global_assets\images\qoutation\activity.png"
                       alt="activity"
                     />
-                    <span>Activity</span>
+                    <span className="span-font-size">Activity</span>
                   </div>
                   <div className="col d-flex flex-column align-items-center pt-1">
                     <img
@@ -115,7 +115,7 @@ const Quotation = () => {
                       src="\public\global_assets\images\qoutation\guide.png"
                       alt="activity"
                     />
-                    <span>Guide</span>
+                    <span className="span-font-size">Guide</span>
                   </div>
                   <div className="col d-flex flex-column align-items-center pt-1">
                     <img
@@ -123,7 +123,7 @@ const Quotation = () => {
                       src="\public\global_assets\images\qoutation\transportation.png"
                       alt="activity"
                     />
-                    <span>Tranportation</span>
+                    <span className="span-font-size">Tranportation</span>
                   </div>
                   <div className="col d-flex flex-column align-items-center pt-1">
                     <img
@@ -131,7 +131,7 @@ const Quotation = () => {
                       src="\public\global_assets\images\qoutation\train.png"
                       alt="activity"
                     />
-                    <span>Trains</span>
+                    <span className="span-font-size">Trains</span>
                   </div>
                   <div className="col d-flex flex-column align-items-center pt-1">
                     <img
@@ -139,7 +139,7 @@ const Quotation = () => {
                       src="\public\global_assets\images\qoutation\add.png"
                       alt="activity"
                     />
-                    <span>Add Ons</span>
+                    <span className="span-font-size">Add Ons</span>
                   </div>
                 </div>
               </div>

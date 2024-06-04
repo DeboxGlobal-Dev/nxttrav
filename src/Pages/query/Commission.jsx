@@ -35,8 +35,8 @@ const Commission = () => {
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-2">
+        <div className="row row-gap-2">
+          <div className="col-lg-2 px-lg-1 p-0">
             <div className="row">
               <div className="col-12">
                 <table className="table table-bordered">
@@ -52,7 +52,7 @@ const Commission = () => {
                     <tr>
                       <td className="p-0 text-center py-2">
                         <select name="" id="" className="px-2">
-                          <option value="">%</option>
+                          <option>%</option>
                         </select>
                       </td>
                       <td className="p-0 text-center py-2">20</td>
@@ -62,9 +62,9 @@ const Commission = () => {
               </div>
             </div>
           </div>
-          <div className="col-10">
+          <div className="col-lg-10">
             <div className="row">
-              <div className="col-1 p-0">
+              <div className="col-4 col-sm-2 col-md-1 p-0">
                 <table className="table table-bordered">
                   <thead>
                     <tr>
@@ -75,15 +75,15 @@ const Commission = () => {
                     <tr>
                       <td className="p-0 text-center py-2 d-flex flex-column align-items-center gap-1">
                         <select name="" id="" className="px-2 table-select">
-                          <option value="">%</option>
+                          <option>%</option>
                         </select>
-                        <input type="text" className="table-input" value="5" />
+                        <input type="text" className="table-input" />
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div className="col-1 p-0">
+              <div className="col-4 col-sm-2 col-md-1 p-0">
                 <table className="table table-bordered">
                   <thead>
                     <tr>
@@ -94,15 +94,15 @@ const Commission = () => {
                     <tr>
                       <td className="p-0 text-center py-2 d-flex flex-column align-items-center gap-1">
                         <select name="" id="" className="px-2 table-select">
-                          <option value="">%</option>
+                          <option>%</option>
                         </select>
-                        <input type="text" className="table-input" value="5" />
+                        <input type="text" className="table-input" />
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div className="col-1 p-0">
+              <div className="col-4 col-sm-2 col-md-1 p-0">
                 <table className="table table-bordered">
                   <thead>
                     <tr>
@@ -113,15 +113,15 @@ const Commission = () => {
                     <tr>
                       <td className="p-0 text-center py-2 d-flex flex-column align-items-center gap-1">
                         <select name="" id="" className="px-2 table-select">
-                          <option value="">%</option>
+                          <option>%</option>
                         </select>
-                        <input type="text" className="table-input" value="5" />
+                        <input type="text" className="table-input" />
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div className="col-1 p-0">
+              <div className="col-4 col-sm-2 col-md-1 p-0">
                 <table className="table table-bordered">
                   <thead>
                     <tr>
@@ -132,15 +132,15 @@ const Commission = () => {
                     <tr>
                       <td className="p-0 text-center py-2 d-flex flex-column align-items-center gap-1">
                         <select name="" id="" className="px-2 table-select">
-                          <option value="">%</option>
+                          <option>%</option>
                         </select>
-                        <input type="text" className="table-input" value="5" />
+                        <input type="text" className="table-input" />
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div className="col-1 p-0">
+              <div className="col-4 col-sm-2 col-md-1 p-0">
                 <table className="table table-bordered">
                   <thead>
                     <tr>
@@ -151,15 +151,15 @@ const Commission = () => {
                     <tr>
                       <td className="p-0 text-center py-2 d-flex flex-column align-items-center gap-1">
                         <select name="" id="" className="px-2 table-select">
-                          <option value="">%</option>
+                          <option>%</option>
                         </select>
-                        <input type="text" className="table-input" value="5" />
+                        <input type="text" className="table-input" />
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div className="col-1 p-0">
+              <div className="col-4 col-sm-2 col-md-1 p-0">
                 <table className="table table-bordered">
                   <thead>
                     <tr>
@@ -170,15 +170,15 @@ const Commission = () => {
                     <tr>
                       <td className="p-0 text-center py-2 d-flex flex-column align-items-center gap-1">
                         <select name="" id="" className="px-2 table-select">
-                          <option value="">%</option>
+                          <option>%</option>
                         </select>
-                        <input type="text" className="table-input" value="5" />
+                        <input type="text" className="table-input" />
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div className="col-1 p-0">
+              <div className="col-4 col-sm-2 col-md-1 p-0">
                 <table className="table table-bordered">
                   <thead>
                     <tr>
@@ -189,15 +189,15 @@ const Commission = () => {
                     <tr>
                       <td className="p-0 text-center py-2 d-flex flex-column align-items-center gap-1">
                         <select name="" id="" className="px-2 table-select">
-                          <option value="">%</option>
+                          <option>%</option>
                         </select>
-                        <input type="text" className="table-input" value="5" />
+                        <input type="text" className="table-input" />
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div className="col-1 p-0">
+              <div className="col-4 col-sm-2 col-md-1 p-0">
                 <table className="table table-bordered">
                   <thead>
                     <tr>
@@ -208,15 +208,15 @@ const Commission = () => {
                     <tr>
                       <td className="p-0 text-center py-2 d-flex flex-column align-items-center gap-1">
                         <select name="" id="" className="px-2 table-select">
-                          <option value="">%</option>
+                          <option>%</option>
                         </select>
-                        <input type="text" className="table-input" value="5" />
+                        <input type="text" className="table-input" />
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div className="col-1 p-0">
+              <div className="col-4 col-sm-2 col-md-1 p-0">
                 <table className="table table-bordered">
                   <thead>
                     <tr>
@@ -229,15 +229,15 @@ const Commission = () => {
                     <tr>
                       <td className="p-0 text-center py-2 d-flex flex-column align-items-center gap-1">
                         <select name="" id="" className="px-2 table-select">
-                          <option value="">%</option>
+                          <option>%</option>
                         </select>
-                        <input type="text" className="table-input" value="5" />
+                        <input type="text" className="table-input" />
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div className="col-1 p-0">
+              <div className="col-4 col-sm-2 col-md-1 p-0">
                 <table className="table table-bordered">
                   <thead>
                     <tr>
@@ -248,15 +248,15 @@ const Commission = () => {
                     <tr>
                       <td className="p-0 text-center py-2 d-flex flex-column align-items-center gap-1">
                         <select name="" id="" className="px-2 table-select">
-                          <option value="">%</option>
+                          <option>%</option>
                         </select>
-                        <input type="text" className="table-input" value="5" />
+                        <input type="text" className="table-input" />
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div className="col-1 p-0">
+              <div className="col-4 col-sm-2 col-md-1 p-0">
                 <table className="table table-bordered">
                   <thead>
                     <tr>
@@ -269,15 +269,15 @@ const Commission = () => {
                     <tr>
                       <td className="p-0 text-center py-2 d-flex flex-column align-items-center gap-1">
                         <select name="" id="" className="px-2 table-select">
-                          <option value="">%</option>
+                          <option>%</option>
                         </select>
-                        <input type="text" className="table-input" value="5" />
+                        <input type="text" className="table-input" />
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div className="col-1 p-0">
+              <div className="col-4 col-sm-2 col-md-1 p-0">
                 <table className="table table-bordered ">
                   <thead>
                     <tr>
@@ -288,9 +288,9 @@ const Commission = () => {
                     <tr>
                       <td className="p-0 text-center py-2 d-flex flex-column align-items-center gap-1">
                         <select name="" id="" className="px-2 table-select">
-                          <option value="">%</option>
+                          <option>%</option>
                         </select>
-                        <input type="text" className="table-input" value="5" />
+                        <input type="text" className="table-input" />
                       </td>
                     </tr>
                   </tbody>
@@ -300,85 +300,75 @@ const Commission = () => {
           </div>
         </div>
         {/* add-commision */}
-        <div className="row mt-3 backgroundColor-4">
-          <div className="col-4  d-flex gap-2">
+        <div className="row mt-3 backgroundColor-4 flex-wrap">
+          <div className="col-12 col-md-4  d-flex gap-2">
             <span>
               <i className="fa-solid fa-square text-primary"></i>
             </span>
             <span>Add Commision</span>
           </div>
-          <div className="col-4  d-flex gap-2">
+          <div className="col-12 col-md-4  d-flex gap-2">
             <span>
               <i className="fa-solid fa-square text-primary"></i>
             </span>
             <span>Supplement Selection</span>
           </div>
-          <div className="col-4  d-flex gap-2">
+          <div className="col-12 col-md-4  d-flex gap-2">
             <span>
               <i className="fa-solid fa-square text-primary"></i>
             </span>
             <span>Meal Supplement</span>
           </div>
         </div>
-        <div className="row mt-3">
-          <div className="col-4">
-            <div className="row">
-              <div className="col-5">
-                <table className="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th className="font-size-10 p-0 text-center">
-                        Client Commision
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="d-flex justify-content-center">
-                        <input
-                          type="text"
-                          className="table-input"
-                          placeholder="0"
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div className="col-4">
+        <div className="row mt-3 row-gap-2">
+          <div className="col-md-3 col-lg-4">
             <table className="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th className="font-size-10 p-0 text-center">
-                        Flight Cost
-                      </th>
-                      <th className="font-size-10 p-0 text-center">
-                        Tour Escort
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="p-0 text-center py-2">
-                        <select name="" id="">
-                          <option value="">Supplement Cost</option>
-                        </select>
-                      </td>
-                      <td className="text-center">
-                        <select name="" id="">
-                          <option value="">Supplement Cost</option>
-                        </select>
-                      </td>
-                    </tr>
-                  </tbody>
+              <thead>
+                <tr>
+                  <th className="font-size-10 p-0 text-center">
+                    Client Commision
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="d-flex justify-content-center">
+                    <input
+                      type="text"
+                      className="table-input"
+                      placeholder="0"
+                    />
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </div>
-          <div className="col-4">
-            <div className="row">
-              <div className="col-5">
-              <table className="table table-bordered">
+          <div className="col-md-6 col-lg-4">
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th className="font-size-10 p-0 text-center">Flight Cost</th>
+                  <th className="font-size-10 p-0 text-center">Tour Escort</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="p-0 text-center py-2">
+                    <select name="" id="">
+                      <option>Supplement Cost</option>
+                    </select>
+                  </td>
+                  <td className="text-center">
+                    <select name="" id="">
+                      <option>Supplement Cost</option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="col-md-3 col-lg-4">
+            <table className="table table-bordered">
               <thead>
                 <tr>
                   <th className="font-size-10 p-0 text-center">
@@ -390,14 +380,12 @@ const Commission = () => {
                 <tr>
                   <td className="p-0 text-center py-2">
                     <select name="" id="" className="table-select">
-                      <option value="">All</option>
+                      <option>All</option>
                     </select>
                   </td>
                 </tr>
               </tbody>
             </table>
-              </div>
-            </div>
           </div>
         </div>
         {/* other-information */}
@@ -409,8 +397,8 @@ const Commission = () => {
             <span>Other Information</span>
           </div>
         </div>
-        <div className="row mt-3 ml-1">
-          <div className="col-1 p-0">
+        <div className="row mt-3 ml-1 row-gap-2">
+          <div className="col-6 col-sm-3 col-lg-1 p-0">
             <table className="table table-bordered">
               <thead>
                 <tr>
@@ -421,14 +409,14 @@ const Commission = () => {
                 <tr>
                   <td className="p-0 text-center py-2">
                     <select name="" id="" className="px-2 table-select-1">
-                      <option value="">Same State</option>
+                      <option>Same State</option>
                     </select>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div className="col-1 p-0">
+          <div className="col-6 col-sm-3 col-lg-1 p-0">
             <table className="table table-bordered">
               <thead>
                 <tr>
@@ -439,14 +427,14 @@ const Commission = () => {
                 <tr>
                   <td className="p-0 text-center py-2">
                     <select name="" id="" className="px-2 table-select-1">
-                      <option value="">5% GST</option>
+                      <option>5% GST</option>
                     </select>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div className="col-1 p-0">
+          <div className="col-6 col-sm-3 col-lg-1 p-0">
             <table className="table table-bordered">
               <thead>
                 <tr>
@@ -457,14 +445,14 @@ const Commission = () => {
                 <tr>
                   <td className="p-0 text-center py-2">
                     <select name="" id="" className="px-2 table-select-1">
-                      <option value="">Tax Inc.</option>
+                      <option>Tax Inc.</option>
                     </select>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div className="col-1 p-0">
+          <div className="col-6 col-sm-3 col-lg-1 p-0">
             <table className="table table-bordered">
               <thead>
                 <tr>
@@ -477,14 +465,14 @@ const Commission = () => {
                 <tr>
                   <td className="p-0 text-center py-2">
                     <select name="" id="" className="px-2 table-select-1">
-                      <option value="">%</option>
+                      <option>%</option>
                     </select>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div className="col-1 p-0">
+          <div className="col-6 col-sm-3 col-lg-1 p-0">
             <table className="table table-bordered ">
               <thead>
                 <tr>
@@ -494,13 +482,13 @@ const Commission = () => {
               <tbody>
                 <tr>
                   <td className="p-0 text-center py-2">
-                    <input type="text" className="table-input-1" value="0" />
+                    <input type="text" className="table-input-1" />
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div className="col-1 p-0">
+          <div className="col-6 col-sm-3 col-lg-1 p-0">
             <table className="table table-bordered">
               <thead>
                 <tr>
@@ -511,14 +499,14 @@ const Commission = () => {
                 <tr>
                   <td className="p-0 text-center py-2">
                     <select name="" id="" className="px-2 table-select-1">
-                      <option value="">None</option>
+                      <option>None</option>
                     </select>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div className="col-1 p-0">
+          <div className="col-6 col-sm-3 col-lg-1 p-0">
             <table className="table table-bordered">
               <thead>
                 <tr>
@@ -529,14 +517,14 @@ const Commission = () => {
                 <tr>
                   <td className="p-0 text-center py-2">
                     <select name="" id="" className="px-2 table-select-1">
-                      <option value="">INR</option>
+                      <option>INR</option>
                     </select>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div className="col-1 p-0">
+          <div className="col-6 col-sm-3 col-lg-1 p-0">
             <table className="table table-bordered">
               <thead>
                 <tr>
@@ -548,7 +536,7 @@ const Commission = () => {
               <tbody>
                 <tr>
                   <td className="p-0 text-center py-2">
-                    <input type="text" className="table-input-1" value="1" />
+                    <input type="text" className="table-input-1" />
                   </td>
                 </tr>
               </tbody>

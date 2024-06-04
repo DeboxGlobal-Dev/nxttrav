@@ -57,7 +57,7 @@ const TourEscortPrice = () => {
 
   useEffect(() => {
     const result = getData.filter((item) => {
-      return item.Status.toLowerCase().match(postData.Search.toLowerCase());
+      return item?.Status?.toLowerCase()?.match(postData?.Search?.toLowerCase());
     });
 
     setFilterData(result);

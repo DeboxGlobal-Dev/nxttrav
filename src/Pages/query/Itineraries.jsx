@@ -9,7 +9,7 @@ const Itineraries = () => {
             <p className="text-center">Days Plan</p>
             <div className="row border">
               <div
-                className="col-lg-12 col-3 d-flex gap-3 justify-content-center align-items-center 
+                className="col-lg-12 col-sm-3  d-flex gap-3 justify-content-center align-items-center 
                             px-1 my-1 light-primary-bg"
               >
                 <div>
@@ -24,7 +24,7 @@ const Itineraries = () => {
                 </div>
               </div>
               <div
-                className="col-lg-12 col-3 d-flex gap-3 justify-content-center
+                className="col-lg-12 col-sm-3 d-flex gap-3 justify-content-center
                             align-items-center px-1 my-1"
               >
                 <div>
@@ -38,7 +38,7 @@ const Itineraries = () => {
                 </div>
               </div>
               <div
-                className="col-lg-12 col-3 d-flex gap-3 justify-content-center 
+                className="col-lg-12 col-sm-3 d-flex gap-3 justify-content-center 
                             align-items-center my-1"
               >
                 <div>

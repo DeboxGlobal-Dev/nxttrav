@@ -26,7 +26,7 @@ const ExpenseEntry = () => {
           </div>
           <div className="d-flex flex-column">
             <label className="m-0">Amount</label>
-            <input type="text" placeholder="2656" className="form-input-4" />
+            <input type="text" placeholder="2656" className="form-input-4"/>
           </div>
           <div className="d-flex flex-column">
             <label className="m-0">Narration</label>
@@ -34,7 +34,7 @@ const ExpenseEntry = () => {
           </div>
           <div className="d-flex flex-column">
             <label className="m-0">Paid To</label>
-            <input type="text" placeholder="5812" className="form-input-4" />
+            <input type="text" placeholder="5812" className="form-input-4"/>
           </div>
           <div className="d-flex align-items-end">
             <button className="btn btn-primary padding-3">Save</button>

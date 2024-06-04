@@ -4,10 +4,10 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
-import { Field, ErrorMessage } from "formik";
+import { Field, ErrorMessage } from "formik"; 
 import {
   currencyMasterInitialValue,
-  currencyMasterValidationSchema,
+  currencyMasterValidationSchema
 } from "./MasterValidations";
 
 const CurrencyMaster = () => {
@@ -31,7 +31,6 @@ const CurrencyMaster = () => {
         Status: 1,
       });
       setCountryList(countryData.data.DataList);
-      console.log(country);
     } catch (err) {
       console.log(err);
     }
@@ -56,7 +55,7 @@ const CurrencyMaster = () => {
 
   useEffect(() => {
     const result = getData.filter((item) => {
-      return item.Name.toLowerCase().match(postData.Search.toLowerCase());
+      return item?.Name?.toLowerCase()?.match(postData?.Search?.toLowerCase());
     });
 
     setFilterData(result);
@@ -162,9 +161,9 @@ const CurrencyMaster = () => {
                           component={"select"}
                         >
                           <option value="">Select Country</option>
-                          {countryList.map((value) => {
+                          {countryList.map((value, index) => {
                             return (
-                              <option value={value.Id} key={value.Id}>
+                              <option value={value.Id} key={index+1}>
                                 {value.Name}
                               </option>
                             );
