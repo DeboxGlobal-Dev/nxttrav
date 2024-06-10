@@ -17,7 +17,7 @@ const Language = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: "",
+    Status: ""
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
@@ -27,6 +27,7 @@ const Language = () => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("languagelist", postData);
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {

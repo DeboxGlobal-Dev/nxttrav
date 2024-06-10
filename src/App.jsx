@@ -106,6 +106,7 @@ import Preview from "./Pages/query/Preview.jsx";
 import SupplierPayment from "./Pages/query/SupplierPayment.jsx";
 import AgentPayment from "./Pages/query/AgentPayment.jsx";
 import ExpenseEntry from "./Pages/query/ExpenseEntery.jsx";
+import TaxInvoice from "./Pages/template/TaxInvoice.jsx";
 
 
 const App = () => {
@@ -211,6 +212,7 @@ const App = () => {
           <Route path="/master/saccode" element={<Protected><SACCode/></Protected>}></Route>
           <Route path="/master/paymenttype" element={<Protected><PaymentType/></Protected>}></Route>
           <Route path="/master/bankmaster" element={<Protected><BankMaster/></Protected>}></Route>
+          <Route path="/taxinvoice" element={<Protected><TaxInvoice/></Protected>}></Route>
 
           <Route path="/setting/" element={<Protected><Setting/></Protected>}>
             <Route index element={<Protected><Users/></Protected>}></Route>

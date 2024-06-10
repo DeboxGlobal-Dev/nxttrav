@@ -70,7 +70,6 @@ const Query = () => {
     }
 
     return state;
-    
   };
   const [dropdownState, dropdownDispatch] = useReducer(
     dropdownReducer,

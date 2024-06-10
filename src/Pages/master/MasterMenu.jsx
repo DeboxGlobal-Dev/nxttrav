@@ -3,12 +3,12 @@ import { NavLink } from "react-router-dom";
 
 const MasterMenu = () => {
 
-
   const [search, setSearch] = useState('');
+
   const handleSearch = (e) =>{
     setSearch(e.target.value);
-  }
-  
+  };
+
   return(
     <>
       {/* General Master Menu List */}
@@ -784,7 +784,6 @@ const MasterMenu = () => {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>

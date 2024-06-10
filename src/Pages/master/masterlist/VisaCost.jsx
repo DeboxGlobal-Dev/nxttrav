@@ -8,6 +8,7 @@ import { Field } from "formik";
 import { visaCostInitialValue } from "./MasterValidations";
 
 const VisaCost = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -42,6 +43,7 @@ const VisaCost = () => {
       console.log(err);
     }
   };
+
   useEffect(() => {
     getDataToServer();
   }, []);
@@ -60,6 +62,7 @@ const VisaCost = () => {
   }, [updateData]);
 
   useEffect(() => {
+    
     const result = getData.filter((item) => {
       return item?.Name?.toLowerCase()?.match(postData?.Search?.toLowerCase());
     });
@@ -68,11 +71,13 @@ const VisaCost = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+
     setEditData({
       ...rowValue,
       Status: rowValue.Status === "Active" ? 1 : 0
     });
     setIsEditing(true);
+
   };
 
   const columns = [

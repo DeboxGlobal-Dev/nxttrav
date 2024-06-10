@@ -16,7 +16,7 @@ const CityMaster = () => {
   const [stateList, setStateList] = useState([]);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: "",
+    Status: ""
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
@@ -30,7 +30,7 @@ const CityMaster = () => {
         Status: 1,
       });
       setCountryList(countryData.data.DataList);
-     
+    
     } catch (err) {
       console.log(err);
     }
@@ -83,7 +83,6 @@ const CityMaster = () => {
     });
     setIsEditing(true);
   };
-
 
   const stateFiltered = useMemo(() => {
     

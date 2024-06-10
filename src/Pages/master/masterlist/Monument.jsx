@@ -77,18 +77,8 @@ const Monument = () => {
 
   const handleEditClick = (rowValue) => {
     setEditData({
-      id: rowValue.Id,
-      MonumentName: rowValue.MonumentName,
-      Destination: rowValue.Destination,
-      TransferType: rowValue.TransferType,
-      ClosedOnDays: rowValue.ClosedOnDays,
-      DefaultQuotation: rowValue.DefaultQuotation,
-      DefaultProposal: rowValue.DefaultProposal,
-      WeekendDays: rowValue.WeekendDays,
-      Description: rowValue.Description,
+      ...rowValue,
       Status: rowValue.Status === "Active" ? 1 : 0,
-      AddedBy: rowValue.AddedBy,
-      UpdatedBy: rowValue.UpdatedBy,
     });
     setIsEditing(true);
   };

@@ -21,6 +21,29 @@ const VehicleBrand = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [vehicleTypeData, setVehicleTypeData] = useState([]);
+
+  // getDataToServer for Dropdown
+
+  const getDataToServer = async () => {
+
+    try {
+      const {data} = await axiosOther.post("vehicletypemasterlist", {
+        Search: "",
+        Status: 1
+      });
+      setVehicleTypeData(data.DataList);
+      console.log(data.DataList);
+    } catch (err) {
+      console.log(err);
+    };
+
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
+  
+
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -125,7 +148,7 @@ const VehicleBrand = () => {
                   Back
                 </NavLink>
                 <Model
-                  heading={"Add Vehicle Type"}
+                  heading={"Add Vehicle Brand"}
                   apiurl={"addupdatevehiclebrandmaster"}
                   initialValues={vehicleBrandInitialValue}
                   validationSchema={vehicleBrandValidationSchema}
@@ -138,24 +161,28 @@ const VehicleBrand = () => {
                 >
                   <div className="card-body">
                     <div className="row">
-                      <div className="col-sm-4">
+                    <div className="col-sm-4">
                         <label>Vehicle Type</label>
                         <Field
-                          type="text"
-                          name="VehicleType"
-                          placeholder="Vehicle Type"
                           className="form-control"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="VehicleType" />
-                        </span>
+                          component={"select"}
+                          name="VehicleType"
+                        >
+                          <option value="">Select Vehicle </option>
+                          {
+                            vehicleTypeData.map((vehicle)=>{
+                              console.log("vehicl-di", vehicle.id);
+                              return <option value={vehicle.id} key={vehicle.id}>{vehicle.Name}</option>
+                            })
+                          }
+                        </Field>
                       </div>
                       <div className="col-sm-4">
-                        <label>Name</label>
+                        <label>Brand Name</label>
                         <Field
                           type="text"
                           name="Name"
-                          placeholder="Capacity"
+                          placeholder="Brand Name"
                           className="form-control"
                         />
                         <span className="font-size-10 text-danger">

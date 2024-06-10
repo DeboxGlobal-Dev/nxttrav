@@ -929,7 +929,7 @@ export const cruiseMasterValidationSchema = yup.object().shape({
 });
 export const itineraryRequirementValidationSchema = yup.object().shape({
   FromDestination: yup.string().required("Required"),
-  ToDestination: yup.string().required("Required")
+  ToDestination: yup.string().required("Required"),
 });
 
 // Hotel Master Table Value in JSON-----------------------------------
@@ -991,3 +991,4 @@ export const hotelMasterValue = [
     RateSheet: "RateSheet",
   },
 ];
+

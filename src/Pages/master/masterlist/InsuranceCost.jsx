@@ -165,7 +165,7 @@ const InsuranceCost = () => {
                           <option value="">Select Insurance</option>
                           {
                             insuranceType.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.InsuranceType}</option>
+                              return <option value={value.id} key={index+1}>{value.InsuranceType}</option>
                             })
                           }
                         </Field>

@@ -9,21 +9,57 @@ import { vehicleMasterInitialValue, vehicleMasterValidationSchema } from "./Mast
 
 
 const VehicleMaster = () => {
+  
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: "",
+    Status: ""
   });
   const [changeValue, setChangeValue] = useState("");
+  const [vehicleTypData, setVehicleTypeData] = useState([]);
+  const [vehicleBrandData, setVehicleBrandData] = useState([]);
   const [updateData, setUpdateData] = useState(false);
   const [imageValue, setImageValue] = useState({
     ImageName:"",
     ImageData:""
   });
   const [showImage, setShowImage] = useState('');
+
+  //getDataToServer For Dropdown
+
+  const getDataToServer = async () => {
+
+    try {
+      const {data} = await axiosOther.post("vehicletypemasterlist", {
+        Search: "",
+        Status: 1
+      });
+      setVehicleTypeData(data.DataList);
+      console.log(data.DataList);
+    } catch (err) {
+      console.log(err);
+    };
+
+    try {
+      const {data} = await axiosOther.post("vehiclebrandmasterlist", {
+        Search: "",
+        Status: 1
+      });
+      setVehicleBrandData(data.DataList);
+      console.log(data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
+
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -44,7 +80,6 @@ const VehicleMaster = () => {
 
     setFilterData(result);
   }, [postData]);
-
 
   const handleEditClick = (rowValue) => {
     console.log('Row Value....', rowValue);
@@ -162,7 +197,7 @@ const VehicleMaster = () => {
                   Back
                 </NavLink>
                 <Model
-                  heading={"Add Amenties"}
+                  heading={"Add Vehicle"}
                   apiurl={"addupdatevehiclemaster"}
                   initialValues={vehicleMasterInitialValue}
                   validationSchema={vehicleMasterValidationSchema}
@@ -197,25 +232,21 @@ const VehicleMaster = () => {
                           name="VehicleType"
                         >
                           <option value="">Select Vehicle </option>
-                          <option value={1}>TATA</option>
-                          <option value={2}>Maruti</option>
-                          <option value={3}>BMW</option>
-                          <option value={3}>Rolls Royce</option>
+                          {
+                            vehicleTypData.map((vehicle)=>{
+                              return <option value={vehicle.id} key={vehicle.id}>{vehicle.Name}</option>
+                            })
+                          }
                         </Field>
                       </div>
                       <div className="col-sm-4">
                         <label>Capacity</label>
                         <Field
-                          className="form-control"
-                          component={"select"}
+                          type="text"
                           name="Capacity"
-                        >
-                          <option value="">Select Capacity</option>
-                          <option value={1}>8 Seater</option>
-                          <option value={2}>9 Seater</option>
-                          <option value={3}>10 Seater</option>
-                          <option value={3}>11 Seater</option>
-                        </Field>
+                          placeholder="Enter Name"
+                          className="form-control"
+                        />
                       </div>
                       <div className="col-sm-4">
                         <label>Vehile Brand</label>
@@ -225,10 +256,11 @@ const VehicleMaster = () => {
                           name="VehicleBrand"
                         >
                           <option value="">Select Brand </option>
-                          <option value={1}>TATA</option>
-                          <option value={2}>Maruti</option>
-                          <option value={3}>BMW</option>
-                          <option value={3}>Rolls Royce</option>
+                         {
+                          vehicleBrandData.map((brand)=>{
+                            return <option value={brand.id} key={brand.id}>{brand.Name}</option>
+                          })
+                         }
                         </Field>
                       </div>
                       <div className="col-sm-4">
