@@ -6,23 +6,22 @@ import Checkbox from "@mui/material/Checkbox";
 import { useDispatch } from "react-redux";
 import { login } from "../../reducer/authReducers";
 import { axiosNew } from "../../http/axios/axios_new";
- 
 
 const Login = () => {
-
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [user, setUser] = useState({
     username: "",
     password: "",
-  });
-  
-  //"username":"atuny0","password":"9uQFF1Lh";
+  });   
+
+  //"username":"atuny0","password":"9uQFF1Lh";  
   //"username":"hbingley1","password":"CQutx25i8r";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    navigate("/");
     try {
       if (user.username != "" && user.password != "") {
         setLoading(true);
@@ -37,7 +36,7 @@ const Login = () => {
           dispatch(
             login({
               user: data,
-              isAuthenticated: true,
+              isAuthenticated: true
             })
           );
           setTimeout(() => {
@@ -57,7 +56,7 @@ const Login = () => {
     } catch (error) {
       setLoading(false);
       toast.error(`${error.message}`);
-      console.log("Error while log in.", error);
+      console.log("Error while log in.", error); 
     }
   };
 

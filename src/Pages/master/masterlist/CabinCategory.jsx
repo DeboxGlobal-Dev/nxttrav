@@ -16,7 +16,7 @@ const CabinCategory = () => {
     Search: "",
     Status: "",
   });
-  const [laoding, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [updateData, setUpdateData] = useState(false);
   const [changeValue, setChangeValue] = useState("");
   useEffect(() => {

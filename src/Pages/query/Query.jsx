@@ -5,7 +5,7 @@ import {
   paxInitial,
   roomInitial,
   valueAddInitial,
-  suggestedPackageData
+  suggestedPackageData,
 } from "./QuerySchema";
 import { eachDayOfInterval, format } from "date-fns";
 import { axiosOther } from "../../http/axios/axios_new";
@@ -17,7 +17,6 @@ import "select2";
 import "jquery";
 
 const Query = () => {
-
   const [TravelDate, setTravelDate] = useState({ ...travelInitial });
   const [PaxInfo, setPaxInfo] = useState({ ...paxInitial });
   const [RoomInfo, setRoomInfo] = useState({ ...roomInitial });
@@ -28,7 +27,7 @@ const Query = () => {
   const [queryFields, setQueryFields] = useState({ ...queryInitial });
   const [travelsDestination, setTravelDestination] = useState({
     Country: "",
-    Destination: ""
+    Destination: "",
   });
   const [suggestedPackage, setSuggestedPackage] = useState("");
   const [filteredPackage, setFilteredPackage] = useState([]);
@@ -40,7 +39,7 @@ const Query = () => {
   const initialState = {
     counter1: 0,
     counter2: 0,
-    counter3: 0
+    counter3: 0,
   };
 
   const dropdownInitialState = {
@@ -49,11 +48,10 @@ const Query = () => {
     leadList: [],
     tourType: [],
     countryList: [],
-    cityList: []
+    cityList: [],
   };
 
   const dropdownReducer = (state, action) => {
-
     switch (action.type) {
       case "HOTEL-TYPE":
         return { ...state, hotelType: action.payload };
@@ -119,7 +117,7 @@ const Query = () => {
       try {
         const { data } = await axiosOther.post("leadlist", {
           Search: "",
-          Status: ""
+          Status: "",
         });
         // setLeadList(data.DataList);
         dropdownDispatch({ type: "LEAD-LIST", payload: data.DataList });
@@ -171,14 +169,13 @@ const Query = () => {
       }
     };
     gettingDataForDropdown();
-
   }, []);
 
   // Handling Submit Query Data
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (document.activeElement.name === "SaveButton"){
+    if (document.activeElement.name === "SaveButton") {
       localStorage.setItem(
         "Query",
         JSON.stringify({
@@ -1744,9 +1741,11 @@ const Query = () => {
                         name="SuggestedPackage"
                         onChange={handleSearchSuggestedPackage}
                       />
-                      <label htmlFor="" className="font-size-12">
-                        Click to select the packages
-                      </label>
+                      {filteredPackage != "" && (
+                        <label htmlFor="" className="font-size-12">
+                          Click to select the packages
+                        </label>
+                      )}
                     </div>
                     {filteredPackage?.map((value, index) => {
                       return (
@@ -1771,6 +1770,11 @@ const Query = () => {
                         </div>
                       );
                     })}
+                    {filteredPackage == "" && (
+                      <p className="text-center font-weight-bold mt-3">
+                        No Package Matched
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
