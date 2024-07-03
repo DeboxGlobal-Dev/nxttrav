@@ -5,7 +5,7 @@ import {
   paxInitial,
   roomInitial,
   valueAddInitial,
-  suggestedPackageData,
+  suggestedPackageData
 } from "./QuerySchema";
 import { eachDayOfInterval, format } from "date-fns";
 import { axiosOther } from "../../http/axios/axios_new";

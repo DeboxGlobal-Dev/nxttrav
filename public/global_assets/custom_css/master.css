@@ -609,3 +609,15 @@ a {
   background-color: white;
   border: 1px solid black;
 }
+.overflow-text{
+  display: -webkit-box;
+  -webkit-line-clamp:1;
+  -webkit-box-orient:vertical;
+  overflow: hidden;
+}
+.color-pink{
+  color: pink;
+}
+.scrolling{
+  overflow-y:scroll ;
+}
