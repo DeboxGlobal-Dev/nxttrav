@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, createBrowserRouter, BrowserRouter } from "react-router-dom";
+import React, {lazy, Suspense} from "react";
 import "./App.css";
 import "../public/global_assets/custom_css/master.css";
 import Home from "./Pages/home/Home";
@@ -7,107 +8,110 @@ import Query from "./Pages/query/Query";
 import Master from "./Pages/master/Master";
 import Login from "./Pages/auth/Login";
 import Logout from "./Pages/auth/Logout";
-import StateMaster from "./Pages/master/masterList/StateMaster";
-import CityMaster from "./Pages/master/masterList/CityMaster";
-import CountryMaster from "./Pages/master/masterList/CountryMaster";
-import Profile from "./Component/Layout/Profile.jsx";
-import Protected from "./Pages/auth/Protected";
-import QueryList from "./Pages/query/QueryList";
-import QueryView from "./Pages/query/QueryView";
-import LeadSource from "./Pages/master/masterList/LeadSource";
-import DestinationMaster from "./Pages/master/masterList/DestinationMaster";
-import BusinessType from "./Pages/master/masterList/BusinessType";
-import Language from "./Pages/master/masterList/Language";
-import MarketType from "./Pages/master/masterList/MarketType";
-import DivisionMaster from "./Pages/master/masterList/DivisionMaster";
-import TourType from "./Pages/master/masterList/TourType";
-import SeasonMaster from "./Pages/master/masterList/SeasonMaster";
-import RoomMaster from "./Pages/master/masterList/RoomMaster";
-import RoomType from "./Pages/master/masterList/RoomType";
-import Amenties from "./Pages/master/masterList/Amenties";
-import HotelType from "./Pages/master/masterList/HotelType";
-import HotelMeal from "./Pages/master/masterList/HotelMeal";
-import Weekend from "./Pages/master/masterList/Weekend";
-import HotelCategory from "./Pages/master/masterList/HotelCategory";
-import HotelAdditional from "./Pages/master/masterList/HotelAdditional";
-import HotelChain from "./Pages/master/masterList/HotelChain";
-import Resturant from "./Pages/master/masterList/Resturant";
-import ResturantMealPlan from "./Pages/master/masterList/ResturantMealPlan";
-import Monument from "./Pages/master/masterList/Monument";
-import Sightseeing from "./Pages/master/masterList/Sightseeing";
-import TourEscort from "./Pages/master/masterList/TourEscrot";
-import TourEscortPrice from "./Pages/master/masterList/TourEscortPrice";
-import VisaType from "./Pages/master/masterList/VisaType";
-import VisaCost from "./Pages/master/masterList/VisaCost";
-import InsuranceType from "./Pages/master/masterList/InsuranceType";
-import InsuranceCost from "./Pages/master/masterList/InsuranceCost";
-import PassportType from "./Pages/master/masterList/PassportType";
-import PassportCost from "./Pages/master/masterList/PassportCost";
-import TrainMaster from "./Pages/master/masterList/TrainMaster";
-import AirlineMaster from "./Pages/master/masterList/AirlineMaster";
-import AdditionalRequirement from "./Pages/master/masterList/AdditionalRequirement";
-import OperationRestriction from "./Pages/master/masterList/OperationRestriction";
-import TransferMaster from "./Pages/master/masterList/TransferMaster";
-import VehicleType from "./Pages/master/masterList/VehicleType";
-import TransferType from "./Pages/master/masterList/TransferType";
-import VehicleBrand from "./Pages/master/masterList/VehicleBrand";
-import TransportMaster from "./Pages/master/masterList/TransportMaster";
-import DriverMaster from "./Pages/master/masterList/DriverMaster";
-import VehicleMaster from "./Pages/master/masterList/VehicleMaster";
-import FleetMaster from "./Pages/master/masterList/FleetMaster";
-import CruiseCompany from "./Pages/master/masterList/CruiseCompany";
-import CruiseNameCompany from "./Pages/master/masterList/CruiseNameCompany";
-import CabinType from "./Pages/master/masterList/CabinType";
-import CabinCategory from "./Pages/master/masterList/CabinCategory";
-import CruiseMaster from "./Pages/master/masterList/CruiseMaster";
-import FerryCompany from "./Pages/master/masterList/FerryCompany";
-import FerryMaster from "./Pages/master/masterList/FerryMaster";
-import FerrySeat from "./Pages/master/masterList/FerrySeat";
-import FerryPrice from "./Pages/master/masterList/FerryPrice";
-import CurrencyMaster from "./Pages/master/masterList/CurrencyMaster";
-import TaxMaster from "./Pages/master/masterList/TaxMaster";
-import ExpenseType from "./Pages/master/masterList/ExpenseType";
-import ExpenseHead from "./Pages/master/masterList/ExpenseHead";
-import SACCode from "./Pages/master/masterList/SACCode.jsx";
-import PaymentType from "./Pages/master/masterList/PaymentType.jsx";
-import BankMaster from "./Pages/master/masterList/BankMaster.jsx";
-import ItenaryOverview from "./Pages/master/masterList/ItenaryOverview.jsx";
-import FIT from "./Pages/master/masterList/FIT.jsx";
-import GIT from "./Pages/master/masterList/GIT.jsx";
-import LetterMaster from "./Pages/master/masterList/LetterMaster.jsx";
-import Users from "./Component/settings/Users.jsx";
-import AddUser from "./Component/settings/AddUser.jsx";
-import Company from "./Component/settings/Company.jsx";
-import AddCompany from "./Component/settings/AddCompany.jsx";
-import Setting from "./Component/settings/Setting.jsx";
-import SettingEmail from "./Component/settings/SettingEmail.jsx";
-import SettingProfile from "./Component/settings/SettingProfile.jsx";
-import QueryDetails from "./Pages/query/QueryDetails.jsx";
-import Quotation from "./Pages/query/Quotation.jsx";
-import ClientComm from "./Pages/query/ClientComm.jsx";
-import SupplierComm from "./Pages/query/SupplierComm.jsx";
-import Payments from "./Pages/query/Payments.jsx";
-import HotelMasterCreate from "./Pages/master/masterList/HotelMasterCreate.jsx";
-import EmergencyDetails from "./Pages/master/masterList/EmergencyDetails.jsx";
-import ProposalSetting from "./Pages/master/masterList/ProposalSetting.jsx";
-import CommissionMaster from "./Pages/master/masterList/CommissionMaster.jsx";
-import HotelMaster from "./Pages/master/masterlist/HotelMaster.jsx";
-import 'react-toastify/dist/ReactToastify.css';
+
+const StateMaster = lazy(()=> import("./Pages/master/masterlist/StateMaster.jsx"));
+const CityMaster = lazy(()=> import("./Pages/master/masterlist/CityMaster.jsx"));
+const CountryMaster = lazy(()=> import("./Pages/master/masterlist/CountryMaster.jsx"));
+const Profile = lazy(()=> import("./Component/Layout/Profile.jsx"));
+const Protected = lazy(()=> import("./Pages/auth/Protected.jsx"));
+const QueryList = lazy(()=> import("./Pages/query/QueryList.jsx"));
+const QueryView = lazy(()=> import("./Pages/query/QueryView.jsx"));
+const LeadSource = lazy(()=> import("./Pages/master/masterlist/LeadSource.jsx"));
+const DestinationMaster = lazy(()=> import("./Pages/master/masterlist/DestinationMaster.jsx"));
+const BusinessType = lazy(()=> import("./Pages/master/masterlist/BusinessType.jsx"));
+const Language = lazy(()=> import("./Pages/master/masterlist/Language.jsx"));
+const MarketType = lazy(()=> import("./Pages/master/masterlist/MarketType.jsx"));
+const DivisionMaster = lazy(()=> import("./Pages/master/masterlist/DivisionMaster.jsx"));
+const TourType = lazy(()=> import("./Pages/master/masterlist/TourType.jsx"));
+const SeasonMaster = lazy(()=> import("./Pages/master/masterlist/SeasonMaster.jsx"));
+const RoomMaster = lazy(()=> import("./Pages/master/masterlist/RoomMaster.jsx"));
+const RoomType = lazy(()=> import("./Pages/master/masterlist/RoomType.jsx"));
+const Amenties = lazy(()=> import("./Pages/master/masterlist/Amenties.jsx"));
+const HotelType = lazy(()=> import("./Pages/master/masterlist/HotelType.jsx"));
+const HotelMeal = lazy(()=> import("./Pages/master/masterlist/HotelMeal.jsx"));
+const Weekend = lazy(()=> import("./Pages/master/masterlist/Weekend.jsx"));
+const HotelCategory = lazy(()=> import("./Pages/master/masterlist/HotelCategory.jsx"));
+const HotelAdditional = lazy(()=> import("./Pages/master/masterlist/HotelAdditional.jsx"));
+const HotelChain = lazy(()=> import("./Pages/master/masterlist/HotelChain.jsx"));
+const Resturant = lazy(()=> import("./Pages/master/masterlist/Resturant.jsx"));
+const ResturantMealPlan = lazy(()=> import("./Pages/master/masterlist/ResturantMealPlan.jsx"));
+const Monument = lazy(()=> import("./Pages/master/masterlist/Monument.jsx"));
+const Sightseeing = lazy(()=> import("./Pages/master/masterlist/Sightseeing.jsx"));
+const TourEscort = lazy(()=> import("./Pages/master/masterlist/TourEscrot.jsx"));
+const TourEscortPrice = lazy(()=> import("./Pages/master/masterlist/TourEscortPrice.jsx"));
+const VisaType = lazy(()=> import("./Pages/master/masterlist/VisaType.jsx"));
+const VisaCost = lazy(()=> import("./Pages/master/masterlist/VisaCost.jsx"));
+const InsuranceType = lazy(()=> import("./Pages/master/masterlist/InsuranceType.jsx"));
+const InsuranceCost = lazy(()=> import("./Pages/master/masterlist/InsuranceCost.jsx"));
+const PassportType = lazy(()=> import("./Pages/master/masterlist/PassportType.jsx"));
+const PassportCost = lazy(()=> import("./Pages/master/masterlist/PassportCost.jsx"));
+const TrainMaster = lazy(()=> import("./Pages/master/masterlist/TrainMaster.jsx"));
+const AirlineMaster = lazy(()=> import("./Pages/master/masterlist/AirlineMaster.jsx"));
+const AdditionalRequirement = lazy(()=> import("./Pages/master/masterlist/AdditionalRequirement.jsx"));
+const OperationRestriction = lazy(()=> import("./Pages/master/masterlist/OperationRestriction.jsx"));
+const TransferMaster = lazy(()=> import("./Pages/master/masterlist/TransferMaster.jsx"));
+const VehicleType = lazy(()=> import("./Pages/master/masterlist/VehicleType.jsx"));
+const TransferType = lazy(()=> import("./Pages/master/masterlist/TransferType.jsx"));
+const VehicleBrand = lazy(()=> import("./Pages/master/masterlist/VehicleBrand.jsx"));
+const TransportMaster = lazy(()=> import("./Pages/master/masterlist/TransportMaster.jsx"));
+const DriverMaster = lazy(()=> import("./Pages/master/masterlist/DriverMaster.jsx"));
+const VehicleMaster = lazy(()=> import("./Pages/master/masterlist/VehicleMaster.jsx"));
+const FleetMaster = lazy(()=> import("./Pages/master/masterlist/FleetMaster"));
+const CruiseCompany = lazy(()=> import("./Pages/master/masterlist/CruiseCompany.jsx"));
+const CruiseNameCompany = lazy(()=> import("./Pages/master/masterlist/CruiseNameCompany.jsx"));
+const CabinType = lazy(()=> import("./Pages/master/masterlist/CabinType.jsx"));
+const CabinCategory = lazy(()=> import("./Pages/master/masterlist/CabinCategory.jsx"));
+const CruiseMaster = lazy(()=> import("./Pages/master/masterlist/CruiseMaster.jsx"));
+const FerryCompany = lazy(()=> import("./Pages/master/masterlist/FerryCompany.jsx"));
+const FerryMaster = lazy(()=> import("./Pages/master/masterlist/FerryMaster.jsx"));
+const FerryPrice = lazy(()=> import("./Pages/master/masterlist/FerryPrice.jsx"));
+const FerrySeat = lazy(()=> import("./Pages/master/masterlist/FerrySeat.jsx"));
+const CurrencyMaster = lazy(()=> import("./Pages/master/masterlist/CurrencyMaster.jsx"));
+const TaxMaster = lazy(()=> import("./Pages/master/masterlist/TaxMaster.jsx"));
+const ExpenseType = lazy(()=> import("./Pages/master/masterlist/ExpenseType.jsx"));
+const ExpenseHead = lazy(()=> import("./Pages/master/masterlist/ExpenseHead.jsx"));
+const SACCode = lazy(()=> import("./Pages/master/masterlist/SACCode.jsx"));
+const PaymentType = lazy(()=> import("./Pages/master/masterlist/PaymentType.jsx"));
+const BankMaster = lazy(()=> import("./Pages/master/masterlist/BankMaster.jsx"));
+const ItenaryOverview = lazy(()=> import("./Pages/master/masterlist/ItenaryOverview.jsx"));
+const FIT = lazy(()=> import("./Pages/master/masterlist/FIT.jsx"));
+const GIT = lazy(()=> import("./Pages/master/masterlist/GIT.jsx"));
+const LetterMaster = lazy(()=> import("./Pages/master/masterlist/LetterMaster.jsx"));
+const Users = lazy(()=> import("./Component/settings/Users.jsx"));
+const AddUser = lazy(()=> import("./Component/settings/AddUser.jsx"));
+const Company = lazy(()=> import("./Component/settings/Company.jsx"));
+const AddCompany = lazy(()=> import("./Component/settings/AddCompany.jsx"));
+const Setting = lazy(()=> import("./Component/settings/Setting.jsx"));
+const SettingEmail = lazy(()=> import("./Component/settings/SettingEmail.jsx"));
+const SettingProfile = lazy(()=> import("./Component/settings/SettingProfile.jsx"));
+const QueryDetails = lazy(()=> import("./Pages/query/QueryDetails.jsx"));
+const Quotation = lazy(()=> import("./Pages/query/Quotation.jsx"));
+const ClientComm = lazy(()=> import("./Pages/query/ClientComm.jsx"));
+const SupplierComm = lazy(()=> import("./Pages/query/SupplierComm.jsx"));
+const Payments = lazy(()=> import("./Pages/query/Payments.jsx"));
+const HotelMasterCreate = lazy(()=> import("./Pages/master/masterlist/HotelMasterCreate.jsx"));
+const ProposalSetting = lazy(()=> import("./Pages/master/masterlist/ProposalSetting.jsx"));
+const EmergencyDetails = lazy(()=> import("./Pages/master/masterlist/EmergencyDetails.jsx"));
+const CommissionMaster = lazy(()=> import("./Pages/master/masterlist/CommissionMaster.jsx"));
+const HotelMaster = lazy(()=> import("./Pages/master/masterlist/HotelMaster.jsx"));
+const ItenaryRequirement = lazy(()=> import("./Pages/master/masterlist/ItenaryRequirement.jsx"));
+const Proposal = lazy(()=> import("./Pages/query/Proposal.jsx"));
+const Vouchers = lazy(()=> import("./Pages/query/Vouchers.jsx"));
+const Invoices = lazy(()=> import("./Pages/query/Invoices.jsx"));
+const Itineraries = lazy(()=> import("./Pages/query/Itineraries.jsx"));
+const Polocies = lazy(()=> import("./Pages/query/Policies.jsx"));
+const Commission = lazy(()=> import("./Pages/query/Commission.jsx"));
+const Summary = lazy(()=> import("./Pages/query/Summary.jsx"));
+const Preview = lazy(()=> import("./Pages/query/Preview.jsx"));
+const SupplierPayment = lazy(()=> import("./Pages/query/SupplierPayment.jsx"));
+const AgentPayment = lazy(()=> import("./Pages/query/AgentPayment.jsx"));
+const ExpenseEntry = lazy(()=> import("./Pages/query/ExpenseEntery.jsx"));
+const TaxInvoice = lazy(()=> import("./Pages/template/TaxInvoice.jsx"));
+const PerformanceInvoice = lazy(()=> import("./Pages/template/PerformanceInoive.jsx"));
+
 import { ToastContainer } from 'react-toastify';
-import ItenaryRequirement from "./Pages/master/masterList/ItenaryRequirement.jsx";
-import Proposal from "./Pages/query/Proposal.jsx";
-import Vouchers from "./Pages/query/Vouchers.jsx";
-import Invoices from "./Pages/query/Invoices.jsx";
-import Itineraries from "./Pages/query/Itineraries.jsx";
-import Polocies from "./Pages/query/Policies.jsx";
-import Commission from "./Pages/query/Commission.jsx";
-import Summary from "./Pages/query/Summary.jsx";
-import Preview from "./Pages/query/Preview.jsx";
-import SupplierPayment from "./Pages/query/SupplierPayment.jsx";
-import AgentPayment from "./Pages/query/AgentPayment.jsx";
-import ExpenseEntry from "./Pages/query/ExpenseEntery.jsx";
-import TaxInvoice from "./Pages/template/TaxInvoice.jsx";
-import PerformanceInvoice from "./Pages/template/PerformanceInoive.jsx";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 const App = () => {
@@ -115,6 +119,7 @@ const App = () => {
     <>
     <ToastContainer />
       <Router>
+        <Suspense fallback={<div>Loading</div>}>
         <Routes>
           <Route path="/" element={<Protected><Home /></Protected>}/>
           <Route path="/mail" element={  <Protected><Mail /></Protected>}/>
@@ -214,7 +219,7 @@ const App = () => {
           <Route path="/master/paymenttype" element={<Protected><PaymentType/></Protected>}></Route>
           <Route path="/master/bankmaster" element={<Protected><BankMaster/></Protected>}></Route>
           <Route path="/taxinvoice" element={<Protected><TaxInvoice/></Protected>}></Route>
-          <Route path="/performanceinoice" element={<Protected><PerformanceInvoice/></Protected>}></Route>
+          <Route path="/performanceinvoice" element={<Protected><PerformanceInvoice/></Protected>}></Route>
 
           <Route path="/setting/" element={<Protected><Setting/></Protected>}>
             <Route index element={<Protected><Users/></Protected>}></Route>
@@ -231,6 +236,7 @@ const App = () => {
           <Route path="/login" element={<Login/>}/>
           <Route path="/logout"element={<Protected><Logout/></Protected>}/>
         </Routes>
+        </Suspense>
       </Router>
     </>
   );

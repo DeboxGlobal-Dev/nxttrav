@@ -11,6 +11,10 @@ import {
 } from "./MasterValidations";
 
 const CountryMaster = () => {
+
+  // checking for loading component
+
+  console.log("CountryMaster Loaded");
   
   // console.log("This is Country Master");
   const [getData, setGetData] = useState([]);

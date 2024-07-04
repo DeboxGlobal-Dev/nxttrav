@@ -9,6 +9,8 @@ import {stateInitialValue, stateValidationSchema} from "./MasterValidations";
 
 const StateMaster = () => {
 
+  console.log("StateMaster Loaded");
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
