@@ -3,7 +3,6 @@ import React, {lazy, Suspense} from "react";
 import "./App.css";
 import "../public/global_assets/custom_css/master.css";
 
-
 const Home = lazy(()=> import("./Pages/home/Home.jsx"));
 const Mail = lazy(()=> import("./Pages/mail/Mail.jsx"));
 const Query = lazy(()=> import("./Pages/query/Query.jsx"));
@@ -112,6 +111,7 @@ const TaxInvoice = lazy(()=> import("./Pages/template/TaxInvoice.jsx"));
 const PerformanceInvoice = lazy(()=> import("./Pages/template/PerformanceInoive.jsx"));
 const TourExtension = lazy(()=> import("./Pages/query/TourExtension.jsx"));
 const AssignUser = lazy(()=> import("./Pages/query/AssignUser.jsx"));
+
 import LazyLoading from "./Pages/template/LazyLoading.jsx";
 
 import { ToastContainer } from 'react-toastify';
