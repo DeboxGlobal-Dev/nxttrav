@@ -10,16 +10,19 @@ const QueryList = () => {
   const [filterData, setFilterData] = useState([]);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: "",
+    Status: ""
   });
 
   useEffect(() => {
+
     const postDataToServer = async () => {
       try {
+
         const { data } = await axios.post(
           "http://127.0.0.1:8000/api/querymasterlist",
           postData
         );
+
         setGetData(data.DataList);
         setFilterData(data.DataList);
         console.log("QUERY DATA: ", getData);
@@ -174,7 +177,7 @@ const QueryList = () => {
                     onChange={(e) => {
                       setPostData({
                         ...postData,
-                        Search: e.target.value,
+                        Search: e.target.value
                       });
                     }}
                   />

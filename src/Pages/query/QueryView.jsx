@@ -71,14 +71,14 @@ const QueryView = () => {
               <Stepper />
           </div>
           <div className="col-xl-12 px-4 mt-2" style={{ padding: 0 }}>
-            <ul className="nav nav-pills-toolbar d-flex align-items-center justify-content-between border py-1">
+            <ul className="nav nav-pills-toolbar d-flex align-items-center justify-content-between p-1 radius-10">
               <li className="nav-item view-nav-item rounded-pill">
                 <NavLink
                   to="/querylist/queryview/"
-                  className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
+                  className={`font-size-14 rounded-pill d-flex align-items-center font-weight-500 ${
                     pathname === "/querylist/queryview/"
-                      ? "Active"
-                      : "text-primary"
+                      ? "Active text-light"
+                      : "text-dark"
                   }`}
                 >
                   Query
@@ -87,10 +87,10 @@ const QueryView = () => {
               <li className="nav-item view-nav-item rounded-pill">
                 <NavLink
                   to="quotation"
-                  className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
+                  className={`font-size-14 rounded-pill d-flex align-items-center font-weight-500 ${
                     pathname === "/querylist/queryview/quotation"
                       ? "Active"
-                      : "text-primary"
+                      : "text-dark"
                   }`}
                 >
                   Quotation
@@ -99,10 +99,10 @@ const QueryView = () => {
               <li className="nav-item view-nav-item rounded-pill">
                 <NavLink
                   to="costsheet"
-                  className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
+                  className={`font-size-14 rounded-pill d-flex align-items-center font-weight-500 ${
                     pathname === "/querylist/queryview/costsheet"
                       ? "Active"
-                      : "text-primary"
+                      : "text-dark"
                   }`}
                 >
                   Cost Sheet
@@ -111,10 +111,10 @@ const QueryView = () => {
               <li className="nav-item view-nav-item rounded-pill">
                 <NavLink
                   to="proposal"
-                  className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
+                  className={`font-size-14 rounded-pill d-flex align-items-center font-weight-500 ${
                     pathname === "/querylist/queryview/proposal"
                       ? "Active"
-                      : "text-primary"
+                      : "text-dark"
                   }`}
                 >
                   Proposal
@@ -123,10 +123,10 @@ const QueryView = () => {
               <li className="nav-item view-nav-item rounded-pill">
                 <NavLink
                   to="clientcomm"
-                  className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
+                  className={`font-size-14 rounded-pill d-flex align-items-center font-weight-500 ${
                     pathname === "/querylist/queryview/clientcomm"
                       ? "Active"
-                      : "text-primary"
+                      : "text-dark"
                   }`}
                 >
                   Client Communication
@@ -135,10 +135,10 @@ const QueryView = () => {
               <li className="nav-item view-nav-item rounded-pill">
                 <NavLink
                   to="suppliercomm"
-                  className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
+                  className={`font-size-14 rounded-pill d-flex align-items-center font-weight-500 ${
                     pathname === "/querylist/queryview/suppliercomm"
                       ? "Active"
-                      : "text-primary"
+                      : "text-dark"
                   }`}
                 >
                   Supplier Communication
@@ -147,10 +147,10 @@ const QueryView = () => {
               <li className="nav-item view-nav-item rounded-pill">
                 <NavLink
                   to="payments"
-                  className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
+                  className={`font-size-14 rounded-pill d-flex align-items-center font-weight-500 ${
                     pathname === "/querylist/queryview/payments"
                       ? "Active"
-                      : "text-primary"
+                      : "text-dark"
                   }`}
                 >
                   <i className="fa-solid fa-puzzle-piece"></i>
@@ -160,10 +160,10 @@ const QueryView = () => {
               <li className="nav-item view-nav-item rounded-pill">
                 <NavLink
                   to="vouchers"
-                  className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
+                  className={`font-size-14 rounded-pill d-flex align-items-center font-weight-500 ${
                     pathname === "/querylist/queryview/vouchers"
                       ? "Active"
-                      : "text-primary"
+                      : "text-dark"
                   }`}
                 >
                   Vouchers
@@ -172,13 +172,37 @@ const QueryView = () => {
               <li className="nav-item view-nav-item rounded-pill">
                 <NavLink
                   to="invoices"
-                  className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
+                  className={`font-size-14 rounded-pill d-flex align-items-center font-weight-500 ${
                     pathname === "/querylist/queryview/invoices"
                       ? "Active"
-                      : "text-primary"
+                      : "text-dark"
                   }`}
                 >
                   Invoices
+                </NavLink>
+              </li>
+              <li className="nav-item view-nav-item rounded-pill">
+                <NavLink
+                  to="tourextension"
+                  className={`nav-link font-size-14 rounded-pill d-flex align-items-center font-weight-500 ${
+                    pathname === "/querylist/queryview/tourextension"
+                      ? "Active"
+                      : "text-dark"
+                  }`}
+                >
+                  Tour Extension
+                </NavLink>
+              </li>
+              <li className="nav-item view-nav-item rounded-pill">
+                <NavLink
+                  to="assignuser"
+                  className={`nav-link font-size-14 rounded-pill d-flex align-items-center font-weight-500 ${
+                    pathname === "/querylist/queryview/assignuser"
+                      ? "Active"
+                      : "text-dark"
+                  }`}
+                >
+                  Assign User
                 </NavLink>
               </li>
             </ul>

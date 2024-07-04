@@ -11,12 +11,7 @@ import {
 } from "./MasterValidations";
 
 const CountryMaster = () => {
-
-  // checking for loading component
-
-  console.log("CountryMaster Loaded");
   
-  // console.log("This is Country Master");
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -28,8 +23,9 @@ const CountryMaster = () => {
   });
   const [updateData, setUpdateData] = useState(false);
   const [changeValue, setChangeValue] = useState("");
-  // console.log('GetData', getData);
+  
   useEffect(() => {
+    
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("countrylist", postData);

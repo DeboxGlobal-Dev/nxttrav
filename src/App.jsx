@@ -1,13 +1,15 @@
-import { BrowserRouter as Router, Routes, Route, createBrowserRouter, BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, {lazy, Suspense} from "react";
 import "./App.css";
 import "../public/global_assets/custom_css/master.css";
-import Home from "./Pages/home/Home";
-import Mail from "./Pages/mail/Mail";
-import Query from "./Pages/query/Query";
-import Master from "./Pages/master/Master";
-import Login from "./Pages/auth/Login";
-import Logout from "./Pages/auth/Logout";
+
+
+const Home = lazy(()=> import("./Pages/home/Home.jsx"));
+const Mail = lazy(()=> import("./Pages/mail/Mail.jsx"));
+const Query = lazy(()=> import("./Pages/query/Query.jsx"));
+const Master = lazy(()=> import("./Pages/master/Master.jsx"));
+const Login = lazy(()=> import("./Pages/auth/Login.jsx"));
+const Logout = lazy(()=> import("./Pages/auth/Logout.jsx"));
 
 const StateMaster = lazy(()=> import("./Pages/master/masterlist/StateMaster.jsx"));
 const CityMaster = lazy(()=> import("./Pages/master/masterlist/CityMaster.jsx"));
@@ -108,18 +110,19 @@ const AgentPayment = lazy(()=> import("./Pages/query/AgentPayment.jsx"));
 const ExpenseEntry = lazy(()=> import("./Pages/query/ExpenseEntery.jsx"));
 const TaxInvoice = lazy(()=> import("./Pages/template/TaxInvoice.jsx"));
 const PerformanceInvoice = lazy(()=> import("./Pages/template/PerformanceInoive.jsx"));
+const TourExtension = lazy(()=> import("./Pages/query/TourExtension.jsx"));
+const AssignUser = lazy(()=> import("./Pages/query/AssignUser.jsx"));
+import LazyLoading from "./Pages/template/LazyLoading.jsx";
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
 
 const App = () => {
   return (
     <>
     <ToastContainer />
       <Router>
-        <Suspense fallback={<div>Loading</div>}>
+        <Suspense fallback={<LazyLoading/>}>
         <Routes>
           <Route path="/" element={<Protected><Home /></Protected>}/>
           <Route path="/mail" element={  <Protected><Mail /></Protected>}/>
@@ -144,6 +147,8 @@ const App = () => {
             <Route path="proposal" element={<Protected><Proposal/></Protected>}></Route>
             <Route path="vouchers" element={<Protected><Vouchers/></Protected>}></Route>
             <Route path="invoices" element={<Protected><Invoices/></Protected>}></Route>
+            <Route path="tourextension" element={<Protected><TourExtension/></Protected>}></Route>
+            <Route path="assignuser" element={<Protected><AssignUser/></Protected>}></Route>
           </Route>
           {/* <Route path="/queylist/queryview/quotation"element={<Protected><QueryView/></Protected>}></Route> */}
 

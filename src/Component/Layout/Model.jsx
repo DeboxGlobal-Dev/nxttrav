@@ -16,14 +16,13 @@ const Model = ({
   setUpdateData,
   updateData,
   imageValue,
-  setImageValue,
+  setImageValue
 }) => {
   
   const closeModel = () => {
     document.getElementById("cancel").click();
   };
   
-
   const handleSubmit = async (values, { resetForm }) => {
     console.log('Submit Modal Value', {...values, ...imageValue});
     
@@ -67,7 +66,7 @@ const Model = ({
       >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
-            <div className="modal-header  bg-info-700">
+            <div className="modal-header bg-info-700">
               <h5 className="modal-title" id="exampleModalLabel">
                 {heading}
               </h5>
@@ -114,7 +113,7 @@ const Model = ({
                         Close
                       </button>
                       <button type="submit" className="green-button">
-                        {"Save"}
+                        Save
                       </button>
                     </div>
                   </Form>
