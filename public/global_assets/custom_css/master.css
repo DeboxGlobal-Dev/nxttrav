@@ -634,3 +634,10 @@ a {
 .scrolling{
   overflow-y:scroll ;
 }
+.font-awesome-circle{
+ padding: 3px;
+ background-color: rgb(36, 39, 46);
+ color: white;
+ border-radius: 50%;
+ font-size: 8px;
+}

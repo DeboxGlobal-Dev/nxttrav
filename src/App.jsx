@@ -9,7 +9,6 @@ const Query = lazy(()=> import("./Pages/query/Query.jsx"));
 const Master = lazy(()=> import("./Pages/master/Master.jsx"));
 const Login = lazy(()=> import("./Pages/auth/Login.jsx"));
 const Logout = lazy(()=> import("./Pages/auth/Logout.jsx"));
-
 const StateMaster = lazy(()=> import("./Pages/master/masterlist/StateMaster.jsx"));
 const CityMaster = lazy(()=> import("./Pages/master/masterlist/CityMaster.jsx"));
 const CountryMaster = lazy(()=> import("./Pages/master/masterlist/CountryMaster.jsx"));
@@ -112,7 +111,12 @@ const PerformanceInvoice = lazy(()=> import("./Pages/template/PerformanceInoive.
 const TourExtension = lazy(()=> import("./Pages/query/TourExtension.jsx"));
 const AssignUser = lazy(()=> import("./Pages/query/AssignUser.jsx"));
 
+// import AssignUser from "./Pages/query/AssignUser.jsx";
+
+
+
 import LazyLoading from "./Pages/template/LazyLoading.jsx";
+
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
