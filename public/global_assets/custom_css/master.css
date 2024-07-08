@@ -641,3 +641,15 @@ a {
  border-radius: 50%;
  font-size: 8px;
 }
+.square{
+  height: 15px;
+  width: 15px;
+  background-color: blue;
+  border-radius: 1px;
+}
+.bg-green{
+  background-color: rgba(161, 245, 161, 0.664);
+}
+.green-light-color{
+  color: rgb(2, 100, 2);
+}
