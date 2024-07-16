@@ -110,23 +110,20 @@ const TaxInvoice = lazy(()=> import("./Pages/template/TaxInvoice.jsx"));
 const PerformanceInvoice = lazy(()=> import("./Pages/template/PerformanceInoive.jsx"));
 const TourExtension = lazy(()=> import("./Pages/query/TourExtension.jsx"));
 const AssignUser = lazy(()=> import("./Pages/query/AssignUser.jsx"));
-
-// import AssignUser from "./Pages/query/AssignUser.jsx";
-
-
-
-import LazyLoading from "./Pages/template/LazyLoading.jsx";
+import JsonToExcel from "./Pages/template/JsonToExcel.jsx";
 
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import MasterLoad from "./Pages/template/loadComponent/MasterLoad.jsx";
+
 
 const App = () => {
   return (
     <>
     <ToastContainer />
       <Router>
-        <Suspense fallback={<LazyLoading/>}>
+        <Suspense fallback={<MasterLoad/>}>
         <Routes>
           <Route path="/" element={<Protected><Home /></Protected>}/>
           <Route path="/mail" element={  <Protected><Mail /></Protected>}/>
@@ -244,6 +241,7 @@ const App = () => {
           <Route path="/company/add" element={<Protected><AddCompany/></Protected>}></Route>
           <Route path="/login" element={<Login/>}/>
           <Route path="/logout"element={<Protected><Logout/></Protected>}/>
+          <Route path="/excelconverter" element={<JsonToExcel/>}></Route>
         </Routes>
         </Suspense>
       </Router>

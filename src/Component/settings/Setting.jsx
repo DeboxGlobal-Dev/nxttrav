@@ -99,28 +99,28 @@ const Setting = () => {
                 <div className="card-header border-bottom py-2">
                   <h6 className="my-1">Settings</h6>
                 </div>
-                <NavLink to="/setting" className={`py-2 px-3 d-flex ${pathname==="/setting"? 'Active':''}`}>
+                <NavLink to="/setting" className={`py-2 px-3 d-flex ${pathname==="/setting"? 'Active':''}`} style={{height:"40px"}}>
                   <div>
                      <i className="icon-user-plus mr-2"></i>Users
                   </div>
                   <span className="badge badge-pill bg-blue ml-auto">12</span>
                 </NavLink>
-                <NavLink to="profile" className={`py-2 px-3 d-flex ${pathname==="/setting/profile"? 'Active':''}`}>
+                <NavLink to="profile" className={`py-2 px-3 d-flex ${pathname==="/setting/profile"? 'Active':''}`} style={{height:"40px"}}>
                   <div>
                     <i className="fa-solid fa-user mr-2"></i>Profile
                   </div>
                   <span className="badge badge-pill bg-blue ml-auto">24</span>
                 </NavLink>
-                <NavLink to="email" className={`py-2 px-3 d-flex ${pathname==="/setting/email"? 'Active':''}`}>
+                <NavLink to="email" className={`py-2 px-3 d-flex ${pathname==="/setting/email"? 'Active':''}`} style={{height:"40px"}}>
                   <div>
                     <i className="fa-solid fa-building mr-2"></i>Email Setting
                   </div>
                   <span className="badge badge-pill bg-blue ml-auto">36</span>
                 </NavLink>
-                <NavLink to="reporting" className={`py-2 px-3 ${pathname==="/setting/reporting"? 'Active':''}`}>
+                <NavLink to="reporting" className={`py-2 px-3 ${pathname==="/setting/reporting"? 'Active':''}`} style={{height:"40px"}}>
                   <i className="fa-solid fa-gear mr-2"></i> Reporting Chart
                 </NavLink>
-                <NavLink to="database" className={`py-2 px-3 ${pathname==="/setting/database"? 'Active':''}`}>
+                <NavLink to="database" className={`py-2 px-3 ${pathname==="/setting/database"? 'Active':''}`} style={{height:"40px"}}>
                   <i className="icon-comment-discussion mr-2"></i>Database Backup
                 </NavLink>
               </div>

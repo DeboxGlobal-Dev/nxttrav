@@ -1,87 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import "quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 
 const Polocies = () => {
-  var modules = {
-    toolbar: [
-      [{ size: ["small", false, "large", "huge"] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [{ list: "ordered" }, { list: "bullet" }],
-      ["link", "image"],
-      [
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" },
-        { align: [] },
-      ],
-      [
-        {
-          color: [
-            "#000000",
-            "#e60000",
-            "#ff9900",
-            "#ffff00",
-            "#008a00",
-            "#0066cc",
-            "#9933ff",
-            "#ffffff",
-            "#facccc",
-            "#ffebcc",
-            "#ffffcc",
-            "#cce8cc",
-            "#cce0f5",
-            "#ebd6ff",
-            "#bbbbbb",
-            "#f06666",
-            "#ffc266",
-            "#ffff66",
-            "#66b966",
-            "#66a3e0",
-            "#c285ff",
-            "#888888",
-            "#a10000",
-            "#b26b00",
-            "#b2b200",
-            "#006100",
-            "#0047b2",
-            "#6b24b2",
-            "#444444",
-            "#5c0000",
-            "#663d00",
-            "#666600",
-            "#003700",
-            "#002966",
-            "#3d1466",
-            "custom-color",
-          ],
-        },
-      ],
-    ],
-  };
 
-  var formats = [
-    "header",
-    "height",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "color",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "align",
-    "size",
-  ];
+  const [textEditorValue, setTextEditorValue] = useState({
+    Overview:"",
+    TourHighlight:"",
+    ItenararyIntroduction:"",
+    ItenararySummery:"",
+    PaymentPolicy:"",
+    CancellationPolicy:"",
+    Enclusive:"",
+    Exclusive:"",
+    Remarks:"",
+    TermsCondition:""
+  });
 
-  const handleProcedureContentChange = (content) => {
-    console.log("content---->", content);
-  };
+  const handleOverview = (content) =>{
+    setTextEditorValue({...textEditorValue, Overview:content});
+  }
+  const hanldeTourHighlight = (content) =>{
+    setTextEditorValue({...textEditorValue, TourHighlight:content});
+  }
+  const hanldeItenararyIntroduction = (content) =>{
+    setTextEditorValue({...textEditorValue, ItenararyIntroduction:content});
+  }
+  const hanldeItenararySummary = (content) =>{
+    setTextEditorValue({...textEditorValue, ItenararySummery:content});
+  }
+  const handlePaymentPolicy = (content) =>{
+    setTextEditorValue({...textEditorValue, PaymentPolicy:content});
+  }
+  const handleCancellationPolicy = (content) =>{
+    setTextEditorValue({...textEditorValue, CancellationPolicy:content});
+  }
+  const handleEnculsive = (content) =>{
+    setTextEditorValue({...textEditorValue, Enclusive:content});
+  }
+  const handleExculsive = (content) =>{
+    setTextEditorValue({...textEditorValue, Exclusive:content});
+  }
+  const handleRemarks = (content) =>{
+    setTextEditorValue({...textEditorValue, handleRemarks:content});
+  }
+  const handleTermsCondition = (content) =>{
+    setTextEditorValue({...textEditorValue, TermsCondition:content});
+  }
+
+  console.log("TextEditorValue", textEditorValue);
 
   return (
     <>
@@ -125,19 +92,27 @@ const Polocies = () => {
         <div className="row mt-2">
           <div className="col-6 pl-0" style={{height:"260px"}}>
             <p className="m-0 font-weight-bold">Overview</p>
-            <ReactQuillComponent/>
+            <ReactQuillComponent
+              handleProcedureContentChange={handleOverview}
+            />
           </div>
           <div className="col-6 pr-0" style={{height:"260px"}}>
             <p className="m-0 font-weight-bold">Tour Highlight</p>
-            <ReactQuillComponent/>
+            <ReactQuillComponent
+              handleProcedureContentChange={hanldeTourHighlight}
+            />
           </div>
           <div className="col-6 pl-0" style={{height:"260px"}}>
             <p className="m-0 font-weight-bold">Itenarary Introduction</p>
-            <ReactQuillComponent/>
+            <ReactQuillComponent
+            handleProcedureContentChange={hanldeItenararyIntroduction}
+            />
           </div>
           <div className="col-6 pr-0" style={{height:"260px"}}>
             <p className="m-0 font-weight-bold">Itenarary Summary</p>
-            <ReactQuillComponent/>
+            <ReactQuillComponent
+              handleProcedureContentChange={hanldeItenararySummary}
+            />
           </div>
         </div>
 
@@ -158,14 +133,16 @@ const Polocies = () => {
         <div className="row mt-2">
           <div className="col-6 pl-0" style={{height:"260px"}}>
             <p className="m-0 font-weight-bold">Payment Policy</p>
-            <ReactQuillComponent/>
+            <ReactQuillComponent
+              handleProcedureContentChange={handlePaymentPolicy}
+            />
           </div>
           <div className="col-6 pr-0" style={{height:"260px"}}>
             <p className="m-0 font-weight-bold">Cancellation Policy</p>
-            <ReactQuillComponent/>
+            <ReactQuillComponent
+              handleProcedureContentChange={handleCancellationPolicy}
+            />
           </div>
-          
-         
         </div>
 
         <div className="row bg-green mb-2 py-1">
@@ -185,29 +162,35 @@ const Polocies = () => {
         <div className="row mt-2">
           <div className="col-6 pl-0" style={{height:"260px"}}>
             <p className="m-0 font-weight-bold">Enclusive</p>
-            <ReactQuillComponent/>
+            <ReactQuillComponent
+              handleProcedureContentChange={handleEnculsive}
+            />
           </div>
           <div className="col-6 pr-0" style={{height:"260px"}}>
             <p className="m-0 font-weight-bold">Exclusive</p>
-            <ReactQuillComponent/>
+            <ReactQuillComponent 
+              handleProcedureContentChange={handleExculsive}
+            />
           </div>
           <div className="col-6 pl-0" style={{height:"260px"}}>
             <p className="m-0 font-weight-bold">Remarks</p>
-            <ReactQuillComponent/>
+            <ReactQuillComponent 
+              handleProcedureContentChange={handleRemarks}
+            />
           </div>
           <div className="col-6 pr-0" style={{height:"260px"}}>
             <p className="m-0 font-weight-bold">Terms & Condition</p>
-            <ReactQuillComponent/>
+            <ReactQuillComponent 
+              handleProcedureContentChange={handleTermsCondition}
+            />
           </div>
-          
-         
         </div>
       </div>
     </>
   );
 };
 
-const ReactQuillComponent =()=>{
+const ReactQuillComponent =({handleProcedureContentChange})=>{
 
     var modules = {
         toolbar: [
@@ -285,12 +268,9 @@ const ReactQuillComponent =()=>{
         "size",
       ];
     
-      const handleProcedureContentChange = (content) => {
-        console.log("content---->", content);
-      };
 
     return(
-        <ReactQuill
+      <ReactQuill
         theme="snow"
         modules={modules}
         formats={formats}

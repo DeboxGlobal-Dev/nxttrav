@@ -4,8 +4,9 @@ import Button from "@mui/material/Button";
 import { NavLink, useLocation, Outlet } from "react-router-dom";
 
 const Quotation = () => {
+  
   const {pathname} = useLocation();
-  // console.log()
+  
   return (
     <>
       <div className="container-fluid mt-3 mb-5">
@@ -43,7 +44,7 @@ const Quotation = () => {
           </div>
           <div className="col-12 p-0 mt-2">
             <div className="row justify-content-center">
-             <div className="col-11 border rounded-pill shadow sticky-top scrolling">
+             <div className="col-11 border rounded-pill shadow sticky">
                 <div className="row px-2 py-1">
                   <div className="col d-flex flex-column align-items-center pt-1">
                     <img

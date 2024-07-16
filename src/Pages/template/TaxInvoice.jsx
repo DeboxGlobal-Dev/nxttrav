@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useRef } from "react";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const TaxInvoice = () => {
+ 
+  const generatePDF = () => {
+    const input = document.getElementById('pdf-content');
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      const imgProps = pdf.getImageProperties(imgData);
+
+      //both pdfWidth & pdfHeight are dynamic height and width of pdf. It can be helpfull for dynamic size of width
+      // const pdfWidth = pdf.internal.pageSize.getWidth();
+      // const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      
+      pdf.addImage(imgData, 'PNG', -30, 40, 270, 200);
+      pdf.save('TaxInvoice.pdf');
+    });
+  };
+
   return (
     <>
-      <div className="container">
+      <div className="container" id="pdf-content">
         <div className="row my-3 justify-content-center">
           <h1 className="text-center">Tax Invoice</h1>
           <div className="col-8 border">
@@ -135,7 +154,7 @@ const TaxInvoice = () => {
               </div>
             </div>
             <div className="row">
-              <table class="table table-bordered">
+              <table className="table table-bordered">
                 <thead>
                   <tr>
                     <th className="text-center">SN</th>
@@ -153,12 +172,12 @@ const TaxInvoice = () => {
                     <td className="text-center"></td>
                   </tr>
                   <tr>
-                    <td colspan="5" className="font-weight-bold text-center">
+                    <td colSpan="5" className="font-weight-bold text-center">
                       Total :
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" className="font-weight-bold">
+                    <td colSpan="5" className="font-weight-bold">
                       Amount Chargable in INR : Only
                     </td>
                   </tr>
@@ -166,7 +185,7 @@ const TaxInvoice = () => {
               </table>
             </div>
             <div className="row">
-              <table class="table table-bordered">
+              <table className="table table-bordered">
                 <thead>
                   <tr>
                     <th colSpan="2" className="text-center">
@@ -203,7 +222,7 @@ const TaxInvoice = () => {
             <span className="font-weight-bold">DeboxGlobal</span>
           </p>
           <div className="col-8 border p-0">
-            <table class="table table-bordered">
+            <table className="table table-bordered">
               <thead>
                 <tr>
                   <th>Bank Name</th>
@@ -227,6 +246,19 @@ const TaxInvoice = () => {
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+      </div>
+      <div className="container mb-3">
+        <div className="row justify-content-center">
+          <div className="col-8 p-0">
+            <button
+              onClick={generatePDF}
+              className="border-0 outline-0 rounded text-light fs-6 btn btn-success"
+              style={{ height: "40px", width: "150px" }}
+            >
+              Genereate PDF
+            </button>
           </div>
         </div>
       </div>

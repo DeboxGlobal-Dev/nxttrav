@@ -5,6 +5,7 @@ import CustomizedSteppers from "./CustomizedSteppers";
 import Stepper from "./Stepper";
 
 const QueryView = () => {
+  
   const { pathname } = useLocation();
   const cardBody = {
     MsFlex: "1 1 auto",
@@ -153,7 +154,6 @@ const QueryView = () => {
                       : "text-dark"
                   }`}
                 >
-                  <i className="fa-solid fa-puzzle-piece"></i>
                   Payments
                 </NavLink>
               </li>
