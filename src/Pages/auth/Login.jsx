@@ -19,7 +19,7 @@ const Login = () => {
   //"username":"atuny0","password":"9uQFF1Lh";  
   //"username":"hbingley1","password":"CQutx25i8r";
 
-  const handleSubmit = async (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
     navigate("/");
     try {
@@ -56,9 +56,9 @@ const Login = () => {
     } catch (error) {
       setLoading(false);
       toast.error(`${error.message}`);
-      console.log("Error while log in.", error); 
+      console.log("Error while log in.", error);
     }
-  };
+  }
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });

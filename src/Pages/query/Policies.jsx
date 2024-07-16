@@ -17,6 +17,8 @@ const Polocies = () => {
     TermsCondition:""
   });
 
+  console.log('TextEditorValue',textEditorValue);
+
   const handleOverview = (content) =>{
     setTextEditorValue({...textEditorValue, Overview:content});
   }

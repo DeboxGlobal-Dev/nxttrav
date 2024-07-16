@@ -6,7 +6,7 @@ import { NavLink, useLocation, Outlet } from "react-router-dom";
 const Quotation = () => {
   
   const {pathname} = useLocation();
-  
+  console.log(pathname);
   return (
     <>
       <div className="container-fluid mt-3 mb-5">

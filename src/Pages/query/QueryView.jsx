@@ -5,19 +5,19 @@ import CustomizedSteppers from "./CustomizedSteppers";
 import Stepper from "./Stepper";
 
 const QueryView = () => {
-  
+
   const { pathname } = useLocation();
   const cardBody = {
     MsFlex: "1 1 auto",
     flex: "1 1 auto",
-    padding: "0.8rem 1rem",
+    padding: "0.8rem 1rem"
   };
 
   const linecss = {
     background: "#f1f2f2",
     boxShadow: "2px 3px 2px #cccccc",
     padding: "10px",
-    margin: "7px 2px 7px 0px",
+    margin: "7px 2px 7px 0px"
   };
 
   return (

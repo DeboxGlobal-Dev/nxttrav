@@ -1,6 +1,5 @@
-import React, { createContext, useEffect, useState } from "react";
+import React from "react";
 import Layout from "../../../Component/Layout/Layout";
-import { NavLink } from "react-router-dom";
 import "../../../../public/global_assets/custom_css/shimmer.css";
 
 const MasterLoad = () => {
@@ -37,35 +36,33 @@ const MasterLoad = () => {
               </div>
             </div>
           </div>
-
           <div className="row mt-3">
             <div className="col-12">
-              <div class="table">
-                <div class="table-row">
-                  <div class="table-cell shimmer"></div>
-                  <div class="table-cell shimmer"></div>
-                  <div class="table-cell shimmer"></div>
+              <div className="table">
+                <div className="table-row">
+                  <div className="table-cell shimmer"></div>
+                  <div className="table-cell shimmer"></div>
+                  <div className="table-cell shimmer"></div>
                 </div>
-                <div class="table-row">
-                  <div class="table-cell shimmer"></div>
-                  <div class="table-cell shimmer"></div>
-                  <div class="table-cell shimmer"></div>
+                <div className="table-row">
+                  <div className="table-cell shimmer"></div>
+                  <div className="table-cell shimmer"></div>
+                  <div className="table-cell shimmer"></div>
                 </div>
-                <div class="table-row">
-                  <div class="table-cell shimmer"></div>
-                  <div class="table-cell shimmer"></div>
-                  <div class="table-cell shimmer"></div>
+                <div className="table-row">
+                  <div className="table-cell shimmer"></div>
+                  <div className="table-cell shimmer"></div>
+                  <div className="table-cell shimmer"></div>
                 </div>
-                <div class="table-row">
-                  <div class="table-cell shimmer"></div>
-                  <div class="table-cell shimmer"></div>
-                  <div class="table-cell shimmer"></div>
-
+                <div className="table-row">
+                  <div className="table-cell shimmer"></div>
+                  <div className="table-cell shimmer"></div>
+                  <div className="table-cell shimmer"></div>
                 </div>
-                <div class="table-row">
-                  <div class="table-cell shimmer"></div>
-                  <div class="table-cell shimmer"></div>
-                  <div class="table-cell shimmer"></div>
+                <div className="table-row">
+                  <div className="table-cell shimmer"></div>
+                  <div className="table-cell shimmer"></div>
+                  <div className="table-cell shimmer"></div>
                 </div>
               </div>
             </div>
@@ -75,5 +72,5 @@ const MasterLoad = () => {
     </>
   );
 };
-
+ 
 export default MasterLoad;
