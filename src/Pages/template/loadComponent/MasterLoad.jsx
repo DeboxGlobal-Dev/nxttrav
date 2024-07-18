@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../../Component/Layout/Layout";
 import "../../../../public/global_assets/custom_css/shimmer.css";
 
 const MasterLoad = () => {
+
   return (
     <>
       <Layout>
@@ -71,6 +72,7 @@ const MasterLoad = () => {
       </Layout>
     </>
   );
+
 };
  
 export default MasterLoad;
