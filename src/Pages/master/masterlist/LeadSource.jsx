@@ -28,6 +28,7 @@ const LeadSource = () => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("leadlist", postData);
+        console.log("lead-source", data.DataList);
         setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);

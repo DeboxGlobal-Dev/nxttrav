@@ -17,11 +17,11 @@ import "select2";
 import "jquery";
 import { useLocation } from "react-router-dom";
 
-const Query = () =>{
+const Query = () => {
 
   const location = useLocation();
 
-  const [TravelDate, setTravelDate] = useState({ ...travelInitial });
+  const [TravelDate, setTravelDate] = useState({...travelInitial});
   const [PaxInfo, setPaxInfo] = useState({ ...paxInitial });
   const [RoomInfo, setRoomInfo] = useState({ ...roomInitial });
   const { Room, Single, Double, Twin, Triple, ExtraBed } = RoomInfo;
@@ -43,7 +43,7 @@ const Query = () =>{
   const initialState = {
     counter1: 0,
     counter2: 0,
-    counter3: 0,
+    counter3: 0
   };
 
   const dropdownInitialState = {
@@ -52,8 +52,10 @@ const Query = () =>{
     leadList: [],
     tourType: [],
     countryList: [],
-    cityList: [],
+    cityList: []
   };
+
+  console.log("on-change-data-ansar", {...queryFields});
 
   const dropdownReducer = (state, action) => {
     switch (action.type) {
@@ -70,9 +72,11 @@ const Query = () =>{
       case "CITY-LIST":
         return { ...state, cityList: action.payload };
     }
-
+  
     return state;
+  
   };
+  
   const [dropdownState, dropdownDispatch] = useReducer(
     dropdownReducer,
     dropdownInitialState
@@ -99,9 +103,6 @@ const Query = () =>{
   };
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  
-  
-
   //form validation using yup library
   const validationSchema = Yup.object().shape({
     CompanyInfo: Yup.string().required("Required"),
@@ -123,8 +124,7 @@ const Query = () =>{
           Search: "",
           Status: "",
         });
-        // setLeadList(data.DataList);
-        dropdownDispatch({ type: "LEAD-LIST", payload: data.DataList });
+        dropdownDispatch({ type: "LEAD-LIST", payload: data?.DataList});
       } catch (err) {
         console.log(err);
       }
@@ -134,7 +134,6 @@ const Query = () =>{
           Search: "",
           Status: "",
         });
-        // setHotelType(data.DataList);
         dropdownDispatch({ type: "HOTEL-TYPE", payload: data.DataList });
       } catch (err) {
         console.log(err);
@@ -144,7 +143,6 @@ const Query = () =>{
           Search: "",
           Status: "",
         });
-        // setTourType(data.DataList);
         dropdownDispatch({ type: "TOUR-TYPE", payload: data.DataList });
       } catch (err) {
         console.log(err);
@@ -155,7 +153,6 @@ const Query = () =>{
           Search: "",
           Status: "",
         });
-        // setCountryList(data.DataList);
         dropdownDispatch({ type: "COUNTRY-LIST", payload: data.DataList });
       } catch (err) {
         console.log(err);
@@ -166,7 +163,6 @@ const Query = () =>{
           Search: "",
           Status: "",
         });
-        // setCityList(data.DataList);
         dropdownDispatch({ type: "CITY-LIST", payload: data.DataList });
       } catch (err) {
         console.log(err);
@@ -177,14 +173,26 @@ const Query = () =>{
 
   //SET DATA FOR UPDATE
 
-  if(location.state !=null){
-    console.log(location.state);
-    useEffect(()=>{
+  console.log("on-change-date", TravelDate);
+  console.log("on-change-lead-pax",PaxInfo);
+
+  if (location.state != null) {
+    console.log("location-state", location.state.TravelDate[0].FromDate)
+    
+    useEffect(() => {
+
       setQueryFields(location.state);
-    },[]);
-  }
+      setRoomInfo(location.state.RoomInfo[0]);
+      setTravelDate({
+        FromDate:location.state.TravelDate[0].FromDate,
+      });
+      dispatch({ type: "SET", value: location?.state?.PaxInfo[0]?.Adult, counter: "counter1" });
+      dispatch({ type: "SET", value: location?.state?.PaxInfo[0]?.Child, counter: "counter2" });
+      dispatch({ type: "SET", value: location?.state?.PaxInfo[0]?.Infant, counter: "counter3" });
+    
+    }, []);
 
-
+  };
 
   // Handling Submit Query Data
   const handleSubmit = async (e) => {
@@ -217,13 +225,13 @@ const Query = () =>{
       setEmptyData(!emptyData);
     } else if (document.activeElement.name === "SubmitButton") {
       setEmptyData(!emptyData);
-      console.log("sending data in query", {
-        ...queryFields,
-        TravelDate: [{ ...TravelDate }],
-        RoomInfo: [{ ...RoomInfo }],
-        PaxInfo: [{ ...PaxInfo }],
-        ValueAddServices: [{ ...valueAddServices }],
-      })
+      // console.log("sending data in query", {
+      //   ...queryFields,
+      //   TravelDate: [{ ...TravelDate }],
+      //   RoomInfo: [{ ...RoomInfo }],
+      //   PaxInfo: [{ ...PaxInfo }],
+      //   ValueAddServices: [{ ...valueAddServices }],
+      // })
       try {
         // await validationSchema.validate(
         //   { ...queryFields, TravelDate, PaxInfo, RoomInfo },
@@ -239,7 +247,7 @@ const Query = () =>{
             ValueAddServices: [{ ...valueAddServices }],
           }
         );
-        console.log("SubmitingQueryForm", response);
+        // console.log("SubmitingQueryForm", response);
         toast.success(response.data.Message);
         setQueryFields({ ...queryInitial });
         setTravelDate({ ...travelInitial });
@@ -348,13 +356,13 @@ const Query = () =>{
   const handleUnSubmittedQuery = () => {
     const queryValue = JSON.parse(JSON.stringify(storedData));
     delete queryValue.TravelDate;
-    delete queryValue.PaxInfo;
+    delete queryValue?.PaxInfo;
     delete queryValue.RoomInfo;
     delete queryValue.ValueAddServices;
 
     const travelValue = storedData.TravelDate[0];
     const roomValue = storedData.RoomInfo[0];
-    const { Adult, Child, Infant } = storedData.PaxInfo[0] ?? {};
+    const { Adult, Child, Infant } = storedData?.PaxInfo[0] ?? {};
 
     setQueryFields({ ...queryValue });
     setTravelDate({ ...travelValue });
@@ -405,13 +413,14 @@ const Query = () =>{
     const queryValue = JSON.parse(JSON.stringify(value));
 
     delete queryValue.RoomInfo;
-    delete queryValue.PaxInfo;
+    delete queryValue?.PaxInfo;
     delete queryValue.TravelDate;
     delete queryValue.ValueAddedServices;
 
-    const { Adult, Child, Infant } = value.PaxInfo[0];
+    const { Adult, Child, Infant } = value?.PaxInfo[0];
     const roomValue = value.RoomInfo[0];
     const dateValue = value.TravelDate[0];
+    // console.log("Suggested-pacakge-date", dateValue);
 
     setQueryFields({ ...queryValue });
     setRoomInfo({ ...roomValue });

@@ -124,7 +124,7 @@ const QueryList = () => {
       selector: (row) =>{
         return(
           <span>
-            {row.QueryJson.PaxInfo[0].Adult+row.QueryJson.PaxInfo[0].Child+row.QueryJson.PaxInfo[0].Infant}
+            {row.PaxInfo[0].Adult+row.PaxInfo[0].Child+row.PaxInfo[0].Infant}
           </span>
         )
       },
