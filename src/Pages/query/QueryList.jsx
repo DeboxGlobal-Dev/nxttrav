@@ -19,13 +19,15 @@ const QueryList = () => {
       try {
 
         const { data } = await axios.post(
-          "http://127.0.0.1:8000/api/querymasterlist",
+          "http://20.197.55.39/api/querymasterlist",
           postData
         );
 
+        console.log("query-list-data", data);
+
         setGetData(data.DataList);
         setFilterData(data.DataList);
-        console.log("QUERY DATA: ", getData);
+
       } catch (error) {
         console.log(error);
       }
@@ -49,8 +51,9 @@ const QueryList = () => {
         return (
           <div className="btn-className">
             <Link
-              href="#"
+              to="/querylist/queryview"
               className="btn btn-warning"
+              state={row}
               style={{
                 padding: "5px",
                 margin: "0px",
@@ -93,21 +96,24 @@ const QueryList = () => {
       selector: (row) => {
         return (
           <span>
-            {" "}
-            {row.CreatedDate}
-            <br />
-            {row.CreatedTime}
+            {row.FromDate}
           </span>
         );
       },
     },
     {
       name: "Tour Date",
-      selector: (row) => "-",
+      selector: (row) =>{
+        return(
+          <span>
+            {row.ToDate}
+          </span>
+        )
+      },
     },
     {
       name: "Destination",
-      selector: (row) => "-",
+      selector: (row) => {row.ToDate},
     },
     {
       name: "Query Type",
@@ -115,7 +121,13 @@ const QueryList = () => {
     },
     {
       name: "Total Pax",
-      selector: (row) => "-",
+      selector: (row) =>{
+        return(
+          <span>
+            {row.QueryJson.PaxInfo[0].Adult+row.QueryJson.PaxInfo[0].Child+row.QueryJson.PaxInfo[0].Infant}
+          </span>
+        )
+      },
     },
     {
       name: "Estimated Value",

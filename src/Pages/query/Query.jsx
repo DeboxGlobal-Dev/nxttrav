@@ -15,8 +15,12 @@ import * as Yup from "yup";
 import axios from "axios";
 import "select2";
 import "jquery";
+import { useLocation } from "react-router-dom";
 
-const Query = () => {
+const Query = () =>{
+
+  const location = useLocation();
+
   const [TravelDate, setTravelDate] = useState({ ...travelInitial });
   const [PaxInfo, setPaxInfo] = useState({ ...paxInitial });
   const [RoomInfo, setRoomInfo] = useState({ ...roomInitial });
@@ -31,11 +35,11 @@ const Query = () => {
   });
   const [suggestedPackage, setSuggestedPackage] = useState("");
   const [filteredPackage, setFilteredPackage] = useState([]);
-  const [toDate, setToDate] = useState();
   const [dateArray, setDateArray] = useState([]);
   const [emptyData, setEmptyData] = useState(false);
   const [dayWiseNights, setDayWiseNights] = useState([]);
   const [filteredCity, setFilteredCity] = useState([]);
+
   const initialState = {
     counter1: 0,
     counter2: 0,
@@ -95,6 +99,9 @@ const Query = () => {
   };
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  
+  
+
   //form validation using yup library
   const validationSchema = Yup.object().shape({
     CompanyInfo: Yup.string().required("Required"),
@@ -105,13 +112,10 @@ const Query = () => {
   // PaxInfo:[{...PaxInfo}], ValueAddServices:[{...valueAddServices}]});
 
   const [PaxTotal, setPaxTotal] = useState(0);
-  const [RoomsTotal, setRoomsTotal] = useState(0);
-  const [errors, setErrors] = useState({});
-
   const data = localStorage.getItem("Query");
   const storedData = JSON.parse(data);
 
-  // Getting data to server for Dropdown
+  // Getting data from master api for Dropdown
   useEffect(() => {
     const gettingDataForDropdown = async () => {
       try {
@@ -171,6 +175,17 @@ const Query = () => {
     gettingDataForDropdown();
   }, []);
 
+  //SET DATA FOR UPDATE
+
+  if(location.state !=null){
+    console.log(location.state);
+    useEffect(()=>{
+      setQueryFields(location.state);
+    },[]);
+  }
+
+
+
   // Handling Submit Query Data
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -202,6 +217,13 @@ const Query = () => {
       setEmptyData(!emptyData);
     } else if (document.activeElement.name === "SubmitButton") {
       setEmptyData(!emptyData);
+      console.log("sending data in query", {
+        ...queryFields,
+        TravelDate: [{ ...TravelDate }],
+        RoomInfo: [{ ...RoomInfo }],
+        PaxInfo: [{ ...PaxInfo }],
+        ValueAddServices: [{ ...valueAddServices }],
+      })
       try {
         // await validationSchema.validate(
         //   { ...queryFields, TravelDate, PaxInfo, RoomInfo },
@@ -1641,7 +1663,7 @@ const Query = () => {
                         <option>All</option>
                         {dropdownState.hotelType?.map((value, index) => {
                           return (
-                            <option value={value.Id} key={index + 1}>
+                            <option value={value.id} key={index + 1}>
                               {value.Name}
                             </option>
                           );
@@ -1669,7 +1691,7 @@ const Query = () => {
                         <option>Select Tour</option>
                         {dropdownState.tourType?.map((value, index) => {
                           return (
-                            <option value={value.Id} key={index + 1}>
+                            <option value={value.id} key={index + 1}>
                               {value.Name}
                             </option>
                           );
@@ -1706,7 +1728,7 @@ const Query = () => {
                         <option>Select Source</option>
                         {dropdownState.leadList?.map((value, index) => {
                           return (
-                            <option value={value.Id} key={index + 1}>
+                            <option value={value.id} key={index + 1}>
                               {value.Name}
                             </option>
                           );

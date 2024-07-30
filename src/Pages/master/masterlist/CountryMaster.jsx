@@ -7,7 +7,7 @@ import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
   countryInitialValue,
-  countryValidationSchema,
+  countryValidationSchema
 } from "./MasterValidations";
 
 const CountryMaster = () => {
@@ -19,13 +19,14 @@ const CountryMaster = () => {
   const [loading, setLoading] = useState(true);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: "",
+    Status: ""
   });
+  
   const [updateData, setUpdateData] = useState(false);
   const [changeValue, setChangeValue] = useState("");
   
   useEffect(() => {
-    
+      
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("countrylist", postData);
@@ -43,7 +44,7 @@ const CountryMaster = () => {
     const result = getData.filter((item) => {
       return item?.Name?.toLowerCase()?.match(postData?.Search?.toLowerCase());
     });
-
+  
     setFilterData(result);
   }, [postData]);
 
