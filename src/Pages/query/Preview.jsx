@@ -20,9 +20,9 @@ const Preview = () => {
               <div className="py-1 px-2 pink-bg text-white rounded">
                 <i className="fa-solid fa-ban pr-1"></i> Query Lost
               </div>
-              <button className="orange-button m-0">Edit</button>
-              <button className="green-button m-0">Save</button>
-              <button className="gray-button rounded-pill px-3 m-0">
+              <button className="orange-button m-0 slim-button">Edit</button>
+              <button className="green-button m-0 slim-button">Save</button>
+              <button className="gray-button rounded-pill px-3 m-0 slim-button">
                 Back
               </button>
             </div>
@@ -141,7 +141,6 @@ const Preview = () => {
             </div>
           </div>
         </div>
-
 
         <div className="row column-gap-2 mt-2 m-0">
           <div className="col p-0">
@@ -263,6 +262,10 @@ const Preview = () => {
                 <p className="font-weight-bold">#98787687787</p>
               </div>
             </div>
+          </div>
+          <div className="col-12 p-0 d-flex justify-content-end mt-2 gap-4">
+            <button className="blue-button slim-button">Save</button>
+            <button className="green-button slim-button">Submit</button>
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import CustomizedSteppers from "./CustomizedSteppers";
 import Stepper from "./Stepper";
 
 const QueryView = () => {
-
+  const quotationBasePath = "/querylist/queryview/quotation" ;
   const { pathname } = useLocation();
   const cardBody = {
     MsFlex: "1 1 auto",
@@ -89,7 +89,11 @@ const QueryView = () => {
                 <NavLink
                   to="quotation"
                   className={`font-size-14 rounded-pill d-flex align-items-center font-weight-500 ${
-                    pathname === "/querylist/queryview/quotation"
+                    pathname === `${quotationBasePath}` 
+                    || pathname === `${quotationBasePath}/` 
+                    || pathname ===`${quotationBasePath}/policies`
+                    || pathname ===`${quotationBasePath}/commission`
+                    || pathname ===`${quotationBasePath}/summary`
                       ? "Active"
                       : "text-dark"
                   }`}

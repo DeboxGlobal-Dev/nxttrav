@@ -34,40 +34,50 @@ const Counter = ({ value, dispatch, counter }) => {
 
       <div className="d-flex justify-content-between align-items-center pt-1">
         <div
-          className="py-0 border rounded cursor-pointer green-hover padding-x 
-          d-flex justify-content-center align-items-center"
+          className={`py-0 border rounded cursor-pointer green-hover padding-x 
+          d-flex justify-content-center align-items-center ${
+            value==1? 'Active text-light' :""
+          }`}
           onClick={() => dispatch({ type:"SET",value:1, counter })}
           style={{ height: "19px" }}
         >
           1
         </div>
         <div
-          className="py-0 border rounded cursor-pointer green-hover padding-x
-           d-flex justify-content-center align-items-center"
+          className={`py-0 border rounded cursor-pointer green-hover padding-x
+           d-flex justify-content-center align-items-center ${
+            value==2? 'Active text-ligth' :''
+           }`}
           onClick={() => dispatch({ type:"SET",value:2, counter })}
           style={{ height: "19px" }}
         >
           2
         </div>
         <div
-          className="py-0 border rounded cursor-pointer green-hover padding-x 
-          d-flex justify-content-center align-items-center"
+          className={`py-0 border rounded cursor-pointer green-hover padding-x 
+          d-flex justify-content-center align-items-center ${
+            value==3? 'Active text-light' : '' 
+          }`}
           onClick={() => dispatch({ type: "SET",value:3, counter })}
           style={{ height: "19px" }}
         >
           3
         </div>
         <div
-          className="py-0 border rounded cursor-pointer green-hover padding-x 
-          d-flex justify-content-center align-items-center"
+          className={`py-0 border rounded cursor-pointer green-hover padding-x 
+          d-flex justify-content-center align-items-center ${
+            value==4? 'Active text-light' : ''
+          }`}
           onClick={() => dispatch({ type: "SET",value:4, counter })}
           style={{ height: "19px" }}
         >
           4
         </div>
         <div
-          className="py-0 border rounded cursor-pointer green-hover padding-x 
-          d-flex justify-content-center align-items-center"
+          className={`py-0 border rounded cursor-pointer green-hover padding-x 
+          d-flex justify-content-center align-items-center ${
+            value==5? 'Active text-light' : ''
+          }`}
           onClick={() => dispatch({ type: "SET",value:5, counter })}
           style={{ height: "19px" }}
         >

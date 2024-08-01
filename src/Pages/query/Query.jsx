@@ -5,7 +5,7 @@ import {
   paxInitial,
   roomInitial,
   valueAddInitial,
-  suggestedPackageData
+  suggestedPackageData,
 } from "./QuerySchema";
 import { eachDayOfInterval, format } from "date-fns";
 import { axiosOther } from "../../http/axios/axios_new";
@@ -15,13 +15,15 @@ import * as Yup from "yup";
 import axios from "axios";
 import "select2";
 import "jquery";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Query = () => {
-
   const location = useLocation();
+  const navigate = useNavigate();
+  const fiftyYear = [];
 
-  const [TravelDate, setTravelDate] = useState({...travelInitial});
+  const [PaxTotal, setPaxTotal] = useState(0);
+  const [TravelDate, setTravelDate] = useState({ ...travelInitial });
   const [PaxInfo, setPaxInfo] = useState({ ...paxInitial });
   const [RoomInfo, setRoomInfo] = useState({ ...roomInitial });
   const { Room, Single, Double, Twin, Triple, ExtraBed } = RoomInfo;
@@ -39,11 +41,13 @@ const Query = () => {
   const [emptyData, setEmptyData] = useState(false);
   const [dayWiseNights, setDayWiseNights] = useState([]);
   const [filteredCity, setFilteredCity] = useState([]);
+  const [submitting, setSubmitting] = useState(false);
+  
 
   const initialState = {
-    counter1: 0,
+    counter1: 1,
     counter2: 0,
-    counter3: 0
+    counter3: 0,
   };
 
   const dropdownInitialState = {
@@ -52,10 +56,13 @@ const Query = () => {
     leadList: [],
     tourType: [],
     countryList: [],
-    cityList: []
+    cityList: [],
+    businessType: [],
+    vehicleType: [],
+    seasonList:[],
+    destinationList:[],
+    hotelCategory:[]
   };
-
-  console.log("on-change-data-ansar", {...queryFields});
 
   const dropdownReducer = (state, action) => {
     switch (action.type) {
@@ -71,12 +78,21 @@ const Query = () => {
         return { ...state, countryList: action.payload };
       case "CITY-LIST":
         return { ...state, cityList: action.payload };
+      case "BUSINESS-TYPE":
+        return { ...state, businessType: action.payload };
+      case "VEHICLE-TYPE":
+        return { ...state, vehicleType: action.payload };
+      case "SEASON-LIST":
+        return { ...state, seasonList: action.payload };
+      case "DESTINATION-LIST":
+        return { ...state, destinationList: action.payload };
+      case "HOTEL-CATEGORY":
+        return { ...state, hotelCategory: action.payload };
     }
-  
+
     return state;
-  
   };
-  
+
   const [dropdownState, dropdownDispatch] = useReducer(
     dropdownReducer,
     dropdownInitialState
@@ -109,12 +125,12 @@ const Query = () => {
     AddEmail: Yup.string().email("Invalid Email").required("Required"),
   });
 
-  // console.log('QueryOnChangeValue', { ...queryFields, TravelDate:[{...TravelDate}], RoomInfo:[{...RoomInfo}],
-  // PaxInfo:[{...PaxInfo}], ValueAddServices:[{...valueAddServices}]});
-
-  const [PaxTotal, setPaxTotal] = useState(0);
-  const data = localStorage.getItem("Query");
-  const storedData = JSON.parse(data);
+  //Get Data from localstorage
+  const gettingDataToLocalStorage = () => {
+    const data = localStorage.getItem("Query");
+    return JSON.parse(data);
+  };
+  const storedData = gettingDataToLocalStorage();
 
   // Getting data from master api for Dropdown
   useEffect(() => {
@@ -124,7 +140,7 @@ const Query = () => {
           Search: "",
           Status: "",
         });
-        dropdownDispatch({ type: "LEAD-LIST", payload: data?.DataList});
+        dropdownDispatch({ type: "LEAD-LIST", payload: data?.DataList });
       } catch (err) {
         console.log(err);
       }
@@ -167,32 +183,62 @@ const Query = () => {
       } catch (err) {
         console.log(err);
       }
+
+      try {
+        const { data } = await axiosOther.post("businesstypelist", {
+          Search: "",
+          Status: "",
+        });
+        dropdownDispatch({ type: "BUSINESS-TYPE", payload: data.DataList });
+      } catch (err) {
+        console.log(err);
+      }
+
+      try {
+        const { data } = await axiosOther.post("vehicletypemasterlist", {
+          Search: "",
+          Status: "",
+        });
+        
+        dropdownDispatch({ type: "VEHICLE-TYPE", payload: data.DataList });
+      } catch (err) {
+        console.log(err);
+      }
+      try {
+        const { data } = await axiosOther.post("seasonlist", {
+          Search: "",
+          Status: "",
+        });
+        
+        dropdownDispatch({ type: "SEASON-LIST", payload: data.DataList });
+      } catch (err) {
+        console.log(err);
+      }
+      
+      try {
+        const { data } = await axiosOther.post("destinationlist", {
+          Search: "",
+          Status: "",
+        });
+        
+        dropdownDispatch({ type: "DESTINATION-LIST", payload: data.DataList });
+      } catch (err) {
+        console.log(err);
+      }
+
+      try {
+        const { data } = await axiosOther.post("hotelcategorylist", {
+          Search: "",
+          Status: "",
+        });
+        
+        dropdownDispatch({ type: "HOTEL-CATEGORY", payload: data.DataList });
+      } catch (err) {
+        console.log(err);
+      }
     };
     gettingDataForDropdown();
   }, []);
-
-  //SET DATA FOR UPDATE
-
-  console.log("on-change-date", TravelDate);
-  console.log("on-change-lead-pax",PaxInfo);
-
-  if (location.state != null) {
-    console.log("location-state", location.state.TravelDate[0].FromDate)
-    
-    useEffect(() => {
-
-      setQueryFields(location.state);
-      setRoomInfo(location.state.RoomInfo[0]);
-      setTravelDate({
-        FromDate:location.state.TravelDate[0].FromDate,
-      });
-      dispatch({ type: "SET", value: location?.state?.PaxInfo[0]?.Adult, counter: "counter1" });
-      dispatch({ type: "SET", value: location?.state?.PaxInfo[0]?.Child, counter: "counter2" });
-      dispatch({ type: "SET", value: location?.state?.PaxInfo[0]?.Infant, counter: "counter3" });
-    
-    }, []);
-
-  };
 
   // Handling Submit Query Data
   const handleSubmit = async (e) => {
@@ -215,23 +261,17 @@ const Query = () => {
         setTravelDate({ ...travelInitial });
         setPaxInfo({ ...paxInitial });
         setRoomInfo({ ...roomInitial });
-        dispatch({ type: "SET", value: 0, counter: "counter1" });
+        dispatch({ type: "SET", value: 1, counter: "counter1" });
         dispatch({ type: "SET", value: 0, counter: "counter2" });
         dispatch({ type: "SET", value: 0, counter: "counter3" });
       }
+      navigate("/querylist/queryview/preview");
     } else if (document.activeElement.name === "ClearButton") {
       localStorage.removeItem("Query");
       toast.success("Query Form Cleared !");
       setEmptyData(!emptyData);
     } else if (document.activeElement.name === "SubmitButton") {
       setEmptyData(!emptyData);
-      // console.log("sending data in query", {
-      //   ...queryFields,
-      //   TravelDate: [{ ...TravelDate }],
-      //   RoomInfo: [{ ...RoomInfo }],
-      //   PaxInfo: [{ ...PaxInfo }],
-      //   ValueAddServices: [{ ...valueAddServices }],
-      // })
       try {
         // await validationSchema.validate(
         //   { ...queryFields, TravelDate, PaxInfo, RoomInfo },
@@ -249,6 +289,7 @@ const Query = () => {
         );
         // console.log("SubmitingQueryForm", response);
         toast.success(response.data.Message);
+        console.log("response", response);
         setQueryFields({ ...queryInitial });
         setTravelDate({ ...travelInitial });
         setPaxInfo({ ...paxInitial });
@@ -258,6 +299,32 @@ const Query = () => {
         dispatch({ type: "SET", value: 0, counter: "counter3" });
 
         localStorage.removeItem("Query");
+      } catch (err) {
+        // validationErrors : parameter
+        // const formattedErrors = {};
+        // validationErrors.inner.forEach((error) => {
+        //   formattedErrors[error.path] = error.message;
+        // });
+        // setErrors(formattedErrors);
+        // console.log("Errors From Yup...", formattedErrors);
+        console.log(err);
+      }
+    } else if (document.activeElement.name === "UpdateButton") {
+      try {
+        const response = await axios.post(
+          "http://20.197.55.39/api/addupdatequerymaster",
+          {
+            ...queryFields,
+            TravelDate: [{ ...TravelDate }],
+            RoomInfo: [{ ...RoomInfo }],
+            PaxInfo: [{ ...PaxInfo }],
+            ValueAddServices: [{ ...valueAddServices }],
+          }
+        );
+        toast.success(response.data.Message);
+        setTimeout(() => {
+          navigate("/querylist");
+        }, 2000);
       } catch (err) {
         // validationErrors : parameter
         // const formattedErrors = {};
@@ -344,7 +411,12 @@ const Query = () => {
       ToDate: TravelDate.TotalNights != "" ? finalToDate : "",
     });
     createDateArray();
-  }, [TravelDate.FromDate, TravelDate.TotalNights, TravelDate.ToDate]);
+  }, [
+    TravelDate.FromDate,
+    TravelDate.TotalNights,
+    TravelDate.ToDate,
+    location.state,
+  ]);
 
   // Update Total Values in Pax and Rooms
   const updateTotal = () => {
@@ -368,7 +440,7 @@ const Query = () => {
     setTravelDate({ ...travelValue });
     setRoomInfo({ ...roomValue });
 
-    dispatch({ type: "SET", value: Adult ? Adult : 0, counter: "counter1" });
+    dispatch({ type: "SET", value: Adult ? Adult : 1, counter: "counter1" });
     dispatch({ type: "SET", value: Child ? Child : 0, counter: "counter2" });
     dispatch({ type: "SET", value: Infant ? Infant : 0, counter: "counter3" });
   };
@@ -447,6 +519,57 @@ const Query = () => {
       setFilteredPackage(suggestedPackageData);
     }
   }, [suggestedPackage]);
+
+  //  SET DATA FOR UPDATE
+  if (location.state != null) {
+    const settingDataForUpdate = () => {
+      const {
+        id,
+        FDCode,PackageCode,PackageName,LeadPax,ClientType,AgentId,Subject,
+        AddEmail,AdditionalInfo,QueryType,Priority,TAT,TourType,LeadSource,
+        LeadRefrencedId,HotelPrefrence,HotelType,MealPlan,AddedBy,UpdatedBy,
+      } = location.state;
+
+      setQueryFields({
+        id,
+        QueryId: "",
+        LeadPax,FDCode,PackageCode,PackageName,ClientType,AgentId,Subject,
+        AddEmail,AdditionalInfo,QueryType,Priority,TAT,TourType,LeadSource,
+        LeadRefrencedId,HotelPrefrence,HotelType,MealPlan,AddedBy,UpdatedBy,
+      });
+
+      setRoomInfo(location.state.RoomInfo[0]);
+      setTravelDate(location.state.TravelDate[0]);
+      dispatch({
+        type: "SET",
+        value: location?.state?.PaxInfo[0]?.Adult,
+        counter: "counter1",
+      });
+      dispatch({
+        type: "SET",
+        value: location?.state?.PaxInfo[0]?.Child,
+        counter: "counter2",
+      });
+      dispatch({
+        type: "SET",
+        value: location?.state?.PaxInfo[0]?.Infant,
+        counter: "counter3",
+      });
+    };
+
+    useEffect(() => {
+      settingDataForUpdate();
+    }, []);
+  }
+
+  //CURRENT YEAR + 50 YEAR DATA
+
+  if (TravelDate?.Type == 2) {
+    const currentYear = new Date().getFullYear();
+    for (let i = 0; i <= 50; i++) {
+      fiftyYear.push(currentYear+i);
+    }
+  };
 
   return (
     <>
@@ -538,10 +661,14 @@ const Query = () => {
                           value={queryFields.BusinessType}
                           onChange={handleChange}
                         >
-                          <option value="1">Agent</option>
-                          <option value="2">B2B</option>
-                          <option value="3">B2C</option>
-                          <option value="3">Corporate</option>
+                          <option value="">select</option>
+                          {dropdownState.businessType.map((value, index) => {
+                            return (
+                              <option value={value.id} key={index}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </select>
                       </div>
                       <div className="col-12 col-lg-8">
@@ -674,56 +801,84 @@ const Query = () => {
                 <div className="row mt-3 py-1 column-gap-2 row-gap-2">
                   <div className="col-12 col-sm border rounded py-1">
                     <div className="row row-gap-2 p-0 pt-1 pb-2">
-                      <div className="col-12 col-lg-4 d-flex align-items-center">
                         <p className="m-0 fs-6 font-weight-bold">
                           Accomodation
                         </p>
-                      </div>
-                      <div className="col-12 col-lg-8 px-3">
+                        {/* <div className="col-12 col-lg-4 d-flex align-items-center">
+                          <p className="m-0 fs-6 font-weight-bold">
+                            Accomodation
+                          </p>
+                        </div> */}
+                      <div className="col-12 col-lg-12 px-3">
                         <label htmlFor="hotel" className="m-0 p-0">
                           Hotel Category
                         </label>
-                        <div className="row column-gap-2">
-                          <div className="col form-div d-flex justify-content-center align-items-center">
-                            <label htmlFor="" className="m-0 pr-2">
-                              3*
-                            </label>
-                            <input
-                              className="form-check-input m-0 p-0 ml-3"
-                              type="radio"
-                              name="hotelType"
-                              value="3"
-                              onChange={handleChange}
-                              defaultChecked
-                            />
+                        <div className="row column-gap-2 row-gap-2">
+                        {
+                          dropdownState.hotelCategory.map((value,index)=>{
+                            return(
+                            <div className="col-2 form-div d-flex justify-content-center align-items-center" key={index+1}>
+                                <label htmlFor={value.UploadKeyword} className="m-0 pr-2">
+                                  {value.Name}*
+                                </label>
+                                <input
+                                  className="form-check-input m-0 p-0 ml-3"
+                                  type="radio"
+                                  name="hotelType"
+                                  id={value.UploadKeyword}
+                                  value={value.id}
+                                  onChange={handleChange}
+                                  defaultChecked={index==0? true:false}
+                                />
+                            </div>
+                            )
+                          })
+                        }
+                        {dropdownState.hotelCategory.length == 0 && <>
+                          <div className="col-2 form-div d-flex justify-content-center align-items-center">
+                          <label htmlFor="one-star" className="m-0 pr-2">
+                            1*
+                          </label>
+                          <input
+                            className="form-check-input m-0 p-0 ml-3"
+                            type="radio"
+                            name="hotelType"
+                            id="one-star"
+                            value="0"
+                            onChange={handleChange}
+                            defaultChecked
+                          />
                           </div>
-                          <div className="col form-div d-flex justify-content-center align-items-center">
-                            <label htmlFor="four" className="m-0 pr-2">
-                              4*
-                            </label>
-                            <input
-                              className="form-check-input m-0 p-0 ml-3"
-                              type="radio"
-                              name="hotelType"
-                              id="four"
-                              value="4"
-                              onChange={handleChange}
-                            />
+                          <div className="col-2 form-div d-flex justify-content-center align-items-center">
+                        <label htmlFor="two-star" className="m-0 pr-2">
+                          2*
+                        </label>
+                        <input
+                          className="form-check-input m-0 p-0 ml-3"
+                          type="radio"
+                          name="hotelType"
+                          id="two-star"
+                          value="0"
+                          onChange={handleChange}
+                        />
                           </div>
-                          <div className="col form-div d-flex justify-content-center align-items-center">
-                            <label htmlFor="five" className="m-0 pr-2">
-                              5*
-                            </label>
-                            <input
-                              className="form-check-input m-0 p-0 ml-3"
-                              type="radio"
-                              name="hotelType"
-                              id="five"
-                              value="5"
-                              onChange={handleChange}
-                            />
+                          <div className="col-2 form-div d-flex justify-content-center align-items-center">
+                              <label htmlFor="three-star" className="m-0 pr-2">
+                                3*
+                              </label>
+                              <input
+                                className="form-check-input m-0 p-0 ml-3"
+                                type="radio"
+                                name="hotelType"
+                                id="three-star"
+                                value="0"
+                                onChange={handleChange}
+                              />
                           </div>
-                          <div className="col form-div d-flex justify-content-center align-items-center">
+                          </>
+                        }
+
+                          <div className="col-2 form-div d-flex justify-content-center align-items-center">
                             <label htmlFor="all" className="m-0 pr-2">
                               All
                             </label>
@@ -1292,9 +1447,9 @@ const Query = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="col-6 col-md-6 col-lg-6 d-flex align-items-center">
-                        <p className="font-weight-bold">
-                          Total Rooms :{" "}
+                      <div className="col-6 col-md-6 col-lg-6 d-flex flex-column justify-content-center align-items-center">
+                        <p className="font-weight-bold m-0">
+                          Total Rooms :
                           {Number(Room == "" ? 0 : Room) +
                             Number(Single == "" ? 0 : Single) +
                             Number(Double == "" ? 0 : Double) +
@@ -1303,6 +1458,14 @@ const Query = () => {
                             Number(ExtraBed == "" ? 0 : ExtraBed)}
                         </p>
                       </div>
+                      {PaxInfo.Adult > 0 && (
+                        <div className="col-12">
+                          <p className="py-1 px-1 m-0 paragraph-message">
+                            select {PaxInfo.Adult} single or{" "}
+                            {Math.ceil(PaxInfo.Adult / 2)} double rooms !
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -1366,9 +1529,12 @@ const Query = () => {
                               value={queryFields.SeasonType}
                               onChange={handleDateChange}
                             >
-                              <option value="1">Winter</option>
-                              <option value="2">Summer</option>
-                              <option value="3">Both Season</option>
+                              <option value="">select season</option>
+                              {
+                                dropdownState.seasonList.map((season, index)=>{
+                                  return <option value={season.id} key={index+1}>{season.Name}</option>
+                                })
+                              }
                             </select>
                           </div>
                           <div className="col-6 col-md-12 col-lg-6">
@@ -1379,13 +1545,12 @@ const Query = () => {
                               value={queryFields.SeasonYear}
                               onChange={handleDateChange}
                             >
-                              <option value="1">2024</option>
-                              <option value="2">2025</option>
-                              <option value="3">2026</option>
-                              <option value="4">2027</option>
-                              <option value="5">2028</option>
-                              <option value="6">2029</option>
-                              <option value="7">2030</option>
+                              <option value="">select year</option>
+                              {
+                                fiftyYear.map((year,index)=>{
+                                  return <option value={year} key={index+1}>{year}</option>
+                                })
+                              }
                             </select>
                           </div>
                         </>
@@ -1478,13 +1643,13 @@ const Query = () => {
                                         onChange={handleDateDestination}
                                       >
                                         <option value="1">Select</option>
-                                        {filteredCity.map((value, index) => {
+                                        {dropdownState?.destinationList?.map((destination, index) => {
                                           return (
                                             <option
-                                              value={value.Id}
+                                              value={destination?.id}
                                               key={index + 1}
                                             >
-                                              {value.Name}
+                                              {destination?.Name}
                                             </option>
                                           );
                                         })}
@@ -1533,7 +1698,7 @@ const Query = () => {
                                           name={`Country${index}`}
                                         >
                                           <option value="1">Select</option>
-                                          {dropdownState.countryList?.map(
+                                          {dropdownState?.countryList?.map(
                                             (value, index) => {
                                               return (
                                                 <option
@@ -1555,15 +1720,14 @@ const Query = () => {
                                           name={`Destination${index}`}
                                         >
                                           <option value="1">Select</option>
-                                          <option value="2">Delhi</option>
-                                          {dropdownDispatch.cityList.map(
-                                            (value, index) => {
+                                          {dropdownState?.destinationList?.map(
+                                            (destination, index) => {
                                               return (
                                                 <option
-                                                  value={value.Id}
+                                                  value={destination.id}
                                                   key={index + 1}
                                                 >
-                                                  {value.Name}
+                                                  {destination.Name}
                                                 </option>
                                               );
                                             }
@@ -1720,6 +1884,13 @@ const Query = () => {
                         onChange={handleChange}
                       >
                         <option>Select Vehicle</option>
+                        {dropdownState.vehicleType.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                     <div className="">
@@ -1749,15 +1920,15 @@ const Query = () => {
                         htmlFor="leadreferenced"
                         className="m-0 font-size-12"
                       >
-                        Lead ReferecedId
+                        Lead RefrecedId
                       </label>
                       <input
                         type="text"
                         id="leadreferenced"
                         className="form-input-3"
                         placeholder="#87738727667"
-                        name="LeadReferencedId"
-                        value={queryFields.LeadReferencedId}
+                        name="LeadRefrencedId"
+                        value={queryFields.LeadRefrencedId}
                         onChange={handleChange}
                       />
                     </div>
@@ -1876,7 +2047,7 @@ const Query = () => {
                                     Lead RerfrencedId
                                   </span>
                                   <p className="">
-                                    {storedData?.LeadReferencedId}
+                                    {storedData?.LeadRefrencedId}
                                   </p>
                                 </div>
                                 <div>
@@ -1898,17 +2069,28 @@ const Query = () => {
                       </div>
                     </div>
                   </div>
-                  <button className="blue-button" name="SaveButton">
+                  <button className="blue-button cursor-none" name="SaveButton">
                     Save
                   </button>
-                  <button className="green-button" name="SubmitButton">
-                    Submit
-                  </button>
+                  {location.state == null ? (
+                    <button
+                      className="green-button cursor-none"
+                      name="SubmitButton"
+                    >
+                      Submit
+                    </button>
+                  ) : (
+                    <button
+                      className="green-button cursor-none"
+                      name="UpdateButton"
+                    >
+                      Update
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
           </form>
-          {/* </Formik> */}
         </div>
       </div>
     </>

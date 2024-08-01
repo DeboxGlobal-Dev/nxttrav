@@ -1,56 +1,85 @@
 import React from "react";
 import { NavLink, useLocation, Outlet } from "react-router-dom";
+import SupplierPayment from "./SupplierPayment";
+import AgentPayment from "./AgentPayment";
+import ExpenseEntry from "./ExpenseEntery";
 
 const Payments = () => {
-
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   return (
     <>
       <div className="container-fluid mb-5">
-        <div className="row border-top">
-          <div className="col-12 p-0">
-            <h3 className="m-0 mb-1 px-2 font-weight-bold">Payment Request</h3>
-
-            <ul className="nav nav-pills-toolbar d-flex gap-5 border-bottom py-1">
-              <li className="nav-item view-nav-item rounded-pill">
-                <NavLink
-                  to="/querylist/queryview/payments/"
-                  className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
-                    pathname === "/querylist/queryview/payments/"
-                      ? "Active"
-                      : "text-primary"
-                  }`}
-                >
-                  Supplier Payment Request
-                </NavLink>
-              </li>
-              <li className="nav-item view-nav-item rounded-pill">
-                <NavLink
-                  to="agentpayments"
-                  className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
-                    pathname === "/querylist/queryview/payments/agentpayments"
-                      ? "Active"
-                      : "text-primary"
-                  }`}
-                >
-                  Agent Payment Request
-                </NavLink>
-              </li>
-              <li className="nav-item view-nav-item rounded-pill">
-                <NavLink
-                  to="expenseentry"
-                  className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
-                    pathname === "/querylist/queryview/payments/expenseentry"
-                      ? "Active"
-                      : "text-primary"
-                  }`}
-                >
-                  Expense Entry
-                </NavLink>
-              </li>
-            </ul>
-            <Outlet />
+        <div className="row">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="home-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#supplier"
+                type="button"
+                role="tab"
+                aria-controls="home"
+                aria-selected="true"
+              >
+                Supplier Payment Request
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="profile-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#agent"
+                type="button"
+                role="tab"
+                aria-controls="profile"
+                aria-selected="false"
+              >
+                Agent Payment Request
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="profile-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#expense"
+                type="button"
+                role="tab"
+                aria-controls="profile"
+                aria-selected="false"
+              >
+                Expense Entry
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div
+              class="tab-pane fade show active"
+              id="supplier"
+              role="tabpanel"
+              aria-labelledby="home-tab"
+            >
+              <SupplierPayment/>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="agent"
+              role="tabpanel"
+              aria-labelledby="profile-tab"
+            >
+              <AgentPayment/>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="expense"
+              role="tabpanel"
+              aria-labelledby="profile-tab"
+            >
+              <ExpenseEntry/>
+            </div>
           </div>
         </div>
       </div>

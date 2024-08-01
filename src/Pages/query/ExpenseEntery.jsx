@@ -5,8 +5,8 @@ const ExpenseEntry = () => {
   return (
     <>
       <div className="container">
-        <p className="p-0 font-weight-bold">Create New Express</p>
-        <div className="d-flex mt-2 gap-2">
+        <p className="p-0 font-weight-bold m-0">Create New Express</p>
+        <div className=" d-flex mt-2 gap-2 m-0">
           <div className="p-0 d-flex flex-column">
             <lable>Expense Date</lable>
             <select className="form-input-4">

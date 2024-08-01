@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import { NavLink, useLocation, Outlet } from "react-router-dom";
 
 const Quotation = () => {
-  
+  const quotationBasePath = "/querylist/queryview/quotation";
   const {pathname} = useLocation();
   console.log(pathname);
   return (
@@ -147,13 +147,14 @@ const Quotation = () => {
             </div>
           </div>
           <div className="col-12 mt-3">
-            <ul className="nav nav-pills-toolbar d-flex justify-content-between border top-border-radius px-100 py-1">
+            <ul className="nav nav-pills-toolbar d-flex justify-content-between align-items-center border top-border-radius px-100 py-1">
               <li className="nav-item view-nav-item rounded-pill">
                 <NavLink
                   to="/querylist/queryview/quotation/"
                   className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
-                    pathname === "/querylist/queryview/quotation/"
-                      ? "Active"
+                    pathname === `${quotationBasePath}` ||
+                    pathname === `${quotationBasePath}/` 
+                      ? "q-active"
                       : "text-primary"
                   }`}
                 >
@@ -164,8 +165,8 @@ const Quotation = () => {
                 <NavLink
                   to="policies"
                   className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
-                    pathname === "/querylist/queryview/quotation/policies"
-                      ? "Active"
+                    pathname === `${quotationBasePath}/policies`
+                      ? "q-active"
                       : "text-primary"
                   }`}
                 >
@@ -176,8 +177,8 @@ const Quotation = () => {
                 <NavLink
                   to="commission"
                   className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
-                    pathname === "/querylist/queryview/quotation/commission"
-                      ? "Active"
+                    pathname === `${quotationBasePath}/commission`
+                      ? "q-active"
                       : "text-primary"
                   }`}
                 >
@@ -188,8 +189,8 @@ const Quotation = () => {
                 <NavLink
                   to="summary"
                   className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
-                    pathname === "/querylist/queryview/quotation/summary"
-                      ? "Active"
+                    pathname === `${quotationBasePath}/summary`
+                      ? "q-active"
                       : "text-primary"
                   }`}
                 >

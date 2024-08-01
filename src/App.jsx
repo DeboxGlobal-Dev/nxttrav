@@ -139,9 +139,9 @@ const App = () => {
             </Route>
             <Route path="costsheet" element={<Protected><QueryDetails/></Protected>}></Route>
             <Route path="payments" element={<Protected><Payments/></Protected>}>
-              <Route index element={<Protected><SupplierPayment/></Protected>}></Route>
+              {/* <Route index element={<Protected><SupplierPayment/></Protected>}></Route>
               <Route path="agentpayments" element={<Protected><AgentPayment/></Protected>}></Route>
-              <Route path="expenseentry" element={<Protected><ExpenseEntry/></Protected>}></Route>
+              <Route path="expenseentry" element={<Protected><ExpenseEntry/></Protected>}></Route> */}
             </Route>
             <Route path="clientcomm" element={<Protected><ClientComm/></Protected>}></Route>
             <Route path="suppliercomm" element={<Protected><SupplierComm/></Protected>}></Route>

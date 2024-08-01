@@ -253,13 +253,23 @@ a {
 }
 .Active {
   background-color: rgb(22, 155, 215);
-  height: 20px;
+  height: 25px;
   color: white;
   padding: 0 10px;
 }
 .Active:hover{
   color: white;
 }
+.q-active {
+  height: 25px;
+  background-color: rgb(22, 155, 215);
+  color: white;
+  padding: 0 10px;
+}
+.q-active:hover{
+  color: white;
+}
+
 .radius-10{
   border: 1px solid black;
   border-radius:10px;
@@ -378,7 +388,6 @@ a {
   font-weight: 500;
   height: 35px;
 }
-
 .default-button {
   background-color: #fff;
   border: 1px solid #d5d9d9;
@@ -397,7 +406,11 @@ a {
   font-weight: 500;
   height: 35px;
 }
-
+.slim-button {
+  margin: 0px;
+  padding: 0px 18px;
+  height: 30px;
+}
 .blue-button:hover {
   color: #ffff;
 }
@@ -652,4 +665,16 @@ a {
 }
 .green-light-color{
   color: rgb(2, 100, 2);
+}
+.paragraph-message{
+  background-color: #0e91fc32;
+  color: #1093fe;
+  border-radius: 5px;
+}
+.cursor-none{
+  cursor:wait;
+}
+.tab-active{
+  border: none;
+  border-bottom: 2px solid blue;
 }
