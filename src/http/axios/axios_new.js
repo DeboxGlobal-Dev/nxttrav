@@ -14,7 +14,15 @@ const axiosOther = axios.create({
   },
 });
 
+const axiosQuery = axios.create({
+  baseURL:"http://20.197.55.39/api/",
+  headers:{
+    "Content-Type" :"application/json"
+  }
+});
+
 export {
   axiosNew,
-  axiosOther
+  axiosOther,
+  axiosQuery
 };

@@ -16,6 +16,8 @@ import axios from "axios";
 import "select2";
 import "jquery";
 import { useLocation, useNavigate } from "react-router-dom";
+import { axiosQuery } from "../../http/axios/axios_new";
+import { roomListStaticApi } from "./QuerySchema";
 
 const Query = () => {
   const location = useLocation();
@@ -42,7 +44,8 @@ const Query = () => {
   const [dayWiseNights, setDayWiseNights] = useState([]);
   const [filteredCity, setFilteredCity] = useState([]);
   const [submitting, setSubmitting] = useState(false);
-  
+  const [agentData, setAgentData] = useState("");
+  const [showAgentPopup, setShowAgentPopup] = useState(true);
 
   const initialState = {
     counter1: 1,
@@ -59,9 +62,11 @@ const Query = () => {
     cityList: [],
     businessType: [],
     vehicleType: [],
-    seasonList:[],
-    destinationList:[],
-    hotelCategory:[]
+    seasonList: [],
+    destinationList: [],
+    hotelCategory: [],
+    agentList: [],
+    roomList: [],
   };
 
   const dropdownReducer = (state, action) => {
@@ -88,6 +93,10 @@ const Query = () => {
         return { ...state, destinationList: action.payload };
       case "HOTEL-CATEGORY":
         return { ...state, hotelCategory: action.payload };
+      case "AGENT-LIST":
+        return { ...state, agentList: action.payload };
+      case "ROOM-LIST":
+        return { ...state, roomList: action.payload };
     }
 
     return state;
@@ -138,7 +147,7 @@ const Query = () => {
       try {
         const { data } = await axiosOther.post("leadlist", {
           Search: "",
-          Status: "",
+          Status: "1",
         });
         dropdownDispatch({ type: "LEAD-LIST", payload: data?.DataList });
       } catch (err) {
@@ -148,7 +157,7 @@ const Query = () => {
       try {
         const { data } = await axiosOther.post("hoteltypelist", {
           Search: "",
-          Status: "",
+          Status: "1",
         });
         dropdownDispatch({ type: "HOTEL-TYPE", payload: data.DataList });
       } catch (err) {
@@ -157,7 +166,7 @@ const Query = () => {
       try {
         const { data } = await axiosOther.post("tourlist", {
           Search: "",
-          Status: "",
+          Status: "1",
         });
         dropdownDispatch({ type: "TOUR-TYPE", payload: data.DataList });
       } catch (err) {
@@ -167,7 +176,7 @@ const Query = () => {
       try {
         const { data } = await axiosOther.post("countrylist", {
           Search: "",
-          Status: "",
+          Status: "1",
         });
         dropdownDispatch({ type: "COUNTRY-LIST", payload: data.DataList });
       } catch (err) {
@@ -177,7 +186,7 @@ const Query = () => {
       try {
         const { data } = await axiosOther.post("citylist", {
           Search: "",
-          Status: "",
+          Status: "1",
         });
         dropdownDispatch({ type: "CITY-LIST", payload: data.DataList });
       } catch (err) {
@@ -187,7 +196,7 @@ const Query = () => {
       try {
         const { data } = await axiosOther.post("businesstypelist", {
           Search: "",
-          Status: "",
+          Status: "1",
         });
         dropdownDispatch({ type: "BUSINESS-TYPE", payload: data.DataList });
       } catch (err) {
@@ -197,9 +206,9 @@ const Query = () => {
       try {
         const { data } = await axiosOther.post("vehicletypemasterlist", {
           Search: "",
-          Status: "",
+          Status: "1",
         });
-        
+
         dropdownDispatch({ type: "VEHICLE-TYPE", payload: data.DataList });
       } catch (err) {
         console.log(err);
@@ -207,20 +216,20 @@ const Query = () => {
       try {
         const { data } = await axiosOther.post("seasonlist", {
           Search: "",
-          Status: "",
+          Status: "1",
         });
-        
+
         dropdownDispatch({ type: "SEASON-LIST", payload: data.DataList });
       } catch (err) {
         console.log(err);
       }
-      
+
       try {
         const { data } = await axiosOther.post("destinationlist", {
           Search: "",
-          Status: "",
+          Status: "1",
         });
-        
+
         dropdownDispatch({ type: "DESTINATION-LIST", payload: data.DataList });
       } catch (err) {
         console.log(err);
@@ -229,10 +238,21 @@ const Query = () => {
       try {
         const { data } = await axiosOther.post("hotelcategorylist", {
           Search: "",
-          Status: "",
+          Status: "1",
         });
-        
+
         dropdownDispatch({ type: "HOTEL-CATEGORY", payload: data.DataList });
+      } catch (err) {
+        console.log(err);
+      }
+
+      try {
+        const { data } = await axiosOther.post("roomsharingmasterlist", {
+          Search: "",
+          Status: "1",
+        });
+
+        dropdownDispatch({ type: "ROOM-LIST", payload: data.DataList });
       } catch (err) {
         console.log(err);
       }
@@ -240,6 +260,25 @@ const Query = () => {
     gettingDataForDropdown();
   }, []);
 
+  useEffect(() => {
+    dropdownDispatch({ type: "AGENT-LIST", payload: [] });
+    setAgentData("");
+
+    const gettingDataForDropdown2 = async () => {
+      try {
+        const { data } = await axiosOther.post("agentlist", {
+          id: "",
+          BussinessType: queryFields.BusinessType,
+        });
+
+        dropdownDispatch({ type: "AGENT-LIST", payload: data.DataList });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    gettingDataForDropdown2();
+  }, [queryFields.BusinessType]);
   // Handling Submit Query Data
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -311,16 +350,13 @@ const Query = () => {
       }
     } else if (document.activeElement.name === "UpdateButton") {
       try {
-        const response = await axios.post(
-          "http://20.197.55.39/api/addupdatequerymaster",
-          {
-            ...queryFields,
-            TravelDate: [{ ...TravelDate }],
-            RoomInfo: [{ ...RoomInfo }],
-            PaxInfo: [{ ...PaxInfo }],
-            ValueAddServices: [{ ...valueAddServices }],
-          }
-        );
+        const response = await axiosQuery.post("addupdatequerymaster", {
+          ...queryFields,
+          TravelDate: [{ ...TravelDate }],
+          RoomInfo: [{ ...RoomInfo }],
+          PaxInfo: [{ ...PaxInfo }],
+          ValueAddServices: [{ ...valueAddServices }],
+        });
         toast.success(response.data.Message);
         setTimeout(() => {
           navigate("/querylist");
@@ -525,17 +561,51 @@ const Query = () => {
     const settingDataForUpdate = () => {
       const {
         id,
-        FDCode,PackageCode,PackageName,LeadPax,ClientType,AgentId,Subject,
-        AddEmail,AdditionalInfo,QueryType,Priority,TAT,TourType,LeadSource,
-        LeadRefrencedId,HotelPrefrence,HotelType,MealPlan,AddedBy,UpdatedBy,
+        FDCode,
+        PackageCode,
+        PackageName,
+        LeadPax,
+        ClientType,
+        AgentId,
+        Subject,
+        AddEmail,
+        AdditionalInfo,
+        QueryType,
+        Priority,
+        TAT,
+        TourType,
+        LeadSource,
+        LeadRefrencedId,
+        HotelPrefrence,
+        HotelType,
+        MealPlan,
+        AddedBy,
+        UpdatedBy,
       } = location.state;
 
       setQueryFields({
         id,
         QueryId: "",
-        LeadPax,FDCode,PackageCode,PackageName,ClientType,AgentId,Subject,
-        AddEmail,AdditionalInfo,QueryType,Priority,TAT,TourType,LeadSource,
-        LeadRefrencedId,HotelPrefrence,HotelType,MealPlan,AddedBy,UpdatedBy,
+        LeadPax,
+        FDCode,
+        PackageCode,
+        PackageName,
+        ClientType,
+        AgentId,
+        Subject,
+        AddEmail,
+        AdditionalInfo,
+        QueryType,
+        Priority,
+        TAT,
+        TourType,
+        LeadSource,
+        LeadRefrencedId,
+        HotelPrefrence,
+        HotelType,
+        MealPlan,
+        AddedBy,
+        UpdatedBy,
       });
 
       setRoomInfo(location.state.RoomInfo[0]);
@@ -567,9 +637,30 @@ const Query = () => {
   if (TravelDate?.Type == 2) {
     const currentYear = new Date().getFullYear();
     for (let i = 0; i <= 50; i++) {
-      fiftyYear.push(currentYear+i);
+      fiftyYear.push(currentYear + i);
     }
+  }
+
+  //SET DATA OF AGENT & CLIENT TYPE
+
+  const handleSetDataToAgent = (data) => {
+    setAgentData(data);
+    setQueryFields({
+      ...queryFields,
+      SalesPerson: data.SalesPerson,
+      AssignUser: data.OperationsPerson,
+    });
   };
+
+  const agentListData = dropdownState.agentList.filter((agent) => {
+    return queryFields.ClientType != ""
+      ? agent.CompanyName.toLowerCase().includes(
+          queryFields.ClientType.toLowerCase()
+        )
+      : agent;
+  });
+
+  console.log("agent-list-data", agentListData);
 
   return (
     <>
@@ -581,7 +672,7 @@ const Query = () => {
             <div className="row">
               <div className="col-12 col-md-8">
                 <div className="row py-1 column-gap-2 row-gap-2">
-                  <div className="col-12 col-sm  border rounded py-1">
+                  <div className="col-12 col-sm  border rounded py-1 position-relative">
                     <div className="row row-gap-2 p-0 pt-1 pb-2">
                       <div className="col-12 col-sm-6 col-lg-8 d-flex align-items-center">
                         <p className="m-0 fs-6 font-weight-bold">
@@ -661,7 +752,8 @@ const Query = () => {
                           value={queryFields.BusinessType}
                           onChange={handleChange}
                         >
-                          <option value="">select</option>
+                          <option value="">Select</option>
+                          <option value="1">Agent</option>
                           {dropdownState.businessType.map((value, index) => {
                             return (
                               <option value={value.id} key={index}>
@@ -683,6 +775,7 @@ const Query = () => {
                             name="ClientType"
                             value={queryFields.ClientType}
                             onChange={handleChange}
+                            onClick={() => setShowAgentPopup(true)}
                           />
                           <button
                             className="btn btn-primary d-flex align-items-center ml-1"
@@ -692,43 +785,142 @@ const Query = () => {
                           </button>
                         </div>
                       </div>
-                      <div className="col-12">
-                        <div className="border d-flex justify-content-between p-1 flex-wrap gap-2">
-                          <div className="d-flex justify-content-between align-items-center">
-                            <i className="fa-solid fa-user font-size-12"></i>
-                            <p className="m-0 pl-1 font-size-12">Rahul Kumar</p>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <i className="fa-solid fa-phone-volume font-size-12"></i>
-                            <p className="m-0 pl-1 font-size-12">8765435678</p>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <i className="fa-solid fa-envelope font-size-12"></i>
-                            <p className="m-0 pl-1 font-size-12">
-                              deboxglobal@gmail.com
-                            </p>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <label
-                              htmlFor="market"
-                              className="m-0 font-size-12"
-                            >
-                              Market Type :
-                            </label>
-                            <p className="m-0 pl-1 font-size-12">General</p>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <label
-                              htmlFor="market"
-                              className="m-0 font-size-12"
-                            >
-                              Nationalty :
-                            </label>
-                            <p className="m-0 pl-1 font-size-12">Indian</p>
+                      {agentData != "" && (
+                        <div className="col-12">
+                          <div className="border d-flex justify-content-between p-1 flex-wrap gap-2">
+                            <div className="d-flex justify-content-between align-items-center">
+                              <i className="fa-solid fa-user font-size-12"></i>
+                              <p className="m-0 pl-1 font-size-12">
+                                {agentData?.SalesPerson}
+                              </p>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center">
+                              <i className="fa-solid fa-phone-volume font-size-12"></i>
+                              <p className="m-0 pl-1 font-size-12">
+                                {agentData?.CompanyPhoneNumber}
+                              </p>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center">
+                              <i className="fa-solid fa-envelope font-size-12"></i>
+                              <p className="m-0 pl-1 font-size-12">
+                                {agentData?.CompanyEmailAddress}
+                              </p>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center">
+                              <label
+                                htmlFor="market"
+                                className="m-0 font-size-12"
+                              >
+                                Market Type :
+                              </label>
+                              <p className="m-0 pl-1 font-size-12">General</p>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center">
+                              <label
+                                htmlFor="market"
+                                className="m-0 font-size-12"
+                              >
+                                Nationalty :
+                              </label>
+                              <p className="m-0 pl-1 font-size-12">
+                                {agentData?.Nationality}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      )}
+                      {agentData == "" && (
+                        <div className="col-12">
+                          <div className="border d-flex justify-content-between p-1 flex-wrap gap-2">
+                            <div className="d-flex justify-content-between align-items-center text-secondary">
+                              <i className="fa-solid fa-user font-size-12"></i>
+                              <p className="m-0 pl-1 font-size-12">John Doe</p>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center text-secondary">
+                              <i className="fa-solid fa-phone-volume font-size-12"></i>
+                              <p className="m-0 pl-1 font-size-12">990XXXXXX</p>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center text-secondary">
+                              <i className="fa-solid fa-envelope font-size-12"></i>
+                              <p className="m-0 pl-1 font-size-12">
+                                example@gmail.com
+                              </p>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center text-secondary">
+                              <label
+                                htmlFor="market"
+                                className="m-0 font-size-12"
+                              >
+                                Market Type :
+                              </label>
+                              <p className="m-0 pl-1 font-size-12">General</p>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center text-secondary">
+                              <label
+                                htmlFor="market"
+                                className="m-0 font-size-12"
+                              >
+                                Nationalty :
+                              </label>
+                              <p className="m-0 pl-1 font-size-12">XXXXXXX </p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
+                    {showAgentPopup && queryFields.BusinessType !== "" && (
+                      <div className="custom-search-dropdown">
+                        <div className="row w-100 justify-content-center gap-1 mx-1">
+                          <div
+                            className="col-12 d-flex justify-content-end cursor-pointer p-0"
+                            onClick={() => setShowAgentPopup(!showAgentPopup)}
+                          >
+                            <i className="fa-solid fa-xmark font-size-15 font-weight-bold"></i>
+                          </div>
+                          {dropdownState?.agentList
+                            ?.filter((agent) => {
+                              return queryFields.ClientType != ""
+                                ? agent.CompanyName.toLowerCase().includes(
+                                    queryFields.ClientType.toLowerCase()
+                                  )
+                                : agent;
+                            })
+                            .map((agent, ind) => {
+                              return (
+                                <div
+                                  className="d-flex flex-column bg-white py-1 rounded border cursor-pointer"
+                                  key={ind + 1}
+                                  onClick={() => {
+                                    handleSetDataToAgent(agent),
+                                      setShowAgentPopup(!showAgentPopup);
+                                  }}
+                                >
+                                  <div>
+                                    <span className="font-weight-bold">
+                                      {agent.CompanyName}
+                                    </span>
+                                  </div>
+                                  <div className="d-flex justify-content-between p-0">
+                                    <span className="m-0 ">
+                                      {agent.CompanyEmailAddress}
+                                    </span>
+                                    <span className="m-0 ">
+                                      {agent.CompanyPhoneNumber}
+                                    </span>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          {dropdownState?.agentList == "" && (
+                            <div className="col-12 d-flex justify-content-center ">
+                              <h6 className="text-secondary">
+                                There are no records for show
+                              </h6>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div className="col-12 col-sm border rounded py-1">
                     <div className="row row-gap-2 p-0 pt-1 pb-2">
@@ -801,10 +993,8 @@ const Query = () => {
                 <div className="row mt-3 py-1 column-gap-2 row-gap-2">
                   <div className="col-12 col-sm border rounded py-1">
                     <div className="row row-gap-2 p-0 pt-1 pb-2">
-                        <p className="m-0 fs-6 font-weight-bold">
-                          Accomodation
-                        </p>
-                        {/* <div className="col-12 col-lg-4 d-flex align-items-center">
+                      <p className="m-0 fs-6 font-weight-bold">Accomodation</p>
+                      {/* <div className="col-12 col-lg-4 d-flex align-items-center">
                           <p className="m-0 fs-6 font-weight-bold">
                             Accomodation
                           </p>
@@ -814,69 +1004,93 @@ const Query = () => {
                           Hotel Category
                         </label>
                         <div className="row column-gap-2 row-gap-2">
-                        {
-                          dropdownState.hotelCategory.map((value,index)=>{
-                            return(
-                            <div className="col-2 form-div d-flex justify-content-center align-items-center" key={index+1}>
-                                <label htmlFor={value.UploadKeyword} className="m-0 pr-2">
-                                  {value.Name}*
+                          {dropdownState?.hotelCategory?.map((value, index) => {
+                            return (
+                              <div
+                                className="col-2 form-div d-flex justify-content-center align-items-center"
+                                key={index + 1}
+                              >
+                                <label
+                                  htmlFor={value.UploadKeyword}
+                                  className="m-0 pr-2"
+                                >
+                                  {value?.Name?.length == 1
+                                    ? value?.Name
+                                    : value?.Name?.split("")[0]}
+                                  *
                                 </label>
                                 <input
                                   className="form-check-input m-0 p-0 ml-3"
                                   type="radio"
                                   name="hotelType"
-                                  id={value.UploadKeyword}
-                                  value={value.id}
+                                  id={value?.UploadKeyword}
+                                  value={value?.id}
                                   onChange={handleChange}
-                                  defaultChecked={index==0? true:false}
+                                  defaultChecked={index == 0 ? true : false}
                                 />
-                            </div>
-                            )
-                          })
-                        }
-                        {dropdownState.hotelCategory.length == 0 && <>
-                          <div className="col-2 form-div d-flex justify-content-center align-items-center">
-                          <label htmlFor="one-star" className="m-0 pr-2">
-                            1*
-                          </label>
-                          <input
-                            className="form-check-input m-0 p-0 ml-3"
-                            type="radio"
-                            name="hotelType"
-                            id="one-star"
-                            value="0"
-                            onChange={handleChange}
-                            defaultChecked
-                          />
-                          </div>
-                          <div className="col-2 form-div d-flex justify-content-center align-items-center">
-                        <label htmlFor="two-star" className="m-0 pr-2">
-                          2*
-                        </label>
-                        <input
-                          className="form-check-input m-0 p-0 ml-3"
-                          type="radio"
-                          name="hotelType"
-                          id="two-star"
-                          value="0"
-                          onChange={handleChange}
-                        />
-                          </div>
-                          <div className="col-2 form-div d-flex justify-content-center align-items-center">
-                              <label htmlFor="three-star" className="m-0 pr-2">
-                                3*
-                              </label>
-                              <input
-                                className="form-check-input m-0 p-0 ml-3"
-                                type="radio"
-                                name="hotelType"
-                                id="three-star"
-                                value="0"
-                                onChange={handleChange}
-                              />
-                          </div>
-                          </>
-                        }
+                              </div>
+                            );
+                          })}
+                          {dropdownState?.hotelCategory?.length == 0 && (
+                            <>
+                              <div className="col-2 form-div d-flex justify-content-center align-items-center">
+                                <label htmlFor="one-star" className="m-0 pr-2">
+                                  1*
+                                </label>
+                                <input
+                                  className="form-check-input m-0 p-0 ml-3"
+                                  type="radio"
+                                  name="hotelType"
+                                  id="one-star"
+                                  value="1"
+                                  onChange={handleChange}
+                                  defaultChecked
+                                />
+                              </div>
+                              <div className="col-2 form-div d-flex justify-content-center align-items-center">
+                                <label htmlFor="two-star" className="m-0 pr-2">
+                                  2*
+                                </label>
+                                <input
+                                  className="form-check-input m-0 p-0 ml-3"
+                                  type="radio"
+                                  name="hotelType"
+                                  id="two-star"
+                                  value="2"
+                                  onChange={handleChange}
+                                />
+                              </div>
+                              <div className="col-2 form-div d-flex justify-content-center align-items-center">
+                                <label
+                                  htmlFor="three-star"
+                                  className="m-0 pr-2"
+                                >
+                                  3*
+                                </label>
+                                <input
+                                  className="form-check-input m-0 p-0 ml-3"
+                                  type="radio"
+                                  name="hotelType"
+                                  id="three-star"
+                                  value="3"
+                                  onChange={handleChange}
+                                />
+                              </div>
+                              <div className="col-2 form-div d-flex justify-content-center align-items-center">
+                                <label htmlFor="four-star" className="m-0 pr-2">
+                                  4*
+                                </label>
+                                <input
+                                  className="form-check-input m-0 p-0 ml-3"
+                                  type="radio"
+                                  name="hotelType"
+                                  id="four-star"
+                                  value="4"
+                                  onChange={handleChange}
+                                />
+                              </div>
+                            </>
+                          )}
 
                           <div className="col-2 form-div d-flex justify-content-center align-items-center">
                             <label htmlFor="all" className="m-0 pr-2">
@@ -893,569 +1107,254 @@ const Query = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="col-6 col-md-6 col-lg-3">
-                        <label className="m-0">Room</label>
-                        <div>
-                          <input
-                            type="text"
-                            className="form-input-2 text-center p-0"
-                            placeholder="0"
-                            name="Room"
-                            value={RoomInfo.Room}
-                            onChange={handleRoomInfo}
-                            // readOnly
-                          />
-                        </div>
-                        <div className="d-flex justify-content-between align-items-center pt-1">
+                      {dropdownState.roomList.map((room, ind) => {
+                        return (
                           <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Room == 1 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Room: 1,
-                              })
-                            }
+                            className="col-6 col-md-6 col-lg-3"
+                            key={ind + 1}
                           >
-                            1
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x
+                            <label className="m-0 font-size-12">
+                              {room.Name}
+                            </label>
+                            <div>
+                              <input
+                                type="text"
+                                className="form-input-2 text-center p-0"
+                                placeholder="0"
+                                name={room?.Name?.split(" ")?.join("")}
+                                value={
+                                  RoomInfo[room?.Name?.split(" ")?.join("")]
+                                }
+                                onChange={handleRoomInfo}
+                                // readOnly
+                              />
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center pt-1">
+                              <div
+                                className={`py-0 border rounded cursor-pointer green-hover padding-x
+                            d-flex justify-content-center align-items-center ${
+                              RoomInfo[room?.Name?.split(" ")?.join("")] == 1
+                                ? "Active text-light"
+                                : ""
+                            }`}
+                                style={{ height: "19px" }}
+                                onClick={() =>
+                                  setRoomInfo({
+                                    ...RoomInfo,
+                                    [room?.Name?.split(" ")?.join("")]: 1,
+                                  })
+                                }
+                              >
+                                1
+                              </div>
+                              <div
+                                className={`py-0 border rounded cursor-pointer green-hover padding-x
                             d-flex justify-content-center align-items-center  ${
-                              RoomInfo.Room == 2 ? "Active text-light" : ""
+                              RoomInfo[room?.Name?.split(" ")?.join("")] == 2
+                                ? "Active text-light"
+                                : ""
                             }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Room: 2,
-                              })
-                            }
-                          >
-                            2
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                                style={{ height: "19px" }}
+                                onClick={() =>
+                                  setRoomInfo({
+                                    ...RoomInfo,
+                                    [room?.Name?.split(" ")?.join("")]: 2,
+                                  })
+                                }
+                              >
+                                2
+                              </div>
+                              <div
+                                className={`py-0 border rounded cursor-pointer green-hover padding-x 
                             d-flex justify-content-center align-items-center ${
-                              RoomInfo.Room == 3 ? "Active text-light" : ""
+                              RoomInfo[room?.Name?.split(" ")?.join("")] == 3
+                                ? "Active text-light"
+                                : ""
                             }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Room: 3,
-                              })
-                            }
-                          >
-                            3
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                                style={{ height: "19px" }}
+                                onClick={() =>
+                                  setRoomInfo({
+                                    ...RoomInfo,
+                                    [room?.Name?.split(" ")?.join("")]: 3,
+                                  })
+                                }
+                              >
+                                3
+                              </div>
+                              <div
+                                className={`py-0 border rounded cursor-pointer green-hover padding-x 
                             d-flex justify-content-center align-items-center ${
-                              RoomInfo.Room == 4 ? "Active text-light" : ""
+                              RoomInfo[room?.Name?.split(" ")?.join("")] == 4
+                                ? "Active text-light"
+                                : ""
                             }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Room: 4,
-                              })
-                            }
-                          >
-                            4
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                                style={{ height: "19px" }}
+                                onClick={() =>
+                                  setRoomInfo({
+                                    ...RoomInfo,
+                                    [room?.Name?.split(" ")?.join("")]: 4,
+                                  })
+                                }
+                              >
+                                4
+                              </div>
+                              <div
+                                className={`py-0 border rounded cursor-pointer green-hover padding-x 
                             d-flex justify-content-center align-items-center ${
-                              RoomInfo.Room == 5 ? "Active text-light" : ""
+                              RoomInfo[room?.Name?.split(" ")?.join("")] == 5
+                                ? "Active text-light"
+                                : ""
                             }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Room: 5,
-                              })
-                            }
-                          >
-                            5
+                                style={{ height: "19px" }}
+                                onClick={() =>
+                                  setRoomInfo({
+                                    ...RoomInfo,
+                                    [room?.Name?.split(" ")?.join("")]: 5,
+                                  })
+                                }
+                              >
+                                5
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                      <div className="col-6 col-md-6 col-lg-3 ">
-                        <label className="m-0">SGL Room</label>
-                        <div>
-                          <input
-                            type="text"
-                            className="form-input-2 text-center p-0"
-                            placeholder="0"
-                            name="Single"
-                            value={RoomInfo.Single}
-                            onChange={handleRoomInfo}
-                            // readOnly
-                          />
-                        </div>
-                        <div className="d-flex justify-content-between align-items-center pt-1">
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                        );
+                      })}
+                      {dropdownState.roomList == "" &&
+                        roomListStaticApi?.map((room, ind) => {
+                          return (
+                            <div
+                              className="col-6 col-md-6 col-lg-3"
+                              key={ind + 1}
+                            >
+                              <label className="m-0 font-size-12">
+                                {room.Name}
+                              </label>
+                              <div>
+                                <input
+                                  type="text"
+                                  className="form-input-2 text-center p-0"
+                                  placeholder="0"
+                                  name={room?.Name?.split(" ")?.join("")}
+                                  value={
+                                    RoomInfo[room?.Name?.split(" ")?.join("")]
+                                  }
+                                  onChange={handleRoomInfo}
+                                  // readOnly
+                                />
+                              </div>
+                              <div className="d-flex justify-content-between align-items-center pt-1">
+                                <div
+                                  className={`py-0 border rounded cursor-pointer green-hover padding-x
                             d-flex justify-content-center align-items-center ${
-                              RoomInfo.Single == 1 ? "Active text-light" : ""
+                              RoomInfo[room?.Name?.split(" ")?.join("")] == 1
+                                ? "Active text-light"
+                                : ""
                             }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Single: 1,
-                              })
-                            }
-                          >
-                            1
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x
+                                  style={{ height: "19px" }}
+                                  onClick={() =>
+                                    setRoomInfo({
+                                      ...RoomInfo,
+                                      [room?.Name?.split(" ")?.join("")]: 1,
+                                    })
+                                  }
+                                >
+                                  1
+                                </div>
+                                <div
+                                  className={`py-0 border rounded cursor-pointer green-hover padding-x
+                            d-flex justify-content-center align-items-center  ${
+                              RoomInfo[room?.Name?.split(" ")?.join("")] == 2
+                                ? "Active text-light"
+                                : ""
+                            }`}
+                                  style={{ height: "19px" }}
+                                  onClick={() =>
+                                    setRoomInfo({
+                                      ...RoomInfo,
+                                      [room?.Name?.split(" ")?.join("")]: 2,
+                                    })
+                                  }
+                                >
+                                  2
+                                </div>
+                                <div
+                                  className={`py-0 border rounded cursor-pointer green-hover padding-x 
                             d-flex justify-content-center align-items-center ${
-                              RoomInfo.Single == 2 ? "Active text-light" : ""
+                              RoomInfo[room?.Name?.split(" ")?.join("")] == 3
+                                ? "Active text-light"
+                                : ""
                             }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Single: 2,
-                              })
-                            }
-                          >
-                            2
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                                  style={{ height: "19px" }}
+                                  onClick={() =>
+                                    setRoomInfo({
+                                      ...RoomInfo,
+                                      [room?.Name?.split(" ")?.join("")]: 3,
+                                    })
+                                  }
+                                >
+                                  3
+                                </div>
+                                <div
+                                  className={`py-0 border rounded cursor-pointer green-hover padding-x 
                             d-flex justify-content-center align-items-center ${
-                              RoomInfo.Single == 3 ? "Active text-light" : ""
+                              RoomInfo[room?.Name?.split(" ")?.join("")] == 4
+                                ? "Active text-light"
+                                : ""
                             }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Single: 3,
-                              })
-                            }
-                          >
-                            3
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
+                                  style={{ height: "19px" }}
+                                  onClick={() =>
+                                    setRoomInfo({
+                                      ...RoomInfo,
+                                      [room?.Name?.split(" ")?.join("")]: 4,
+                                    })
+                                  }
+                                >
+                                  4
+                                </div>
+                                <div
+                                  className={`py-0 border rounded cursor-pointer green-hover padding-x 
                             d-flex justify-content-center align-items-center ${
-                              RoomInfo.Single == 4 ? "Active text-light" : ""
+                              RoomInfo[room?.Name?.split(" ")?.join("")] == 5
+                                ? "Active text-light"
+                                : ""
                             }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Single: 4,
-                              })
-                            }
-                          >
-                            4
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Single == 5 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Single: 5,
-                              })
-                            }
-                          >
-                            5
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-6 col-md-6 col-lg-3">
-                        <label htmlFor="queryType" className="m-0">
-                          DBL Room
-                        </label>
-                        <div>
-                          <input
-                            type="text"
-                            className="form-input-2 text-center p-0"
-                            placeholder="0"
-                            name="Double"
-                            value={RoomInfo.Double}
-                            onChange={handleRoomInfo}
-                            // readOnly
-                          />
-                        </div>
-                        <div className="d-flex justify-content-between align-items-center pt-1">
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Double == 1 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Double: 1,
-                              })
-                            }
-                          >
-                            1
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Double == 2 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Double: 2,
-                              })
-                            }
-                          >
-                            2
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Double == 3 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Double: 3,
-                              })
-                            }
-                          >
-                            3
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Double == 4 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Double: 4,
-                              })
-                            }
-                          >
-                            4
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Double == 5 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Double: 5,
-                              })
-                            }
-                          >
-                            5
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-6 col-md-6 col-lg-3 ">
-                        <label htmlFor="queryType" className="m-0">
-                          TWIN Room
-                        </label>
-                        <div>
-                          <input
-                            type="text"
-                            className="form-input-2 text-center p-0"
-                            placeholder="0"
-                            name="Twin"
-                            value={RoomInfo.Twin}
-                            onChange={handleRoomInfo}
-                            // readOnly
-                          />
-                        </div>
-                        <div className="d-flex justify-content-between align-items-center pt-1">
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Twin == 1 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Twin: 1,
-                              })
-                            }
-                          >
-                            1
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Twin == 2 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Twin: 2,
-                              })
-                            }
-                          >
-                            2
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Twin == 3 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Twin: 3,
-                              })
-                            }
-                          >
-                            3
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Twin == 4 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Twin: 4,
-                              })
-                            }
-                          >
-                            4
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Twin == 5 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Twin: 5,
-                              })
-                            }
-                          >
-                            5
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-6 col-md-6 col-lg-3">
-                        <label htmlFor="queryType" className="m-0">
-                          TPL Room
-                        </label>
-                        <div>
-                          <input
-                            type="text"
-                            className="form-input-2 text-center p-0"
-                            placeholder="0"
-                            name="Triple"
-                            value={RoomInfo.Triple}
-                            onChange={handleRoomInfo}
-                            // readOnly
-                          />
-                        </div>
-                        <div className="d-flex justify-content-between align-items-center pt-1">
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Triple == 1 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Triple: 1,
-                              })
-                            }
-                          >
-                            1
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Triple == 2 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Triple: 2,
-                              })
-                            }
-                          >
-                            2
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Triple == 3 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Triple: 3,
-                              })
-                            }
-                          >
-                            3
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Triple == 4 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Triple: 4,
-                              })
-                            }
-                          >
-                            4
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.Triple == 5 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                Triple: 5,
-                              })
-                            }
-                          >
-                            5
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-6 col-md-6 col-lg-3">
-                        <label htmlFor="queryType" className="m-0">
-                          EXTRA Bed
-                        </label>
-                        <div>
-                          <input
-                            type="text"
-                            className="form-input-2 text-center p-0"
-                            placeholder="0"
-                            name="ExtraBed"
-                            value={RoomInfo.ExtraBed}
-                            onChange={handleRoomInfo}
-                            // readOnly
-                          />
-                        </div>
-                        <div className="d-flex justify-content-between align-items-center pt-1">
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.ExtraBed == 1 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                ExtraBed: 1,
-                              })
-                            }
-                          >
-                            1
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.ExtraBed == 2 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                ExtraBed: 2,
-                              })
-                            }
-                          >
-                            2
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.ExtraBed == 3 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                ExtraBed: 3,
-                              })
-                            }
-                          >
-                            3
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.ExtraBed == 4 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                ExtraBed: 4,
-                              })
-                            }
-                          >
-                            4
-                          </div>
-                          <div
-                            className={`py-0 border rounded cursor-pointer green-hover padding-x 
-                            d-flex justify-content-center align-items-center ${
-                              RoomInfo.ExtraBed == 5 ? "Active text-light" : ""
-                            }`}
-                            style={{ height: "19px" }}
-                            onClick={() =>
-                              setRoomInfo({
-                                ...RoomInfo,
-                                ExtraBed: 5,
-                              })
-                            }
-                          >
-                            5
-                          </div>
-                        </div>
-                      </div>
+                                  style={{ height: "19px" }}
+                                  onClick={() =>
+                                    setRoomInfo({
+                                      ...RoomInfo,
+                                      [room?.Name?.split(" ")?.join("")]: 5,
+                                    })
+                                  }
+                                >
+                                  5
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+
                       <div className="col-6 col-md-6 col-lg-6 d-flex flex-column justify-content-center align-items-center">
                         <p className="font-weight-bold m-0">
                           Total Rooms :
-                          {Number(Room == "" ? 0 : Room) +
-                            Number(Single == "" ? 0 : Single) +
-                            Number(Double == "" ? 0 : Double) +
-                            Number(Twin == "" ? 0 : Twin) +
-                            Number(Triple == "" ? 0 : Triple) +
-                            Number(ExtraBed == "" ? 0 : ExtraBed)}
+                          {Number(
+                            RoomInfo.SingleRoom == "" ? 0 : RoomInfo.SingleRoom
+                          ) +
+                            Number(
+                              RoomInfo.DoubleRoom == ""
+                                ? 0
+                                : RoomInfo.DoubleRoom
+                            ) +
+                            Number(
+                              RoomInfo.TwinRoom == "" ? 0 : RoomInfo.TwinRoom
+                            ) +
+                            Number(
+                              RoomInfo.TripleRoom == ""
+                                ? 0
+                                : RoomInfo.TripleRoom
+                            ) +
+                            Number(
+                              RoomInfo.ExtraBed == "" ? 0 : RoomInfo.ExtraBed
+                            )}
                         </p>
                       </div>
                       {PaxInfo.Adult > 0 && (
@@ -1530,11 +1429,15 @@ const Query = () => {
                               onChange={handleDateChange}
                             >
                               <option value="">select season</option>
-                              {
-                                dropdownState.seasonList.map((season, index)=>{
-                                  return <option value={season.id} key={index+1}>{season.Name}</option>
-                                })
-                              }
+                              {dropdownState?.seasonList?.map(
+                                (season, index) => {
+                                  return (
+                                    <option value={season?.id} key={index + 1}>
+                                      {season?.Name}
+                                    </option>
+                                  );
+                                }
+                              )}
                             </select>
                           </div>
                           <div className="col-6 col-md-12 col-lg-6">
@@ -1546,11 +1449,13 @@ const Query = () => {
                               onChange={handleDateChange}
                             >
                               <option value="">select year</option>
-                              {
-                                fiftyYear.map((year,index)=>{
-                                  return <option value={year} key={index+1}>{year}</option>
-                                })
-                              }
+                              {fiftyYear?.map((year, index) => {
+                                return (
+                                  <option value={year} key={index + 1}>
+                                    {year}
+                                  </option>
+                                );
+                              })}
                             </select>
                           </div>
                         </>
@@ -1607,7 +1512,7 @@ const Query = () => {
                               </tr>
                             </thead>
                             <tbody>
-                              {dateArray.map((value, index) => {
+                              {dateArray?.map((value, index) => {
                                 return (
                                   <tr key={index + 1}>
                                     <td className="p-0 text-center">{value}</td>
@@ -1643,16 +1548,18 @@ const Query = () => {
                                         onChange={handleDateDestination}
                                       >
                                         <option value="1">Select</option>
-                                        {dropdownState?.destinationList?.map((destination, index) => {
-                                          return (
-                                            <option
-                                              value={destination?.id}
-                                              key={index + 1}
-                                            >
-                                              {destination?.Name}
-                                            </option>
-                                          );
-                                        })}
+                                        {dropdownState?.destinationList?.map(
+                                          (destination, index) => {
+                                            return (
+                                              <option
+                                                value={destination?.id}
+                                                key={index + 1}
+                                              >
+                                                {destination?.Name}
+                                              </option>
+                                            );
+                                          }
+                                        )}
                                       </select>
                                     </td>
                                     <td>
@@ -1833,7 +1740,7 @@ const Query = () => {
                         value={queryFields.HotelType}
                         onChange={handleChange}
                       >
-                        <option>All</option>
+                        <option>Select hotel</option>
                         {dropdownState.hotelType?.map((value, index) => {
                           return (
                             <option value={value.id} key={index + 1}>

@@ -1,24 +1,25 @@
 export const queryInitial = {
-  id:"",
+  id: "",
   QueryId: "",
   FDCode: "",
   PackageCode: "",
   PackageName: "",
   ClientType: "",
+  BusinessType: "",
   AgentId: "",
-  LeadPax: "Ansar",
-  Subject: "its subject field required",
-  AddEmail: "ansar@gmail.com, sanaul@gmail.com",
-  AdditionalInfo: "itsdefaultinfo",
+  LeadPax: "",
+  Subject: "",
+  AddEmail: "",
+  AdditionalInfo: "",
   QueryType: "",
-  Priority: "1",
-  TAT: "23",
+  Priority: "",
+  TAT: "",
   TourType: "",
   LeadSource: "",
   LeadReferencedId: "",
   HotelPreference: "",
   VehiclePrefrence: "",
-  HotelType: "3",
+  HotelType: "",
   MealPlan: "",
   TravelInfo: "",
   PaxType: "",
@@ -45,11 +46,10 @@ export const paxInitial = {
 };
 
 export const roomInitial = {
-  Room: "",
-  Single: "",
-  Double: "",
-  Twin: "",
-  Triple: "",
+  SingleRoom: 1,
+  DoubleRoom: "",
+  TripleRoom: "",
+  TwinRoom: "",
   ExtraBed: "",
 };
 
@@ -63,10 +63,11 @@ export const valueAddInitial = {
 
 export const suggestedPackageData = [
   {
-    Id:"",
-    PackageId:"1",
+    Id: "",
+    PackageId: "1",
     QueryId: "",
-    PackageImage:"https://media.cntraveller.com/photos/617936a2a8f76267fba5d115/master/w_1600%2Cc_limit/The%2520Burj%2520Khalifa-GettyImages-1084264582.jpeg",
+    PackageImage:
+      "https://media.cntraveller.com/photos/617936a2a8f76267fba5d115/master/w_1600%2Cc_limit/The%2520Burj%2520Khalifa-GettyImages-1084264582.jpeg",
     FDCode: "321",
     PackageCode: "431",
     PackageName: "6 Days Dubai Package",
@@ -86,7 +87,7 @@ export const suggestedPackageData = [
     HotelType: "3",
     MealPlan: "3",
     TravelInfo: "1",
-    ValueAddedServices:[
+    ValueAddedServices: [
       {
         Flight: "NO",
         Visa: "NO",
@@ -96,7 +97,7 @@ export const suggestedPackageData = [
       },
     ],
 
-    TravelDate:[
+    TravelDate: [
       {
         Type: "1",
         FromDate: "2024-05-23",
@@ -107,14 +108,14 @@ export const suggestedPackageData = [
       },
     ],
     PaxType: "1",
-    PaxInfo:[
+    PaxInfo: [
       {
         Adult: "3",
         Child: "1",
         Infant: "1",
       },
     ],
-    RoomInfo:[
+    RoomInfo: [
       {
         Room: "1",
         Single: "1",
@@ -128,10 +129,11 @@ export const suggestedPackageData = [
     UpdatedBy: "0",
   },
   {
-    Id:"",
-    PackageId:"2",
+    Id: "",
+    PackageId: "2",
     QueryId: "1",
-    PackageImage:"https://i.natgeofe.com/n/483e77f7-f52b-432a-a0f5-d9cd1489a95a/madinat-jumeirah-dubai-uae_3x4.jpg",
+    PackageImage:
+      "https://i.natgeofe.com/n/483e77f7-f52b-432a-a0f5-d9cd1489a95a/madinat-jumeirah-dubai-uae_3x4.jpg",
     FDCode: "321",
     PackageCode: "431",
     PackageName: "4 Days Maldives Package",
@@ -152,7 +154,7 @@ export const suggestedPackageData = [
     HotelType: "3",
     MealPlan: "3",
     TravelInfo: "1",
-    ValueAddedServices:[
+    ValueAddedServices: [
       {
         Flight: "NO",
         Visa: "NO",
@@ -161,7 +163,7 @@ export const suggestedPackageData = [
         Transfer: "NO",
       },
     ],
-    TravelDate:[
+    TravelDate: [
       {
         Type: "1",
         FromDate: "2024-05-13",
@@ -172,14 +174,14 @@ export const suggestedPackageData = [
       },
     ],
     PaxType: "1",
-    PaxInfo:[
+    PaxInfo: [
       {
         Adult: "3",
         Child: "1",
         Infant: "1",
       },
     ],
-    RoomInfo:[
+    RoomInfo: [
       {
         Room: "1",
         Single: "1",
@@ -196,10 +198,11 @@ export const suggestedPackageData = [
     UpdatedBy: "0",
   },
   {
-    Id:"",
-    PackageId:"3",
+    Id: "",
+    PackageId: "3",
     QueryId: "1",
-    PackageImage:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/377486240.jpg?k=956825fb96b0ccd1d754e9b01d3f8fa33d83eb47c44b171bee406d9ae7b78c5e&o=&hp=1",
+    PackageImage:
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/377486240.jpg?k=956825fb96b0ccd1d754e9b01d3f8fa33d83eb47c44b171bee406d9ae7b78c5e&o=&hp=1",
     FDCode: "321",
     PackageCode: "431",
     PackageName: "8 Days Goa Package",
@@ -220,7 +223,7 @@ export const suggestedPackageData = [
     HotelType: "3",
     MealPlan: "3",
     TravelInfo: "1",
-    ValueAddedServices:[
+    ValueAddedServices: [
       {
         Flight: "NO",
         Visa: "NO",
@@ -230,7 +233,7 @@ export const suggestedPackageData = [
       },
     ],
 
-    TravelDate:[
+    TravelDate: [
       {
         Type: "1",
         FromDate: "2024-05-09",
@@ -241,14 +244,14 @@ export const suggestedPackageData = [
       },
     ],
     PaxType: "1",
-    PaxInfo:[
+    PaxInfo: [
       {
         Adult: "3",
         Child: "1",
         Infant: "1",
       },
     ],
-    RoomInfo:[
+    RoomInfo: [
       {
         Room: "1",
         Single: "1",
@@ -265,10 +268,11 @@ export const suggestedPackageData = [
     UpdatedBy: "0",
   },
   {
-    Id:"",
-    PackageId:"4",
+    Id: "",
+    PackageId: "4",
     QueryId: "1",
-    PackageImage:"https://r1imghtlak.mmtcdn.com/a271073a79ca11eca91e0a58a9feac02.jpg?&output-quality=75&downsize=520:350&crop=520:350;2,0&output-format=jpg&downsize=192:224.4&crop=192:224.4",
+    PackageImage:
+      "https://r1imghtlak.mmtcdn.com/a271073a79ca11eca91e0a58a9feac02.jpg?&output-quality=75&downsize=520:350&crop=520:350;2,0&output-format=jpg&downsize=192:224.4&crop=192:224.4",
     FDCode: "321",
     PackageCode: "431",
     PackageName: "Weekend Thailand Package",
@@ -289,7 +293,7 @@ export const suggestedPackageData = [
     HotelType: "3",
     MealPlan: "3",
     TravelInfo: "1",
-    ValueAddedServices:[
+    ValueAddedServices: [
       {
         Flight: "NO",
         Visa: "NO",
@@ -299,7 +303,7 @@ export const suggestedPackageData = [
       },
     ],
 
-    TravelDate:[
+    TravelDate: [
       {
         Type: "1",
         FromDate: "2024-05-05",
@@ -310,14 +314,14 @@ export const suggestedPackageData = [
       },
     ],
     PaxType: "1",
-    PaxInfo:[
+    PaxInfo: [
       {
         Adult: "3",
         Child: "1",
         Infant: "1",
       },
     ],
-    RoomInfo:[
+    RoomInfo: [
       {
         Room: "1",
         Single: "1",
@@ -334,10 +338,11 @@ export const suggestedPackageData = [
     UpdatedBy: "0",
   },
   {
-    Id:"",
-    PackageId:"5",
+    Id: "",
+    PackageId: "5",
     QueryId: "1",
-    PackageImage:"https://static.dezeen.com/uploads/2022/02/museum-of-the-future-killa-design-dubai_dezeen_2364_col_20-scaled.jpg",
+    PackageImage:
+      "https://static.dezeen.com/uploads/2022/02/museum-of-the-future-killa-design-dubai_dezeen_2364_col_20-scaled.jpg",
     FDCode: "321",
     PackageCode: "431",
     PackageName: "WeekDays Kashmir Package",
@@ -358,7 +363,7 @@ export const suggestedPackageData = [
     HotelType: "3",
     MealPlan: "3",
     TravelInfo: "1",
-    ValueAddedServices:[
+    ValueAddedServices: [
       {
         Flight: "NO",
         Visa: "NO",
@@ -368,7 +373,7 @@ export const suggestedPackageData = [
       },
     ],
 
-    TravelDate:[
+    TravelDate: [
       {
         Type: "1",
         FromDate: "2024-05-10",
@@ -379,14 +384,14 @@ export const suggestedPackageData = [
       },
     ],
     PaxType: "1",
-    PaxInfo:[
+    PaxInfo: [
       {
         Adult: "3",
         Child: "1",
         Infant: "1",
       },
     ],
-    RoomInfo:[
+    RoomInfo: [
       {
         Room: "1",
         Single: "1",
@@ -403,10 +408,11 @@ export const suggestedPackageData = [
     UpdatedBy: "0",
   },
   {
-    Id:"",
-    PackageId:"6",
+    Id: "",
+    PackageId: "6",
     QueryId: "1",
-    PackageImage:"https://akm-img-a-in.tosshub.com/sites/visualstory/stories/2021_06/story_1330/assets/46.jpeg?time=1624977644&size=*:900",
+    PackageImage:
+      "https://akm-img-a-in.tosshub.com/sites/visualstory/stories/2021_06/story_1330/assets/46.jpeg?time=1624977644&size=*:900",
     FDCode: "321",
     PackageCode: "431",
     PackageName: "Full Manali Package",
@@ -427,7 +433,7 @@ export const suggestedPackageData = [
     HotelType: "3",
     MealPlan: "3",
     TravelInfo: "1",
-    ValueAddedServices:[
+    ValueAddedServices: [
       {
         Flight: "NO",
         Visa: "NO",
@@ -437,7 +443,7 @@ export const suggestedPackageData = [
       },
     ],
 
-    TravelDate:[
+    TravelDate: [
       {
         Type: "1",
         FromDate: "2024-05-19",
@@ -448,14 +454,14 @@ export const suggestedPackageData = [
       },
     ],
     PaxType: "1",
-    PaxInfo:[
+    PaxInfo: [
       {
         Adult: "3",
         Child: "1",
         Infant: "1",
       },
     ],
-    RoomInfo:[
+    RoomInfo: [
       {
         Room: "1",
         Single: "1",
@@ -472,10 +478,11 @@ export const suggestedPackageData = [
     UpdatedBy: "0",
   },
   {
-    Id:"",
-    PackageId:"7",
+    Id: "",
+    PackageId: "7",
     QueryId: "1",
-    PackageImage:"https://media.architecturaldigest.com/photos/6032b3c9a0b9bd2edd5510d1/1:1/w_2880,h_2880,c_limit/Hero_Soneva%20Jani%20Chapter%20Two%20by%20Aksham%20Abdul%20Ghadir.jpg",
+    PackageImage:
+      "https://media.architecturaldigest.com/photos/6032b3c9a0b9bd2edd5510d1/1:1/w_2880,h_2880,c_limit/Hero_Soneva%20Jani%20Chapter%20Two%20by%20Aksham%20Abdul%20Ghadir.jpg",
     FDCode: "321",
     PackageCode: "431",
     PackageName: "Mumbai Ship Arena Package",
@@ -496,7 +503,7 @@ export const suggestedPackageData = [
     HotelType: "3",
     MealPlan: "3",
     TravelInfo: "1",
-    ValueAddedServices:[
+    ValueAddedServices: [
       {
         Flight: "NO",
         Visa: "NO",
@@ -506,7 +513,7 @@ export const suggestedPackageData = [
       },
     ],
 
-    TravelDate:[
+    TravelDate: [
       {
         Type: "1",
         FromDate: "2024-05-15",
@@ -517,14 +524,14 @@ export const suggestedPackageData = [
       },
     ],
     PaxType: "1",
-    PaxInfo:[
+    PaxInfo: [
       {
         Adult: "3",
         Child: "1",
         Infant: "1",
       },
     ],
-    RoomInfo:[
+    RoomInfo: [
       {
         Room: "1",
         Single: "1",
@@ -541,10 +548,11 @@ export const suggestedPackageData = [
     UpdatedBy: "0",
   },
   {
-    Id:"",
-    PackageId:"8",
+    Id: "",
+    PackageId: "8",
     QueryId: "1",
-    PackageImage:"https://assets.vogue.in/photos/63889b741b8712b28236a56b/2:3/w_2560%2Cc_limit/Goa.jpeg",
+    PackageImage:
+      "https://assets.vogue.in/photos/63889b741b8712b28236a56b/2:3/w_2560%2Cc_limit/Goa.jpeg",
     FDCode: "321",
     PackageCode: "431",
     PackageName: "10 Days Qatar Package",
@@ -565,7 +573,7 @@ export const suggestedPackageData = [
     HotelType: "3",
     MealPlan: "3",
     TravelInfo: "1",
-    ValueAddedServices:[
+    ValueAddedServices: [
       {
         Flight: "NO",
         Visa: "NO",
@@ -575,7 +583,7 @@ export const suggestedPackageData = [
       },
     ],
 
-    TravelDate:[
+    TravelDate: [
       {
         Type: "1",
         FromDate: "2024-05-02",
@@ -586,14 +594,14 @@ export const suggestedPackageData = [
       },
     ],
     PaxType: "1",
-    PaxInfo:[
+    PaxInfo: [
       {
         Adult: "3",
         Child: "1",
         Infant: "1",
       },
     ],
-    RoomInfo:[
+    RoomInfo: [
       {
         Room: "1",
         Single: "1",
@@ -608,5 +616,23 @@ export const suggestedPackageData = [
     ContractPerson: "Rizwan",
     AddedBy: "1",
     UpdatedBy: "0",
-  }
+  },
+];
+
+export const roomListStaticApi = [
+  {
+    Name: "SingleRoom",
+  },
+  {
+    Name: "DoubleRoom",
+  },
+  {
+    Name: "TripleRoom",
+  },
+  {
+    Name: "TwinRoom",
+  },
+  {
+    Name: "ExtraBed",
+  },
 ];

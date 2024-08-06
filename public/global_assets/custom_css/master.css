@@ -678,3 +678,19 @@ a {
   border: none;
   border-bottom: 2px solid blue;
 }
+.custom-search-dropdown{
+  position: absolute;
+  top: 60%;
+  left: 2.5%;
+  height: 100%;
+  width: 95%;
+  background-color: rgb(242, 247, 255);
+  z-index: 999;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding: 10px 0;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  overflow-y: scroll;
+}
