@@ -1,0 +1,25 @@
+
+export const agentMasterInitialValue = {
+    id:"",
+    BussinessType:"",
+    WebsiteUrl:"",
+    SalesPerson:"",
+    OperationsPerson:"",
+    CompanyName:"",
+    CompanyType:"",
+    Consortia:"",
+    ISO:"",
+    CompanyPhoneNumber:"",
+    CompanyEmailAddress:"",
+    Competitor:"",
+    MarketType:"",
+    LocalAgent:"YES",
+    Nationality:"",
+    Country:"",
+    Category:"",
+    TourType:"",
+    PreferredLanguage:"",
+    Status:"1",
+    AddedBy:1,
+    UpdatedBy:0
+}

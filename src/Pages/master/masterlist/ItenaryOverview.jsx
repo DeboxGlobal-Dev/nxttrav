@@ -9,6 +9,7 @@ import {
   itenararyOverviewInitialValue,
   itenararyOverviewValidationSchema,
 } from "./MasterValidations";
+import Editor from "./TextEditor/Editor";
 
 const ItenaryOverview = () => {
   const [getData, setGetData] = useState([]);
@@ -52,6 +53,23 @@ const ItenaryOverview = () => {
       Status: rowValue.Status === "Active" ? 1 : 0
     });
     setIsEditing(true);
+  };
+
+  const handleOverviewNameEditor = (content) =>{
+    console.log(content)
+  };
+  const handleOverviewInformationEditor = (content) =>{
+    console.log(content);
+  };
+
+  const handleHighlightInformationEditor = (content) =>{
+    console.log(content);
+  };
+  const hanldeItenararyIntroductionEditor = (content)=>{
+    console.log(content);
+  };
+  const handleItenararySummaryEditor = (content) =>{
+    console.log(content);
   };
 
   const columns = [
@@ -154,59 +172,37 @@ const ItenaryOverview = () => {
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
-                      <div className="col-sm-6">
-                        <label>Overview Name</label>
-                        <Field
-                          type="text"
-                          name="OverviewName"
-                          placeholder="Overview Name"
-                          className="form-control"
+                      <div className="col-sm-12">
+                        <label className="m-0">Overview Name</label>
+                        <Editor 
+                            handleChangeEditor={handleOverviewNameEditor}
                         />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="OverviewName"/>
-                        </span>
                       </div>
-                      <div className="col-sm-6">
-                        <label>Overview Information</label>
-                        <Field
-                          as="textarea"
-                          name="OverviewInformation"
-                          placeholder="Write Here..."
-                          className="form-control"
-                          style={{height:"38px"}}
-                          />
+                      <div className="col-sm-12 mt-4">
+                        <label className="m-0">Overview Information</label>
+                        <Editor
+                          handleChangeEditor={handleOverviewInformationEditor}
+                        />
                       </div>
-                      <div className="col-sm-6">
-                        <label>Highlight Information</label>
-                        <Field
-                          as="textarea"
-                          name="HighlightInformation"
-                          placeholder="Write Here..."
-                          className="form-control"
-                          style={{height:"38px"}}
-                          />
+                      <div className="col-sm-12 mt-4">
+                        <label className="m-0">Highlight Information</label>
+                        <Editor
+                          handleChangeEditor={handleHighlightInformationEditor}
+                        />
                       </div>
-                      <div className="col-sm-6">
-                        <label>Itinerary Introduction</label>
-                        <Field
-                          as="textarea"
-                          name="ItineraryIntroduction"
-                          placeholder="Write Here..."
-                          className="form-control"
-                          style={{height:"38px"}}
-                          />
+                      <div className="col-sm-12 mt-4">
+                        <label className="m-0">Itinerary Introduction</label>
+                        <Editor
+                          handleChangeEditor={hanldeItenararyIntroductionEditor}
+                        />
                       </div>
-                      <div className="col-sm-6">
-                        <label>Itenarary Summary</label>
-                        <Field
-                          as="textarea"
-                          name="ItinerarySummary"
-                          placeholder="Write Here..."
-                          className="form-control"
-                          style={{height:"38px"}}
-                          />
+                      <div className="col-sm-12 mt-4">
+                        <label className="m-0">Itenarary Summary</label>
+                        <Editor
+                          handleChangeEditor={handleItenararySummaryEditor}
+                        />
                       </div>
-                      <div className="col-sm-6">
+                      <div className="col-sm-6 mt-4">
                         <label>Status</label>
                         <Field
                           name="Status"

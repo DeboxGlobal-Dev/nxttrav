@@ -11,6 +11,7 @@ import {
 } from "./MasterValidations";
 import "jquery";
 import "select2";
+import Editor from "./TextEditor/Editor";
 
 const Sightseeing = () => {
   const [getData, setGetData] = useState([]);
@@ -71,6 +72,18 @@ const Sightseeing = () => {
     });
     setIsEditing(true);
   };
+
+  const handleImportantNoteEditor = (content) =>{
+    console.log(content);
+  };
+
+  const handleDescriptionEditor = (content) =>{
+    console.log(content);
+  };
+
+  const handleInclusionEditor = (content) =>{
+    console.log(content);
+  }
 
   const columns = [
     {
@@ -244,31 +257,22 @@ const Sightseeing = () => {
                           <option value={1}>Yes</option>
                         </Field>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Description</label>
-                        <Field
-                          name="Description"
-                          as="textarea"
-                          className="form-control"
-                          style={{ height: "38px" }}
+                      <div className="col-sm-12 mt-2">
+                        <label className="m-0">Description</label>
+                        <Editor
+                          handleChangeEditor={handleDescriptionEditor}
                         />
                       </div>
-                      <div className="col-sm-4">
-                        <label className="font-size-10">Inclusion / Exclusion & Timing</label>
-                        <Field
-                          name="InclusionsExclusionsTiming"
-                          as="textarea"
-                          className="form-control"
-                          style={{height:'40px'}}
-                        />
+                      <div className="col-sm-12 mt-4">
+                        <label className="m-0">Inclusion / Exclusion & Timing</label>
+                          <Editor 
+                            handleChangeEditor={handleInclusionEditor}
+                          />
                       </div>
-                      <div className="col-sm-4">
-                        <label>Important Note</label>
-                        <Field
-                          name="ImportantNote"
-                          as="textarea"
-                          className="form-control"
-                          style={{height:'40px'}}
+                      <div className="col-sm-12 mt-4">
+                        <label className="m-0">Important Note</label>
+                        <Editor
+                          handleChangeEditor={handleImportantNoteEditor}
                         />
                       </div>
                     </div>

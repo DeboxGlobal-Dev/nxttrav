@@ -6,6 +6,7 @@ import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
 import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
+import Editor from "./TextEditor/Editor";
 
 const FerryPrice = () => {
   const [getData, setGetData] = useState([]);
@@ -50,6 +51,10 @@ const FerryPrice = () => {
     setIsEditing(true);
   };
 
+  const handleDetailEditor = (content)=>{
+    console.log(content);
+  };
+  
   const columns = [
     {
       name: "Name",
@@ -210,11 +215,8 @@ const FerryPrice = () => {
                       </div>
                       <div className="col-sm-12">
                         <label>Detail</label>
-                        <Field
-                          as="textarea"
-                          className="form-control"
-                          name="Name"
-                          placeholder="Write Your Detail's Here..."
+                        <Editor
+                          handleChangeEditor={handleDetailEditor}
                         />
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />

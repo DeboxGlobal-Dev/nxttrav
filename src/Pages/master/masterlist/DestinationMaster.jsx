@@ -10,6 +10,7 @@ import {
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { isDeepEqual } from "@mui/x-data-grid/internals";
+import Editor from "./TextEditor/Editor";
 
 const DestinationMaster = () => {
   const [getData, setGetData] = useState([]);
@@ -89,6 +90,10 @@ const DestinationMaster = () => {
       return filteredState;
 
   }, [changeValue.CountryId, changeValue.StateId]);
+
+  const handleDescription = (content) =>{
+    console.log(content);
+  }
 
   const columns = [
     {
@@ -234,7 +239,7 @@ const DestinationMaster = () => {
                           })}
                         </Field>
                       </div>
-                      <div className="col-sm-4">
+                      <div className="col-sm-4 h-100">
                         <label>Destination Name</label>
                         <Field
                           type="text"
@@ -244,19 +249,6 @@ const DestinationMaster = () => {
                         />
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Description</label>
-                        <Field
-                          as="textarea"
-                          placeholder="Description"
-                          className="form-control"
-                          name="Description"
-                          style={{ height: "38px" }}
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Description" />
                         </span>
                       </div>
                       <div className="col-sm-4">
@@ -282,6 +274,15 @@ const DestinationMaster = () => {
                           <option value="1">Active</option>
                           <option value="0">Inactive</option>
                         </Field>
+                      </div>
+                      <div className="col-sm-12">
+                        <label>Description</label>
+                        <Editor
+                          handleChangeEditor={handleDescription}
+                        />
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="Description" />
+                        </span>
                       </div>
                     </div>
                   </div>

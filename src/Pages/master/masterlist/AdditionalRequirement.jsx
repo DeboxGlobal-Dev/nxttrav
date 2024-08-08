@@ -9,6 +9,7 @@ import {
   additionalRequiremntInitialValue,
   additionaRequirementValidationSchema
 } from "./MasterValidations";
+import Editor from "./TextEditor/Editor";
 
 const AdditionalRequirement = () => {
   const [getData, setGetData] = useState([]);
@@ -119,6 +120,10 @@ const AdditionalRequirement = () => {
     }
 
     reader.readAsDataURL(file);
+  };
+
+  const handleDetailEditor = (content) =>{
+    console.log(content);
   }
 
   const columns = [
@@ -370,12 +375,9 @@ const AdditionalRequirement = () => {
                       </div>
                       <div className="col-sm-12">
                         <label>Details</label>
-                        <Field
-                          name="Details"
-                          className="form-control"
-                          as="textarea"
-                          placeholder="Write Here..."
-                        ></Field>
+                          <Editor
+                            handleChangeEditor={handleDetailEditor}
+                          />
                       </div>
                     </div>
                   </div>

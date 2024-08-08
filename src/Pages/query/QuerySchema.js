@@ -46,11 +46,11 @@ export const paxInitial = {
 };
 
 export const roomInitial = {
-  SingleRoom: 1,
-  DoubleRoom: "",
-  TripleRoom: "",
-  TwinRoom: "",
-  ExtraBed: "",
+  "SGLRoom": 1,
+  "DBLRoom": "",
+  "TPLRoom": "",
+  "TWINRoom": "",
+  "ExtraBed(A)": "",
 };
 
 export const valueAddInitial = {
@@ -621,18 +621,18 @@ export const suggestedPackageData = [
 
 export const roomListStaticApi = [
   {
-    Name: "SingleRoom",
+    Name: "SGLRoom",
   },
   {
-    Name: "DoubleRoom",
+    Name: "DBLRoom",
   },
   {
-    Name: "TripleRoom",
+    Name: "TPLRoom",
   },
   {
-    Name: "TwinRoom",
+    Name: "TWINRoom",
   },
   {
-    Name: "ExtraBed",
+    Name: "ExtraBed(A)",
   },
 ];

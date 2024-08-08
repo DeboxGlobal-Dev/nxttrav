@@ -50,7 +50,6 @@ const Polocies = () => {
     setTextEditorValue({...textEditorValue, TermsCondition:content});
   }
 
-  console.log("TextEditorValue", textEditorValue);
 
   return (
     <>
@@ -270,7 +269,6 @@ const ReactQuillComponent =({handleProcedureContentChange})=>{
         "size",
       ];
     
-
     return(
       <ReactQuill
         theme="snow"
@@ -281,7 +279,7 @@ const ReactQuillComponent =({handleProcedureContentChange})=>{
         style={{ height: "160px" }}
       />
     )
-}
+};
 
 export default Polocies;
 

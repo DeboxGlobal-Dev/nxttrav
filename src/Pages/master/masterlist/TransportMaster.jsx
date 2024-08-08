@@ -9,9 +9,9 @@ import {
   transportMasterValidationSchema,
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
+import Editor from "./TextEditor/Editor";
 
 const TransportMaster = () => {
-
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -24,7 +24,6 @@ const TransportMaster = () => {
   const [updateData, setUpdateData] = useState(false);
 
   useEffect(() => {
-    
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("transportmasterlist", postData);
@@ -36,7 +35,6 @@ const TransportMaster = () => {
     };
 
     postDataToServer();
-
   }, [updateData]);
 
   useEffect(() => {
@@ -58,6 +56,10 @@ const TransportMaster = () => {
 
     setIsEditing(true);
   };
+
+  const handleDetailEditor = (content) =>{
+    console.log(content);
+  }
 
   const columns = [
     {
@@ -209,16 +211,6 @@ const TransportMaster = () => {
                         </Field>
                       </div>
                       <div className="col-sm-4">
-                        <label>Detail</label>
-                        <Field
-                          as="textarea"
-                          name="Detail"
-                          placeholder="Detail"
-                          className="form-control"
-                          style={{ height: "38px" }}
-                        />
-                      </div>
-                      <div className="col-sm-4">
                         <label>Status</label>
                         <Field
                           name="Status"
@@ -228,6 +220,12 @@ const TransportMaster = () => {
                           <option value={1}>Active</option>
                           <option value={0}>Inactive</option>
                         </Field>
+                      </div>
+                      <div className="col-sm-12">
+                        <label>Detail</label>
+                        <Editor
+                          handleChangeEditor={handleDetailEditor}
+                        />
                       </div>
                     </div>
                   </div>

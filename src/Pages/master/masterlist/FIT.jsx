@@ -9,6 +9,7 @@ import {
   fitInitialValue,
   fitValidationSchema
 } from "./MasterValidations";
+import Editor from "./TextEditor/Editor";
 
 const FIT = () => {
   const [getData, setGetData] = useState([]);
@@ -69,6 +70,40 @@ const FIT = () => {
     });
     setIsEditing(true);
   };
+
+  const handleRemarkEditor = (content) =>{
+    console.log(content);
+  };
+
+  const handlePaymentPolicyEditor = (content) =>{
+    console.log(content);
+  };
+
+  const handleOptionTourEditor = (content) =>{
+    console.log(content);
+  };
+
+  const handleServiceUpgradationEditor = (content) =>{
+    console.log(content);
+  };
+
+  const handleCancelationEditor = (content) =>{
+    console.log(content);
+  };
+
+  const handleTermsConditionEditor = (content) =>{
+    console.log(content);
+  };
+
+  const handleExlusionEditor = (content) =>{
+    console.log(content);
+  };
+
+  const handleInclusionEditor = (content) =>{
+    console.log(content);
+  }
+
+
 
   const columns = [
     {
@@ -197,90 +232,55 @@ const FIT = () => {
                           <ErrorMessage name="Destination" />
                         </span>
                       </div>
-                      <div className="col-sm-6">
-                        <label>Inclusion</label>
-                        <Field
-                          as="textarea"
-                          name="Inclusion"
-                          placeholder="Write Here..."
-                          className="form-control"
-                          style={{ height: "38px" }}
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Inclusion" />
-                        </span>
-                      </div>
-                      <div className="col-sm-6">
-                        <label>Exclusion</label>
-                        <Field
-                          as="textarea"
-                          name="Exclusion"
-                          placeholder="Write Here..."
-                          className="form-control"
-                          style={{ height: "38px" }}
+                      <div className="col-sm-12">
+                        <label className="m-0">Inclusion</label>
+                        <Editor
+                          handleChangeEditor={handleInclusionEditor}
                         />
                       </div>
-                      <div className="col-sm-6">
-                        <label>Terms Condition</label>
-                        <Field
-                          as="textarea"
-                          name="TermsCondition"
-                          placeholder="Write Here..."
-                          className="form-control"
-                          style={{ height: "38px" }}
+                      <div className="col-sm-12 mt-4">
+                        <label className="m-0">Exclusion</label>
+                        <Editor
+                          handleChangeEditor={handleExlusionEditor}
                         />
                       </div>
-                      <div className="col-sm-6">
-                        <label>Cancelation</label>
-                        <Field
-                          as="textarea"
-                          name="Cancelation"
-                          placeholder="Write Here..."
-                          className="form-control"
-                          style={{ height: "38px" }}
+                      <div className="col-sm-12 mt-4">
+                        <label className="m-0">Terms Condition</label>
+                        <Editor
+                          handleChangeEditor={handleTermsConditionEditor}
                         />
                       </div>
-                      <div className="col-sm-6">
-                        <label>Service Upgradation</label>
-                        <Field
-                          as="textarea"
-                          name="ServiceUpgradation"
-                          placeholder="Write Here..."
-                          className="form-control"
-                          style={{ height: "38px" }}
+                      <div className="col-sm-12 mt-4">
+                        <label className="m-0">Cancelation</label>
+                        <Editor
+                          handleChangeEditor={handleCancelationEditor}
                         />
                       </div>
-                      <div className="col-sm-6">
-                        <label>Optional Tour</label>
-                        <Field
-                          as="textarea"
-                          name="OptionalTour"
-                          placeholder="Write Here..."
-                          className="form-control"
-                          style={{ height: "38px" }}
+                      <div className="col-sm-12 mt-4">
+                        <label className="m-0">Service Upgradation</label>
+                        <Editor
+                          handleChangeEditor={handleServiceUpgradationEditor}
                         />
                       </div>
-                      <div className="col-sm-6">
-                        <label>Payment Policy</label>
-                        <Field
-                          as="textarea"
-                          name="PaymentPolicy"
-                          placeholder="Write Here..."
-                          className="form-control"
-                          style={{ height: "38px" }}
+                      <div className="col-sm-12 mt-4">
+                        <label className="m-0">Optional Tour</label>
+                        <Editor
+                          handleChangeEditor={handleOptionTourEditor}
                         />
                       </div>
-                      <div className="col-sm-6">
-                        <label>Remarks</label>
-                        <Field
-                          as="textarea"
-                          name="Remarks"
-                          placeholder="Write Here..."
-                          className="form-control"
-                          style={{ height: "38px" }}
+                      <div className="col-sm-12 mt-4">
+                        <label className="m-0">Payment Policy</label>
+                        <Editor
+                          handleChangeEditor={handlePaymentPolicyEditor}
                         />
                       </div>
-                      <div className="col-sm-6">
+                      <div className="col-sm-12 mt-4">
+                        <label className="m-0">Remarks</label>
+                        <Editor
+                          handleChangeEditor={handleRemarkEditor}
+                        />
+                      </div>
+                      <div className="col-sm-6 mt-4">
                         <label>Status</label>
                         <Field
                           name="Status"
@@ -291,7 +291,7 @@ const FIT = () => {
                           <option value="0">Inactive</option>
                         </Field>
                       </div>
-                      <div className="col-sm-6">
+                      <div className="col-sm-6 mt-4">
                         <label>Set Default</label>
                         <Field
                           name="SetDefault"

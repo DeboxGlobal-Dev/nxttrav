@@ -109,7 +109,13 @@ const Setting = () => {
                   <div>
                     <i className="fa-solid fa-user mr-2"></i>Profile
                   </div>
-                  <span className="badge badge-pill bg-blue ml-auto">24</span>
+                 
+                </NavLink>
+                <NavLink to="company" className={`py-2 px-3 d-flex ${pathname==="/setting/company"? 'Active':''}`} style={{height:"40px"}}>
+                  <div>
+                    <i className="fa-solid fa-user mr-2"></i>Company
+                  </div>
+                  
                 </NavLink>
                 <NavLink to="email" className={`py-2 px-3 d-flex ${pathname==="/setting/email"? 'Active':''}`} style={{height:"40px"}}>
                   <div>

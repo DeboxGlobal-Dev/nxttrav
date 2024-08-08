@@ -18,6 +18,7 @@ import "jquery";
 import { useLocation, useNavigate } from "react-router-dom";
 import { axiosQuery } from "../../http/axios/axios_new";
 import { roomListStaticApi } from "./QuerySchema";
+import { Value } from "sass";
 
 const Query = () => {
   const location = useLocation();
@@ -44,7 +45,11 @@ const Query = () => {
   const [dayWiseNights, setDayWiseNights] = useState([]);
   const [filteredCity, setFilteredCity] = useState([]);
   const [submitting, setSubmitting] = useState(false);
-  const [agentData, setAgentData] = useState("");
+  const [agentData, setAgentData] = useState({
+    Agent: "",
+    Contact: "",
+  });
+
   const [showAgentPopup, setShowAgentPopup] = useState(true);
 
   const initialState = {
@@ -67,6 +72,7 @@ const Query = () => {
     hotelCategory: [],
     agentList: [],
     roomList: [],
+    queryType: [],
   };
 
   const dropdownReducer = (state, action) => {
@@ -97,6 +103,8 @@ const Query = () => {
         return { ...state, agentList: action.payload };
       case "ROOM-LIST":
         return { ...state, roomList: action.payload };
+      case "QUERY-TYPE":
+        return { ...state, queryType: action.payload };
     }
 
     return state;
@@ -256,13 +264,26 @@ const Query = () => {
       } catch (err) {
         console.log(err);
       }
+      try {
+        const { data } = await axiosOther.post("querytypelist", {
+          Search: "",
+          Status: "1",
+        });
+
+        dropdownDispatch({ type: "QUERY-TYPE", payload: data.DataList });
+      } catch (err) {
+        console.log(err);
+      }
     };
     gettingDataForDropdown();
   }, []);
 
   useEffect(() => {
     dropdownDispatch({ type: "AGENT-LIST", payload: [] });
-    setAgentData("");
+    setAgentData({
+      Agent: "",
+      Contact: "",
+    });
 
     const gettingDataForDropdown2 = async () => {
       try {
@@ -643,24 +664,19 @@ const Query = () => {
 
   //SET DATA OF AGENT & CLIENT TYPE
 
-  const handleSetDataToAgent = (data) => {
-    setAgentData(data);
+  const handleSetDataToAgent = (agent, contact) => {
+    setAgentData({
+      Agent: agent,
+      Contact: contact,
+    });
     setQueryFields({
       ...queryFields,
-      SalesPerson: data.SalesPerson,
-      AssignUser: data.OperationsPerson,
+      SalesPerson: agent.SalesPerson,
+      AssignUser: agent.OperationsPerson,
     });
   };
 
-  const agentListData = dropdownState.agentList.filter((agent) => {
-    return queryFields.ClientType != ""
-      ? agent.CompanyName.toLowerCase().includes(
-          queryFields.ClientType.toLowerCase()
-        )
-      : agent;
-  });
-
-  console.log("agent-list-data", agentListData);
+  // console.log("query-type", dropdownState.queryType);
 
   return (
     <>
@@ -690,11 +706,14 @@ const Query = () => {
                           value={queryFields.QueryType}
                           onChange={handleChange}
                         >
-                          <option value="1">Query</option>
-                          <option value="2">Package</option>
-                          <option value="3">Duplicate Query</option>
-                          <option value="4">Activity</option>
-                          <option value="5">Multiple Services</option>
+                          <option value="">Select</option>
+                          {dropdownState?.queryType?.map((query, ind) => {
+                            return (
+                              <option value={query.id} key={ind + 1}>
+                                {query.Name}
+                              </option>
+                            );
+                          })}
                         </select>
                       </div>
                       {queryFields.QueryType == "3" && (
@@ -753,7 +772,6 @@ const Query = () => {
                           onChange={handleChange}
                         >
                           <option value="">Select</option>
-                          <option value="1">Agent</option>
                           {dropdownState.businessType.map((value, index) => {
                             return (
                               <option value={value.id} key={index}>
@@ -785,25 +803,25 @@ const Query = () => {
                           </button>
                         </div>
                       </div>
-                      {agentData != "" && (
+                      {agentData.Agent != "" && agentData.Contact != "" && (
                         <div className="col-12">
                           <div className="border d-flex justify-content-between p-1 flex-wrap gap-2">
                             <div className="d-flex justify-content-between align-items-center">
                               <i className="fa-solid fa-user font-size-12"></i>
                               <p className="m-0 pl-1 font-size-12">
-                                {agentData?.SalesPerson}
+                                {agentData?.Contact?.Name}
                               </p>
                             </div>
                             <div className="d-flex justify-content-between align-items-center">
                               <i className="fa-solid fa-phone-volume font-size-12"></i>
                               <p className="m-0 pl-1 font-size-12">
-                                {agentData?.CompanyPhoneNumber}
+                                {agentData?.Contact?.Phone}
                               </p>
                             </div>
                             <div className="d-flex justify-content-between align-items-center">
                               <i className="fa-solid fa-envelope font-size-12"></i>
                               <p className="m-0 pl-1 font-size-12">
-                                {agentData?.CompanyEmailAddress}
+                                {agentData?.Agent?.CompanyEmailAddress}
                               </p>
                             </div>
                             <div className="d-flex justify-content-between align-items-center">
@@ -813,7 +831,9 @@ const Query = () => {
                               >
                                 Market Type :
                               </label>
-                              <p className="m-0 pl-1 font-size-12">General</p>
+                              <p className="m-0 pl-1 font-size-12">
+                                {agentData?.Agent?.MarketType}
+                              </p>
                             </div>
                             <div className="d-flex justify-content-between align-items-center">
                               <label
@@ -823,13 +843,13 @@ const Query = () => {
                                 Nationalty :
                               </label>
                               <p className="m-0 pl-1 font-size-12">
-                                {agentData?.Nationality}
+                                {agentData?.Agent?.Nationality}
                               </p>
                             </div>
                           </div>
                         </div>
                       )}
-                      {agentData == "" && (
+                      {agentData.Agent == "" && agentData.Contact == "" && (
                         <div className="col-12">
                           <div className="border d-flex justify-content-between p-1 flex-wrap gap-2">
                             <div className="d-flex justify-content-between align-items-center text-secondary">
@@ -870,13 +890,13 @@ const Query = () => {
                     </div>
                     {showAgentPopup && queryFields.BusinessType !== "" && (
                       <div className="custom-search-dropdown">
-                        <div className="row w-100 justify-content-center gap-1 mx-1">
-                          <div
-                            className="col-12 d-flex justify-content-end cursor-pointer p-0"
-                            onClick={() => setShowAgentPopup(!showAgentPopup)}
-                          >
-                            <i className="fa-solid fa-xmark font-size-15 font-weight-bold"></i>
-                          </div>
+                        <div
+                          className="col-12 d-flex justify-content-end cursor-pointer p-0"
+                          onClick={() => setShowAgentPopup(!showAgentPopup)}
+                        >
+                          <i className="fa-solid fa-xmark font-size-15 font-weight-bold px-1"></i>
+                        </div>
+                        <div className="row w-100 align-items-center gap-1 m-0 px-1">
                           {dropdownState?.agentList
                             ?.filter((agent) => {
                               return queryFields.ClientType != ""
@@ -888,31 +908,45 @@ const Query = () => {
                             .map((agent, ind) => {
                               return (
                                 <div
-                                  className="d-flex flex-column bg-white py-1 rounded border cursor-pointer"
+                                  className="col-12 d-flex flex-column py-1 rounded border"
                                   key={ind + 1}
-                                  onClick={() => {
-                                    handleSetDataToAgent(agent),
-                                      setShowAgentPopup(!showAgentPopup);
-                                  }}
                                 >
                                   <div>
                                     <span className="font-weight-bold">
-                                      {agent.CompanyName}
+                                      {agent?.CompanyName}
                                     </span>
                                   </div>
-                                  <div className="d-flex justify-content-between p-0">
-                                    <span className="m-0 ">
-                                      {agent.CompanyEmailAddress}
-                                    </span>
-                                    <span className="m-0 ">
-                                      {agent.CompanyPhoneNumber}
-                                    </span>
-                                  </div>
+                                  {agent?.ContactList[0]?.ContactDetail?.map(
+                                    (contact, ind) => {
+                                      return (
+                                        <div
+                                          className="d-flex justify-content-between p-2 rounded cursor-pointer alternate-color"
+                                          key={ind + 1}
+                                          onClick={() => {
+                                            handleSetDataToAgent(
+                                              agent,
+                                              contact
+                                            ),
+                                              setShowAgentPopup(
+                                                !showAgentPopup
+                                              );
+                                          }}
+                                        >
+                                          <span className="m-0 ">
+                                            {contact?.Name}
+                                          </span>
+                                          <span className="m-0 ">
+                                            {contact?.Phone}
+                                          </span>
+                                        </div>
+                                      );
+                                    }
+                                  )}
                                 </div>
                               );
                             })}
                           {dropdownState?.agentList == "" && (
-                            <div className="col-12 d-flex justify-content-center ">
+                            <div className="col-12 d-flex justify-content-center">
                               <h6 className="text-secondary">
                                 There are no records for show
                               </h6>
@@ -928,10 +962,11 @@ const Query = () => {
                         <p className="m-0 fs-6 font-weight-bold">Pax Details</p>
                       </div>
                       <div className="col-12 col-sm-6 col-lg-4">
-                        <label htmlFor="queryType" className="m-0">
+                        <label htmlFor="paxtype" className="m-0">
                           Pax Type
                         </label>
                         <select
+                          id="paxtype"
                           component={"select"}
                           className="form-input-2"
                           name="LeadPax"
@@ -994,11 +1029,6 @@ const Query = () => {
                   <div className="col-12 col-sm border rounded py-1">
                     <div className="row row-gap-2 p-0 pt-1 pb-2">
                       <p className="m-0 fs-6 font-weight-bold">Accomodation</p>
-                      {/* <div className="col-12 col-lg-4 d-flex align-items-center">
-                          <p className="m-0 fs-6 font-weight-bold">
-                            Accomodation
-                          </p>
-                        </div> */}
                       <div className="col-12 col-lg-12 px-3">
                         <label htmlFor="hotel" className="m-0 p-0">
                           Hotel Category
@@ -1014,10 +1044,7 @@ const Query = () => {
                                   htmlFor={value.UploadKeyword}
                                   className="m-0 pr-2"
                                 >
-                                  {value?.Name?.length == 1
-                                    ? value?.Name
-                                    : value?.Name?.split("")[0]}
-                                  *
+                                  {value.Name}*
                                 </label>
                                 <input
                                   className="form-check-input m-0 p-0 ml-3"
@@ -1107,7 +1134,7 @@ const Query = () => {
                           </div>
                         </div>
                       </div>
-                      {dropdownState.roomList.map((room, ind) => {
+                      {dropdownState?.roomList?.map((room, ind) => {
                         return (
                           <div
                             className="col-6 col-md-6 col-lg-3"
@@ -1126,7 +1153,6 @@ const Query = () => {
                                   RoomInfo[room?.Name?.split(" ")?.join("")]
                                 }
                                 onChange={handleRoomInfo}
-                                // readOnly
                               />
                             </div>
                             <div className="d-flex justify-content-between align-items-center pt-1">
@@ -1337,23 +1363,21 @@ const Query = () => {
                         <p className="font-weight-bold m-0">
                           Total Rooms :
                           {Number(
-                            RoomInfo.SingleRoom == "" ? 0 : RoomInfo.SingleRoom
+                            RoomInfo.SGLRoom == "" ? 0 : RoomInfo.SGLRoom
                           ) +
                             Number(
-                              RoomInfo.DoubleRoom == ""
+                              RoomInfo.DBLRoom == "" ? 0 : RoomInfo.DBLRoom
+                            ) +
+                            Number(
+                              RoomInfo.TPLRoom == "" ? 0 : RoomInfo.TPLRoom
+                            ) +
+                            Number(
+                              RoomInfo["ExtraBed(A)"] == ""
                                 ? 0
-                                : RoomInfo.DoubleRoom
+                                : RoomInfo["ExtraBed(A)"]
                             ) +
                             Number(
-                              RoomInfo.TwinRoom == "" ? 0 : RoomInfo.TwinRoom
-                            ) +
-                            Number(
-                              RoomInfo.TripleRoom == ""
-                                ? 0
-                                : RoomInfo.TripleRoom
-                            ) +
-                            Number(
-                              RoomInfo.ExtraBed == "" ? 0 : RoomInfo.ExtraBed
+                              RoomInfo.TWINRoom == "" ? 0 : RoomInfo.TWINRoom
                             )}
                         </p>
                       </div>
@@ -1673,43 +1697,49 @@ const Query = () => {
                       <label htmlFor="salesperson" className="m-0 font-size-12">
                         Sales Person
                       </label>
-                      <input
-                        type="text"
+                      <select
+                        type="select"
                         id="salesperson"
-                        className="form-input-3"
-                        placeholder="Sales Person"
+                        className="form-input-3 w-100"
                         name="SalesPerson"
                         value={queryFields.SalesPerson}
                         onChange={handleChange}
-                      />
+                      >
+                        <option value={""}>Select</option>
+                        <option value={"1"}>Ansar</option>
+                      </select>
                     </div>
                     <div className="">
                       <label htmlFor="assignuser" className="m-0 font-size-12">
                         Assign User
                       </label>
-                      <input
-                        type="text"
+                      <select
+                        type="select"
                         id="assignuser"
-                        className="form-input-3"
-                        placeholder="Assign User"
+                        className="form-input-3 w-100"
                         name="AssignUser"
                         value={queryFields.AssignUser}
                         onChange={handleChange}
-                      />
+                      >
+                        <option value={""}>Select</option>
+                        <option value={"1"}>Nishank</option>
+                      </select>
                     </div>
                     <div className="">
                       <label htmlFor="contracting" className="m-0 font-size-12">
                         Contracting Person
                       </label>
-                      <input
-                        type="text"
+                      <select
+                        type="select"
                         id="contracting"
-                        className="form-input-3"
-                        placeholder="Contracting Person"
+                        className="form-input-3 w-100"
                         name="ContractPerson"
                         value={queryFields.ContractPerson}
                         onChange={handleChange}
-                      />
+                      >
+                        <option value={""}>Select</option>
+                        <option value={"1"}>Sanif</option>
+                      </select>
                     </div>
                     <div className="">
                       <label htmlFor="priority" className="m-0 font-size-12">
@@ -1723,6 +1753,7 @@ const Query = () => {
                         value={queryFields.Priority}
                         onChange={handleChange}
                       >
+                        <option value={""}>Select</option>
                         <option value={"1"}>Normal</option>
                         <option value={"2"}>Medium</option>
                         <option value={"3"}>High</option>
@@ -1740,7 +1771,7 @@ const Query = () => {
                         value={queryFields.HotelType}
                         onChange={handleChange}
                       >
-                        <option>Select hotel</option>
+                        <option>Select</option>
                         {dropdownState.hotelType?.map((value, index) => {
                           return (
                             <option value={value.id} key={index + 1}>
@@ -1768,7 +1799,7 @@ const Query = () => {
                         value={queryFields.TourType}
                         onChange={handleChange}
                       >
-                        <option>Select Tour</option>
+                        <option>Select</option>
                         {dropdownState.tourType?.map((value, index) => {
                           return (
                             <option value={value.id} key={index + 1}>
@@ -1790,7 +1821,7 @@ const Query = () => {
                         value={queryFields.VehiclePrefrence}
                         onChange={handleChange}
                       >
-                        <option>Select Vehicle</option>
+                        <option>Select</option>
                         {dropdownState.vehicleType.map((value, index) => {
                           return (
                             <option value={value.id} key={index}>
@@ -1812,7 +1843,7 @@ const Query = () => {
                         value={queryFields.LeadSource}
                         onChange={handleChange}
                       >
-                        <option>Select Source</option>
+                        <option>Select</option>
                         {dropdownState.leadList?.map((value, index) => {
                           return (
                             <option value={value.id} key={index + 1}>

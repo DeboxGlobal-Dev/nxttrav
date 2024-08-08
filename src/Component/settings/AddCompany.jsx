@@ -31,13 +31,13 @@ const AddCompany = () => {
               onSubmit={handleSubmit}
             >
               <Form>
-                <div className="card-header header-elements-inline py-2 bg-teal">
+                <div className="card-header header-elements-inline py-2 bg-teal backgroundColor-2">
                   <div className="col-xl-12 d-flex align-items-center justify-content-between">
                     <h5 className="card-title d-none d-sm-block">
                       Company Information
                     </h5>
                     <div>
-                      <NavLink to="/company" className="btn btn-light mr-2">
+                      <NavLink to="/setting/company" className="btn btn-light mr-2">
                         Back
                       </NavLink>
                       <button className="btn btn-light" type="submit">

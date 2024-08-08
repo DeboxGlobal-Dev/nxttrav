@@ -9,6 +9,7 @@ import {
   letterMasterInitialValue,
   letterMasterValidationSchema
 } from "./MasterValidations";
+import Editor from "./TextEditor/Editor";
 
 const LetterMaster = () => {
 
@@ -58,6 +59,10 @@ const LetterMaster = () => {
       UpdatedBy: rowValue.UpdatedBy,
     });
     setIsEditing(true);
+  };
+
+  const handleWelcomeNoteEditor = (content) =>{
+    console.log(content);
   };
 
   const columns = [
@@ -164,16 +169,6 @@ const LetterMaster = () => {
                         />
                       </div>
                       <div className="col-sm-6">
-                        <label>Welcome Note</label>
-                        <Field
-                          as="textarea"
-                          name="WelcomeNote"
-                          placeholder="Write Here..."
-                          className="form-control"
-                          style={{ height: "38px" }}
-                        />
-                      </div>
-                      <div className="col-sm-6">
                         <label>Status</label>
                         <Field
                           name="Status"
@@ -183,6 +178,12 @@ const LetterMaster = () => {
                           <option value={1}>Active</option>
                           <option value={0}>Inactive</option>
                         </Field>
+                      </div>
+                      <div className="col-sm-12">
+                        <label>Welcome Note</label>
+                        <Editor
+                          handleChangeEditor={handleWelcomeNoteEditor}
+                        />
                       </div>
                     </div>
                   </div>

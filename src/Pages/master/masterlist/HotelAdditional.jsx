@@ -7,6 +7,7 @@ import { Field, ErrorMessage } from "formik";
 import { hotelAdditonalInitialValue, hotelAdditionalValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { InputAdornment } from "@mui/material";
+import Editor from "./TextEditor/Editor";
 
 const HotelAdditional = () => {
   const [getData, setGetData] = useState([]);
@@ -24,6 +25,10 @@ const HotelAdditional = () => {
   ImageName:''
  });
  const [loading, setLoading] = useState(true);
+
+ const handleDetailEditor = (content) =>{
+  console.log(content);
+ }
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -193,15 +198,7 @@ const HotelAdditional = () => {
                       </div>
                       <div className="col-sm-12">
                         <label>Details</label>
-                        <Field
-                          as="textarea"
-                          name="Details"
-                          className="form-control"
-                          style={{height:'38px'}}
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Details" />
-                        </span>
+                        <Editor handleChangeEditor={handleDetailEditor}/>
                       </div>
                     </div>
                   </div>

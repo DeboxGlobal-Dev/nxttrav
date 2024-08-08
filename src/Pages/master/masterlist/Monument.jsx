@@ -11,6 +11,7 @@ import {
 } from "./MasterValidations";
 import "jquery";
 import "select2";
+import Editor from "./TextEditor/Editor";
 
 const Monument = () => {
   const [getData, setGetData] = useState([]);
@@ -82,6 +83,12 @@ const Monument = () => {
     });
     setIsEditing(true);
   };
+
+
+  const handleDescriptionEditor = (content) =>{
+    console.log(content);
+  };
+  
 
   const columns = [
     {
@@ -286,11 +293,8 @@ const Monument = () => {
                       </div>
                       <div className="col-sm-4">
                         <label>Description</label>
-                        <Field
-                          name="Description"
-                          as="textarea"
-                          className="form-control"
-                          style={{height:'38px'}}
+                        <Editor
+                          handleChangeEditor={handleDescriptionEditor}
                         />
                       </div>
                     </div>

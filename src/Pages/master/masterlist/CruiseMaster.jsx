@@ -6,6 +6,7 @@ import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
 import { cruiseMasterInitialValue, cruiseMasterValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
+import Editor from "./TextEditor/Editor";
 
 const CruiseMaster = () => {
   const [getData, setGetData] = useState([]);
@@ -63,6 +64,10 @@ const CruiseMaster = () => {
       Status: rowValue.Status === "Active" ? 1 : 0
     });
     setIsEditing(true);
+  };
+
+  const handleDetailEditor = (content) =>{
+    console.log(content);
   };
 
   const columns = [
@@ -236,11 +241,8 @@ const CruiseMaster = () => {
                       </div>
                       <div className="col-sm-12">
                         <label>Detail</label>
-                        <Field
-                          as="textarea"
-                          className="form-control"
-                          name="Details"
-                          placeholder="Write Your Detail's Here..."
+                        <Editor
+                          handleChangeEditor={handleDetailEditor}
                         />
                       </div>
                     </div>

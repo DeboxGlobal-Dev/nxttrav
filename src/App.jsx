@@ -110,9 +110,9 @@ const TaxInvoice = lazy(()=> import("./Pages/template/TaxInvoice.jsx"));
 const PerformanceInvoice = lazy(()=> import("./Pages/template/PerformanceInoive.jsx"));
 const TourExtension = lazy(()=> import("./Pages/query/TourExtension.jsx"));
 const AssignUser = lazy(()=> import("./Pages/query/AssignUser.jsx"));
+const Agent = lazy(()=> import("./Pages/master/masterlist/Agent.jsx"));
+const AddAgent = lazy(()=> import("./Pages/master/masterlist/AddAgent.jsx"));
 import JsonToExcel from "./Pages/template/JsonToExcel.jsx";
-
-
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import MasterLoad from "./Pages/template/loadComponent/MasterLoad.jsx";
@@ -155,6 +155,8 @@ const App = () => {
 
           <Route path="/master" element={ <Protected> <Master/> </Protected>}/>
           <Route path="/master/country" element={ <Protected> <CountryMaster /></Protected>}/>
+          <Route path="/master/agent" element={ <Protected> <Agent /></Protected>}/>
+          <Route path="/master/agent/add" element={ <Protected> <AddAgent /></Protected>}/>
           <Route path="/master/state" element={<Protected><StateMaster /></Protected>} />
           <Route path="/master/city" element={ <Protected> <CityMaster /></Protected>}/>
           <Route path="/master/lead_source" element={ <Protected> <LeadSource /></Protected>}/>
@@ -230,6 +232,7 @@ const App = () => {
           <Route path="/setting/" element={<Protected><Setting/></Protected>}>
             <Route index element={<Protected><Users/></Protected>}></Route>
             <Route path="profile" element={<Protected><SettingProfile/></Protected>}></Route>
+            <Route path="company" element={<Protected><Company/></Protected>}></Route>
             <Route path="email" element={<Protected><SettingEmail/></Protected>}></Route>
             <Route path="reporting" element={<Protected><SettingEmail/></Protected>}></Route>
             <Route path="database" element={<Protected><SettingEmail/></Protected>}></Route>
@@ -237,7 +240,6 @@ const App = () => {
 
           <Route path="/profile" element={<Protected><Profile/></Protected>}></Route>
           <Route path="/users/add" element={<Protected><AddUser/></Protected>}></Route>
-          <Route path="/company" element={<Protected><Company/></Protected>}></Route>
           <Route path="/company/add" element={<Protected><AddCompany/></Protected>}></Route>
           <Route path="/login" element={<Login/>}/>
           <Route path="/logout"element={<Protected><Logout/></Protected>}/>

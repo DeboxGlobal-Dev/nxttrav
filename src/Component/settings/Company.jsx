@@ -95,11 +95,10 @@ const Company = () => {
 
   return (
     <>
-      <Layout>
-        <div className="container-fluid p-3 mb-4">
+        <div className="container-fluid ">
           <div className="card shadow-none border">
             <div
-              className="card-header header-elements-inline bg-teal py-2"
+              className="card-header header-elements-inline bg-teal backgroundColor-2"
               style={{ padding: "10px" }}
             >
               <div className="col-xl-10 d-flex align-items-center">
@@ -110,7 +109,7 @@ const Company = () => {
                 <NavLink
                   to="/company/add"
                   type="button"
-                  className="btn bg-teal-400 add-button fs-11 shadow"
+                  className="btn add-button fs-11 shadow-2 backgroundColor-2 text-white" 
                 >
                   <i className="fa fa-plus pr-1" aria-hidden="true"></i>
                   Create New
@@ -118,7 +117,7 @@ const Company = () => {
               </div>
             </div>
             <div className="card-body">
-              {/* <div className="row align-items-center">
+              <div className="row align-items-center">
                 <div className="col-lg-2 col-md-3 mt-2 mt-md-0">
                   <input
                     type="text"
@@ -146,11 +145,11 @@ const Company = () => {
                   </select>
                 </div>
                 <div className="col-lg-2 col-md-3 mt-2 mt-md-0">
-                  <button className="btn bg-teal-400 w-75 custom-h-37">
+                  <button className="btn bg-teal-400 w-75 custom-h-37 backgroundColor-2">
                     Search
                   </button>
                 </div>
-              </div> */}
+              </div>
               <DataTable
                 columns={columns}
                 data={
@@ -165,11 +164,7 @@ const Company = () => {
               />
             </div>
           </div>
-
-          {/* <div className="card shadow-none border">
-          </div> */}
         </div>
-      </Layout>
     </>
   );
 

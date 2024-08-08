@@ -6,6 +6,7 @@ import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
 import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
+import Editor from "./TextEditor/Editor";
 
 const TransferMaster = () => {
   const [getData, setGetData] = useState([]);
@@ -67,6 +68,10 @@ const TransferMaster = () => {
     });
     setIsEditing(true);
   };
+
+  const handleDetailEditor = (content) =>{
+    console.log(content);
+  }
 
   const columns = [
     {
@@ -221,14 +226,10 @@ const TransferMaster = () => {
                           <option value={1}>Yes</option>
                         </Field>
                       </div>
-                      <div className="col-sm-4">
+                      <div className="col-sm-12">
                         <label>Detail</label>
-                        <Field
-                          as="textarea"
-                          name="ShortName"
-                          placeholder="Detail"
-                          className="form-control"
-                          style={{height:'38px'}}
+                        <Editor
+                          handleChangeEditor={handleDetailEditor}
                         />
                       </div>
                     </div>
