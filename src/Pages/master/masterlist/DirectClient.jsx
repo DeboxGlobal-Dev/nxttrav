@@ -4,21 +4,24 @@ import { NavLink } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 
-
-const Agent = () => {
+const DirectClient = () => {
   const [filterData, setFilterData] = useState([]);
   const [getData, setGetData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updateData, setUpdateData] = useState(false);
+  const [postData, setPostData] = useState({
+    Id: "",
+    FirstName: "",
+  });
 
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("agentlist");
+        const { data } = await axiosOther.post("directClientlist", postData);
         setLoading(false);
-        setFilterData(data.DataList);
-        setGetData(data.DataList);
-        console.log(data.DataList);
+        setFilterData(data?.DataList);
+        setGetData(data?.DataList);
+        console.log(data?.DataList);
       } catch (error) {
         console.log(error);
       }
@@ -28,7 +31,7 @@ const Agent = () => {
 
   const columns = [
     {
-      name: "Company",
+      name: "Name",
       selector: (row) => (
         <span>
           <i
@@ -37,83 +40,65 @@ const Agent = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.CompanyName}
+          {row.FirstName}
         </span>
       ),
       sortable: true,
     },
     {
-      name: "Bussiness Type",
-      selector: (row) => row.BussinessType,
+      name: "Address",
+      selector: (row) => row?.Address,
       sortable: true,
     },
     {
-      name: "Company Phone",
+      name: "Contact Information",
       selector: (row) => (
-        <span>
-          Admin <br /> {row.CompanyPhone}
-        </span>
-      ),
-      sortable: true,
-    },
-    {
-      name: "Company Email",
-      selector: (row) => (
-        <span>
-          Admin <br /> {row.CompanyEmail}
-        </span>
-      ),
-      sortable: true,
-    },
-    {
-      name: "Assign Person",
-      selector: (row) => (
-        <span>
-          Admin <br /> {row.SalesPerson}
-        </span>
-      ),
-      sortable: true,
-    },
-    {
-      name: "Nationality",
-      selector: (row) => (
-        <span>
-          Admin <br /> {row.Nationality}
-        </span>
-      ),
-      sortable: true,
-    },
-    {
-      name: "Country",
-      selector: (row) => (
-        <span>
-          Admin <br /> {row.Country}
-        </span>
-      ),
-      sortable: true,
-    },
-    {
-      name: "Market Type",
-      selector: (row) => (
-        <span>
-          Admin <br /> {row.MarketType}
-        </span>
-      ),
-      sortable: true,
-    },
-    {
-      name: "Updated By",
-      selector: (row) => {
-        return (
+        <>
           <span>
-            Admin <br /> {row.UpdatedBy}
+            {row?.Contactinfo == null ? "" : row?.Contactinfo[0]?.Mobile}
           </span>
-        );
+          <br></br>
+          <span>
+            {row?.Contactinfo == null ? "" : row?.Contactinfo[0]?.Email}
+          </span>
+        </>
+      ),
+      sortable: true,
+    },
+    {
+      name: "Address Proof",
+      selector: (row) => <span>img</span>,
+      sortable: true,
+    },
+    {
+      name: "Passport",
+      selector: (row) => <span className="text-warning">No Attachment</span>,
+      sortable: true,
+    },
+    {
+      name: "VISA",
+      selector: (row) => <span className="text-warning">No Attachment</span>,
+      sortable: true,
+    },
+    {
+      name: "Driver License",
+      selector: (row) => <span className="text-warning">No Attachment</span>,
+      sortable: true,
+    },
+    {
+      name: "Covid Certificate",
+      selector: (row) => <span className="text-warning">No Attachment</span>,
+      sortable: true,
+    },
+    {
+      name: "Other",
+      selector: (row) => {
+        return <span className="text-warning">No Attachment</span>;
       },
     },
     {
       name: "Status",
-      selector: (row) => row.Status,
+      selector: (row) => row?.Status,
       sortable: true,
     },
   ];
@@ -127,7 +112,7 @@ const Agent = () => {
             style={{ padding: "10px" }}
           >
             <div className="col-xl-10 d-flex align-items-center">
-              <h5 className="card-title d-none d-sm-block">Agent Master</h5>
+              <h5 className="card-title d-none d-sm-block">Direct Client</h5>
             </div>
             <div className="col-xl-2 d-flex justify-content-end">
               <NavLink
@@ -138,7 +123,7 @@ const Agent = () => {
                 Back
               </NavLink>
               <NavLink
-                to="/master/agent/add"
+                to="/master/directclient/add"
                 type="button"
                 className="blue-button text-white "
               >
@@ -192,4 +177,4 @@ const Agent = () => {
   );
 };
 
-export default Agent;
+export default DirectClient;

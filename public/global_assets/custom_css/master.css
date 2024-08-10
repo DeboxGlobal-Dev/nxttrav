@@ -704,3 +704,41 @@ a {
 .dark-primary-color{
   color: #1093fe;
 }
+.width-16{
+  width: 16%;
+}
+.width-6{
+  width: 6%;
+}
+.width-25{
+  width: 25%;
+}
+.width-30{
+  width: 30%;
+}
+.width-4{
+  width: 4%;
+}
+.image-style{
+  height: 150px;
+  object-fit: contain;
+  padding: 5px;
+  border: 1px solid rgb(205, 204, 204);
+  border-radius: 2px;
+}
+.agent-view-table::-webkit-scrollbar {
+  height: 3px;
+}
+.agent-view-table table tr th{
+  text-align: center;
+  font-size: 12px;
+  padding: 10px 0;
+  font-weight: 600;
+}
+.agent-view-table table tbody tr td{
+  text-align: center;
+  text-wrap: wrap;
+  padding: 14px 0;
+  font-weight: 400;
+  font-size: 11px;
+}

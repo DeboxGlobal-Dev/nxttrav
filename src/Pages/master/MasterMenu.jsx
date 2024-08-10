@@ -229,7 +229,7 @@ const MasterMenu = () => {
                       </span>
                     </div>
                   </NavLink>
-                  <NavLink to="/master/season">
+                  <NavLink to="/master/directclient">
                     <div className="master-list-icon">
                       <img src="assets/icons/season.png" alt="image" />
                       <span
@@ -241,7 +241,7 @@ const MasterMenu = () => {
                             : ""
                         }`}
                       >
-                        Season Master
+                        Direct Client
                       </span>
                     </div>
                   </NavLink>

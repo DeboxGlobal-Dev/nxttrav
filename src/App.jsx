@@ -110,8 +110,11 @@ const TaxInvoice = lazy(()=> import("./Pages/template/TaxInvoice.jsx"));
 const PerformanceInvoice = lazy(()=> import("./Pages/template/PerformanceInoive.jsx"));
 const TourExtension = lazy(()=> import("./Pages/query/TourExtension.jsx"));
 const AssignUser = lazy(()=> import("./Pages/query/AssignUser.jsx"));
-const Agent = lazy(()=> import("./Pages/master/masterlist/Agent.jsx"));
-const AddAgent = lazy(()=> import("./Pages/master/masterlist/AddAgent.jsx"));
+const Agent = lazy(()=> import("./Pages/master/masterlist/agent/Agent.jsx"));
+const AddAgent = lazy(()=> import("./Pages/master/masterlist/agent/AddAgent.jsx"));
+const DirectClient = lazy(()=> import("./Pages/master/masterlist/DirectClient.jsx"));
+const AddDirectClient = lazy(()=> import("./Pages/master/masterlist/AddDirectClient.jsx"));
+const ViewAgent = lazy(()=> import("./Pages/master/masterlist/agent/ViewAgent.jsx"));
 import JsonToExcel from "./Pages/template/JsonToExcel.jsx";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -151,12 +154,16 @@ const App = () => {
             <Route path="tourextension" element={<Protected><TourExtension/></Protected>}></Route>
             <Route path="assignuser" element={<Protected><AssignUser/></Protected>}></Route>
           </Route>
+
           {/* <Route path="/queylist/queryview/quotation"element={<Protected><QueryView/></Protected>}></Route> */}
 
           <Route path="/master" element={ <Protected> <Master/> </Protected>}/>
           <Route path="/master/country" element={ <Protected> <CountryMaster /></Protected>}/>
           <Route path="/master/agent" element={ <Protected> <Agent /></Protected>}/>
+          <Route path="/master/agent/view" element={ <Protected> <ViewAgent /></Protected>}/>
           <Route path="/master/agent/add" element={ <Protected> <AddAgent /></Protected>}/>
+          <Route path="/master/directclient" element={ <Protected> <DirectClient /></Protected>}/>
+          <Route path="/master/directclient/add" element={ <Protected> <AddDirectClient /></Protected>}/>
           <Route path="/master/state" element={<Protected><StateMaster /></Protected>} />
           <Route path="/master/city" element={ <Protected> <CityMaster /></Protected>}/>
           <Route path="/master/lead_source" element={ <Protected> <LeadSource /></Protected>}/>
