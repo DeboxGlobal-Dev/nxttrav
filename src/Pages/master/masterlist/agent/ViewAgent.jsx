@@ -1,27 +1,30 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
-import { agentBankDetailsInitialValue } from "../mastersInitialValues";
-import {axiosOther} from "../../../../http/axios/axios_new";
+import { agentBankDetailsInitialValue, addOfficeInitialValue } from "../mastersInitialValues";
+import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 
 const ViewAgent = () => {
+
   const [bankData, setBankData] = useState(agentBankDetailsInitialValue);
+  const [officeData, setOfficeData] = useState(addOfficeInitialValue);
 
   const handleBankDataChange = (e) => {
-    const {name, value} = e.target;
 
-    setBankData((prevData)=>({
-      ...prevData, [name]:value
+    const { name, value } = e.target;
+    
+    setBankData((prevData) => ({
+      ...prevData,
+      [name]: value,
     }));
+
   };
 
-  const submitBankData = async () =>{
-    const {data} = await axiosOther.post("addupdatebankdetails", bankData);
+  const submitBankData = async () => {
+    const { data } = await axiosOther.post("addupdatebankdetails", bankData);
     toast.success(data.Message);
-  }
-
-  console.log("bank-data", bankData);
+  };
 
   return (
     <Layout>
@@ -38,13 +41,13 @@ const ViewAgent = () => {
             </div>
             <div className="col-xl-2 d-flex justify-content-end">
               <NavLink
-                to="/master"
+                to="/master/agent/add"
                 className="gray-button"
                 aria-expanded="false"
               >
                 Back
               </NavLink>
-              <Toaster/>
+              <Toaster />
             </div>
           </div>
 
@@ -183,8 +186,8 @@ const ViewAgent = () => {
 
                         <form>
                           <div className="modal-body">
-                            <div className="row">
-                              <div className="col-12">
+                            <div className="row row-gap-3">
+                              <div className="col-4">
                                 <label htmlFor="officename" className="m-0">
                                   Office Name
                                 </label>
@@ -194,7 +197,7 @@ const ViewAgent = () => {
                                   placeholder="Office Name"
                                 />
                               </div>
-                              <div className="col-4 mt-3">
+                              <div className="col-4">
                                 <label htmlFor="country" className="m-0">
                                   Country
                                 </label>
@@ -203,7 +206,7 @@ const ViewAgent = () => {
                                   <option value="">Bangladesh</option>
                                 </select>
                               </div>
-                              <div className="col-4 mt-3">
+                              <div className="col-4">
                                 <label htmlFor="state" className="m-0">
                                   State
                                 </label>
@@ -212,7 +215,7 @@ const ViewAgent = () => {
                                   <option value="">Dhanka</option>
                                 </select>
                               </div>
-                              <div className="col-4 mt-3">
+                              <div className="col-4">
                                 <label htmlFor="city" className="m-0">
                                   City
                                 </label>
@@ -220,7 +223,7 @@ const ViewAgent = () => {
                                   <option value="">New Delhi</option>
                                 </select>
                               </div>
-                              <div className="col-6 mt-3">
+                              <div className="col-4">
                                 <label htmlFor="address" className="m-0">
                                   Address
                                 </label>
@@ -230,7 +233,7 @@ const ViewAgent = () => {
                                   placeholder="Address"
                                 />
                               </div>
-                              <div className="col-6 mt-3">
+                              <div className="col-4">
                                 <label htmlFor="pincode" className="m-0">
                                   Pin Code
                                 </label>
@@ -240,7 +243,7 @@ const ViewAgent = () => {
                                   placeholder="PIN CODE"
                                 />
                               </div>
-                              <div className="col-6 mt-3">
+                              <div className="col-4">
                                 <label htmlFor="gstn" className="m-0">
                                   GSTN
                                 </label>
@@ -250,7 +253,7 @@ const ViewAgent = () => {
                                   placeholder="GSTN"
                                 />
                               </div>
-                              <div className="col-6 mt-3">
+                              <div className="col-4">
                                 <label htmlFor="pan" className="m-0">
                                   PAN
                                 </label>
@@ -260,7 +263,7 @@ const ViewAgent = () => {
                                   placeholder="PAN"
                                 />
                               </div>
-                              <div className="col-6 mt-3">
+                              <div className="col-4">
                                 <label htmlFor="primaryaddress" className="m-0">
                                   Primary Address
                                 </label>
@@ -269,7 +272,7 @@ const ViewAgent = () => {
                                   <option value="">NO</option>
                                 </select>
                               </div>
-                              <div className="col-6 mt-3">
+                              <div className="col-4">
                                 <label htmlFor="primaryaddress" className="m-0">
                                   Place of delivery for invoice
                                 </label>
@@ -919,140 +922,143 @@ const ViewAgent = () => {
 
                         {/* <form>
                         </form> */}
-                          <div className="modal-body">
-                            <div className="row row-gap-2">
-                              <div className="col-4">
-                                <label htmlFor="bankname" className="m-0">
-                                  Bank Name
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Bank Name"
-                                  name="BankName"
-                                  value={bankData.BankName}
-                                  onChange={handleBankDataChange}
-                                />
-                              </div>
-                              <div className="col-4">
-                                <label htmlFor="phoneno" className="m-0">
-                                  Phone No
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Phone No"
-                                  name="PhoneNumber"
-                                  value={bankData.PhoneNumber}
-                                  onChange={handleBankDataChange}
-                                />
-                              </div>
-                              <div className="col-4">
-                                <label htmlFor="branchname" className="m-0">
-                                  Branch Name
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Branch Name"
-                                  name="BankBranch"
-                                  value={bankData.BankBranch}
-                                  onChange={handleBankDataChange}
-                                />
-                              </div>
-                              <div className="col-4">
-                                <label htmlFor="emailid" className="m-0">
-                                  Email Id
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Email Id"
-                                  name="EmailId"
-                                  value={bankData.EmailId}
-                                  onChange={handleBankDataChange}
-                                />
-                              </div>
-                              <div className="col-4">
-                                <label htmlFor="benifeciaryn" className="m-0">
-                                  Benifeciary N
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Benifeciary Name"
-                                  name="BenificiryName"
-                                  value={bankData.BenificiryName}
-                                  onChange={handleBankDataChange}
-                                />
-                              </div>
-                              <div className="col-4">
-                                <label htmlFor="swiftcode" className="m-0">
-                                  Swift Code
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Swift Code"
-                                  name="SwiftCode"
-                                  value={bankData.SwiftCode}
-                                  onChange={handleBankDataChange}
-                                />
-                              </div>
-                              <div className="col-4">
-                                <label htmlFor="accountnumber" className="m-0">
-                                  Account Number
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Account Number"
-                                  name="AccountNumber"
-                                  value={bankData.AccountNumber}
-                                  onChange={handleBankDataChange}
-                                />
-                              </div>
-                              <div className="col-4">
-                                <label htmlFor="documentnumber" className="m-0">
-                                  Address
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Address"
-                                  name="Address"
-                                  value={bankData.Address}
-                                  onChange={handleBankDataChange}
-                                />
-                              </div>
-                              <div className="col-4">
-                                <label htmlFor="ifsccode" className="m-0">
-                                  IFSC Code
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="IFSC Code"
-                                  name="IfscCode"
-                                  value={bankData.IfscCode}
-                                  onChange={handleBankDataChange}
-                                />
-                              </div>
+                        <div className="modal-body">
+                          <div className="row row-gap-2">
+                            <div className="col-4">
+                              <label htmlFor="bankname" className="m-0">
+                                Bank Name
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Bank Name"
+                                name="BankName"
+                                value={bankData.BankName}
+                                onChange={handleBankDataChange}
+                              />
+                            </div>
+                            <div className="col-4">
+                              <label htmlFor="phoneno" className="m-0">
+                                Phone No
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Phone No"
+                                name="PhoneNumber"
+                                value={bankData.PhoneNumber}
+                                onChange={handleBankDataChange}
+                              />
+                            </div>
+                            <div className="col-4">
+                              <label htmlFor="branchname" className="m-0">
+                                Branch Name
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Branch Name"
+                                name="BankBranch"
+                                value={bankData.BankBranch}
+                                onChange={handleBankDataChange}
+                              />
+                            </div>
+                            <div className="col-4">
+                              <label htmlFor="emailid" className="m-0">
+                                Email Id
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Email Id"
+                                name="EmailId"
+                                value={bankData.EmailId}
+                                onChange={handleBankDataChange}
+                              />
+                            </div>
+                            <div className="col-4">
+                              <label htmlFor="benifeciaryn" className="m-0">
+                                Benifeciary N
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Benifeciary Name"
+                                name="BenificiryName"
+                                value={bankData.BenificiryName}
+                                onChange={handleBankDataChange}
+                              />
+                            </div>
+                            <div className="col-4">
+                              <label htmlFor="swiftcode" className="m-0">
+                                Swift Code
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Swift Code"
+                                name="SwiftCode"
+                                value={bankData.SwiftCode}
+                                onChange={handleBankDataChange}
+                              />
+                            </div>
+                            <div className="col-4">
+                              <label htmlFor="accountnumber" className="m-0">
+                                Account Number
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Account Number"
+                                name="AccountNumber"
+                                value={bankData.AccountNumber}
+                                onChange={handleBankDataChange}
+                              />
+                            </div>
+                            <div className="col-4">
+                              <label htmlFor="documentnumber" className="m-0">
+                                Address
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Address"
+                                name="Address"
+                                value={bankData.Address}
+                                onChange={handleBankDataChange}
+                              />
+                            </div>
+                            <div className="col-4">
+                              <label htmlFor="ifsccode" className="m-0">
+                                IFSC Code
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="IFSC Code"
+                                name="IfscCode"
+                                value={bankData.IfscCode}
+                                onChange={handleBankDataChange}
+                              />
                             </div>
                           </div>
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              id="cancel"
-                              className="default-button"
-                              data-dismiss="modal"
-                            >
-                              Close
-                            </button>
-                            <button className="green-button" onClick={submitBankData}>
-                              Save
-                            </button>
-                          </div>
+                        </div>
+                        <div className="modal-footer">
+                          <button
+                            type="button"
+                            id="cancel"
+                            className="default-button"
+                            data-dismiss="modal"
+                          >
+                            Close
+                          </button>
+                          <button
+                            className="green-button"
+                            onClick={submitBankData}
+                          >
+                            Save
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1084,156 +1090,15 @@ const ViewAgent = () => {
                   </tbody>
                 </table>
               </div>
-              {/* cals */}
+              {/* calls */}
               <div className="col-12 agent-view-table mt-4">
                 <div className="d-flex gap-5">
                   <p className="fs-6 font-weight-bold">Calls</p>
-                  <p
-                    data-toggle="modal"
-                    data-target="#modal_form_vertical"
-                    className="fs-6 font-weight-bold text-success cursor-pointer"
-                  >
-                    + Add Calls
-                  </p>
-                  <div
-                    className="modal fade"
-                    id="modal_form_vertical"
-                    data-bs-backdrop="static"
-                    data-bs-keyboard="false"
-                  >
-                    <div className="modal-dialog" role="document">
-                      <div className="modal-content">
-                        <div className="modal-header bg-info-700 py-2">
-                          <h5 className="modal-title" id="exampleModalLabel">
-                            ADD ADDRESS
-                          </h5>
-                          <button
-                            type="button"
-                            className="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-
-                        <form>
-                          <div className="modal-body">
-                            <div className="row">
-                              <div className="col-12">
-                                <label htmlFor="officename" className="m-0">
-                                  Office Name
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Office Name"
-                                />
-                              </div>
-                              <div className="col-4 mt-3">
-                                <label htmlFor="country" className="m-0">
-                                  Country
-                                </label>
-                                <select className="form-control">
-                                  <option value="">India</option>
-                                  <option value="">Bangladesh</option>
-                                </select>
-                              </div>
-                              <div className="col-4 mt-3">
-                                <label htmlFor="state" className="m-0">
-                                  State
-                                </label>
-                                <select className="form-control">
-                                  <option value="">Delhi</option>
-                                  <option value="">Dhanka</option>
-                                </select>
-                              </div>
-                              <div className="col-4 mt-3">
-                                <label htmlFor="city" className="m-0">
-                                  City
-                                </label>
-                                <select className="form-control">
-                                  <option value="">New Delhi</option>
-                                </select>
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="address" className="m-0">
-                                  Address
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Address"
-                                />
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="pincode" className="m-0">
-                                  Pin Code
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="PIN CODE"
-                                />
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="gstn" className="m-0">
-                                  GSTN
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="GSTN"
-                                />
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="pan" className="m-0">
-                                  PAN
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="PAN"
-                                />
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="primaryaddress" className="m-0">
-                                  Primary Address
-                                </label>
-                                <select className="form-control">
-                                  <option value="">YES</option>
-                                  <option value="">NO</option>
-                                </select>
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="primaryaddress" className="m-0">
-                                  Place of delivery for invoice
-                                </label>
-                                <select className="form-control">
-                                  <option value="">Agent</option>
-                                  <option value="">Agent By</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              id="cancel"
-                              className="default-button"
-                              data-dismiss="modal"
-                            >
-                              Close
-                            </button>
-                            <button type="submit" className="green-button">
-                              Save
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
+                  <NavLink to="/master/agent/view/call">
+                    <p className="fs-6 font-weight-bold text-success cursor-pointer">
+                      + Add Calls
+                    </p>
+                  </NavLink>
                 </div>
                 <table className="table table-bordered agent-view-table">
                   <thead className="thead-dark">
@@ -1266,152 +1131,11 @@ const ViewAgent = () => {
               <div className="col-12 agent-view-table mt-4">
                 <div className="d-flex gap-5">
                   <p className="fs-6 font-weight-bold">Meetings</p>
-                  <p
-                    data-toggle="modal"
-                    data-target="#modal_form_vertical"
-                    className="fs-6 font-weight-bold text-success cursor-pointer"
-                  >
-                    + Add Meetings
-                  </p>
-                  <div
-                    className="modal fade"
-                    id="modal_form_vertical"
-                    data-bs-backdrop="static"
-                    data-bs-keyboard="false"
-                  >
-                    <div className="modal-dialog" role="document">
-                      <div className="modal-content">
-                        <div className="modal-header bg-info-700 py-2">
-                          <h5 className="modal-title" id="exampleModalLabel">
-                            ADD ADDRESS
-                          </h5>
-                          <button
-                            type="button"
-                            className="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-
-                        <form>
-                          <div className="modal-body">
-                            <div className="row">
-                              <div className="col-12">
-                                <label htmlFor="officename" className="m-0">
-                                  Office Name
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Office Name"
-                                />
-                              </div>
-                              <div className="col-4 mt-3">
-                                <label htmlFor="country" className="m-0">
-                                  Country
-                                </label>
-                                <select className="form-control">
-                                  <option value="">India</option>
-                                  <option value="">Bangladesh</option>
-                                </select>
-                              </div>
-                              <div className="col-4 mt-3">
-                                <label htmlFor="state" className="m-0">
-                                  State
-                                </label>
-                                <select className="form-control">
-                                  <option value="">Delhi</option>
-                                  <option value="">Dhanka</option>
-                                </select>
-                              </div>
-                              <div className="col-4 mt-3">
-                                <label htmlFor="city" className="m-0">
-                                  City
-                                </label>
-                                <select className="form-control">
-                                  <option value="">New Delhi</option>
-                                </select>
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="address" className="m-0">
-                                  Address
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Address"
-                                />
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="pincode" className="m-0">
-                                  Pin Code
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="PIN CODE"
-                                />
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="gstn" className="m-0">
-                                  GSTN
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="GSTN"
-                                />
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="pan" className="m-0">
-                                  PAN
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="PAN"
-                                />
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="primaryaddress" className="m-0">
-                                  Primary Address
-                                </label>
-                                <select className="form-control">
-                                  <option value="">YES</option>
-                                  <option value="">NO</option>
-                                </select>
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="primaryaddress" className="m-0">
-                                  Place of delivery for invoice
-                                </label>
-                                <select className="form-control">
-                                  <option value="">Agent</option>
-                                  <option value="">Agent By</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              id="cancel"
-                              className="default-button"
-                              data-dismiss="modal"
-                            >
-                              Close
-                            </button>
-                            <button type="submit" className="green-button">
-                              Save
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
+                  <NavLink to="/master/agent/view/meeting">
+                    <p className="fs-6 font-weight-bold text-success cursor-pointer">
+                      + Add Meetings
+                    </p>
+                  </NavLink>
                 </div>
                 <table className="table table-bordered agent-view-table">
                   <thead className="thead-dark">
@@ -1444,152 +1168,11 @@ const ViewAgent = () => {
               <div className="col-12 agent-view-table mt-4">
                 <div className="d-flex gap-5">
                   <p className="fs-6 font-weight-bold">Task</p>
-                  <p
-                    data-toggle="modal"
-                    data-target="#modal_form_vertical"
-                    className="fs-6 font-weight-bold text-success cursor-pointer"
-                  >
-                    + Add Task
-                  </p>
-                  <div
-                    className="modal fade"
-                    id="modal_form_vertical"
-                    data-bs-backdrop="static"
-                    data-bs-keyboard="false"
-                  >
-                    <div className="modal-dialog" role="document">
-                      <div className="modal-content">
-                        <div className="modal-header bg-info-700 py-2">
-                          <h5 className="modal-title" id="exampleModalLabel">
-                            ADD ADDRESS
-                          </h5>
-                          <button
-                            type="button"
-                            className="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-
-                        <form>
-                          <div className="modal-body">
-                            <div className="row">
-                              <div className="col-12">
-                                <label htmlFor="officename" className="m-0">
-                                  Office Name
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Office Name"
-                                />
-                              </div>
-                              <div className="col-4 mt-3">
-                                <label htmlFor="country" className="m-0">
-                                  Country
-                                </label>
-                                <select className="form-control">
-                                  <option value="">India</option>
-                                  <option value="">Bangladesh</option>
-                                </select>
-                              </div>
-                              <div className="col-4 mt-3">
-                                <label htmlFor="state" className="m-0">
-                                  State
-                                </label>
-                                <select className="form-control">
-                                  <option value="">Delhi</option>
-                                  <option value="">Dhanka</option>
-                                </select>
-                              </div>
-                              <div className="col-4 mt-3">
-                                <label htmlFor="city" className="m-0">
-                                  City
-                                </label>
-                                <select className="form-control">
-                                  <option value="">New Delhi</option>
-                                </select>
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="address" className="m-0">
-                                  Address
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Address"
-                                />
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="pincode" className="m-0">
-                                  Pin Code
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="PIN CODE"
-                                />
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="gstn" className="m-0">
-                                  GSTN
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="GSTN"
-                                />
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="pan" className="m-0">
-                                  PAN
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="PAN"
-                                />
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="primaryaddress" className="m-0">
-                                  Primary Address
-                                </label>
-                                <select className="form-control">
-                                  <option value="">YES</option>
-                                  <option value="">NO</option>
-                                </select>
-                              </div>
-                              <div className="col-6 mt-3">
-                                <label htmlFor="primaryaddress" className="m-0">
-                                  Place of delivery for invoice
-                                </label>
-                                <select className="form-control">
-                                  <option value="">Agent</option>
-                                  <option value="">Agent By</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              id="cancel"
-                              className="default-button"
-                              data-dismiss="modal"
-                            >
-                              Close
-                            </button>
-                            <button type="submit" className="green-button">
-                              Save
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
+                  <NavLink to="/master/agent/view/task">
+                    <p className="fs-6 font-weight-bold text-success cursor-pointer">
+                      + Add Task
+                    </p>
+                  </NavLink>
                 </div>
                 <table className="table table-bordered agent-view-table">
                   <thead className="thead-dark">

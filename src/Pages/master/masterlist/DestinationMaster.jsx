@@ -279,6 +279,7 @@ const DestinationMaster = () => {
                         <label>Description</label>
                         <Editor
                           handleChangeEditor={handleDescription}
+                          heightValue="60%"
                         />
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Description" />
