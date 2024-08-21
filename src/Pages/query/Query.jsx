@@ -688,7 +688,7 @@ const Query = () => {
             <div className="row">
               <div className="col-12 col-md-8">
                 <div className="row py-1 column-gap-2 row-gap-2">
-                  <div className="col-12 col-sm  border rounded py-1 position-relative">
+                  <div className="col-12 col-sm  query-box-shadow py-1 position-relative">
                     <div className="row row-gap-2 p-0 pt-1 pb-2">
                       <div className="col-12 col-sm-6 col-lg-8 d-flex align-items-center">
                         <p className="m-0 fs-6 font-weight-bold">
@@ -762,9 +762,17 @@ const Query = () => {
                         </>
                       )}
                       <div className="col-12 col-lg-4">
-                        <label htmlFor="queryType" className="m-0">
-                          BusinessType
-                        </label>
+                        <div className="d-flex justify-content-between">
+                          <label htmlFor="firstname" className="m-0">
+                            Bussiness Type{" "}
+                            <span className="text-danger">*</span>
+                          </label>
+                          {/* {errors?.Status && (
+                            <span className="text-danger font-size-10">
+                              {errors?.Status}
+                            </span>
+                          )} */}
+                        </div>
                         <select
                           className="form-input-2"
                           name="BusinessType"
@@ -782,9 +790,17 @@ const Query = () => {
                         </select>
                       </div>
                       <div className="col-12 col-lg-8">
-                        <label htmlFor="queryType" className="m-0">
-                          Agent/Client Name
-                        </label>
+                        <div className="d-flex justify-content-between">
+                          <label htmlFor="firstname" className="m-0">
+                            Agent/Client Name{" "}
+                            <span className="text-danger">*</span>
+                          </label>
+                          {/* {errors?.Status && (
+                            <span className="text-danger font-size-10">
+                              {errors?.Status}
+                            </span>
+                          )} */}
+                        </div>
                         <div className="d-flex">
                           <input
                             type="text"
@@ -956,7 +972,7 @@ const Query = () => {
                       </div>
                     )}
                   </div>
-                  <div className="col-12 col-sm border rounded py-1">
+                  <div className="col-12 col-sm query-box-shadow py-1">
                     <div className="row row-gap-2 p-0 pt-1 pb-2">
                       <div className="col-12 col-sm-6 col-lg-8 d-flex align-items-center">
                         <p className="m-0 fs-6 font-weight-bold">Pax Details</p>
@@ -978,10 +994,18 @@ const Query = () => {
                         </select>
                       </div>
                       <div className="col-6 col-sm-4 col-md-4">
-                        <label htmlFor="" className="m-0">
-                          Adult
-                          <i className="fa-solid fa-person pl-2"></i>
-                        </label>
+                        <div className="d-flex justify-content-between">
+                          <label htmlFor="adult" className="m-0">
+                            Adult
+                            <i className="fa-solid fa-person pl-2"></i>{" "}
+                            <span className="text-danger">*</span>
+                          </label>
+                          {/* {errors?.Status && (
+                            <span className="text-danger font-size-10">
+                              {errors?.Status}
+                            </span>
+                          )} */}
+                        </div>
                         <Counter
                           value={state.counter1}
                           dispatch={dispatch}
@@ -1026,7 +1050,7 @@ const Query = () => {
                   </div>
                 </div>
                 <div className="row mt-3 py-1 column-gap-2 row-gap-2">
-                  <div className="col-12 col-sm border rounded py-1">
+                  <div className="col-12 col-sm query-box-shadow  py-1">
                     <div className="row row-gap-2 p-0 pt-1 pb-2">
                       <p className="m-0 fs-6 font-weight-bold">Accomodation</p>
                       <div className="col-12 col-lg-12 px-3">
@@ -1392,7 +1416,7 @@ const Query = () => {
                     </div>
                   </div>
 
-                  <div className="col-12 col-sm border rounded py-1">
+                  <div className="col-12 col-sm query-box-shadow py-1">
                     <div className="row row-gap-2 p-0 pt-1 pb-2">
                       <div className="col-12 col-md-6 col-lg-8 d-flex align-items-center">
                         <p className="m-0 fs-6 font-weight-bold">
@@ -1488,7 +1512,17 @@ const Query = () => {
                         ""
                       ) : (
                         <div className="col-6 col-md-12 col-lg-6">
-                          <label className="m-0">From Date</label>
+                          <div className="d-flex justify-content-between">
+                            <label htmlFor="adult" className="m-0">
+                              From Date
+                              <span className="text-danger">*</span>
+                            </label>
+                            {/* {errors?.Status && (
+                            <span className="text-danger font-size-10">
+                              {errors?.Status}
+                            </span>
+                          )} */}
+                          </div>
                           <input
                             type="date"
                             className="form-input-2"
@@ -1505,9 +1539,17 @@ const Query = () => {
                             : "col-4 col-md-6 col-lg-3"
                         }
                       >
-                        <label htmlFor="queryType" className="m-0">
-                          Total Nights
-                        </label>
+                        <div className="d-flex justify-content-between">
+                          <label htmlFor="totalnights" className="m-0">
+                            TotalNights
+                            <span className="text-danger">*</span>
+                          </label>
+                          {/* {errors?.Status && (
+                            <span className="text-danger font-size-10">
+                              {errors?.Status}
+                            </span>
+                          )} */}
+                        </div>
                         <input
                           type="text"
                           className="form-input-2 text-center p-0"
@@ -1872,18 +1914,18 @@ const Query = () => {
                     </div>
                   </div>
                   <div className="col-12 col-sm-7 border rounded p-2">
-                    <h6 className="font-weight-bold">Suggested Packages</h6>
+                    <h6 className="font-weight-bold">Destination Template</h6>
                     <div>
                       <input
                         type="text"
-                        placeholder="Search Packages "
+                        placeholder="Search Destination"
                         className="form-input-3 rounded-pill"
                         name="SuggestedPackage"
                         onChange={handleSearchSuggestedPackage}
                       />
                       {filteredPackage != "" && (
                         <label htmlFor="" className="font-size-12">
-                          Click to select the packages
+                          Click to select the Destination
                         </label>
                       )}
                     </div>
@@ -1912,7 +1954,7 @@ const Query = () => {
                     })}
                     {filteredPackage == "" && (
                       <p className="text-center font-weight-bold mt-3">
-                        No Package Matched
+                        No Destination Matched
                       </p>
                     )}
                   </div>

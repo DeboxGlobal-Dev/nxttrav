@@ -932,6 +932,35 @@ export const itineraryRequirementValidationSchema = yup.object().shape({
   ToDestination: yup.string().required("Required"),
 });
 
+export const direcetClientValidationSchema = yup.object().shape({
+  Status: yup.string().required("Required"),
+  DOB: yup.string().required("Required"),
+  Gender: yup.string().required("Required"),
+  LastName: yup.string().required("Required"),
+  FirstName: yup.string().required("Required"),
+  Title: yup.string().required("Required"),
+  Nationality: yup.string().required("Required"),
+});
+
+export const agentMasterValidationSchema = yup.object().shape({
+  BussinessType: yup.string().required("Required"),
+  SalesPerson: yup.string().required("Required"),
+  CompanyName: yup.string().required("Required"),
+  CompanyEmailAddress: yup.string().required("Required"),
+  CompanyPhoneNumber: yup.string().required("Required"),
+  AgentHeaderImageData: yup.string().required("Required"),
+  AgentFooterImageData: yup.string().required("Required"),
+  MarketType: yup.string().required("Required"),
+  Nationality: yup.string().required("Required"),
+  Status: yup.string().required("Requried"),
+});
+
+export const supplierValidationSchema = yup.object().shape({
+  SupplierName: yup.string().required("Required"),
+  Status: yup.string().required("Required"),
+  SupplierServices: yup.array().min(1, "Required").required("Required"),
+});
+
 // Hotel Master Table Value in JSON-----------------------------------
 
 export const hotelMasterValue = [
@@ -991,4 +1020,3 @@ export const hotelMasterValue = [
     RateSheet: "RateSheet",
   },
 ];
-

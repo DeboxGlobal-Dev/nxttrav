@@ -1,0 +1,71 @@
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { axiosOther } from "../../../../../http/axios/axios_new";
+
+const Calls = () => {
+  const [callList, setCallList] = useState([]);
+
+  const fetchCallListData = async () => {
+    const { data } = await axiosOther.post("callslist", {
+      Fk_partnerid: "1",
+      Type: "",
+    });
+
+    setCallList(data?.DataList);
+  };
+
+  useEffect(() => {
+    fetchCallListData();
+  }, []);
+
+  return (
+    <>
+      <div className="col-12 agent-view-table mt-4">
+        <div className="d-flex gap-5">
+          <p className="fs-6 font-weight-bold">Calls</p>
+          <NavLink to="/master/agent/view/call">
+            <p className="fs-6 font-weight-bold text-success cursor-pointer">
+              + Add Calls
+            </p>
+          </NavLink>
+        </div>
+        <table className="table table-bordered agent-view-table">
+          <thead className="thead-dark">
+            <tr>
+              <th className="px-1">Call Subject</th>
+              <th className="py-1">Start Date</th>
+              <th className="py-1">Status</th>
+              <th className="py-1">Call Type</th>
+              <th className="py-1">Sales Person</th>
+              <th className="py-1">Created Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+            callList?.length > 1 ?
+            callList?.map((list, index) => {
+              return (
+                <tr key={index + 1}>
+                  <th className="py-1">{list?.CallSubject}</th>
+                  <td className="py-1">{list?.StartDate}</td>
+                  <td className="py-1">{list?.CallStatus}</td>
+                  <td className="py-1">{list?.CallType}</td>
+                  <td className="py-1">{list?.SalesPerson}</td>
+                  <td className="py-1">{list?.Created_At}</td>
+                </tr>
+              );
+            }) : 
+              <tr>
+                <td colSpan={6}>
+                  <p className="fs-6">No Records Found</p>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+};
+
+export default Calls;

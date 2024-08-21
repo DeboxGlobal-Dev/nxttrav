@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../../Component/Layout/Layout";
+import Layout from "../../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import DataTable from "react-data-table-component";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosOther } from "../../../../http/axios/axios_new";
 
 const DirectClient = () => {
   const [filterData, setFilterData] = useState([]);
@@ -17,11 +17,15 @@ const DirectClient = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("directClientlist", postData);
+        // const { data } = await axiosOther.post("directClientlist", postData);
+        const getDataFromLocalStorage = localStorage.getItem("directClientList");
+        if(getDataFromLocalStorage == null){
+          return null
+        }
+        const data = JSON.parse(getDataFromLocalStorage);
         setLoading(false);
-        setFilterData(data?.DataList);
-        setGetData(data?.DataList);
-        console.log(data?.DataList);
+        setFilterData(data);
+        setGetData(data);
       } catch (error) {
         console.log(error);
       }
@@ -33,15 +37,11 @@ const DirectClient = () => {
     {
       name: "Name",
       selector: (row) => (
-        <span>
-          <i
-            className="fa-solid fa-pen-to-square pr-2 cursor-pointer"
-            data-toggle="modal"
-            data-target="#modal_form_vertical"
-            onClick={() => handleEditClick(row)}
-          ></i>
+       <NavLink to={`/master/directclient/view/${row.id}`}>
+         <span>
           {row.FirstName}
         </span>
+       </NavLink>
       ),
       sortable: true,
     },
@@ -170,6 +170,7 @@ const DirectClient = () => {
             fixedHeaderScrollHeight="280px"
             highlightOnHover
             progressPending={loading}
+            className="masterListDataTable"
           />
         </div>
       </div>

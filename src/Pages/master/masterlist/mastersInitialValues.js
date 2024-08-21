@@ -1,5 +1,4 @@
 export const agentMasterInitialValue = {
-  id: "",
   BussinessType: "",
   WebsiteUrl: "",
   SalesPerson: "",
@@ -18,6 +17,8 @@ export const agentMasterInitialValue = {
   Category: "",
   TourType: "",
   PreferredLanguage: "",
+  AgentInfo:"",
+  Remarks:"",
   Status: "1",
   AddedBy: 1,
   UpdatedBy: 0,
@@ -82,6 +83,7 @@ export const directClientDocumentation = {
   IssueCountry: "",
   DocumentTitle: "",
   ImageData: "",
+  ImageName: "",
 };
 
 export const agentBankDetailsInitialValue = {
@@ -196,18 +198,33 @@ export const addTaskInitialValue = {
 
 export const addOfficeInitialValue = {
   id: "",
-  Name: "Shivam",
+  Name: "",
   Type: "Agent",
   Fk_partnerid: "1",
-  Country: "India",
-  State: "UP",
-  City: "Agra",
-  Address: "Rambagh",
-  PinCode: "28006",
-  Pan: "GM78009",
-  Gstn: "HUT",
-  PrimaryAddress: "Rambagh",
-  PlaceOfDeliveryInvoice: "India",
+  Country: "",
+  State: "",
+  City: "",
+  Address: "",
+  PinCode: "",
+  Pan: "",
+  Gstn: "",
+  PrimaryAddress: "",
+  PlaceOfDeliveryInvoice: "",
   AddedBy: "1",
+  UpdatedBy: 0,
+};
+
+export const addDocumentsInitialValue = {
+  id: "",
+  Type: "Supplier",
+  Fk_partnerid: "1",
+  DocumentName: "",
+  DocumentNumber: "",
+  IssueDate: "",
+  ExpireDate: "",
+  Remarks: "",
+  DocumentPath: "",
+  Status: "Yes",
+  AddedBy: 1,
   UpdatedBy: 0,
 };

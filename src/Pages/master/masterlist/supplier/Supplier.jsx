@@ -4,26 +4,28 @@ import { NavLink } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../../http/axios/axios_new";
 
-
-const Agent = () => {
+const Supplier = () => {
   const [filterData, setFilterData] = useState([]);
   const [getData, setGetData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updateData, setUpdateData] = useState(false);
+  const [postData, setPostData] = useState({
+    Id: "",
+    FirstName: "",
+  });
 
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        // const { data } = await axiosOther?.post("agentlist");
-        const getDataFromLocalStorage = localStorage.getItem("agentList");
-        if(getDataFromLocalStorage == null){
-          return null
+        // const { data } = await axiosOther.post("directClientlist", postData);
+        const getDataFromLocalStorage = localStorage.getItem("supplierList");
+        if (getDataFromLocalStorage == null) {
+          return null;
         }
         const data = JSON.parse(getDataFromLocalStorage);
         setLoading(false);
         setFilterData(data);
         setGetData(data);
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -33,96 +35,66 @@ const Agent = () => {
 
   const columns = [
     {
-      name: "CODE",
+      name: "Action",
       selector: (row) => (
         <span>
-          <i
-            className="fa-solid fa-pen-to-square pr-2 cursor-pointer"
-            data-toggle="modal"
-            data-target="#modal_form_vertical"
-            onClick={() => handleEditClick(row)}
-          ></i>
-          {row.id}
+          <i className="fa-solid fa-pen-to-square"></i>
         </span>
       ),
       sortable: true,
     },
     {
-      name: "Company",
+      name: "#",
+      selector: (row) => <span>9878979</span>,
+      sortable: true,
+    },
+    {
+      name: "Name",
       selector: (row) => (
-        <NavLink to={`/master/agent/view/${row.id}`}>
-          {row?.CompanyName}
+        <NavLink to={`/master/supplier/view/${row.id}`}>
+          <span>{row?.SupplierName}</span>
         </NavLink>
       ),
       sortable: true,
     },
     {
-      name: "Bussiness Type",
-      selector: (row) => row?.BussinessType,
+      name: "Alias Name",
+      selector: (row) => row?.AliasName,
       sortable: true,
     },
     {
-      name: "Company Phone",
+      name: "Type",
       selector: (row) => (
-        <span>
-          {row?.CompanyPhoneNumber}
-        </span>
+        <>
+          <span>{row?.SupplierServices?.join(",")}</span>
+        </>
       ),
       sortable: true,
     },
     {
-      name: "Company Email",
-      selector: (row) => (
-        <span>
-          {row?.CompanyEmailAddress}
-        </span>
-      ),
+      name: "Destionation",
+      selector: (row) => row?.Destinations?.join(","),
       sortable: true,
     },
     {
-      name: "Assign Person",
-      selector: (row) => (
-        <span>
-         {row?.SalesPerson}
-        </span>
-      ),
+      name: "Contact Person",
+      selector: (row) => "Rizwan",
       sortable: true,
     },
     {
-      name: "Nationality",
-      selector: (row) => (
-        <span>
-          {row?.Nationality}
-        </span>
-      ),
+      name: "Phone Number",
+      selector: (row) => <span>87978979</span>,
       sortable: true,
     },
     {
-      name: "Country",
-      selector: (row) => (
-        <span>
-        {row?.Country}
-        </span>
-      ),
+      name: "Email Address",
+      selector: (row) => <span>example@gmail.com</span>,
       sortable: true,
     },
     {
-      name: "Market Type",
-      selector: (row) => (
-        <span>
-          {row?.MarketType}
-        </span>
-      ),
-      sortable: true,
-    },
-    {
-      name: "Updated By",
+      name: "View",
       selector: (row) => {
-        return (
-          <span>
-            Admin <br /> {row?.UpdatedBy}
-          </span>
-        );
+        return <span className="text-success cursor-pointer">View</span>;
       },
     },
     {
@@ -141,7 +113,7 @@ const Agent = () => {
             style={{ padding: "10px" }}
           >
             <div className="col-xl-10 d-flex align-items-center">
-              <h5 className="card-title d-none d-sm-block">Agent Master</h5>
+              <h5 className="card-title d-none d-sm-block">Supplier</h5>
             </div>
             <div className="col-xl-2 d-flex justify-content-end">
               <NavLink
@@ -152,7 +124,7 @@ const Agent = () => {
                 Back
               </NavLink>
               <NavLink
-                to="/master/agent/add"
+                to="/master/supplier/add"
                 type="button"
                 className="blue-button text-white "
               >
@@ -198,8 +170,8 @@ const Agent = () => {
             fixedHeader
             fixedHeaderScrollHeight="280px"
             highlightOnHover
-            className="masterListDataTable"
             progressPending={loading}
+            className="masterListDataTable"
           />
         </div>
       </div>
@@ -207,4 +179,4 @@ const Agent = () => {
   );
 };
 
-export default Agent;
+export default Supplier;

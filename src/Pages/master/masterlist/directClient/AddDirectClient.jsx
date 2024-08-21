@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../../../Component/Layout/Layout";
+import Layout from "../../../../Component/Layout/Layout";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   directClientContact,
   directClientDocumentation,
   directClientInitialValue,
-} from "./mastersInitialValues";
-import { axiosOther } from "../../../http/axios/axios_new";
-import toast, {Toaster} from "react-hot-toast";
+} from "../mastersInitialValues";
+import { axiosOther } from "../../../../http/axios/axios_new";
+import toast, { Toaster } from "react-hot-toast";
+import fetchingDataForDropdownList from "../../../../helper/MasterHelper/fetchingDataForList";
+import { direcetClientValidationSchema } from "../MasterValidations";
 
 const AddDirectClient = () => {
   const navigate = useNavigate();
@@ -15,18 +17,12 @@ const AddDirectClient = () => {
   const [contactListArray, setContactListArray] = useState([1]);
   const [documentationListArray, setDocumentationListArray] = useState([1]);
   const [formData, setFormData] = useState({ ...directClientInitialValue });
+  const [errors, setErrors] = useState({});
   const [contactFormDataArray, setContactFormDataArray] = useState([
     directClientContact,
   ]);
   const [documentationDataArray, setDocumentationDataArray] = useState([
     directClientDocumentation,
-  ]);
-
-  const [documentImageData, setDocoumentImageData] = useState([
-    {
-      ImageData: "",
-      ImageName: "",
-    },
   ]);
 
   console.log("final object for post data", {
@@ -44,7 +40,6 @@ const AddDirectClient = () => {
   };
 
   const increaseDocumentationList = () => {
-
     const length = documentationListArray.length;
     const lastValue = documentationListArray[length - 1];
     setDocumentationListArray([...documentationListArray, lastValue + 1]);
@@ -53,16 +48,6 @@ const AddDirectClient = () => {
       ...prevArr,
       directClientDocumentation,
     ]);
-
-    setDocoumentImageData((prevArr) => [
-
-      ...prevArr,
-      {
-        ImageData: "",
-        ImageName: "",
-      },
-    ]);
-
   };
 
   const deleteContactListItem = () => {
@@ -95,8 +80,29 @@ const AddDirectClient = () => {
   };
 
   const handleDocumentationChangeFormData = (index, e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
 
+    if (files && files.length > 0) {
+      const fileData = files[0];
+      const reader = new FileReader();
+
+      reader.readAsDataURL(fileData);
+      reader.onload = () => {
+        const base64String = reader.result;
+
+        // Update only the ImageData for the specific index
+        setDocumentationDataArray((prevArr) => {
+          const newArray = [...prevArr];
+          newArray[index] = {
+            ...newArray[index],
+            ImageData: base64String,
+          };
+          return newArray;
+        });
+      };
+    }
+
+    // Update other fields without waiting for file processing
     setDocumentationDataArray((prevArr) => {
       const newArray = [...prevArr];
       newArray[index] = { ...newArray[index], [name]: value };
@@ -105,15 +111,109 @@ const AddDirectClient = () => {
   };
 
   const handleDirectClienFormSubmit = async () => {
-    const {data} = await axiosOther.post("addupdatedirectClient", {
-      ...formData,
-      ContactInfo: contactFormDataArray,
-      Documentation: documentationDataArray,
+    // const { data } = await axiosOther.post("addupdatedirectClient", {
+    //   ...formData,
+    //   ContactInfo: contactFormDataArray,
+    //   Documentation: documentationDataArray,
+    // });
+
+    try {
+      await direcetClientValidationSchema.validate(formData, {
+        abortEarly: false,
+      });
+      setErrors({});
+
+      const getDataFromLocalStorage = localStorage.getItem("directClientList");
+      if (getDataFromLocalStorage == null) {
+        localStorage.setItem(
+          "directClientList",
+          JSON.stringify([
+            {
+              ...formData,
+              ContactInfo: contactFormDataArray,
+              Documentation: documentationDataArray,
+              id: 1,
+            },
+          ])
+        );
+        navigate(`/master/directClient/view/1`);
+        return null;
+      }
+      const lengthOfStoredData = JSON.parse(getDataFromLocalStorage)?.length;
+      const allDataListOfStorage = [...JSON.parse(getDataFromLocalStorage)];
+      console.log(" allDataListOfStorage", allDataListOfStorage);
+
+      localStorage.setItem(
+        "directClientList",
+        JSON.stringify([
+          ...allDataListOfStorage,
+          {
+            ...formData,
+            ContactInfo: contactFormDataArray,
+            Documentation: documentationDataArray,
+            id: getDataFromLocalStorage == null ? 1 : lengthOfStoredData + 1,
+          },
+        ])
+      );
+      const getDataAfterAdded = localStorage.getItem("directClientList");
+      const lengthOfAfterStoredData = JSON.parse(getDataAfterAdded)?.length;
+
+      if (lengthOfStoredData + 1 == lengthOfAfterStoredData) {
+        toast.success("Data Added Successfully !");
+        setTimeout(() => {
+          navigate(`/master/directClient/view/${lengthOfAfterStoredData}`);
+        }, 2000);
+      }
+    } catch (err) {
+      if (err.inner) {
+        const errorMessages = err.inner.reduce((acc, curr) => {
+          acc[curr.path] = curr.message;
+          return acc;
+        }, {});
+        setErrors(errorMessages);
+      }
+    }
+  };
+
+  console.log("errors-errors", errors);
+
+  // fetching data from server for dropdown list
+
+  const handleDropdownListApi = async () => {
+    const nationalityResponse = await fetchingDataForDropdownList(
+      "nationalitylist",
+      {
+        Search: "",
+        Status: "",
+      }
+    );
+    const CompanyResponse = await fetchingDataForDropdownList(
+      "companytypemasterlist",
+      {
+        Search: "",
+        Status: "",
+      }
+    );
+    const CountryResponse = await fetchingDataForDropdownList("countrylist", {
+      Search: "",
+      Status: "",
+    });
+    const StateResponse = await fetchingDataForDropdownList("statelist", {
+      Search: "",
+      Status: "",
+    });
+    const CityResponse = await fetchingDataForDropdownList("citylist", {
+      Search: "",
+      Status: "",
     });
 
-    toast.success(data.Message);
-    console.log(data);
   };
+
+  useEffect(() => {
+    handleDropdownListApi();
+  }, []);
+
+  const handleHeaderImageChange = (e) => {};
 
   return (
     <Layout>
@@ -125,7 +225,10 @@ const AddDirectClient = () => {
                 Add Direct Client
               </h5>
               <div>
-                <NavLink to="/master/agent" className="btn btn-light mr-2">
+                <NavLink
+                  to="/master/directClient"
+                  className="btn btn-light mr-2"
+                >
                   Back
                 </NavLink>
                 <button
@@ -151,7 +254,7 @@ const AddDirectClient = () => {
                       Contact Information
                     </label>
                     <select
-                      className="form-input-1"
+                      className="form-input-5"
                       name="ContactType"
                       value={formData.ContactType}
                       onChange={handleChangeFormData}
@@ -163,18 +266,25 @@ const AddDirectClient = () => {
                   </div>
                 </div>
                 {/* personal information */}
-                <div className="row mt-1 row-gap-1">
+                <div className="row mt-1 row-gap-4">
                   <p className="font-weight-bold m-0">Personal Information</p>
                   <div className="col-3 pt-0 mt-0">
-                    <label htmlFor="nationality" className="m-0">
-                      Nationality
-                    </label>
+                    <div className="d-flex justify-content-between">
+                      <label htmlFor="nationality" className="m-0">
+                        Nationality <span className="text-danger">*</span>
+                      </label>
+                      {errors?.Nationality && (
+                        <span className="text-danger font-size-12 m-0">
+                          {errors?.Nationality}
+                        </span>
+                      )}
+                    </div>
                     <select
                       name="Nationality"
                       value={formData.Nationality}
                       onChange={handleChangeFormData}
                       id=""
-                      className="form-input-1"
+                      className="form-input-5"
                     >
                       <option value="">Select</option>
                       <option value="1">Indian</option>
@@ -182,15 +292,22 @@ const AddDirectClient = () => {
                     </select>
                   </div>
                   <div className="col-3">
-                    <label htmlFor="title" className="m-0">
-                      Title
-                    </label>
+                    <div className="d-flex justify-content-between">
+                      <label htmlFor="title" className="m-0">
+                        Title <span className="text-danger">*</span>
+                      </label>
+                      {errors?.Title && (
+                        <span className="text-danger font-size-12">
+                          {errors?.Title}
+                        </span>
+                      )}
+                    </div>
                     <select
                       name="Title"
                       onChange={handleChangeFormData}
                       value={formData.Title}
                       id=""
-                      className="form-input-1"
+                      className="form-input-5"
                     >
                       <option value="">Select</option>
                       <option value="Mr">Mr</option>
@@ -199,12 +316,19 @@ const AddDirectClient = () => {
                     </select>
                   </div>
                   <div className="col-3">
-                    <label htmlFor="fname" className="m-0">
-                      First Name
-                    </label>
+                    <div className="d-flex justify-content-between">
+                      <label htmlFor="firstname" className="m-0">
+                        First Name <span className="text-danger">*</span>
+                      </label>
+                      {errors?.FirstName && (
+                        <span className="text-danger font-size-12">
+                          {errors?.FirstName}
+                        </span>
+                      )}
+                    </div>
                     <input
                       type="text"
-                      className="form-input-1"
+                      className="form-input-5"
                       placeholder="First Name"
                       name="FirstName"
                       value={formData.FirstName}
@@ -218,7 +342,7 @@ const AddDirectClient = () => {
                     </label>
                     <input
                       type="text"
-                      className="form-input-1"
+                      className="form-input-5"
                       placeholder="Middle Name"
                       name="MiddleName"
                       value={formData.MiddleName}
@@ -227,12 +351,19 @@ const AddDirectClient = () => {
                     />
                   </div>
                   <div className="col-3">
-                    <label htmlFor="lName" className="m-0">
-                      Last Name
-                    </label>
+                    <div className="d-flex justify-content-between">
+                      <label htmlFor="lastname" className="m-0">
+                        Last Name <span className="text-danger">*</span>
+                      </label>
+                      {errors?.LastName && (
+                        <span className="text-danger font-size-12">
+                          {errors?.LastName}
+                        </span>
+                      )}
+                    </div>
                     <input
                       type="text"
-                      className="form-input-1"
+                      className="form-input-5"
                       placeholder="Last Name"
                       name="LastName"
                       value={formData.LastName}
@@ -241,12 +372,19 @@ const AddDirectClient = () => {
                     />
                   </div>
                   <div className="col-3">
-                    <label htmlFor="gender" className="m-0">
-                      Gender
-                    </label>
+                    <div className="d-flex justify-content-between">
+                      <label htmlFor="gender" className="m-0">
+                        Gender <span className="text-danger">*</span>
+                      </label>
+                      {errors?.Gender && (
+                        <span className="text-danger font-size-12">
+                          {errors?.Gender}
+                        </span>
+                      )}
+                    </div>
                     <select
                       id="gender"
-                      className="form-input-1"
+                      className="form-input-5"
                       name="Gender"
                       value={formData.Gender}
                       onChange={handleChangeFormData}
@@ -257,13 +395,20 @@ const AddDirectClient = () => {
                     </select>
                   </div>
                   <div className="col-3">
-                    <label htmlFor="dob" className="m-0">
-                      Date Of Birth
-                    </label>
+                    <div className="d-flex justify-content-between">
+                      <label htmlFor="dob" className="m-0">
+                        DOB <span className="text-danger">*</span>
+                      </label>
+                      {errors?.DOB && (
+                        <span className="text-danger font-size-12">
+                          {errors?.DOB}
+                        </span>
+                      )}
+                    </div>
                     <input
                       type="date"
                       name="DOB"
-                      className="form-input-1"
+                      className="form-input-5"
                       id="dob"
                       value={formData.DOB}
                       onChange={handleChangeFormData}
@@ -276,7 +421,7 @@ const AddDirectClient = () => {
                     <input
                       type="date"
                       name="AnniversaryDate"
-                      className="form-input-1"
+                      className="form-input-5"
                       id="anniversary"
                       value={formData.AnniversaryDate}
                       onChange={handleChangeFormData}
@@ -298,7 +443,7 @@ const AddDirectClient = () => {
                     {contactListArray?.map((value, index) => {
                       return (
                         <div
-                          className="row row-gap-1 justify-content-between"
+                          className="row row-gap-3 justify-content-between"
                           key={value}
                         >
                           <div className="pr-0 width-16">
@@ -311,7 +456,7 @@ const AddDirectClient = () => {
                             <select
                               name="Contact_Type"
                               id="contacttype"
-                              className="form-input-1"
+                              className="form-input-5"
                               value={contactFormDataArray[index].Contact_Type}
                               onChange={(e) =>
                                 handleContactInfoChangeData(index, e)
@@ -330,7 +475,7 @@ const AddDirectClient = () => {
                             </label>
                             <input
                               type="text"
-                              className="form-input-1 pl-1"
+                              className="form-input-5 pl-1"
                               placeholder="+91"
                               name="CountryCode"
                               value={contactFormDataArray[index].CountryCode}
@@ -348,7 +493,7 @@ const AddDirectClient = () => {
                             </label>
                             <input
                               type="text"
-                              className="form-input-1 pl-1"
+                              className="form-input-5 pl-1"
                               placeholder="987654321"
                               name="Mobile"
                               id="mobile"
@@ -369,7 +514,7 @@ const AddDirectClient = () => {
                               onChange={(e) =>
                                 handleContactInfoChangeData(index, e)
                               }
-                              className="form-input-1 pl-0"
+                              className="form-input-5 pl-0"
                             >
                               <option value="">Select</option>
                               <option value="Office">Office</option>
@@ -385,7 +530,7 @@ const AddDirectClient = () => {
                             <input
                               type="text"
                               placeholder="Email"
-                              className="form-input-1"
+                              className="form-input-5"
                               value={contactFormDataArray[index].Email}
                               name="Email"
                               onChange={(e) =>
@@ -411,7 +556,7 @@ const AddDirectClient = () => {
                   </div>
                 </div>
                 {/* address information */}
-                <div className="row mt-1 row-gap-1">
+                <div className="row mt-1 row-gap-3">
                   <p className="font-weight-bold m-0">Address Information</p>
                   <div className="col-3">
                     <label htmlFor="country" className="m-0 ">
@@ -420,7 +565,7 @@ const AddDirectClient = () => {
                     <select
                       name="Country"
                       id="country"
-                      className="form-input-1"
+                      className="form-input-5"
                       value={formData.Country}
                       onChange={handleChangeFormData}
                     >
@@ -440,7 +585,7 @@ const AddDirectClient = () => {
                       value={formData.State}
                       onChange={handleChangeFormData}
                       id="state"
-                      className="form-input-1"
+                      className="form-input-5"
                     >
                       <option value="">Select</option>
                       <option value="1">Delhi</option>
@@ -458,7 +603,7 @@ const AddDirectClient = () => {
                       value={formData.City}
                       onChange={handleChangeFormData}
                       id="city"
-                      className="form-input-1"
+                      className="form-input-5"
                     >
                       <option value="">Select</option>
                       <option value="1">New Delhi</option>
@@ -473,7 +618,7 @@ const AddDirectClient = () => {
                     </label>
                     <input
                       type="text"
-                      className="form-input-1 pl-1"
+                      className="form-input-5 pl-1"
                       placeholder="201301"
                       name="Pin_Zip"
                       id="mobile"
@@ -487,10 +632,11 @@ const AddDirectClient = () => {
                   <label htmlFor="address">Address</label>
                   <div className="col-12">
                     <textarea
-                      className="form-input-1"
+                      className="form-input-5"
                       name="Address"
                       value={formData.Address}
                       onChange={handleChangeFormData}
+                      placeholder="Address..."
                     />
                   </div>
                 </div>
@@ -520,7 +666,7 @@ const AddDirectClient = () => {
                           id="salesperson"
                           onChange={handleChangeFormData}
                           value={formData.SalesPerson}
-                          className="form-input-1"
+                          className="form-input-5"
                         >
                           <option value="">Select</option>
                           <option value="1">Ansar</option>
@@ -528,15 +674,22 @@ const AddDirectClient = () => {
                         </select>
                       </div>
                       <div className="col-3">
-                        <label htmlFor="status" className="m-0">
-                          Status
-                        </label>
+                        <div className="d-flex justify-content-between">
+                          <label htmlFor="firstname" className="m-0">
+                            Status <span className="text-danger">*</span>
+                          </label>
+                          {errors?.Status && (
+                            <span className="text-danger font-size-12">
+                              {errors?.Status}
+                            </span>
+                          )}
+                        </div>
                         <select
                           name="Status"
                           value={formData.Status}
                           onChange={handleChangeFormData}
                           id="status"
-                          className="form-input-1"
+                          className="form-input-5"
                         >
                           <option value="">Select</option>
                           <option value="1">Active</option>
@@ -552,10 +705,11 @@ const AddDirectClient = () => {
                         </label>
                         <input
                           type="text"
-                          className="form-input-1"
+                          className="form-input-5"
                           name="FamilyCode"
                           value={formData.FamilyCode}
                           onChange={handleChangeFormData}
+                          placeholder="Family Code"
                         />
                       </div>
                       <div className="col-4">
@@ -563,7 +717,7 @@ const AddDirectClient = () => {
                           Family Relation
                         </label>
                         <select
-                          className="form-input-1"
+                          className="form-input-5"
                           onChange={handleChangeFormData}
                           value={formData.FamilyRelation}
                           name="FamilyRelation"
@@ -583,13 +737,15 @@ const AddDirectClient = () => {
                           Meal Preference
                         </label>
                         <select
-                          className="form-input-1"
+                          className="form-input-5"
                           name="MealPreference"
                           value={formData.MealPreference}
                           onChange={handleChangeFormData}
                         >
                           <option value="">Select</option>
-                          <option value="1">CP</option>
+                          <option value="1">Indian Meal</option>
+                          <option value="2">Vegiterian</option>
+                          <option value="3">Non Veg</option>
                         </select>
                       </div>
                       <div className="col-3">
@@ -600,13 +756,14 @@ const AddDirectClient = () => {
                           Special Assistence
                         </label>
                         <select
-                          className="form-input-1"
+                          className="form-input-5"
                           name="SpecialAssisteance"
                           value={formData.SpecialAssisteance}
                           onChange={handleChangeFormData}
                         >
                           <option value="">Select</option>
-                          <option value="1">A</option>
+                          <option value="1">Wheel Chair</option>
+                          <option value="2">Bed Requirements</option>
                         </select>
                       </div>
                       <div className="col-3">
@@ -617,13 +774,14 @@ const AddDirectClient = () => {
                           Seat Preference
                         </label>
                         <select
-                          className="form-input-1"
+                          className="form-input-5"
                           name="SeatPreference"
                           value={formData.SeatPreference}
                           onChange={handleChangeFormData}
                         >
                           <option value="">Select</option>
                           <option value="Window">Window</option>
+                          <option value="Aisle">Aisle</option>
                         </select>
                       </div>
                       <div className="col-3">
@@ -634,13 +792,14 @@ const AddDirectClient = () => {
                           Accomodation Pref
                         </label>
                         <select
-                          className="form-input-1"
+                          className="form-input-5"
                           name="AccomodationPreference"
                           value={formData.AccomodationPreference}
                           onChange={handleChangeFormData}
                         >
                           <option value="">Select</option>
-                          <option value="1">AB</option>
+                          <option value="1">Guest House</option>
+                          <option value="1">Holiday Home</option>
                         </select>
                       </div>
                     </div>
@@ -654,7 +813,7 @@ const AddDirectClient = () => {
                           Market Type
                         </label>
                         <select
-                          className="form-input-1"
+                          className="form-input-5"
                           name="MarketType"
                           value={formData.MarketType}
                           onChange={handleChangeFormData}
@@ -672,7 +831,7 @@ const AddDirectClient = () => {
                         </label>
                         <input
                           type="text"
-                          className="form-input-1"
+                          className="form-input-5"
                           name="HolidayPreference"
                           value={formData.HolidayPreference}
                           onChange={handleChangeFormData}
@@ -686,7 +845,7 @@ const AddDirectClient = () => {
                           Covid Vaccinated
                         </label>
                         <select
-                          className="form-input-1"
+                          className="form-input-5"
                           name="CovidVaccinated"
                           value={formData.CovidVaccinated}
                           onChange={handleChangeFormData}
@@ -703,7 +862,7 @@ const AddDirectClient = () => {
                           News Letter
                         </label>
                         <select
-                          className="form-input-1"
+                          className="form-input-5"
                           id="newsletter"
                           name="NewsLetter"
                           value={formData.NewsLetter}
@@ -728,11 +887,12 @@ const AddDirectClient = () => {
                         </label>
                         <input
                           type="text"
-                          className="form-input-1"
+                          className="form-input-5"
                           id="emergencyContactName"
                           name="EmergencyContactName"
                           value={formData.EmergencyContactName}
                           onChange={handleChangeFormData}
+                          placeholder="Name"
                         />
                       </div>
                       <div className="col-4">
@@ -744,11 +904,12 @@ const AddDirectClient = () => {
                         </label>
                         <input
                           type="text"
-                          className="form-input-1"
+                          className="form-input-5"
                           id="emergencyContactRelation"
                           name="Relation"
                           value={formData.Relation}
                           onChange={handleChangeFormData}
+                          placeholder="Relation"
                         />
                       </div>
                       <div className="col-4">
@@ -760,11 +921,12 @@ const AddDirectClient = () => {
                         </label>
                         <input
                           type="text"
-                          className="form-input-1"
+                          className="form-input-5"
                           id="emergencyContact"
                           name="EmergencyContactNumber"
                           value={formData.EmergencyContactNumber}
                           onChange={handleChangeFormData}
+                          placeholder="Contact"
                         />
                       </div>
                     </div>
@@ -773,7 +935,7 @@ const AddDirectClient = () => {
               </div>
             </div>
             {/* documentation */}
-            <div className="row row-gap-2">
+            <div className="row row-gap-3">
               <div className="d-flex justify-content-between">
                 <p className="font-weight-500 fs-5 m-0">Documentation</p>
                 <p
@@ -801,7 +963,7 @@ const AddDirectClient = () => {
                             handleDocumentationChangeFormData(index, e)
                           }
                           id="docuemnttype"
-                          className="form-input-1"
+                          className="form-input-5"
                         >
                           <option value="1">Adhar</option>
                           <option value="2">Pan</option>
@@ -820,7 +982,7 @@ const AddDirectClient = () => {
                             handleDocumentationChangeFormData(index, e)
                           }
                           id="required"
-                          className="form-input-1"
+                          className="form-input-5"
                         >
                           <option value="">Select</option>
                           <option value="No">No</option>
@@ -834,22 +996,23 @@ const AddDirectClient = () => {
                         <input
                           type="text"
                           id="documentno"
-                          className="form-input-1"
+                          className="form-input-5"
                           name="DocumentNo"
+                          placeholder="Document Number"
                           value={documentationDataArray[index].DocumentNo}
                           onChange={(e) =>
                             handleDocumentationChangeFormData(index, e)
                           }
                         />
                       </div>
-                      <div className="col-1">
+                      <div className="col-1 p-0">
                         <label htmlFor="issuedate" className="m-0 font-size-10">
                           Issue Date
                         </label>
                         <input
                           type="date"
                           id="issuedate"
-                          className="form-input-1"
+                          className="form-input-5 font-size-12"
                           name="IssueDate"
                           value={documentationDataArray[index].IssueDate}
                           onChange={(e) =>
@@ -857,7 +1020,7 @@ const AddDirectClient = () => {
                           }
                         />
                       </div>
-                      <div className="col-1">
+                      <div className="col-1 p-0 pl-1">
                         <label
                           htmlFor="expiredate"
                           className="m-0 font-size-10"
@@ -867,7 +1030,7 @@ const AddDirectClient = () => {
                         <input
                           type="date"
                           id="expiredate"
-                          className="form-input-1"
+                          className="form-input-5 font-size-12"
                           name="ExpiryDate"
                           value={documentationDataArray[index].ExpiryDate}
                           onChange={(e) =>
@@ -884,7 +1047,7 @@ const AddDirectClient = () => {
                         </label>
                         <select
                           id="issuecountry"
-                          className="form-input-1"
+                          className="form-input-5"
                           name="IssueCountry"
                           value={documentationDataArray[index].IssueCountry}
                           onChange={(e) =>
@@ -904,7 +1067,7 @@ const AddDirectClient = () => {
                         </label>
                         <select
                           id="documentitle"
-                          className="form-input-1"
+                          className="form-input-5"
                           name="DocumentTitle"
                           value={documentationDataArray[index].DocumentTitle}
                           onChange={(e) =>
@@ -923,9 +1086,9 @@ const AddDirectClient = () => {
                           </label>
                           <label
                             htmlFor="agentheader"
-                            className="form-input-1 border-0 p-0"
+                            className="form-input-5 border-0 p-0"
                           >
-                            <div className="form-input-1 border-0 primary-light-bg d-flex align-items-center justify-content-center gap-2 cursor-pointer">
+                            <div className="form-input-5 border-0 primary-light-bg d-flex align-items-center justify-content-center gap-2 cursor-pointer">
                               <i className="fa-solid fa-cloud-arrow-up m-0 fs-5 dark-primary-color"></i>
                               <p className="m-0 dark-primary-color">
                                 Upload Here..
@@ -934,11 +1097,14 @@ const AddDirectClient = () => {
                           </label>
                           <input
                             type="file"
-                            name="AgentHeaderImageData"
+                            name="ImageData"
                             id="agentheader"
-                            className="form-input-1"
+                            className="form-input-5"
                             value=""
                             hidden
+                            onChange={(e) =>
+                              handleDocumentationChangeFormData(index, e)
+                            }
                           ></input>
                         </div>
                         {documentationListArray.length > 1 && (
@@ -971,7 +1137,7 @@ const AddDirectClient = () => {
                     <input
                       type="text"
                       id="facebook"
-                      className="form-input-1"
+                      className="form-input-5"
                       name="Facebook"
                       placeholder="Facebook"
                       value={formData.Facebook}
@@ -985,7 +1151,7 @@ const AddDirectClient = () => {
                     <input
                       type="text"
                       id="twitter"
-                      className="form-input-1"
+                      className="form-input-5"
                       name="Twitter"
                       placeholder="Twitter"
                       value={formData.Twitter}
@@ -999,7 +1165,7 @@ const AddDirectClient = () => {
                     <input
                       type="text"
                       id="linked"
-                      className="form-input-1"
+                      className="form-input-5"
                       name="LinkedIn"
                       placeholder="Linked"
                       value={formData.LinkedIn}
@@ -1013,7 +1179,7 @@ const AddDirectClient = () => {
                     <input
                       type="text"
                       id="instagram"
-                      className="form-input-1"
+                      className="form-input-5"
                       name="Instagram"
                       placeholder="Instagram"
                       value={formData.Instagram}
@@ -1027,7 +1193,7 @@ const AddDirectClient = () => {
                     <input
                       type="text"
                       id="skypeid"
-                      className="form-input-1"
+                      className="form-input-5"
                       name="Skype"
                       placeholder="Skype"
                       value={formData.Skype}
@@ -1042,7 +1208,7 @@ const AddDirectClient = () => {
                       <input
                         type="text"
                         id="msnid"
-                        className="form-input-1"
+                        className="form-input-5"
                         name="MSN_Id"
                         placeholder="MSN"
                         value={formData.MSN_Id}
@@ -1060,7 +1226,7 @@ const AddDirectClient = () => {
                       name="Remark1"
                       value={formData.Remark1}
                       onChange={handleChangeFormData}
-                      className="form-input-1"
+                      className="form-input-5"
                       id="remark1"
                     ></textarea>
                   </div>
@@ -1072,7 +1238,7 @@ const AddDirectClient = () => {
                       name="Remark2"
                       value={formData.Remark2}
                       onChange={handleChangeFormData}
-                      className="form-input-1"
+                      className="form-input-5"
                       id="remark2"
                     ></textarea>
                   </div>
@@ -1084,7 +1250,7 @@ const AddDirectClient = () => {
                       name="Remark3"
                       value={formData.Remark3}
                       onChange={handleChangeFormData}
-                      className="form-input-1"
+                      className="form-input-5"
                       id="remark3"
                     ></textarea>
                   </div>

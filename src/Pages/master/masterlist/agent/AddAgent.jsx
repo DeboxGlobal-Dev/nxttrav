@@ -1,15 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Layout from "../../../../Component/Layout/Layout";
-import { Formik, Form, ErrorMessage } from "formik";
 import { NavLink, useNavigate } from "react-router-dom";
 import { agentMasterInitialValue } from "../mastersInitialValues";
 import { axiosOther } from "../../../../http/axios/axios_new";
-import { toast } from "react-toastify";
-import { Toaster } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
+import Editor from "../TextEditor/Editor";
+import { agentMasterValidationSchema } from "../MasterValidations";
 
 const AddAgent = () => {
-  
   const navigate = useNavigate();
+  const initialState = {
+    businessTypeList: [],
+    consortiaList: [],
+    isoList: [],
+    marketType: [],
+    companyType: [],
+    nationalityList: [],
+    tourList: [],
+    countryList: [],
+    preferredLanguage: [],
+    countryList: [],
+  };
+  const [agentInfoValue, setAgentInfoValue] = useState("");
+  const [remarksValue, setRemarksValue] = useState("");
+  const [errors, setErrors] = useState({});
 
   const [agentInputData, setAgentInputData] = useState({
     ...agentMasterInitialValue,
@@ -27,12 +41,39 @@ const AddAgent = () => {
     AgentFooterImageData: "",
   });
 
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "BUSINESS-TYPE":
+        return { ...state, businessTypeList: action.payload };
+      case "CONSORTIA-LIST":
+        return { ...state, consortiaList: action.payload };
+      case "ISO-LIST":
+        return { ...state, isoList: action.payload };
+      case "MARKET-TYPE":
+        return { ...state, marketType: action.payload };
+      case "COMPANY-TYPE":
+        return { ...state, companyType: action.payload };
+      case "NATIONALITY-LIST":
+        return { ...state, nationalityList: action.payload };
+      case "TOUR-LIST":
+        return { ...state, tourList: action.payload };
+      case "PREFERED-LANGUAGE":
+        return { ...state, preferredLanguage: action.payload };
+      case "COUNTRY-LIST":
+        return { ...state, countryList: action.payload };
+    }
+    return state;
+  };
+
+  const [allApiList, dispatch] = useReducer(reducer, initialState);
+
   const handleAgentInputChange = (e) => {
     setAgentInputData({ ...agentInputData, [e.target.name]: e.target.value });
   };
 
   const handleAgentLogoInputChange = (e) => {
-    const file = e.target.files[0];(file);
+    const file = e.target.files[0];
+    file;
 
     if (file) {
       const reader = new FileReader();
@@ -48,6 +89,7 @@ const AddAgent = () => {
       reader.readAsDataURL(file);
     }
   };
+
   const handleAgentHeaderImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -82,41 +124,202 @@ const AddAgent = () => {
   };
 
   const postingDataIntoAgentApi = async () => {
+    // try {
+    //   const { data } = await axiosOther.post("addupdateagent", {
+    //     ...logoImageData,
+    //     ...headerImageData,
+    //     ...footerImageData,
+    //     ...agentInputData,
+    //   });
+
+    //   console.log("agent-post", data);
+
+    //   if (data.status === 1) {
+    //     navigate("/master/agent/view");
+    //     toast.success(data?.Message);
+    //   }
+    //   if (data.status == -1) {
+    //     toast.error(data?.message);
+    //   }
+    // } catch (err) {
+    //   console.log(err);
+    // }
+
     try {
-      const { data } = await axiosOther.post("addupdateagent", {
-        ...logoImageData,
-        ...headerImageData,
-        ...footerImageData,
-        ...agentInputData,
+      await agentMasterValidationSchema.validate(
+        { ...headerImageData, ...footerImageData, ...agentInputData },
+        {
+          abortEarly: false,
+        }
+      );
+      setErrors({});
+
+      const getDataFromLocalStorage = localStorage.getItem("agentList");
+      if (getDataFromLocalStorage == null) {
+        localStorage.setItem(
+          "agentList",
+          JSON.stringify([
+            {
+              ...logoImageData,
+              ...headerImageData,
+              ...footerImageData,
+              ...agentInputData,
+              id: 1,
+            },
+          ])
+        );
+        navigate(`/master/agent/view/1`);
+        return null;
+      }
+      const lengthOfStoredData = JSON.parse(getDataFromLocalStorage)?.length;
+      const allDataListOfStorage = [...JSON.parse(getDataFromLocalStorage)];
+
+      localStorage.setItem(
+        "agentList",
+        JSON.stringify([
+          ...allDataListOfStorage,
+          {
+            ...logoImageData,
+            ...headerImageData,
+            ...footerImageData,
+            ...agentInputData,
+            id: getDataFromLocalStorage == null ? 1 : lengthOfStoredData + 1,
+            AgentInfo: agentInfoValue,
+            Remarks: remarksValue,
+          },
+        ])
+      );
+      const getDataAfterAdded = localStorage.getItem("agentList");
+      const lengthOfAfterStoredData = JSON.parse(getDataAfterAdded)?.length;
+      if (lengthOfStoredData + 1 == lengthOfAfterStoredData) {
+        toast.success("Data Added Successfully !");
+        setTimeout(() => {
+          navigate(`/master/agent/view/${lengthOfAfterStoredData}`);
+        }, 2000);
+      }
+    } catch (err) {
+      if (err.inner) {
+        const errorMessages = err.inner.reduce((acc, curr) => {
+          acc[curr.path] = curr.message;
+          return acc;
+        }, {});
+        setErrors(errorMessages);
+      }
+    }
+  };
+
+  console.log("error-error", errors);
+
+  // console.log("json-data", {
+  //   ...logoImageData,
+  //   ...headerImageData,
+  //   ...footerImageData,
+  //   ...agentInputData,
+  // });
+
+  const getApiListForDropdown = async () => {
+    try {
+      const { data } = await axiosOther.post("businesstypelist", {
+        Search: "",
+        Status: "",
       });
-      console.log("api-response", data);
-      toast.success(data.Message);
-      navigate("/master/agent/view");
+
+      dispatch({ type: "BUSINESS-TYPE", payload: data?.DataList });
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const { data } = await axiosOther.post("consortiamasterlist ", {
+        Search: "",
+        Status: "",
+      });
+
+      dispatch({ type: "CONSORTIA-LIST", payload: data?.DataList });
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const { data } = await axiosOther.post("isomasterlist ", {
+        Search: "",
+        Status: "",
+      });
+
+      dispatch({ type: "ISO-LIST", payload: data?.DataList });
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const { data } = await axiosOther.post("markettypemasterlist", {
+        Search: "",
+        Status: "",
+      });
+
+      dispatch({ type: "MARKET-TYPE", payload: data?.DataList });
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const { data } = await axiosOther.post("companytypemasterlist", {
+        Search: "",
+        Status: "",
+      });
+
+      dispatch({ type: "COMPANY-TYPE", payload: data?.DataList });
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const { data } = await axiosOther.post("nationalitylist", {
+        Search: "",
+        Status: "",
+      });
+
+      dispatch({ type: "NATIONALITY-LIST", payload: data?.DataList });
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const { data } = await axiosOther.post("tourlist", {
+        Search: "",
+        Status: "",
+      });
+
+      dispatch({ type: "TOUR-LIST", payload: data?.DataList });
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const { data } = await axiosOther.post("countrylist", {
+        Search: "",
+        Status: "",
+      });
+
+      dispatch({ type: "COUNTRY-LIST", payload: data?.DataList });
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const { data } = await axiosOther.post("preferredlanguagelist", {
+        Search: "",
+        Status: "",
+      });
+
+      dispatch({ type: "PREFERED-LANGUAGE", payload: data?.DataList });
     } catch (err) {
       console.log(err);
     }
   };
+  useEffect(() => {
+    getApiListForDropdown();
+  }, []);
 
-  console.log("json-data", {
-    ...logoImageData,
-    ...headerImageData,
-    ...footerImageData,
-    ...agentInputData,
-  });
-
-  function convertingImgToBase64String(file){
-    let base64String = "";
-    const reader = new FileReader();
-
-    reader.onload = function(){
-      base64String = reader.result; 
-    };
-    
-    reader.readAsDataURL(file);
-
+  const agentInfoChangeHandler = (content) => {
+    setAgentInfoValue(content);
   };
 
-  
+  const remarksChangeHandler = (content) => {
+    setRemarksValue(content);
+  };
 
   return (
     <Layout>
@@ -135,7 +338,7 @@ const AddAgent = () => {
                 >
                   Save
                 </button>
-                <Toaster/>
+                <Toaster />
               </div>
             </div>
             <div></div>
@@ -143,7 +346,14 @@ const AddAgent = () => {
           <div className="card-body mb-5 mt-3">
             <div className="row row-gap-3">
               <div className="col-lg-2 col-md-3 col-sm-4 col-12">
-                <label>Bussiness Type</label>
+                <div className="d-flex justify-content-between">
+                  <label>
+                    Bussiness Type <span className="text-danger">*</span>
+                  </label>
+                  {errors?.BussinessType && (
+                    <span className="text-danger">{errors?.BussinessType}</span>
+                  )}
+                </div>
                 <select
                   type={"select"}
                   name="BussinessType"
@@ -153,6 +363,13 @@ const AddAgent = () => {
                 >
                   <option value="">select</option>
                   <option value="1">Agent</option>
+                  {allApiList?.businessTypeList?.map((list, index) => {
+                    return (
+                      <option value={list?.id} key={index + 1}>
+                        {list?.Name}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-lg-2 col-md-3 col-sm-4 col-12">
@@ -173,11 +390,14 @@ const AddAgent = () => {
               </div>
               <div className="col-lg-2 col-md-3 col-sm-4 col-12">
                 <div className="d-flex justify-content-between">
-                  <label className="">Sales Person</label>
-                  <span className="font-size-10 text-danger pt-1">
-                    {/* <ErrorMessage name="LicenseKey" /> */}
-                  </span>
+                  <label>
+                    Sales Person <span className="text-danger">*</span>
+                  </label>
+                  {errors?.SalesPerson && (
+                    <span className="text-danger">{errors?.SalesPerson}</span>
+                  )}
                 </div>
+
                 <select
                   type={"select"}
                   name="SalesPerson"
@@ -208,7 +428,14 @@ const AddAgent = () => {
                 </select>
               </div>
               <div className="col-lg-2 col-md-3 col-sm-4 col-12">
-                <label>Company Name</label>
+                <div className="d-flex justify-content-between">
+                  <label>
+                    Company Name <span className="text-danger">*</span>
+                  </label>
+                  {errors?.CompanyName && (
+                    <span className="text-danger">{errors?.CompanyName}</span>
+                  )}
+                </div>
                 <input
                   type="text"
                   name="CompanyName"
@@ -228,7 +455,13 @@ const AddAgent = () => {
                   value={agentInputData.CompanyType}
                 >
                   <option value="">Select</option>
-                  <option value={1}>B2B</option>
+                  {allApiList?.companyType?.map((list, index) => {
+                    return (
+                      <option key={index + 1} value={list?.id}>
+                        {list?.Name}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-lg-2 col-md-3 col-sm-4 col-12">
@@ -243,7 +476,13 @@ const AddAgent = () => {
                   value={agentInputData.Consortia}
                 >
                   <option value="">Select</option>
-                  <option value="1">ABC</option>
+                  {allApiList?.consortiaList?.map((list, index) => {
+                    return (
+                      <option value={list?.id} key={index + 1}>
+                        {list?.Name}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-lg-2 col-md-3 col-sm-4 col-12">
@@ -256,16 +495,32 @@ const AddAgent = () => {
                   value={agentInputData.ISO}
                 >
                   <option value="">Select</option>
-                  <option value="1">ABC</option>
+                  {allApiList?.isoList?.map((list, index) => {
+                    return (
+                      <option value={list?.id} key={index + 1}>
+                        {list?.Name}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-lg-2 col-md-6 col-sm-6 col-12">
                 <div className="d-flex justify-content-between">
-                  <label className="">Company Phone Number</label>
-                  <span className="font-size-10 text-danger pt-1">
-                    {/* <ErrorMessage name="Address1" /> */}
-                  </span>
+                  <label
+                    className={`${
+                      errors?.CompanyPhoneNumber && "font-size-10 pt-1"
+                    }`}
+                  >
+                    Company Phone Number
+                    <span className="text-danger">*</span>
+                  </label>
+                  {errors?.CompanyPhoneNumber && (
+                    <span className="text-danger font-size-10 pt-1">
+                      {errors?.CompanyPhoneNumber}
+                    </span>
+                  )}
                 </div>
+
                 <input
                   type="text"
                   name="CompanyPhoneNumber"
@@ -276,7 +531,20 @@ const AddAgent = () => {
                 />
               </div>
               <div className="col-lg-2 col-md-6 col-sm-6 col-12">
-                <label>Company Email Address</label>
+                <div className="d-flex justify-content-between">
+                  <label
+                    className={`${
+                      errors?.CompanyPhoneNumber && "font-size-10 pt-1"
+                    }`}
+                  >
+                    Company Email Address <span className="text-danger">*</span>
+                  </label>
+                  {errors?.CompanyEmailAddress && (
+                    <span className="text-danger font-size-10 pt-1">
+                      {errors?.CompanyEmailAddress}
+                    </span>
+                  )}
+                </div>
                 <input
                   type="text"
                   name="CompanyEmailAddress"
@@ -298,7 +566,15 @@ const AddAgent = () => {
                 />
               </div>
               <div className="col-lg-2 col-md-3 col-sm-4 col-12">
-                <label>Market Type</label>
+                <div className="d-flex justify-content-between">
+                  <label>
+                    Market Type
+                    <span className="text-danger">*</span>
+                  </label>
+                  {errors?.MarketType && (
+                    <span className="text-danger">{errors?.MarketType}</span>
+                  )}
+                </div>
                 <select
                   type="select"
                   name="MarketType"
@@ -307,7 +583,13 @@ const AddAgent = () => {
                   value={agentInputData.MarketType}
                 >
                   <option value="">Select</option>
-                  <option value="1">ABC</option>
+                  {allApiList?.marketType?.map((list, index) => {
+                    return (
+                      <option value={list?.id} key={index + 1}>
+                        {list?.Name}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-lg-2 col-md-3 col-sm-4 col-12">
@@ -320,10 +602,10 @@ const AddAgent = () => {
                     <input
                       type="radio"
                       name="LocalAgent"
-                      checked
                       id="agentyes"
                       value="Yes"
                       onChange={handleAgentInputChange}
+                      defaultChecked
                     />
                   </div>
                   <div className="d-flex align-items-center gap-1">
@@ -341,7 +623,14 @@ const AddAgent = () => {
                 </div>
               </div>
               <div className="col-lg-2 col-md-3 col-sm-4 col-12">
-                <label>Nationality</label>
+                <div className="d-flex justify-content-between">
+                  <label>
+                    Nationality <span className="text-danger">*</span>
+                  </label>
+                  {errors?.Nationality && (
+                    <span className="text-danger">{errors?.Nationality}</span>
+                  )}
+                </div>
                 <select
                   type={"select"}
                   name="Nationality"
@@ -350,7 +639,13 @@ const AddAgent = () => {
                   value={agentInputData.Nationality}
                 >
                   <option value="">Select</option>
-                  <option value={1}>Indian</option>
+                  {allApiList?.nationalityList?.map((list, index) => {
+                    return (
+                      <option value={list?.id} key={index + 1}>
+                        {list?.Name}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-lg-2 col-md-3 col-sm-4 col-12">
@@ -363,7 +658,13 @@ const AddAgent = () => {
                   value={agentInputData.Country}
                 >
                   <option value="">Select</option>
-                  <option value={2}>India</option>
+                  {allApiList?.countryList?.map((list, index) => {
+                    return (
+                      <option value={list?.id} key={index + 1}>
+                        {list?.Name}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-lg-2 col-md-3 col-sm-4 col-12">
@@ -389,7 +690,13 @@ const AddAgent = () => {
                   value={agentInputData.TourType}
                 >
                   <option value="">Select</option>
-                  <option value="1">ABC</option>
+                  {allApiList?.tourList?.map((list, index) => {
+                    return (
+                      <option value={list?.id} key={index + 1}>
+                        Select
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-lg-2 col-md-3 col-sm-4 col-12">
@@ -402,11 +709,25 @@ const AddAgent = () => {
                   value={agentInputData.PreferredLanguage}
                 >
                   <option value="">Select</option>
-                  <option value="1">Hindi</option>
+                  {allApiList?.preferredLanguage?.map((list, index) => {
+                    return (
+                      <option value={list?.id} key={index + 1}>
+                        Select
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-lg-2 col-md-3 col-sm-4 col-12">
-                <label>Status</label>
+                <div className="d-flex justify-content-between">
+                  <label>
+                    Status
+                    <span className="text-danger">*</span>
+                  </label>
+                  {errors?.Status == "Status" && (
+                    <span className="text-danger">{errors?.Status}</span>
+                  )}
+                </div>
                 <select
                   type="select"
                   name="Status"
@@ -440,9 +761,18 @@ const AddAgent = () => {
                   hidden
                 ></input>
               </div>
-
               <div className="col-lg-2 col-md-3 col-sm-4 col-12 d-flex flex-column">
-                <label>Agent Header</label>
+                <div className="d-flex justify-content-between">
+                  <label>
+                    Agent Header
+                    <span className="text-danger">*</span>
+                  </label>
+                  {errors?.AgentHeaderImageData && (
+                    <span className="text-danger">
+                      {errors?.AgentHeaderImageData}
+                    </span>
+                  )}
+                </div>
                 <label htmlFor="agentheader">
                   <div className="form-input-1 border-0 primary-light-bg d-flex align-items-center justify-content-center gap-2 cursor-pointer">
                     <i className="fa-solid fa-cloud-arrow-up m-0 fs-5 dark-primary-color"></i>
@@ -464,7 +794,17 @@ const AddAgent = () => {
                 ></input>
               </div>
               <div className="col-lg-2 col-md-3 col-sm-4 col-12 d-flex flex-column">
-                <label>Agent Footer</label>
+                <div className="d-flex justify-content-between">
+                  <label>
+                    Agent Footer
+                    <span className="text-danger">*</span>
+                  </label>
+                  {errors?.AgentFooterImageData && (
+                    <span className="text-danger">
+                      {errors?.AgentFooterImageData}
+                    </span>
+                  )}
+                </div>
                 <label htmlFor="agentfooter">
                   <div className="form-input-1 border-0 primary-light-bg d-flex align-items-center justify-content-center gap-2 cursor-pointer">
                     <i className="fa-solid fa-cloud-arrow-up m-0 fs-5 dark-primary-color"></i>
@@ -484,6 +824,20 @@ const AddAgent = () => {
                   value=""
                   hidden
                 ></input>
+              </div>
+              <div className="col-6">
+                <label>Agent Info</label>
+                <Editor
+                  handleChangeEditor={agentInfoChangeHandler}
+                  heightValue={"60%"}
+                />
+              </div>
+              <div className="col-6">
+                <label>Remarks</label>
+                <Editor
+                  handleChangeEditor={remarksChangeHandler}
+                  heightValue={"60%"}
+                />
               </div>
             </div>
           </div>

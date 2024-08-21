@@ -112,16 +112,22 @@ const TourExtension = lazy(()=> import("./Pages/query/TourExtension.jsx"));
 const AssignUser = lazy(()=> import("./Pages/query/AssignUser.jsx"));
 const Agent = lazy(()=> import("./Pages/master/masterlist/agent/Agent.jsx"));
 const AddAgent = lazy(()=> import("./Pages/master/masterlist/agent/AddAgent.jsx"));
-const DirectClient = lazy(()=> import("./Pages/master/masterlist/DirectClient.jsx"));
-const AddDirectClient = lazy(()=> import("./Pages/master/masterlist/AddDirectClient.jsx"));
+const DirectClient = lazy(()=> import("./Pages/master/masterlist/directClient/DirectClient.jsx"));
+const AddDirectClient = lazy(()=> import("./Pages/master/masterlist/directClient/AddDirectClient.jsx"));
+const ViewDirectClient = lazy(()=> import("./Pages/master/masterlist/directClient/ViewDirectClient.jsx"));
 const ViewAgent = lazy(()=> import("./Pages/master/masterlist/agent/ViewAgent.jsx"));
 const AddTask = lazy(()=> import("./Pages/master/masterlist/agent/AddTask.jsx"));
 const AddMeeting = lazy(()=> import("./Pages/master/masterlist/agent/AddMeeting.jsx"));
 const AddCall = lazy(()=> import("./Pages/master/masterlist/agent/AddCall.jsx"));
+const Supplier = lazy(()=> import("./Pages/master/masterlist/supplier/Supplier.jsx"));
+const AddSupplier = lazy(()=> import("./Pages/master/masterlist/supplier/AddSupplier.jsx"));
+const ViewSupplier = lazy(()=> import("./Pages/master/masterlist/supplier/ViewSupplier.jsx"));
+
 import JsonToExcel from "./Pages/template/JsonToExcel.jsx";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import MasterLoad from "./Pages/template/loadComponent/MasterLoad.jsx";
+
 
 
 const App = () => {
@@ -164,12 +170,16 @@ const App = () => {
           <Route path="/master/country" element={ <Protected> <CountryMaster /></Protected>}/>
           <Route path="/master/agent" element={ <Protected> <Agent /></Protected>}/>
           <Route path="/master/agent/add" element={ <Protected> <AddAgent /></Protected>}/>
-          <Route path="/master/agent/view" element={ <Protected> <ViewAgent /></Protected>}/>
+          <Route path="/master/agent/view/:id" element={ <Protected> <ViewAgent /></Protected>}/>
           <Route path="/master/agent/view/task" element={ <Protected> <AddTask /></Protected>}/>
           <Route path="/master/agent/view/meeting" element={ <Protected> <AddMeeting /></Protected>}/>
           <Route path="/master/agent/view/call" element={ <Protected> <AddCall /></Protected>}/>
           <Route path="/master/directclient" element={ <Protected> <DirectClient /></Protected>}/>
           <Route path="/master/directclient/add" element={ <Protected> <AddDirectClient /></Protected>}/>
+          <Route path="/master/directclient/view/:id" element={ <Protected> <ViewDirectClient /></Protected>}/>
+          <Route path="/master/supplier" element={ <Protected> <Supplier /></Protected>}/>
+          <Route path="/master/supplier/add" element={ <Protected> <AddSupplier /></Protected>}/>
+          <Route path="/master/supplier/view/:id" element={ <Protected> <ViewSupplier /></Protected>}/>
           <Route path="/master/state" element={<Protected><StateMaster /></Protected>} />
           <Route path="/master/city" element={ <Protected> <CityMaster /></Protected>}/>
           <Route path="/master/lead_source" element={ <Protected> <LeadSource /></Protected>}/>
