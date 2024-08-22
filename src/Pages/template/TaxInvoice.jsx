@@ -1,94 +1,110 @@
 import React, { useRef } from "react";
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const TaxInvoice = () => {
- 
   const generatePDF = () => {
-    const input = document.getElementById('pdf-content');
+    const input = document.getElementById("pdf-content");
     html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
+      const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF();
       const imgProps = pdf.getImageProperties(imgData);
 
       //both pdfWidth & pdfHeight are dynamic height and width of pdf. It can be helpfull for dynamic size of width
       // const pdfWidth = pdf.internal.pageSize.getWidth();
       // const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      
-      pdf.addImage(imgData, 'PNG', -30, 40, 270, 200);
-      pdf.save('TaxInvoice.pdf');
+
+      pdf.addImage(imgData, "PNG", -30, 40, 270, 200);
+      pdf.save("TaxInvoice.pdf");
     });
   };
 
   return (
     <>
       <div className="container" id="pdf-content">
-        <div className="row my-3 justify-content-center">
-          <h1 className="text-center">Tax Invoice</h1>
+        <div className="row justify-content-center">
           <div className="col-8 border">
-            <div className="row border-bottom">
-              <div className="col-4 border-right d-flex justify-content-center align-items-center">
+            <div className="row border-bottom yellow-bg py-3">
+              <div className="col-5 d-flex justify-content-center align-items-center">
                 <img
                   src="\public\assets\icons\general_master\debox.png"
                   alt="logo"
-                  style={{ height: "100px", width: "200px" }}
+                  style={{ height: "80px", width: "150px" }}
                 />
               </div>
-              <div className="col-8">
-                <p className="font-weight-bold m-0">Debox Global</p>
-                <p className="m-0">
-                  <span className="font-weight-bold">Address</span> : New Delhi
-                  Chhatarpur
+              <div className="col-7 d-flex flex-column gap-1">
+                <p className="font-weight-bold m-0">
+                  DEBOX GLOBAL IT SOLUTION PRIVATE LIMITED
                 </p>
-                <p className="m-0">
-                  <span className="font-weight-bold">Contact</span> : 880976542
+                <p className="m-0 mt-1">
+                  <span className="font-weight-bold yellow-text">
+                    Address &nbsp; &nbsp;
+                  </span>
+                  : &nbsp; New Delhi Chhatarpur
                 </p>
                 <div className="d-flex gap-3">
                   <p className="m-0">
-                    <span className="font-weight-bold">Email</span> :
-                    debox@global.com
+                    <span className="font-weight-bold yellow-text">
+                      Contact &nbsp; &nbsp;
+                    </span>
+                    : &nbsp;880976542
                   </p>
                   <p className="m-0">
-                    <span className="font-weight-bold">Website</span> :
-                    www.deboxglobal.com
+                    <span className="font-weight-bold yellow-text">
+                      Email &nbsp; &nbsp;
+                    </span>
+                    : &nbsp; debox@global.com
                   </p>
                 </div>
                 <p className="m-0">
-                  <span className="font-weight-bold">GSTIN/UIN</span>:-{" "}
-                  <span>PAN</span>:DB87678997
+                  <span className="font-weight-bold yellow-text">
+                    Website &nbsp; &nbsp;
+                  </span>
+                  : &nbsp; www.deboxglobal.com
                 </p>
-                <p className="m-0">
-                  <span className="font-weight-bold">CIN:-</span>BDi87888676767
-                </p>
+
+                <div className="d-flex gap-3">
+                  <p className="m-0">
+                    <span className="font-weight-bold yellow-text">GSTIN/UIN&nbsp; &nbsp;</span> :
+                    <span>&nbsp; DB87678997D7DS</span>
+                  </p>
+                  <p className="m-0">
+                    <span className="font-weight-bold yellow-text">CIN &nbsp; &nbsp; </span> :
+                    <span>&nbsp; BDi87888676767</span>
+                  </p>
+                </div>
               </div>
             </div>
             <div className="row border-bottom">
-              <div className="col-6 py-2 border-right">
-                <p className="m-0 font-weight-bold">Bill To: PVT LTD</p>
+              <div className="col-5 py-2 border-right d-flex flex-column gap-2">
+                <p className="m-0"><span className=" font-weight-bold">Bill To &nbsp; &nbsp; &nbsp;</span>: &nbsp; PVT LTD</p>
                 <p className="m-0">
-                  <span className="font-weight-bold">Address</span> : New Delhi
+                  <span className="font-weight-bold">Address&nbsp;</span> :&nbsp; New Delhi
                   Sarojni Nagar
                 </p>
                 <p className="m-0">
-                  <span className="font-weight-bold">Phone</span> : 880976542
+                  <span className="font-weight-bold">Phone &nbsp; &nbsp;</span> :&nbsp; 880976542
                 </p>
                 <p className="m-0">
-                  <span className="font-weight-bold">Email</span> :
+                  <span className="font-weight-bold">Email&nbsp; &nbsp; &nbsp;</span> :&nbsp;
                   debox@global.com
                 </p>
+                <div className="d-flex gap-2">
                 <p className="m-0">
-                  <span className="font-weight-bold">GSTIN/UIN</span> : JHF JDHF
+                  <span className="font-weight-bold">GSTIN/UIN</span> :&nbsp; JHF JDHF
                   JH4
                 </p>
+
                 <p className="m-0">
-                  <span className="font-weight-bold">PAN</span>:- :DB87678997
+                  <span className="font-weight-bold">PAN&nbsp; &nbsp;</span>:&nbsp; DB87678997
                 </p>
+                </div>
                 <p className="m-0">
                   <span className="font-weight-bold">State/Country Name</span>
                   Uttrakhand /India
                 </p>
               </div>
-              <div className="col-6">
+              <div className="col-7">
                 <div className="row border-bottom align-items-center">
                   <div className="col-6 border-right p-0 pl-1">
                     <p>
