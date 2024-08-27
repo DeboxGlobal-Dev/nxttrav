@@ -11,7 +11,7 @@ import {
 } from "./MasterValidations";
 import "jquery";
 import "select2";
-import Editor from "./TextEditor/Editor";
+import Editor from "../../../helper/Editor";
 
 const Sightseeing = () => {
   const [getData, setGetData] = useState([]);
@@ -261,18 +261,21 @@ const Sightseeing = () => {
                         <label className="m-0">Description</label>
                         <Editor
                           handleChangeEditor={handleDescriptionEditor}
+                           heightValue="60%"
                         />
                       </div>
                       <div className="col-sm-12 mt-4">
                         <label className="m-0">Inclusion / Exclusion & Timing</label>
                           <Editor 
                             handleChangeEditor={handleInclusionEditor}
+                             heightValue="60%"
                           />
                       </div>
                       <div className="col-sm-12 mt-4">
                         <label className="m-0">Important Note</label>
                         <Editor
                           handleChangeEditor={handleImportantNoteEditor}
+                           heightValue="60%"
                         />
                       </div>
                     </div>

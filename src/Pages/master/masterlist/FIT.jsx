@@ -5,11 +5,8 @@ import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
-import {
-  fitInitialValue,
-  fitValidationSchema
-} from "./MasterValidations";
-import Editor from "./TextEditor/Editor";
+import { fitInitialValue, fitValidationSchema } from "./MasterValidations";
+import Editor from "../../../helper/Editor";
 
 const FIT = () => {
   const [getData, setGetData] = useState([]);
@@ -24,7 +21,7 @@ const FIT = () => {
   const [updateData, setUpdateData] = useState(false);
   const [destinationList, setDestinationList] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+
   const getDataToServer = async () => {
     try {
       const destination = await axiosOther.post("destinationlist", {
@@ -66,44 +63,42 @@ const FIT = () => {
     setEditData({
       ...rowValue,
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
 
-  const handleRemarkEditor = (content) =>{
+  const handleRemarkEditor = (content) => {
     console.log(content);
   };
 
-  const handlePaymentPolicyEditor = (content) =>{
+  const handlePaymentPolicyEditor = (content) => {
     console.log(content);
   };
 
-  const handleOptionTourEditor = (content) =>{
+  const handleOptionTourEditor = (content) => {
     console.log(content);
   };
 
-  const handleServiceUpgradationEditor = (content) =>{
+  const handleServiceUpgradationEditor = (content) => {
     console.log(content);
   };
 
-  const handleCancelationEditor = (content) =>{
+  const handleCancelationEditor = (content) => {
     console.log(content);
   };
 
-  const handleTermsConditionEditor = (content) =>{
+  const handleTermsConditionEditor = (content) => {
     console.log(content);
   };
 
-  const handleExlusionEditor = (content) =>{
+  const handleExlusionEditor = (content) => {
     console.log(content);
   };
 
-  const handleInclusionEditor = (content) =>{
+  const handleInclusionEditor = (content) => {
     console.log(content);
-  }
-
-
+  };
 
   const columns = [
     {
@@ -210,7 +205,7 @@ const FIT = () => {
                           placeholder="Name"
                           className="form-control"
                         />
-                      <span className="font-size-10 text-danger">
+                        <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
@@ -222,11 +217,13 @@ const FIT = () => {
                           component={"select"}
                         >
                           <option value="">ALL</option>
-                          {
-                            destinationList.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
-                            })
-                          }
+                          {destinationList.map((value, index) => {
+                            return (
+                              <option value={value.Id} key={index + 1}>
+                                {value.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Destination" />
@@ -236,48 +233,56 @@ const FIT = () => {
                         <label className="m-0">Inclusion</label>
                         <Editor
                           handleChangeEditor={handleInclusionEditor}
+                          heightValue="60%"
                         />
                       </div>
                       <div className="col-sm-12 mt-4">
                         <label className="m-0">Exclusion</label>
                         <Editor
                           handleChangeEditor={handleExlusionEditor}
+                          heightValue="60%"
                         />
                       </div>
                       <div className="col-sm-12 mt-4">
                         <label className="m-0">Terms Condition</label>
                         <Editor
                           handleChangeEditor={handleTermsConditionEditor}
+                          heightValue="60%"
                         />
                       </div>
                       <div className="col-sm-12 mt-4">
                         <label className="m-0">Cancelation</label>
                         <Editor
                           handleChangeEditor={handleCancelationEditor}
+                          heightValue="60%"
                         />
                       </div>
                       <div className="col-sm-12 mt-4">
                         <label className="m-0">Service Upgradation</label>
                         <Editor
                           handleChangeEditor={handleServiceUpgradationEditor}
+                          heightValue="60%"
                         />
                       </div>
                       <div className="col-sm-12 mt-4">
                         <label className="m-0">Optional Tour</label>
                         <Editor
                           handleChangeEditor={handleOptionTourEditor}
+                          heightValue="60%"
                         />
                       </div>
                       <div className="col-sm-12 mt-4">
                         <label className="m-0">Payment Policy</label>
                         <Editor
                           handleChangeEditor={handlePaymentPolicyEditor}
+                          heightValue="60%"
                         />
                       </div>
                       <div className="col-sm-12 mt-4">
                         <label className="m-0">Remarks</label>
                         <Editor
                           handleChangeEditor={handleRemarkEditor}
+                          heightValue="60%"
                         />
                       </div>
                       <div className="col-sm-6 mt-4">

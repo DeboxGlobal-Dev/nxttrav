@@ -2,10 +2,11 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { NavLink, useLocation, Outlet } from "react-router-dom";
+import Popup from "./qoutation/Popup";
 
 const Quotation = () => {
   const quotationBasePath = "/querylist/queryview/quotation";
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
   console.log(pathname);
   return (
     <>
@@ -42,110 +43,9 @@ const Quotation = () => {
               </div>
             </div>
           </div>
-          <div className="col-12 p-0 mt-2">
-            <div className="row justify-content-center">
-             <div className="col-11 border rounded-pill shadow sticky">
-                <div className="row px-2 py-1">
-                  <div className="col d-flex flex-column align-items-center pt-1">
-                    <img
-                      className="image-hw"
-                      src="\public\global_assets\images\qoutation\itenary.png"
-                      alt="activity"
-                    />
-                    <span className="span-font-size">Itenary Info</span>
-                  </div>
-                  <div className="col d-flex flex-column align-items-center pt-1">
-                    <img
-                      className="image-hw"
-                      src="\public\global_assets\images\qoutation\flight.png"
-                      alt="activity"
-                    />
-                    <span className="span-font-size">Flight</span>
-                  </div>
-                  <div className="col d-flex flex-column align-items-center pt-1">
-                    <img
-                      className="image-hw"
-                      src="\public\global_assets\images\qoutation\hotel.png"
-                      alt="activity"
-                    />
-                    <span className="span-font-size">Hotel</span>
-                  </div>
-                  <div className="col d-flex flex-column align-items-center pt-1">
-                    <img
-                      className="image-hw"
-                      src="\public\global_assets\images\qoutation\transfer.png"
-                      alt="activity"
-                    />
-                    <span className="span-font-size">Transfer</span>
-                  </div>
-                  <div className="col d-flex flex-column align-items-center pt-1">
-                    <img
-                      className="image-hw"
-                      src="\public\global_assets\images\qoutation\monument.png"
-                      alt="activity"
-                    />
-                    <span className="span-font-size">Monument</span>
-                  </div>
-                  <div className="col d-flex flex-column align-items-center pt-1">
-                    <img
-                      className="image-hw"
-                      src="\public\global_assets\images\qoutation\enroute.png"
-                      alt="activity"
-                    />
-                    <span className="span-font-size">Enroute</span>
-                  </div>
-                  <div className="col d-flex flex-column align-items-center pt-1">
-                    <img
-                      className="image-hw"
-                      src="\public\global_assets\images\qoutation\restaurant.png"
-                      alt="activity"
-                    />
-                    <span className="span-font-size">Restaurant</span>
-                  </div>
-                  <div className="col d-flex flex-column align-items-center pt-1">
-                    <img
-                      className="image-hw"
-                      src="\public\global_assets\images\qoutation\activity.png"
-                      alt="activity"
-                    />
-                    <span className="span-font-size">Activity</span>
-                  </div>
-                  <div className="col d-flex flex-column align-items-center pt-1">
-                    <img
-                      className="image-hw"
-                      src="\public\global_assets\images\qoutation\guide.png"
-                      alt="activity"
-                    />
-                    <span className="span-font-size">Guide</span>
-                  </div>
-                  <div className="col d-flex flex-column align-items-center pt-1">
-                    <img
-                      className="image-hw"
-                      src="\public\global_assets\images\qoutation\transportation.png"
-                      alt="activity"
-                    />
-                    <span className="span-font-size">Tranportation</span>
-                  </div>
-                  <div className="col d-flex flex-column align-items-center pt-1">
-                    <img
-                      className="image-hw"
-                      src="\public\global_assets\images\qoutation\train.png"
-                      alt="activity"
-                    />
-                    <span className="span-font-size">Trains</span>
-                  </div>
-                  <div className="col d-flex flex-column align-items-center pt-1">
-                    <img
-                      className="image-hw"
-                      src="\public\global_assets\images\qoutation\add.png"
-                      alt="activity"
-                    />
-                    <span className="span-font-size">Add Ons</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* all popups */}
+          <Popup />
+          {/* all popups */}
           <div className="col-12 mt-3">
             <ul className="nav nav-pills-toolbar d-flex justify-content-between align-items-center border top-border-radius px-100 py-1">
               <li className="nav-item view-nav-item rounded-pill">
@@ -153,7 +53,7 @@ const Quotation = () => {
                   to="/querylist/queryview/quotation/"
                   className={`nav-link fs-6 rounded-pill height-30 d-flex align-items-center ${
                     pathname === `${quotationBasePath}` ||
-                    pathname === `${quotationBasePath}/` 
+                    pathname === `${quotationBasePath}/`
                       ? "q-active"
                       : "text-primary"
                   }`}

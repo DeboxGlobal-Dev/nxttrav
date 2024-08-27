@@ -9,7 +9,7 @@ import {
   additionalRequiremntInitialValue,
   additionaRequirementValidationSchema
 } from "./MasterValidations";
-import Editor from "./TextEditor/Editor";
+import Editor from "../../../helper/Editor";
 
 const AdditionalRequirement = () => {
   const [getData, setGetData] = useState([]);
@@ -377,6 +377,7 @@ const AdditionalRequirement = () => {
                         <label>Details</label>
                           <Editor
                             handleChangeEditor={handleDetailEditor}
+                             heightValue="60%"
                           />
                       </div>
                     </div>

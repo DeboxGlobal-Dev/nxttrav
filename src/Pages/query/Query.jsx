@@ -15,7 +15,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import "select2";
 import "jquery";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { axiosQuery } from "../../http/axios/axios_new";
 import { roomListStaticApi } from "./QuerySchema";
 import { Value } from "sass";
@@ -1728,13 +1728,15 @@ const Query = () => {
               <div className="col-12 col-md-4">
                 <div className="row py-1 row-gap-2">
                   <div className="col-12 col-sm-5 d-flex flex-column justify-content-between">
-                    <p
-                      className="font-weight-bold 
+                    <NavLink to="/preferrence">
+                      <p
+                        className="font-weight-bold 
                     bg-primary form-input-3 px-3 rounded 
                     border-0 height-30 d-flex align-items-center m-0"
-                    >
-                      Set Preference
-                    </p>
+                      >
+                        Set Preference
+                      </p>
+                    </NavLink>
                     <div className=" mt-1">
                       <label htmlFor="salesperson" className="m-0 font-size-12">
                         Sales Person

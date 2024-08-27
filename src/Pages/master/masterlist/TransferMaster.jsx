@@ -6,7 +6,7 @@ import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
 import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
-import Editor from "./TextEditor/Editor";
+import Editor from "../../../helper/Editor";
 
 const TransferMaster = () => {
   const [getData, setGetData] = useState([]);
@@ -230,6 +230,7 @@ const TransferMaster = () => {
                         <label>Detail</label>
                         <Editor
                           handleChangeEditor={handleDetailEditor}
+                           heightValue="60%"
                         />
                       </div>
                     </div>

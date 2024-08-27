@@ -4,24 +4,23 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
-import { Field, ErrorMessage } from "formik";
+import { Field } from "formik";
 import {
   letterMasterInitialValue,
-  letterMasterValidationSchema
+  letterMasterValidationSchema,
 } from "./MasterValidations";
-import Editor from "./TextEditor/Editor";
+import Editor from "../../../helper/Editor";
 
 const LetterMaster = () => {
-
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: ""
+    Status: "",
   });
-  
+
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -61,7 +60,7 @@ const LetterMaster = () => {
     setIsEditing(true);
   };
 
-  const handleWelcomeNoteEditor = (content) =>{
+  const handleWelcomeNoteEditor = (content) => {
     console.log(content);
   };
 
@@ -183,6 +182,7 @@ const LetterMaster = () => {
                         <label>Welcome Note</label>
                         <Editor
                           handleChangeEditor={handleWelcomeNoteEditor}
+                          heightValue="60%"
                         />
                       </div>
                     </div>

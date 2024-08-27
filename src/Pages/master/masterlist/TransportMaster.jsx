@@ -9,7 +9,7 @@ import {
   transportMasterValidationSchema,
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
-import Editor from "./TextEditor/Editor";
+import Editor from "../../../helper/Editor";
 
 const TransportMaster = () => {
   const [getData, setGetData] = useState([]);
@@ -225,6 +225,7 @@ const TransportMaster = () => {
                         <label>Detail</label>
                         <Editor
                           handleChangeEditor={handleDetailEditor}
+                           heightValue="60%"
                         />
                       </div>
                     </div>

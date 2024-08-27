@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { agentMasterInitialValue } from "../mastersInitialValues";
 import { axiosOther } from "../../../../http/axios/axios_new";
 import { toast, Toaster } from "react-hot-toast";
-import Editor from "../TextEditor/Editor";
+import Editor from "../../../../helper/Editor";
 import { agentMasterValidationSchema } from "../MasterValidations";
 
 const AddAgent = () => {

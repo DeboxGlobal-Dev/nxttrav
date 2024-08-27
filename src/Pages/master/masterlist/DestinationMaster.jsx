@@ -10,7 +10,7 @@ import {
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { isDeepEqual } from "@mui/x-data-grid/internals";
-import Editor from "./TextEditor/Editor";
+import Editor from "../../../helper/Editor";
 
 const DestinationMaster = () => {
   const [getData, setGetData] = useState([]);

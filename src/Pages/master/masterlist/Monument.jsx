@@ -11,7 +11,7 @@ import {
 } from "./MasterValidations";
 import "jquery";
 import "select2";
-import Editor from "./TextEditor/Editor";
+import Editor from "../../../helper/Editor";
 
 const Monument = () => {
   const [getData, setGetData] = useState([]);
@@ -291,10 +291,11 @@ const Monument = () => {
                          
                         </Field>
                       </div>
-                      <div className="col-sm-4">
+                      <div className="col-sm-12">
                         <label>Description</label>
                         <Editor
                           handleChangeEditor={handleDescriptionEditor}
+                          heightValue="60%"
                         />
                       </div>
                     </div>

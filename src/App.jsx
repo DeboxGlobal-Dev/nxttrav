@@ -106,8 +106,6 @@ const Preview = lazy(()=> import("./Pages/query/Preview.jsx"));
 const SupplierPayment = lazy(()=> import("./Pages/query/SupplierPayment.jsx"));
 const AgentPayment = lazy(()=> import("./Pages/query/AgentPayment.jsx"));
 const ExpenseEntry = lazy(()=> import("./Pages/query/ExpenseEntery.jsx"));
-const TaxInvoice = lazy(()=> import("./Pages/template/TaxInvoice.jsx"));
-const PerformanceInvoice = lazy(()=> import("./Pages/template/PerformanceInoive.jsx"));
 const TourExtension = lazy(()=> import("./Pages/query/TourExtension.jsx"));
 const AssignUser = lazy(()=> import("./Pages/query/AssignUser.jsx"));
 const Agent = lazy(()=> import("./Pages/master/masterlist/agent/Agent.jsx"));
@@ -122,6 +120,7 @@ const AddCall = lazy(()=> import("./Pages/master/masterlist/agent/AddCall.jsx"))
 const Supplier = lazy(()=> import("./Pages/master/masterlist/supplier/Supplier.jsx"));
 const AddSupplier = lazy(()=> import("./Pages/master/masterlist/supplier/AddSupplier.jsx"));
 const ViewSupplier = lazy(()=> import("./Pages/master/masterlist/supplier/ViewSupplier.jsx"));
+const SetPreferrence = lazy(()=> import("./Pages/query/SetPreferrence.jsx"));
 
 import JsonToExcel from "./Pages/template/JsonToExcel.jsx";
 import { ToastContainer } from 'react-toastify';
@@ -140,6 +139,7 @@ const App = () => {
           <Route path="/" element={<Protected><Home /></Protected>}/>
           <Route path="/mail" element={  <Protected><Mail /></Protected>}/>
           <Route path="/querylist" element={ <Protected>  <QueryList />  </Protected>}/>
+          <Route path="/preferrence" element={<Protected><SetPreferrence/></Protected>}></Route>
           <Route path="/querylist/queryview" element={<Protected><QueryView /></Protected>}>
           <Route path="/querylist/queryview/preview" element={<Protected><Preview/></Protected>}></Route>
             <Route index element={<Protected><Query/></Protected>}></Route>
@@ -249,9 +249,6 @@ const App = () => {
           <Route path="/master/saccode" element={<Protected><SACCode/></Protected>}></Route>
           <Route path="/master/paymenttype" element={<Protected><PaymentType/></Protected>}></Route>
           <Route path="/master/bankmaster" element={<Protected><BankMaster/></Protected>}></Route>
-          <Route path="/taxinvoice" element={<Protected><TaxInvoice/></Protected>}></Route>
-          <Route path="/performanceinvoice" element={<Protected><PerformanceInvoice/></Protected>}></Route>
-
           <Route path="/setting/" element={<Protected><Setting/></Protected>}>
             <Route index element={<Protected><Users/></Protected>}></Route>
             <Route path="profile" element={<Protected><SettingProfile/></Protected>}></Route>
@@ -260,7 +257,6 @@ const App = () => {
             <Route path="reporting" element={<Protected><SettingEmail/></Protected>}></Route>
             <Route path="database" element={<Protected><SettingEmail/></Protected>}></Route>
           </Route>
-
           <Route path="/profile" element={<Protected><Profile/></Protected>}></Route>
           <Route path="/users/add" element={<Protected><AddUser/></Protected>}></Route>
           <Route path="/company/add" element={<Protected><AddCompany/></Protected>}></Route>

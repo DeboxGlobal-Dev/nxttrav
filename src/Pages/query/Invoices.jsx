@@ -1,5 +1,6 @@
 import React from "react";
-import TaxInvoice from "../template/TaxInvoice";
+import TaxInvoice from "./TaxInvoice";
+import PerformanceInvoice from "./PerformanceInoive";
 
 const Invoices = () => {
   return (
@@ -51,7 +52,7 @@ const Invoices = () => {
               role="tabpanel"
               aria-labelledby="item-wise-invoice-tab"
             >
-              <h1>Item Wise Invoice</h1>
+              <PerformanceInvoice/>
             </div>
           </div>
         </div>

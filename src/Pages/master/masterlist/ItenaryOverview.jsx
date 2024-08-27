@@ -9,7 +9,7 @@ import {
   itenararyOverviewInitialValue,
   itenararyOverviewValidationSchema,
 } from "./MasterValidations";
-import Editor from "./TextEditor/Editor";
+import Editor from "../../../helper/Editor";
 
 const ItenaryOverview = () => {
   const [getData, setGetData] = useState([]);
@@ -176,30 +176,35 @@ const ItenaryOverview = () => {
                         <label className="m-0">Overview Name</label>
                         <Editor 
                             handleChangeEditor={handleOverviewNameEditor}
+                             heightValue="60%"
                         />
                       </div>
                       <div className="col-sm-12 mt-4">
                         <label className="m-0">Overview Information</label>
                         <Editor
                           handleChangeEditor={handleOverviewInformationEditor}
+                           heightValue="60%"
                         />
                       </div>
                       <div className="col-sm-12 mt-4">
                         <label className="m-0">Highlight Information</label>
                         <Editor
                           handleChangeEditor={handleHighlightInformationEditor}
+                           heightValue="60%"
                         />
                       </div>
                       <div className="col-sm-12 mt-4">
                         <label className="m-0">Itinerary Introduction</label>
                         <Editor
                           handleChangeEditor={hanldeItenararyIntroductionEditor}
+                           heightValue="60%"
                         />
                       </div>
                       <div className="col-sm-12 mt-4">
                         <label className="m-0">Itenarary Summary</label>
                         <Editor
                           handleChangeEditor={handleItenararySummaryEditor}
+                           heightValue="60%"
                         />
                       </div>
                       <div className="col-sm-6 mt-4">

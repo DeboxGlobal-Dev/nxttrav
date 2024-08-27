@@ -67,7 +67,7 @@ const SupplierPayment = () => {
             <p className="m-0 text-light font-size-10">SUPPLIER COSTSHEET</p>
           </div>
         </div>
-        <div className="row bg-color-2 align-items-center">
+        <div className="row yellow-bg align-items-center">
           <div className="col-6 text-dark font-weight-bold">
             SUPPLIER-AFRICA AVENUE
           </div>
@@ -128,7 +128,7 @@ const SupplierPayment = () => {
             </div>
           </div>
         </div>
-        <div className="row bg-color-2 align-items-center">
+        <div className="row yellow-bg align-items-center">
           <div className="col-6 text-dark font-weight-bold">
             SUPPLIER - Mohammad Rizwan
           </div>

@@ -11,10 +11,10 @@ const Payments = () => {
     <>
       <div className="container-fluid mb-5">
         <div className="row">
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <ul class="nav nav-tabs custom-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
               <button
-                class="nav-link active"
+                class="nav-link custom-tab-link active"
                 id="home-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#supplier"
@@ -28,7 +28,7 @@ const Payments = () => {
             </li>
             <li class="nav-item" role="presentation">
               <button
-                class="nav-link"
+                class="nav-link custom-tab-link"
                 id="profile-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#agent"
@@ -42,7 +42,7 @@ const Payments = () => {
             </li>
             <li class="nav-item" role="presentation">
               <button
-                class="nav-link"
+                class="nav-link custom-tab-link"
                 id="profile-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#expense"

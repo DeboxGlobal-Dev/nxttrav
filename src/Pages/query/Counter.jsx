@@ -1,4 +1,5 @@
 const Counter = ({ value, dispatch, counter }) => {
+  
   const handleCounterInputValue = (e) => {
     const value = e.target.value;
     dispatch({ type: "SET", value: Number(value), counter });
@@ -20,7 +21,8 @@ const Counter = ({ value, dispatch, counter }) => {
         </div>
 
         <input
-          className="col backgroundColor-1 border-0 outline-0 counter-input"
+          className="col backgroundColor-2 border-0 outline-0 counter-input"
+          style={{backgroundColor:'#71bfff7b'}}
           value={value}
           onChange={handleCounterInputValue}
         />

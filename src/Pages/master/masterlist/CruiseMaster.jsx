@@ -6,7 +6,7 @@ import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
 import { cruiseMasterInitialValue, cruiseMasterValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
-import Editor from "./TextEditor/Editor";
+import Editor from "../../../helper/Editor";
 
 const CruiseMaster = () => {
   const [getData, setGetData] = useState([]);
@@ -243,6 +243,7 @@ const CruiseMaster = () => {
                         <label>Detail</label>
                         <Editor
                           handleChangeEditor={handleDetailEditor}
+                           heightValue="60%"
                         />
                       </div>
                     </div>

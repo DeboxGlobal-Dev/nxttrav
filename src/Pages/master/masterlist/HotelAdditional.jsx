@@ -4,10 +4,13 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
-import { hotelAdditonalInitialValue, hotelAdditionalValidationSchema } from "./MasterValidations";
+import {
+  hotelAdditonalInitialValue,
+  hotelAdditionalValidationSchema,
+} from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { InputAdornment } from "@mui/material";
-import Editor from "./TextEditor/Editor";
+import Editor from "../../../helper/Editor";
 
 const HotelAdditional = () => {
   const [getData, setGetData] = useState([]);
@@ -18,17 +21,17 @@ const HotelAdditional = () => {
     Search: "",
     Status: "",
   });
- const [changeValue, setChangeValue] = useState("");
- const [updateData, setUpdateData] = useState(false);
- const [imageValue, setImageValue] = useState({
-  ImageData:'',
-  ImageName:''
- });
- const [loading, setLoading] = useState(true);
+  const [changeValue, setChangeValue] = useState("");
+  const [updateData, setUpdateData] = useState(false);
+  const [imageValue, setImageValue] = useState({
+    ImageData: "",
+    ImageName: "",
+  });
+  const [loading, setLoading] = useState(true);
 
- const handleDetailEditor = (content) =>{
-  console.log(content);
- }
+  const handleDetailEditor = (content) => {
+    console.log(content);
+  };
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -55,31 +58,30 @@ const HotelAdditional = () => {
 
   const handleEditClick = (rowValue) => {
     setImageValue({
-      ImageData:"",
-      ImageName:""
-    })
+      ImageData: "",
+      ImageName: "",
+    });
     setEditData({
       ...rowValue,
-      Status: rowValue.Status==="Active"?1:0
-    })
+      Status: rowValue.Status === "Active" ? 1 : 0,
+    });
     setIsEditing(true);
   };
 
-  const handleImageChange = (e) =>{
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    reader.onload = () =>{
+    reader.onload = () => {
       const base64 = reader.result;
-      const base64String = base64.split(',')[1];
+      const base64String = base64.split(",")[1];
       setImageValue({
-        ImageData:base64String,
-        ImageName:file.name
+        ImageData: base64String,
+        ImageName: file.name,
       });
     };
     reader.readAsDataURL(file);
-
-  }
+  };
 
   const columns = [
     {
@@ -92,7 +94,13 @@ const HotelAdditional = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {<img src={row.ImageName} alt="AdditionImage" style={{height:'30px', width:'30px'}}></img>}
+          {
+            <img
+              src={row.ImageName}
+              alt="AdditionImage"
+              style={{ height: "30px", width: "30px" }}
+            ></img>
+          }
         </span>
       ),
       sortable: true,
@@ -198,7 +206,10 @@ const HotelAdditional = () => {
                       </div>
                       <div className="col-sm-12">
                         <label>Details</label>
-                        <Editor handleChangeEditor={handleDetailEditor}/>
+                        <Editor
+                          handleChangeEditor={handleDetailEditor}
+                          heightValue="60%"
+                        />
                       </div>
                     </div>
                   </div>
