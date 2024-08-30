@@ -11,7 +11,8 @@ import {
   EnrouteModalForm,
   RestaurantModalForm,
   TransportationModalForm,
-  TrainModalForm
+  TrainModalForm,
+  AddOnsModalForm
 } from "./QouttionAllForm";
 
 const Popup = () => {
@@ -189,76 +190,76 @@ const Popup = () => {
 
           {/* all modals */}
 
-          <QoutationModal TabClass={"bd-itenarary-modal-lg"} Title="Delhi">
+          <QoutationModal TabclassName={"bd-itenarary-modal-lg"} Title="Delhi">
             <ItenararyModalForm />
           </QoutationModal>
 
-          <QoutationModal TabClass={"bd-flight-modal-lg"} Title="Flight Title">
+          <QoutationModal TabclassName={"bd-flight-modal-lg"} Title="Flight Title">
             <FlightModalForm/>
           </QoutationModal>
 
           <QoutationModal
-            TabClass={"bd-hotel-modal-lg"}
+            TabclassName={"bd-hotel-modal-lg"}
             Title=" Guest Hotel | Thu 22 Aug 2024  |  Pax Type: FIT  "
           >
             <HotelModalForm />
           </QoutationModal>
 
           <QoutationModal
-            TabClass={"bd-transfer-modal-lg"}
+            TabclassName={"bd-transfer-modal-lg"}
             Title="Transfer Title"
           >
             <TransferModalForm/>
           </QoutationModal>
 
           <QoutationModal
-            TabClass={"bd-monument-modal-lg"}
+            TabclassName={"bd-monument-modal-lg"}
             Title="Monument Modal"
           >
             <MonumentModalForm/>
           </QoutationModal>
 
           <QoutationModal
-            TabClass={"bd-enroute-modal-lg"}
+            TabclassName={"bd-enroute-modal-lg"}
             Title="Enroute Modal"
           >
             <EnrouteModalForm/>
           </QoutationModal>
 
           <QoutationModal
-            TabClass={"bd-restaurant-modal-lg"}
+            TabclassName={"bd-restaurant-modal-lg"}
             Title="Restaurant Modal"
           >
             <RestaurantModalForm/>
           </QoutationModal>
 
           <QoutationModal
-            TabClass={"bd-activity-modal-lg"}
+            TabclassName={"bd-activity-modal-lg"}
             Title="Activity | Experiences | Thu 22 Aug 2024 "
           >
             <ActivityModalForm />
           </QoutationModal>
 
           <QoutationModal
-            TabClass={"bd-guide-modal-lg"}
+            TabclassName={"bd-guide-modal-lg"}
             Title="Guide | Fri 23 Aug 2024 "
           >
             <GuideModalForm />
           </QoutationModal>
 
           <QoutationModal
-            TabClass={"bd-transportation-modal-lg"}
+            TabclassName={"bd-transportation-modal-lg"}
             Title="Transportation"
           >
             <TransportationModalForm/>
           </QoutationModal>
 
-          <QoutationModal TabClass={"bd-train-modal-lg"} Title="Train Modal">
+          <QoutationModal TabclassName={"bd-train-modal-lg"} Title="Train Modal">
             <TrainModalForm/>
           </QoutationModal>
 
-          <QoutationModal TabClass={"bd-addons-modal-lg"} Title="Add Ons Title">
-            <h1>Add Ons Modal</h1>
+          <QoutationModal TabclassName={"bd-addons-modal-lg"} Title="Add Ons Title">
+            <AddOnsModalForm />
           </QoutationModal>
         </div>
       </div>

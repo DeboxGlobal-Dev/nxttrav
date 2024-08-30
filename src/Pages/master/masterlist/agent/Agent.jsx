@@ -11,23 +11,17 @@ const Agent = () => {
   const [loading, setLoading] = useState(true);
   const [updateData, setUpdateData] = useState(false);
 
+  const postDataToServer = async () => {
+    try {
+      const { data } = await axiosOther?.post("agentlist");
+      setLoading(false);
+      setFilterData(data?.DataList);
+      setGetData(data?.DataList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    const postDataToServer = async () => {
-      try {
-        // const { data } = await axiosOther?.post("agentlist");
-        const getDataFromLocalStorage = localStorage.getItem("agentList");
-        if(getDataFromLocalStorage == null){
-          return null
-        }
-        const data = JSON.parse(getDataFromLocalStorage);
-        setLoading(false);
-        setFilterData(data);
-        setGetData(data);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     postDataToServer();
   }, [updateData]);
 

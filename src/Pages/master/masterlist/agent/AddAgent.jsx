@@ -124,98 +124,27 @@ const AddAgent = () => {
   };
 
   const postingDataIntoAgentApi = async () => {
-    // try {
-    //   const { data } = await axiosOther.post("addupdateagent", {
-    //     ...logoImageData,
-    //     ...headerImageData,
-    //     ...footerImageData,
-    //     ...agentInputData,
-    //   });
-
-    //   console.log("agent-post", data);
-
-    //   if (data.status === 1) {
-    //     navigate("/master/agent/view");
-    //     toast.success(data?.Message);
-    //   }
-    //   if (data.status == -1) {
-    //     toast.error(data?.message);
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
-
     try {
-      await agentMasterValidationSchema.validate(
-        { ...headerImageData, ...footerImageData, ...agentInputData },
-        {
-          abortEarly: false,
-        }
-      );
-      setErrors({});
+      const { data } = await axiosOther.post("addupdateagent", {
+        ...logoImageData,
+        ...headerImageData,
+        ...footerImageData,
+        ...agentInputData,
+      });
 
-      const getDataFromLocalStorage = localStorage.getItem("agentList");
-      if (getDataFromLocalStorage == null) {
-        localStorage.setItem(
-          "agentList",
-          JSON.stringify([
-            {
-              ...logoImageData,
-              ...headerImageData,
-              ...footerImageData,
-              ...agentInputData,
-              id: 1,
-            },
-          ])
-        );
-        navigate(`/master/agent/view/1`);
-        return null;
+      console.log("agent-post", data);
+
+      if (data.Status === 1) {
+        navigate(`/master/agent/view/${data?.AgentId}`);
+        toast.success(data?.Message);
       }
-      const lengthOfStoredData = JSON.parse(getDataFromLocalStorage)?.length;
-      const allDataListOfStorage = [...JSON.parse(getDataFromLocalStorage)];
-
-      localStorage.setItem(
-        "agentList",
-        JSON.stringify([
-          ...allDataListOfStorage,
-          {
-            ...logoImageData,
-            ...headerImageData,
-            ...footerImageData,
-            ...agentInputData,
-            id: getDataFromLocalStorage == null ? 1 : lengthOfStoredData + 1,
-            AgentInfo: agentInfoValue,
-            Remarks: remarksValue,
-          },
-        ])
-      );
-      const getDataAfterAdded = localStorage.getItem("agentList");
-      const lengthOfAfterStoredData = JSON.parse(getDataAfterAdded)?.length;
-      if (lengthOfStoredData + 1 == lengthOfAfterStoredData) {
-        toast.success("Data Added Successfully !");
-        setTimeout(() => {
-          navigate(`/master/agent/view/${lengthOfAfterStoredData}`);
-        }, 2000);
+      if (data.Status == -1) {
+        toast.error(data?.message);
       }
     } catch (err) {
-      if (err.inner) {
-        const errorMessages = err.inner.reduce((acc, curr) => {
-          acc[curr.path] = curr.message;
-          return acc;
-        }, {});
-        setErrors(errorMessages);
-      }
+      console.log(err);
     }
   };
-
-  console.log("error-error", errors);
-
-  // console.log("json-data", {
-  //   ...logoImageData,
-  //   ...headerImageData,
-  //   ...footerImageData,
-  //   ...agentInputData,
-  // });
 
   const getApiListForDropdown = async () => {
     try {

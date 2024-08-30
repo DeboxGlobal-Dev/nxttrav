@@ -1,35 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { agentBankDetailsInitialValue } from "../mastersInitialValues";
 import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
+import { memo } from "react";
 
-const BankDetails = ({partner_payload}) => {
-  const [bankData, setBankData] = useState(agentBankDetailsInitialValue);
+const BankDetails = ({ partner_payload }) => {
+  const [formData, setFormData] = useState(agentBankDetailsInitialValue);
   const [bankList, setBankList] = useState([]);
+  const closeRef = useRef(null);
 
-  console.log(`form with partner ${partner_payload.name}` , bankData);
+  console.log('bank-component-rendered')
+
   const handleBankDataChange = (e) => {
     const { name, value } = e.target;
 
-    setBankData((prevData) => ({
+    setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
   const submitBankData = async () => {
-    const { data } = await axiosOther.post("addupdatebankdetails", bankData);
-    toast.success(data.Message);
-    setBankData(agentBankDetailsInitialValue);
+    try {
+      const { data } = await axiosOther.post("addupdatebankdetails", {
+        ...formData,
+        ...partner_payload,
+      });
+      if (data?.Status) {
+        toast.success(data.Message);
+        fetchingBankData();
+        closeRef.current.click();
+      }
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const fetchingBankData = async () => {
-    const { data } = await axiosOther.post("bankdetailslist", {
-      Fk_partnerid: "1",
-      Type: "",
-    });
-    setBankList(data.DataList);
-  };
+  async function fetchingBankData() {
+    const { data } = await axiosOther.post("bankdetailslist", partner_payload);
+    setBankList(data?.DataList);
+  }
 
   useEffect(() => {
     fetchingBankData();
@@ -81,7 +92,7 @@ const BankDetails = ({partner_payload}) => {
                         className="form-control"
                         placeholder="Bank Name"
                         name="BankName"
-                        value={bankData.BankName}
+                        value={formData.BankName}
                         onChange={handleBankDataChange}
                       />
                     </div>
@@ -94,7 +105,7 @@ const BankDetails = ({partner_payload}) => {
                         className="form-control"
                         placeholder="Phone No"
                         name="PhoneNumber"
-                        value={bankData.PhoneNumber}
+                        value={formData.PhoneNumber}
                         onChange={handleBankDataChange}
                       />
                     </div>
@@ -107,7 +118,7 @@ const BankDetails = ({partner_payload}) => {
                         className="form-control"
                         placeholder="Branch Name"
                         name="BankBranch"
-                        value={bankData.BankBranch}
+                        value={formData.BankBranch}
                         onChange={handleBankDataChange}
                       />
                     </div>
@@ -120,7 +131,7 @@ const BankDetails = ({partner_payload}) => {
                         className="form-control"
                         placeholder="Email Id"
                         name="EmailId"
-                        value={bankData.EmailId}
+                        value={formData.EmailId}
                         onChange={handleBankDataChange}
                       />
                     </div>
@@ -133,7 +144,7 @@ const BankDetails = ({partner_payload}) => {
                         className="form-control"
                         placeholder="Benifeciary Name"
                         name="BenificiryName"
-                        value={bankData.BenificiryName}
+                        value={formData.BenificiryName}
                         onChange={handleBankDataChange}
                       />
                     </div>
@@ -146,7 +157,7 @@ const BankDetails = ({partner_payload}) => {
                         className="form-control"
                         placeholder="Swift Code"
                         name="SwiftCode"
-                        value={bankData.SwiftCode}
+                        value={formData.SwiftCode}
                         onChange={handleBankDataChange}
                       />
                     </div>
@@ -159,7 +170,7 @@ const BankDetails = ({partner_payload}) => {
                         className="form-control"
                         placeholder="Account Number"
                         name="AccountNumber"
-                        value={bankData.AccountNumber}
+                        value={formData.AccountNumber}
                         onChange={handleBankDataChange}
                       />
                     </div>
@@ -172,7 +183,7 @@ const BankDetails = ({partner_payload}) => {
                         className="form-control"
                         placeholder="Address"
                         name="Address"
-                        value={bankData.Address}
+                        value={formData.Address}
                         onChange={handleBankDataChange}
                       />
                     </div>
@@ -185,7 +196,7 @@ const BankDetails = ({partner_payload}) => {
                         className="form-control"
                         placeholder="IFSC Code"
                         name="IfscCode"
-                        value={bankData.IfscCode}
+                        value={formData.IfscCode}
                         onChange={handleBankDataChange}
                       />
                     </div>
@@ -197,6 +208,7 @@ const BankDetails = ({partner_payload}) => {
                     id="cancel"
                     className="default-button"
                     data-dismiss="modal"
+                    ref={closeRef}
                   >
                     Close
                   </button>
@@ -224,17 +236,17 @@ const BankDetails = ({partner_payload}) => {
             </tr>
           </thead>
           <tbody>
-            {bankList.map((details, index) => {
+            {bankList.length>0? (bankList.map((list, index) => {
               return (
                 <tr key={index + 1}>
-                  <th className="py-1">{details?.BankName}</th>
-                  <td className="py-1">{details?.BankBranch}</td>
-                  <td className="py-1">{details?.BenificiryName}</td>
-                  <td className="py-1">{details?.AccountNumber}</td>
-                  <td className="py-1">{details?.IfscCode}</td>
-                  <td className="py-1">{details?.PhoneNumber}</td>
-                  <td className="py-1">{details?.EmailId}</td>
-                  <td className="py-1">{details?.SwiftCode}</td>
+                  <th className="py-1">{list?.BankName}</th>
+                  <td className="py-1">{list?.BankBranch}</td>
+                  <td className="py-1">{list?.BenificiryName}</td>
+                  <td className="py-1">{list?.AccountNumber}</td>
+                  <td className="py-1">{list?.IfscCode}</td>
+                  <td className="py-1">{list?.PhoneNumber}</td>
+                  <td className="py-1">{list?.EmailId}</td>
+                  <td className="py-1">{list?.SwiftCode}</td>
                   <td className="py-1"></td>
                   <td className="py-1">
                     <i className="fa-solid fa-pen-to-square"></i>
@@ -242,7 +254,11 @@ const BankDetails = ({partner_payload}) => {
                   </td>
                 </tr>
               );
-            })}
+            })):( 
+              <tr>
+                <td colSpan={10} className="fs-6">No Records Found</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
@@ -250,4 +266,4 @@ const BankDetails = ({partner_payload}) => {
   );
 };
 
-export default BankDetails;
+export default memo(BankDetails);

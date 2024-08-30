@@ -7,7 +7,7 @@ import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
   additionalRequiremntInitialValue,
-  additionaRequirementValidationSchema
+  additionaRequirementValidationSchema,
 } from "./MasterValidations";
 import Editor from "../../../helper/Editor";
 
@@ -18,7 +18,7 @@ const AdditionalRequirement = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: ""
+    Status: "",
   });
 
   const [loading, setLoading] = useState(true);
@@ -28,8 +28,8 @@ const AdditionalRequirement = () => {
   const [taxSlabList, setTaxSlabList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
   const [imageValue, setImageValue] = useState({
-    ImageData:'',
-    ImageName:''
+    ImageData: "",
+    ImageName: "",
   });
 
   const getDataToServer = async () => {
@@ -42,14 +42,13 @@ const AdditionalRequirement = () => {
     } catch (err) {
       console.log("Erro Occured", err);
     }
-    
+
     try {
       const taxslab = await axiosOther.post("taxmasterlist", {
         Search: "",
         Status: 1,
       });
       setTaxSlabList(taxslab.data.DataList);
-      console.log('TaxSlab', taxslab);
     } catch (err) {
       console.log("Erro Occured", err);
     }
@@ -57,7 +56,7 @@ const AdditionalRequirement = () => {
     try {
       const currency = await axiosOther.post("currencymasterlist", {
         Search: "",
-        Status: 1
+        Status: 1,
       });
       setCurrencyList(currency.data.DataList);
     } catch (err) {
@@ -67,7 +66,6 @@ const AdditionalRequirement = () => {
   useEffect(() => {
     getDataToServer();
   }, []);
-
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -96,35 +94,35 @@ const AdditionalRequirement = () => {
 
   const handleEditClick = (rowValue) => {
     setImageValue({
-      ImageName:"",
-      ImageData:""
+      ImageName: "",
+      ImageData: "",
     });
     setEditData({
       ...rowValue,
-      Status:rowValue.Status==="Active"?1:0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
 
-  const handleImageChange = (e) =>{
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    reader.onload = () =>{
+    reader.onload = () => {
       const base64 = reader.result;
-      const base64String = base64.split(',')[1];
+      const base64String = base64.split(",")[1];
       setImageValue({
-        ImageData:base64String,
-        ImageName:file.name
-      })
-    }
+        ImageData: base64String,
+        ImageName: file.name,
+      });
+    };
 
     reader.readAsDataURL(file);
   };
 
-  const handleDetailEditor = (content) =>{
+  const handleDetailEditor = (content) => {
     console.log(content);
-  }
+  };
 
   const columns = [
     {
@@ -137,7 +135,11 @@ const AdditionalRequirement = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          <img src={row.ImageName} alt="image" style={{height:'30px', height:'30px'}}></img>
+          <img
+            src={row.ImageName}
+            alt="image"
+            style={{ height: "30px", height: "30px" }}
+          ></img>
         </span>
       ),
       sortable: true,
@@ -155,21 +157,13 @@ const AdditionalRequirement = () => {
     {
       name: "Per Pax Cost",
       selector: (row) => {
-        return (
-          <span>
-          {row.CostType}
-          </span>
-        );
+        return <span>{row.CostType}</span>;
       },
     },
     {
       name: "Description",
       selector: (row) => {
-        return (
-          <span>
-           {row.Details}
-          </span>
-        );
+        return <span>{row.Details}</span>;
       },
     },
     {
@@ -185,11 +179,7 @@ const AdditionalRequirement = () => {
     {
       name: "Status",
       selector: (row) => {
-        return (
-          <span>
-            {row.Status}
-          </span>
-        );
+        return <span>{row.Status}</span>;
       },
     },
   ];
@@ -255,11 +245,13 @@ const AdditionalRequirement = () => {
                           name="DestinationId"
                         >
                           <option value="">Select Destination</option>
-                          {
-                            destinationList?.map((value, index)=>{
-                              return <option value={value?.id} key={index+1}>{value?.Name}</option>
-                            })
-                          }
+                          {destinationList?.map((value, index) => {
+                            return (
+                              <option value={value?.id} key={index + 1}>
+                                {value?.Name}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -270,11 +262,13 @@ const AdditionalRequirement = () => {
                           name="TaxSlab"
                         >
                           <option value="">Select Tax Slab</option>
-                          {
-                            taxSlabList?.map((value, index)=>{
-                              return <option value={value?.id} key={index+1}>{value?.TaxSlabName}</option>
-                            })
-                          }
+                          {taxSlabList?.map((value, index) => {
+                            return (
+                              <option value={value?.id} key={index + 1}>
+                                {value?.TaxSlabName}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -296,12 +290,13 @@ const AdditionalRequirement = () => {
                           name="CurrencyId"
                         >
                           <option value="">Select Currency</option>
-                          {
-                            currencyList.map((value, index)=>{
-
-                              return  <option value={value?.id} key={index+1}>{value?.Currencyname}</option>
-                            })
-                          }
+                          {currencyList.map((value, index) => {
+                            return (
+                              <option value={value?.id} key={index + 1}>
+                                {value?.Currencyname}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                       <div className="col-sm-4">
@@ -375,10 +370,10 @@ const AdditionalRequirement = () => {
                       </div>
                       <div className="col-sm-12">
                         <label>Details</label>
-                          <Editor
-                            handleChangeEditor={handleDetailEditor}
-                             heightValue="60%"
-                          />
+                        <Editor
+                          handleChangeEditor={handleDetailEditor}
+                          heightValue="60%"
+                        />
                       </div>
                     </div>
                   </div>

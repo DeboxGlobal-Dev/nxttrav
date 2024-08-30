@@ -54,6 +54,7 @@ const VisaCost = () => {
         const { data } = await axiosOther.post("visacostmasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
+        console.log(data);
       } catch (error) {
         console.log(error);
       }

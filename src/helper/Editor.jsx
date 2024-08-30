@@ -2,7 +2,7 @@ import React from "react";
 import "quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 
-const Editor =({handleChangeEditor, heightValue})=>{
+const Editor =({handleChangeEditor, heightValue, initialValue})=>{
 
     var modules = {
         toolbar: [
@@ -88,6 +88,7 @@ const Editor =({handleChangeEditor, heightValue})=>{
         placeholder="write your content ...."
         onChange={handleChangeEditor}
         style={{height:heightValue}}
+        value={initialValue}
       />
     )
 };

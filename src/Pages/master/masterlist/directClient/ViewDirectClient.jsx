@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../../../../Component/Layout/Layout";
 import { NavLink, useParams } from "react-router-dom";
-import CompanyDocument from "../agent/viewPages/CompanyDocument";
+import CompanyDocument from "../common/CompanyDocument";
 
 const ViewDirectClient = () => {
   const { id } = useParams();
@@ -227,7 +227,7 @@ const ViewDirectClient = () => {
                   </div>
                 </div>
               )}
-              <CompanyDocument />
+              <CompanyDocument partner_payload={{Fk_partnerid:1, Type:'Direct Client'}}/>
             </div>
           </div>
         </div>

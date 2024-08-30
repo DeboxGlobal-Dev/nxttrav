@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Layout from "../../../../Component/Layout/Layout";
 import { NavLink, useParams } from "react-router-dom";
 import Office from "../common/Offce";
@@ -8,17 +8,25 @@ import BankDetails from "../common/BankDetails";
 import Calls from "./viewPages/Calls";
 import Meetings from "./viewPages/Meetings";
 import Tasks from "./viewPages/Tasks";
+import { axiosOther } from "../../../../http/axios/axios_new";
 
 const ViewAgent = () => {
   const { id } = useParams();
 
-  const allAgentListFromStorage = localStorage.getItem("agentList");
-  const parsedAgentList = JSON.parse(allAgentListFromStorage);
+  const [viewData, setViewData] = useState({});
 
-  const filteredAgentList = parsedAgentList.filter((list) => list.id == id);
-  const filteredObject = filteredAgentList[0];
+  const getSingleAgentList = useCallback(async () => {
+    const { data } = await axiosOther.post("agentlist", {
+      id: id,
+      BusinessType: 1,
+    });
+    setViewData(data?.DataList[0]);
+    console.log("view-api-function-rendered");
+  }, []);
 
-  console.log("filteredObject", filteredObject);
+  useEffect(() => {
+    getSingleAgentList();
+  }, [id]);
 
   return (
     <Layout>
@@ -66,14 +74,14 @@ const ViewAgent = () => {
                     </thead>
                     <tbody className="">
                       <tr>
-                        <td>{filteredObject?.SalesPerson}</td>
-                        <td>{filteredObject?.OperationsPerson}</td>
-                        <td>{filteredObject?.MarketType}</td>
-                        <td>{filteredObject?.Competitor}</td>
-                        <td>{filteredObject?.Nationality}</td>
-                        <td>{filteredObject?.PreferredLanguage}</td>
-                        <td>{filteredObject?.TourType}</td>
-                        <td>{filteredObject?.Category}</td>
+                        <td>{viewData?.SalesPerson}</td>
+                        <td>{viewData?.OperationsPerson}</td>
+                        <td>{viewData?.MarketType}</td>
+                        <td>{viewData?.Competitor}</td>
+                        <td>{viewData?.Nationality}</td>
+                        <td>{viewData?.PreferredLanguage}</td>
+                        <td>{viewData?.TourType}</td>
+                        <td>{viewData?.Category}</td>
                         <td>Sandy</td>
                         <td>Sandy</td>
                       </tr>
@@ -98,16 +106,16 @@ const ViewAgent = () => {
                     </thead>
                     <tbody className="">
                       <tr>
-                        <td>{filteredObject?.BussinessType}</td>
-                        <td>{filteredObject?.CompanyType}</td>
-                        <td>{filteredObject?.CompanyName}</td>
-                        <td>{filteredObject?.CompanyEmailAddress}</td>
-                        <td>{filteredObject?.CompanyPhoneNumber}</td>
-                        <td>{filteredObject?.WebsiteUrl}</td>
-                        <td>{filteredObject?.Remarks}</td>
-                        <td>{filteredObject?.AgentInfo}</td>
-                        <td>{filteredObject?.ISO}</td>
-                        <td>{filteredObject?.Consortia}</td>
+                        <td>{viewData?.BussinessType}</td>
+                        <td>{viewData?.CompanyType}</td>
+                        <td>{viewData?.CompanyName}</td>
+                        <td>{viewData?.CompanyEmailAddress}</td>
+                        <td>{viewData?.CompanyPhoneNumber}</td>
+                        <td>{viewData?.WebsiteUrl}</td>
+                        <td>{viewData?.Remarks}</td>
+                        <td>{viewData?.AgentInfo}</td>
+                        <td>{viewData?.ISO}</td>
+                        <td>{viewData?.Consortia}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -117,31 +125,31 @@ const ViewAgent = () => {
               <div className="col-6">
                 <div className="card">
                   <div className="card-body d-flex gap-2 p-1 ">
-                    {filteredObject?.CompanyLogoImageData && (
+                    {viewData?.CompanyLogoImageName && (
                       <div className="card w-50 shadow-0 m-0">
                         <img
                           className="card-img-top image-style"
-                          src={filteredObject?.CompanyLogoImageData}
+                          src={viewData?.CompanyLogoImageName}
                           alt="Card image cap"
                         />
                         <p className="card-text text-center">Company Logo</p>
                       </div>
                     )}
-                    {filteredObject?.AgentHeaderImageData && (
+                    {viewData?.AgentHeaderImageName && (
                       <div className="card w-50 shadow-0 m-0">
                         <img
                           className="card-img-top image-style"
-                          src={filteredObject?.AgentHeaderImageData}
+                          src={viewData?.AgentHeaderImageName}
                           alt="Card image cap"
                         />
                         <p className="card-text text-center">Agent Header</p>
                       </div>
                     )}
-                    {filteredObject?.AgentFooterImageData && (
+                    {viewData?.AgentFooterImageName && (
                       <div className="card w-50 shadow-0 m-0">
                         <img
                           className="card-img-top image-style"
-                          src={filteredObject?.AgentFooterImageData}
+                          src={viewData?.AgentFooterImageName}
                           alt="Card image cap"
                         />
                         <p className="card-text text-center">Agent Footer</p>
@@ -153,26 +161,32 @@ const ViewAgent = () => {
 
               {/* Office Address */}
               <div className="col-6 agent-view-table">
-                <Office partner_payload={{ id: 1, name: "agent" }} />
+                <Office partner_payload={{ Fk_partnerid: id, Type: "agent" }} />
               </div>
               {/* Contact Person */}
               <div className="col-12 agent-view-table mt-4">
-                <ContactPerson partner_payload={{ id: 1, name: "agent" }} />
+                <ContactPerson
+                  partner_payload={{ Fk_partnerid: id, Type: "agent" }}
+                />
               </div>
               {/* Company Documents */}
               <div className="col-12 agent-view-table mt-4">
-                <CompanyDocument partner_payload={{ id: 1, name: "agent" }} />
+                <CompanyDocument
+                  partner_payload={{ Fk_partnerid: id, Type: "agent" }}
+                />
               </div>
               {/* Bank Details */}
               <div className="col-12 agent-view-table mt-4">
-                <BankDetails partner_payload={{ id: 1, name: "agent" }} />
+                <BankDetails
+                  partner_payload={{ Fk_partnerid: id, Type: "agent" }}
+                />
               </div>
               {/* calls */}
-              <Calls />
+              <Calls partner_payload={{ Fk_partnerid: id, Type: "agent" }} />
               {/* Meetings */}
-              <Meetings />
+              <Meetings partner_payload={{ Fk_partnerid: id, Type: "agent" }} />
               {/* Tasks */}
-              <Tasks />
+              <Tasks partner_payload={{ Fk_partnerid: id, Type: "agent" }} />
             </div>
           </div>
         </div>

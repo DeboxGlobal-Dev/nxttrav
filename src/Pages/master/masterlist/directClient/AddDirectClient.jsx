@@ -110,70 +110,22 @@ const AddDirectClient = () => {
     });
   };
 
-  const handleDirectClienFormSubmit = async () => {
-    // const { data } = await axiosOther.post("addupdatedirectClient", {
-    //   ...formData,
-    //   ContactInfo: contactFormDataArray,
-    //   Documentation: documentationDataArray,
-    // });
-
-    try {
-      await direcetClientValidationSchema.validate(formData, {
-        abortEarly: false,
+  const handleSumbitData = async () => {
+    try{
+      const { data } = await axiosOther.post("addupdatedirectClient", {
+        ...formData,
+        ContactInfo: contactFormDataArray,
+        Documentation: documentationDataArray,
       });
-      setErrors({});
 
-      const getDataFromLocalStorage = localStorage.getItem("directClientList");
-      if (getDataFromLocalStorage == null) {
-        localStorage.setItem(
-          "directClientList",
-          JSON.stringify([
-            {
-              ...formData,
-              ContactInfo: contactFormDataArray,
-              Documentation: documentationDataArray,
-              id: 1,
-            },
-          ])
-        );
-        navigate(`/master/directClient/view/1`);
-        return null;
+      console.log('direct-client',data);
+      if(data?.Success ===1){
+        toast.success(data?.Message);
       }
-      const lengthOfStoredData = JSON.parse(getDataFromLocalStorage)?.length;
-      const allDataListOfStorage = [...JSON.parse(getDataFromLocalStorage)];
-      console.log(" allDataListOfStorage", allDataListOfStorage);
-
-      localStorage.setItem(
-        "directClientList",
-        JSON.stringify([
-          ...allDataListOfStorage,
-          {
-            ...formData,
-            ContactInfo: contactFormDataArray,
-            Documentation: documentationDataArray,
-            id: getDataFromLocalStorage == null ? 1 : lengthOfStoredData + 1,
-          },
-        ])
-      );
-      const getDataAfterAdded = localStorage.getItem("directClientList");
-      const lengthOfAfterStoredData = JSON.parse(getDataAfterAdded)?.length;
-
-      if (lengthOfStoredData + 1 == lengthOfAfterStoredData) {
-        toast.success("Data Added Successfully !");
-        setTimeout(() => {
-          navigate(`/master/directClient/view/${lengthOfAfterStoredData}`);
-        }, 2000);
-      }
-    } catch (err) {
-      if (err.inner) {
-        const errorMessages = err.inner.reduce((acc, curr) => {
-          acc[curr.path] = curr.message;
-          return acc;
-        }, {});
-        setErrors(errorMessages);
-      }
+    }catch(err){
+      console.log(err);
     }
-  };
+  }
 
   console.log("errors-errors", errors);
 
@@ -233,7 +185,7 @@ const AddDirectClient = () => {
                 </NavLink>
                 <button
                   className="btn btn-light"
-                  onClick={handleDirectClienFormSubmit}
+                  onClick={handleSumbitData}
                 >
                   Save
                 </button>

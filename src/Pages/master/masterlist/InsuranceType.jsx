@@ -30,6 +30,7 @@ const InsuranceType = () => {
         setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
+        console.log(data);
       } catch (error) {
         console.log(error);
       }

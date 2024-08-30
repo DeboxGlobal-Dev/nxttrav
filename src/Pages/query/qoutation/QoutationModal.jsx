@@ -1,23 +1,23 @@
 import React from "react";
 
-const QoutationModal = ({ TabClass, children, Title }) => {
+const QoutationModal = ({ TabclassName, children, Title }) => {
   return (
     <div
-      class={`modal fade ${TabClass}`}
-      tabindex="-1"
+      className={`modal fade ${TabclassName}`}
+      tabIndex="-1"
       role="dialog"
       aria-labelledby="myLargeModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header p-2 bg-blue">
-            <h5 class="modal-title" id="exampleModalLabel" className="m-0">
+      <div className="modal-dialog modal-lg ">
+        <div className="modal-content ">
+          <div className="modal-header p-2 bg-blue">
+            <h5 className="modal-title m-0" id="exampleModalLabel">
               {Title}
             </h5>
             <button
               type="button"
-              class="close"
+              className="close"
               data-dismiss="modal"
               aria-label="Close"
             >
@@ -27,16 +27,16 @@ const QoutationModal = ({ TabClass, children, Title }) => {
             </button>
           </div>
 
-          <div class="modal-body p-2">{children}</div>
+          <div className="modal-body p-2">{children}</div>
 
-          {/* <div class="modal-footer p-2">
-            <button type="button" class="btn  border" data-dismiss="modal">
+          <div className="modal-footer p-2 mt-4">
+            <button type="button" className="btn  border" data-dismiss="modal">
               Close
             </button>
-            <button type="button" class="btn btn-primary">
-              Save changes
+            <button type="button" className="btn btn-primary">
+              Save 
             </button>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

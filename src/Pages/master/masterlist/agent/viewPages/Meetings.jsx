@@ -1,34 +1,44 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { axiosOther } from "../../../../../http/axios/axios_new";
-import { tr } from "date-fns/locale";
+import { memo } from "react";
 
-const Meetings = () => {
+const Meetings = ({ partner_payload }) => {
+  const navigate = useNavigate();
   const [meetinsList, setMeetingsList] = useState([]);
 
   const fetchMeetingListData = async () => {
-    const { data } = await axiosOther.post("meetingslist", {
-      Fk_partnerid: "1",
-      Type: "",
-    });
 
-    setMeetingsList(data?.DataList);
+    try{
+      const { data } = await axiosOther.post("meetingslist", partner_payload);
+      setMeetingsList(data?.DataList);
+    }catch(error){
+      console.log(error);
+    }
+
   };
 
   useEffect(() => {
     fetchMeetingListData();
   });
 
+  const handleNavigate = () => {
+    navigate("/master/agent/view/meeting", { state: partner_payload });
+  };
+
+  console.log('meeting-component-rendered')
+
   return (
     <>
       <div className="col-12 agent-view-table mt-4">
         <div className="d-flex gap-5">
           <p className="fs-6 font-weight-bold">Meetings</p>
-          <NavLink to="/master/agent/view/meeting">
-            <p className="fs-6 font-weight-bold text-success cursor-pointer">
-              + Add Meetings
-            </p>
-          </NavLink>
+          <p
+            className="fs-6 font-weight-bold text-success cursor-pointer"
+            onClick={handleNavigate}
+          >
+            + Add Meetings
+          </p>
         </div>
         <table className="table table-bordered agent-view-table">
           <thead className="thead-dark">
@@ -69,4 +79,4 @@ const Meetings = () => {
   );
 };
 
-export default Meetings;
+export default memo(Meetings);

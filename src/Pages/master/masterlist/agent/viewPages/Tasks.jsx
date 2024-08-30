@@ -1,35 +1,44 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { axiosOther } from "../../../../../http/axios/axios_new";
-import { tr } from "date-fns/locale";
+import { memo } from "react";
 
-const Tasks = () => {
+const Tasks = ({ partner_payload }) => {
   const [taskList, setTaskList] = useState([]);
+  const navigate = useNavigate();
 
   const fetchTaskListData = async () => {
-    const { data } = await axiosOther.post("taskslist", {
-      Fk_partnerid: "1",
-      Type: "",
-    });
-
-    setTaskList(data?.DataList);
+    try {
+      const { data } = await axiosOther.post("taskslist", partner_payload);
+      setTaskList(data?.DataList);
+      console.log("tasklist-data", data);
+    } catch (err) {
+      console.log("task-list-err", err);
+    }
   };
 
   useEffect(() => {
     fetchTaskListData();
   }, []);
 
+  const handleNavigate = () => {
+    navigate("/master/agent/view/task", { state: partner_payload });
+  };
+
+  console.log('task-component-rendered')
+
   return (
     <>
       <div className="col-12 agent-view-table mt-4">
         <div className="d-flex gap-5">
           <p className="fs-6 font-weight-bold">Task</p>
-          <NavLink to="/master/agent/view/task">
-            <p className="fs-6 font-weight-bold text-success cursor-pointer">
-              + Add Task
-            </p>
-          </NavLink>
+          <p
+            className="fs-6 font-weight-bold text-success cursor-pointer"
+            onClick={handleNavigate}
+          >
+            + Add Task
+          </p>
         </div>
         <table className="table table-bordered agent-view-table">
           <thead className="thead-dark">
@@ -68,4 +77,4 @@ const Tasks = () => {
   );
 };
 
-export default Tasks;
+export default memo(Tasks);

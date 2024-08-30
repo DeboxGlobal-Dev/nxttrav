@@ -17,17 +17,13 @@ const DirectClient = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        // const { data } = await axiosOther.post("directClientlist", postData);
-        const getDataFromLocalStorage = localStorage.getItem("directClientList");
-        if(getDataFromLocalStorage == null){
-          return null
-        }
-        const data = JSON.parse(getDataFromLocalStorage);
+        const { data } = await axiosOther.post("directClientlist", postData);
         setLoading(false);
-        setFilterData(data);
-        setGetData(data);
-      } catch (error) {
-        console.log(error);
+        console.log("direct-client-list", data);
+        setFilterData(data?.DataList);
+        setGetData(data?.DataList);
+      } catch (err) {
+        console.log(err);
       }
     };
     postDataToServer();
@@ -37,11 +33,9 @@ const DirectClient = () => {
     {
       name: "Name",
       selector: (row) => (
-       <NavLink to={`/master/directclient/view/${row.id}`}>
-         <span>
-          {row.FirstName}
-        </span>
-       </NavLink>
+        <NavLink to={`/master/directclient/view/${row.id}`}>
+          <span>{row.FirstName}</span>
+        </NavLink>
       ),
       sortable: true,
     },

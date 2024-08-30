@@ -1,13 +1,17 @@
 import Layout from "../../../../Component/Layout/Layout";
-import { NavLink } from "react-router-dom";
-import Editor from "../TextEditor/Editor";
+import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
+import Editor  from '../../../../helper/Editor';
 import { agentAddCallInitialValue } from "../mastersInitialValues";
 import { useState } from "react";
 import {axiosOther} from "../../../../http/axios/axios_new"; 
 import toast, { Toaster } from "react-hot-toast";
+import { memo } from "react";
 
 
 const AddCall = () => {
+  const {state} = useLocation();
+  const navigate = useNavigate();
+  const {Fk_partnerid, Type} = state;
   const [formData, setFormData] = useState(agentAddCallInitialValue);
 
   const handleChangeFormData = (e) => {
@@ -20,12 +24,20 @@ const AddCall = () => {
   };
 
   const handleSubmitData = async () =>{
-    
-    const {data} = await axiosOther.post("addupdatecalls", formData);
-    toast.success(data.Message); 
-    setFormData({...agentAddCallInitialValue});
+    try{
+      const {data} = await axiosOther.post("addupdatecalls", {...formData, ...state});
+      toast.success(data.Message); 
+      setTimeout(()=>{
+        navigate(`/master/agent/view/${Fk_partnerid}`);
+      }, 2000);
+      console.log(data)
+    }catch(err){
+      console.log(err);
+    }
     
   }
+
+  console.log('calls-form-data', formData);
 
 
   return (
@@ -37,7 +49,7 @@ const AddCall = () => {
               <div className="col-xl-12 d-flex align-items-center justify-content-between">
                 <h5 className="card-title d-none d-sm-block">Add Call</h5>
                 <div>
-                  <NavLink to="/master/agent/view" className="btn btn-light mr-2">
+                  <NavLink to={`/master/agent/view/${Fk_partnerid}`} className="btn btn-light mr-2">
                     Back
                   </NavLink>
                   <button className="btn btn-light" onClick={handleSubmitData}>Save</button>
@@ -412,4 +424,4 @@ const AddCall = () => {
   );
 };
 
-export default AddCall;
+export default memo(AddCall);

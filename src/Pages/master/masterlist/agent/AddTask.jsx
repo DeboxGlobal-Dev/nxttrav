@@ -1,13 +1,18 @@
 import Layout from "../../../../Component/Layout/Layout";
-import { NavLink } from "react-router-dom";
-import Editor from "../TextEditor/Editor";
+import { NavLink, useLocation } from "react-router-dom";
+import Editor from "../../../../helper/Editor";
 import { addTaskInitialValue } from "../mastersInitialValues";
 import { useState } from "react";
 import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
+import { memo } from "react";
 
 const AddTask = () => {
   const [formData, setFormData] = useState(addTaskInitialValue);
+  const { state } = useLocation();
+  const { Fk_partnerid } = state;
+
+  console.log("task-form-data", { ...formData, ...state });
 
   const handleChangeFormData = (e) => {
     const { name, value } = e.target;
@@ -19,9 +24,16 @@ const AddTask = () => {
   };
 
   const handleSubmitData = async () => {
-    const { data } = await axiosOther.post("addupdatetasks", formData);
-    toast.success(data.Message);
-    console.log("submitting", data);
+    try {
+      const { data } = await axiosOther.post("addupdatetasks", {
+        ...formData,
+        ...state,
+      });
+      toast.success(data.Message);
+      console.log("submitting", data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -33,7 +45,10 @@ const AddTask = () => {
               <div className="col-xl-12 d-flex align-items-center justify-content-between">
                 <h5 className="card-title d-none d-sm-block">Add Task</h5>
                 <div>
-                  <NavLink to="/master/agent/view" className="btn btn-light mr-2">
+                  <NavLink
+                    to={`/master/agent/view/${Fk_partnerid}`}
+                    className="btn btn-light mr-2"
+                  >
                     Back
                   </NavLink>
                   <button className="btn btn-light" onClick={handleSubmitData}>
@@ -395,4 +410,4 @@ const AddTask = () => {
   );
 };
 
-export default AddTask;
+export default memo(AddTask);

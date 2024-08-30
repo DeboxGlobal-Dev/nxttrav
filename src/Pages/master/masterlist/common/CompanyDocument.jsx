@@ -2,20 +2,22 @@ import React, { useState } from "react";
 import { addDocumentsInitialValue } from "../mastersInitialValues";
 import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
+import { memo } from "react";
 
-const CompanyDocument = ({partner_payload}) => {
+const CompanyDocument = ({ partner_payload }) => {
   const [formData, setFormData] = useState(addDocumentsInitialValue);
+  const [imageName, setImageName] = useState("");
+  const [documentList, setDocumentList] = useState([]);
+
+  console.log('document-component-rendered');
 
   const handleChangFormData = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  console.log(`form with partner ${partner_payload.name}` , formData);
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-
+    setImageName(file?.name);
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
@@ -24,18 +26,33 @@ const CompanyDocument = ({partner_payload}) => {
     };
   };
 
-  const handleSubmitData = () => {
-    const { data } = axiosOther.post("addupdatecompanydocument");
-
-    if (data.status == 1) {
-      toast.success(data.Message);
-    }
-    if (data.status == -1) {
-      toast.error(data.message);
+  const handleSubmitData = async () => {
+    try {
+      const { data } = await axiosOther.post("addupdatecompanydocument", {
+        ...formData,
+        ...partner_payload,
+      });
+      console.log("company-document-data", data);
+      if (data.Status === 1) {
+        toast.success(data.Message);
+      }
+      if (data.Status === -1) {
+        toast.error(data.Message);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
-  console.log("company-documents", formData);
+  async function getDocumentListData() {
+    try {
+      const { data } = await axiosOther.post("documentlist", partner_payload);
+      setDocumentList(data?.DataList);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <>
@@ -72,115 +89,111 @@ const CompanyDocument = ({partner_payload}) => {
                   </button>
                 </div>
 
-                <form>
-                  <div className="modal-body">
-                    <div className="row row-gap-2">
-                      <div className="col-4">
-                        <label htmlFor="documentname" className="m-0">
-                          Document Name
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Document Name"
-                          name="DocumentName"
-                          value={formData.DocumentName}
-                          onChange={handleChangFormData}
-                        />
-                      </div>
-                      <div className="col-4">
-                        <label htmlFor="documentnumber" className="m-0">
-                          Document Number
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Document Number"
-                          name="DocumentNumber"
-                          value={formData.DocumentNumber}
-                          onChange={handleChangFormData}
-                        />
-                      </div>
-                      <div className="col-4">
-                        <label htmlFor="issuedate" className="m-0">
-                          Issue Date
-                        </label>
-                        <input
-                          type="date"
-                          className="form-control"
-                          placeholder="Issue Date"
-                          name="IssueDate"
-                          value={formData.IssueDate}
-                          onChange={handleChangFormData}
-                        />
-                      </div>
-                      <div className="col-4">
-                        <label htmlFor="expirydate" className="m-0">
-                          Expiry Date
-                        </label>
-                        <input
-                          type="date"
-                          className="form-control"
-                          placeholder="Expiry Date"
-                          name="ExpireDate"
-                          value={formData.ExpireDate}
-                          onChange={handleChangFormData}
-                        />
-                      </div>
-                      <div className="col-8">
-                        <label className="m-0 font-size-10">
-                          Document File
-                        </label>
-                        <label
-                          htmlFor="agentheader"
-                          className="form-input-1 border-0 p-0"
-                        >
-                          <div className="form-input-1 border-0 primary-light-bg d-flex align-items-center justify-content-center gap-2 cursor-pointer">
-                            <i className="fa-solid fa-cloud-arrow-up m-0 fs-5 dark-primary-color"></i>
-                            <p className="m-0 dark-primary-color">
-                              Upload Here..
-                            </p>
-                          </div>
-                        </label>
-                        <input
-                          type="file"
-                          name="DocumentPath"
-                          id="agentheader"
-                          className="form-input-1"
-                          value=""
-                          onChange={handleImageChange}
-                          hidden
-                        ></input>
-                      </div>
-                      <div className="col-12">
-                        <label htmlFor="remarks" className="m-0">
-                          Remarks
-                        </label>
-                        <textarea
-                          className="form-control"
-                          placeholder="Remarks"
-                          name="Remarks"
-                          value={formData.Remarks}
-                          onChange={handleChangFormData}
-                        />
-                      </div>
+                <div className="modal-body">
+                  <div className="row row-gap-2">
+                    <div className="col-4">
+                      <label htmlFor="documentname" className="m-0">
+                        Document Name
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Document Name"
+                        name="DocumentName"
+                        value={formData.DocumentName}
+                        onChange={handleChangFormData}
+                      />
+                    </div>
+                    <div className="col-4">
+                      <label htmlFor="documentnumber" className="m-0">
+                        Document Number
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Document Number"
+                        name="DocumentNumber"
+                        value={formData.DocumentNumber}
+                        onChange={handleChangFormData}
+                      />
+                    </div>
+                    <div className="col-4">
+                      <label htmlFor="issuedate" className="m-0">
+                        Issue Date
+                      </label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        placeholder="Issue Date"
+                        name="IssueDate"
+                        value={formData.IssueDate}
+                        onChange={handleChangFormData}
+                      />
+                    </div>
+                    <div className="col-4">
+                      <label htmlFor="expirydate" className="m-0">
+                        Expiry Date
+                      </label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        placeholder="Expiry Date"
+                        name="ExpireDate"
+                        value={formData.ExpireDate}
+                        onChange={handleChangFormData}
+                      />
+                    </div>
+                    <div className="col-8">
+                      <label className="m-0 font-size-10">Document File</label>
+                      <label
+                        htmlFor="agentheader"
+                        className="form-input-1 border-0 p-0"
+                      >
+                        <div className="form-input-1 border-0 primary-light-bg d-flex align-items-center justify-content-center gap-2 cursor-pointer">
+                          <i className="fa-solid fa-cloud-arrow-up m-0 fs-5 dark-primary-color"></i>
+                          <p className="m-0 dark-primary-color">
+                            {imageName ? imageName : "Upload Here.."}
+                          </p>
+                        </div>
+                      </label>
+                      <input
+                        type="file"
+                        name="DocumentPath"
+                        id="agentheader"
+                        className="form-input-1"
+                        value=""
+                        onChange={handleImageChange}
+                        hidden
+                      ></input>
+                    </div>
+                    <div className="col-12">
+                      <label htmlFor="remarks" className="m-0">
+                        Remarks
+                      </label>
+                      <textarea
+                        className="form-control"
+                        placeholder="Remarks"
+                        name="Remarks"
+                        value={formData.Remarks}
+                        onChange={handleChangFormData}
+                      />
                     </div>
                   </div>
+                </div>
 
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      id="cancel"
-                      className="default-button"
-                      data-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <button onClick={handleSubmitData} className="green-button">
-                      Save
-                    </button>
-                  </div>
-                </form>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    id="cancel"
+                    className="default-button"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button onClick={handleSubmitData} className="green-button">
+                    Save
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -199,16 +212,28 @@ const CompanyDocument = ({partner_payload}) => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th className="py-1">1</th>
-              <td className="py-1">Mark</td>
-              <td className="py-1">Otto</td>
-              <td className="py-1">@mdo</td>
-              <td className="py-1">@mdo</td>
-              <td className="py-1">@mdo</td>
-              <td className="py-1">@mdo</td>
-              <td className="py-1">@mdo</td>
-            </tr>
+            {documentList.length > 0 ? (
+              documentList?.map((list, index) => {
+                return (
+                  <tr>
+                    <th className="py-1">{index + 1}</th>
+                    <td className="py-1">Mark</td>
+                    <td className="py-1">Otto</td>
+                    <td className="py-1">@mdo</td>
+                    <td className="py-1">@mdo</td>
+                    <td className="py-1">@mdo</td>
+                    <td className="py-1">@mdo</td>
+                    <td className="py-1">@mdo</td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan="8" className="fs-6">
+                  No Records Found
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
@@ -216,4 +241,4 @@ const CompanyDocument = ({partner_payload}) => {
   );
 };
 
-export default CompanyDocument;
+export default memo(CompanyDocument);

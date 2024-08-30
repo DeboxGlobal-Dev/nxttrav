@@ -1,33 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { axiosOther } from "../../../../../http/axios/axios_new";
+import { memo } from "react";
 
-const Calls = () => {
+const Calls = ({ partner_payload }) => {
   const [callList, setCallList] = useState([]);
+  const navigate = useNavigate();
 
-  const fetchCallListData = async () => {
-    const { data } = await axiosOther.post("callslist", {
-      Fk_partnerid: "1",
-      Type: "",
-    });
-
-    setCallList(data?.DataList);
+  const getCallListData = async () => {
+    try {
+      const { data } = await axiosOther.post("callslist", partner_payload);
+      setCallList(data?.DataList);
+      console.log("calls-list", data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
-    fetchCallListData();
+    getCallListData();
   }, []);
 
+  const handleNavigate = () => {
+    navigate(`/master/agent/view/call`, { state: partner_payload });
+  };
+
+  console.log('call-component-rendered')
   return (
     <>
       <div className="col-12 agent-view-table mt-4">
         <div className="d-flex gap-5">
           <p className="fs-6 font-weight-bold">Calls</p>
-          <NavLink to="/master/agent/view/call">
-            <p className="fs-6 font-weight-bold text-success cursor-pointer">
-              + Add Calls
-            </p>
-          </NavLink>
+          <p
+            className="fs-6 font-weight-bold text-success cursor-pointer"
+            onClick={handleNavigate}
+          >
+            + Add Calls
+          </p>
         </div>
         <table className="table table-bordered agent-view-table">
           <thead className="thead-dark">
@@ -41,26 +50,26 @@ const Calls = () => {
             </tr>
           </thead>
           <tbody>
-            {
-            callList?.length > 1 ?
-            callList?.map((list, index) => {
-              return (
-                <tr key={index + 1}>
-                  <th className="py-1">{list?.CallSubject}</th>
-                  <td className="py-1">{list?.StartDate}</td>
-                  <td className="py-1">{list?.CallStatus}</td>
-                  <td className="py-1">{list?.CallType}</td>
-                  <td className="py-1">{list?.SalesPerson}</td>
-                  <td className="py-1">{list?.Created_At}</td>
-                </tr>
-              );
-            }) : 
+            {callList?.length > 1 ? (
+              callList?.map((list, index) => {
+                return (
+                  <tr key={index + 1}>
+                    <th className="py-1">{list?.CallSubject}</th>
+                    <td className="py-1">{list?.StartDate}</td>
+                    <td className="py-1">{list?.CallStatus}</td>
+                    <td className="py-1">{list?.CallType}</td>
+                    <td className="py-1">{list?.SalesPerson}</td>
+                    <td className="py-1">{list?.Created_At}</td>
+                  </tr>
+                );
+              })
+            ) : (
               <tr>
                 <td colSpan={6}>
                   <p className="fs-6">No Records Found</p>
                 </td>
               </tr>
-            }
+            )}
           </tbody>
         </table>
       </div>
@@ -68,4 +77,4 @@ const Calls = () => {
   );
 };
 
-export default Calls;
+export default memo(Calls);
