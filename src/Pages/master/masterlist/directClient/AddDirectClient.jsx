@@ -119,8 +119,11 @@ const AddDirectClient = () => {
       });
 
       console.log('direct-client',data);
-      if(data?.Success ===1){
+      if(data?.Status ===1){
         toast.success(data?.Message);
+        setTimeout(()=>{
+          navigate(`/master/directclient/view/${data?.id}`, {state:data?.id})
+        },2000);
       }
     }catch(err){
       console.log(err);

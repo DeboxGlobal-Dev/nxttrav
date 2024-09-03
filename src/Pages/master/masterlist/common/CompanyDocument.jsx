@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { addDocumentsInitialValue } from "../mastersInitialValues";
+import React, { useEffect, useState } from "react";
+import { companyDocumentsInitialValue } from "../mastersInitialValues";
 import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 import { memo } from "react";
+import { companyDocumentValidationSchema } from "../MasterValidations";
 
 const CompanyDocument = ({ partner_payload }) => {
-  const [formData, setFormData] = useState(addDocumentsInitialValue);
+  const [formData, setFormData] = useState(companyDocumentsInitialValue);
   const [imageName, setImageName] = useState("");
   const [documentList, setDocumentList] = useState([]);
-
-  console.log('document-component-rendered');
+  const [errors, setErrors] = useState({});
 
   const handleChangFormData = (e) => {
     const { name, value } = e.target;
@@ -28,11 +28,15 @@ const CompanyDocument = ({ partner_payload }) => {
 
   const handleSubmitData = async () => {
     try {
+      await companyDocumentValidationSchema.validate(formData, {
+        abortEarly: false,
+      });
+
       const { data } = await axiosOther.post("addupdatecompanydocument", {
         ...formData,
         ...partner_payload,
       });
-      console.log("company-document-data", data);
+
       if (data.Status === 1) {
         toast.success(data.Message);
       }
@@ -40,19 +44,33 @@ const CompanyDocument = ({ partner_payload }) => {
         toast.error(data.Message);
       }
     } catch (err) {
-      console.log(err);
+      if (err?.inner) {
+        const errorMessages = err?.inner.reduce((acc, crr) => {
+          acc[crr.path] = crr.message;
+          return acc;
+        }, {});
+
+        setErrors(errorMessages);
+      }
     }
   };
 
   async function getDocumentListData() {
     try {
-      const { data } = await axiosOther.post("documentlist", partner_payload);
+      const { data } = await axiosOther.post(
+        "companydocumentlist",
+        partner_payload
+      );
       setDocumentList(data?.DataList);
-      console.log(data);
+      // console.log('company-document-list',data);
     } catch (error) {
       console.log(error);
     }
   }
+
+  useEffect(() => {
+    getDocumentListData();
+  }, []);
 
   return (
     <>
@@ -92,9 +110,16 @@ const CompanyDocument = ({ partner_payload }) => {
                 <div className="modal-body">
                   <div className="row row-gap-2">
                     <div className="col-4">
-                      <label htmlFor="documentname" className="m-0">
-                        Document Name
-                      </label>
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="documentname" className="m-0">
+                          Document Name <span className="text-danger">*</span>
+                        </label>
+                        {errors?.DocumentName && (
+                          <span className="text-danger font-size-10">
+                            {errors?.DocumentName}
+                          </span>
+                        )}
+                      </div>
                       <input
                         type="text"
                         className="form-control"
@@ -144,7 +169,16 @@ const CompanyDocument = ({ partner_payload }) => {
                       />
                     </div>
                     <div className="col-8">
-                      <label className="m-0 font-size-10">Document File</label>
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 ">
+                          Document File <span className="text-danger">*</span>
+                        </label>
+                        {errors?.DocumentPath && (
+                          <span className="text-danger font-size-10">
+                            {errors?.DocumentPath}
+                          </span>
+                        )}
+                      </div>
                       <label
                         htmlFor="agentheader"
                         className="form-input-1 border-0 p-0"
@@ -212,7 +246,7 @@ const CompanyDocument = ({ partner_payload }) => {
             </tr>
           </thead>
           <tbody>
-            {documentList.length > 0 ? (
+            {documentList?.length > 0 ? (
               documentList?.map((list, index) => {
                 return (
                   <tr>

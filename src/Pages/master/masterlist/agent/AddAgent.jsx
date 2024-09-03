@@ -125,6 +125,17 @@ const AddAgent = () => {
 
   const postingDataIntoAgentApi = async () => {
     try {
+      await agentMasterValidationSchema.validate(
+        {
+          ...headerImageData,
+          ...footerImageData,
+          ...agentInputData,
+        },
+        {
+          abortEarly: false,
+        }
+      );
+
       const { data } = await axiosOther.post("addupdateagent", {
         ...logoImageData,
         ...headerImageData,
@@ -142,7 +153,15 @@ const AddAgent = () => {
         toast.error(data?.message);
       }
     } catch (err) {
-      console.log(err);
+      if (err.inner) {
+        const errorMessages = err.inner.reduce((acc, curr) => {
+          acc[curr.path] = curr.message;
+          return acc;
+        }, {});
+        setErrors(errorMessages);
+
+        console.log("errorMessages", errorMessages);
+      }
     }
   };
 
@@ -249,7 +268,7 @@ const AddAgent = () => {
   const remarksChangeHandler = (content) => {
     setRemarksValue(content);
   };
-
+  
   return (
     <Layout>
       <div className="container-fluid p-3 mb-4">
@@ -280,7 +299,7 @@ const AddAgent = () => {
                     Bussiness Type <span className="text-danger">*</span>
                   </label>
                   {errors?.BussinessType && (
-                    <span className="text-danger">{errors?.BussinessType}</span>
+                    <span className="text-danger font-size-10">{errors?.BussinessType}</span>
                   )}
                 </div>
                 <select
@@ -323,7 +342,7 @@ const AddAgent = () => {
                     Sales Person <span className="text-danger">*</span>
                   </label>
                   {errors?.SalesPerson && (
-                    <span className="text-danger">{errors?.SalesPerson}</span>
+                    <span className="text-danger font-size-10">{errors?.SalesPerson}</span>
                   )}
                 </div>
 
@@ -362,7 +381,7 @@ const AddAgent = () => {
                     Company Name <span className="text-danger">*</span>
                   </label>
                   {errors?.CompanyName && (
-                    <span className="text-danger">{errors?.CompanyName}</span>
+                    <span className="text-danger font-size-10">{errors?.CompanyName}</span>
                   )}
                 </div>
                 <input
@@ -501,7 +520,7 @@ const AddAgent = () => {
                     <span className="text-danger">*</span>
                   </label>
                   {errors?.MarketType && (
-                    <span className="text-danger">{errors?.MarketType}</span>
+                    <span className="text-danger font-size-10">{errors?.MarketType}</span>
                   )}
                 </div>
                 <select
@@ -557,7 +576,7 @@ const AddAgent = () => {
                     Nationality <span className="text-danger">*</span>
                   </label>
                   {errors?.Nationality && (
-                    <span className="text-danger">{errors?.Nationality}</span>
+                    <span className="text-danger font-size-10">{errors?.Nationality}</span>
                   )}
                 </div>
                 <select
@@ -697,7 +716,7 @@ const AddAgent = () => {
                     <span className="text-danger">*</span>
                   </label>
                   {errors?.AgentHeaderImageData && (
-                    <span className="text-danger">
+                    <span className="text-danger font-size-10">
                       {errors?.AgentHeaderImageData}
                     </span>
                   )}
@@ -729,7 +748,7 @@ const AddAgent = () => {
                     <span className="text-danger">*</span>
                   </label>
                   {errors?.AgentFooterImageData && (
-                    <span className="text-danger">
+                    <span className="text-danger font-size-10">
                       {errors?.AgentFooterImageData}
                     </span>
                   )}

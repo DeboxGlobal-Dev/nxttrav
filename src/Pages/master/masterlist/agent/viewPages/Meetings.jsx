@@ -12,6 +12,7 @@ const Meetings = ({ partner_payload }) => {
     try{
       const { data } = await axiosOther.post("meetingslist", partner_payload);
       setMeetingsList(data?.DataList);
+      console.log("meeting-list", data);
     }catch(error){
       console.log(error);
     }
@@ -25,8 +26,6 @@ const Meetings = ({ partner_payload }) => {
   const handleNavigate = () => {
     navigate("/master/agent/view/meeting", { state: partner_payload });
   };
-
-  console.log('meeting-component-rendered')
 
   return (
     <>

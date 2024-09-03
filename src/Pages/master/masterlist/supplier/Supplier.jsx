@@ -14,18 +14,15 @@ const Supplier = () => {
     FirstName: "",
   });
 
+
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        // const { data } = await axiosOther.post("directClientlist", postData);
-        const getDataFromLocalStorage = localStorage.getItem("supplierList");
-        if (getDataFromLocalStorage == null) {
-          return null;
-        }
-        const data = JSON.parse(getDataFromLocalStorage);
+        const { data } = await axiosOther.post("directClientlist", postData);
         setLoading(false);
-        setFilterData(data);
-        setGetData(data);
+        setFilterData(data?.DataList);
+        setGetData(data?.DataList);
       } catch (error) {
         console.log(error);
       }

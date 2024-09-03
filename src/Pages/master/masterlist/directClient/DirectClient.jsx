@@ -5,6 +5,7 @@ import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../../http/axios/axios_new";
 
 const DirectClient = () => {
+  
   const [filterData, setFilterData] = useState([]);
   const [getData, setGetData] = useState([]);
   const [loading, setLoading] = useState(true);

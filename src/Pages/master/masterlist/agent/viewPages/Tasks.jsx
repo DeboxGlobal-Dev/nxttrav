@@ -12,7 +12,7 @@ const Tasks = ({ partner_payload }) => {
     try {
       const { data } = await axiosOther.post("taskslist", partner_payload);
       setTaskList(data?.DataList);
-      console.log("tasklist-data", data);
+      console.log("tasklist-data", data?.DataList);
     } catch (err) {
       console.log("task-list-err", err);
     }

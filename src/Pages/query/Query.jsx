@@ -792,7 +792,7 @@ const Query = () => {
                       <div className="col-12 col-lg-8">
                         <div className="d-flex justify-content-between">
                           <label htmlFor="firstname" className="m-0">
-                            Agent/Client Name{" "}
+                            Agent/Client Name
                             <span className="text-danger">*</span>
                           </label>
                           {/* {errors?.Status && (

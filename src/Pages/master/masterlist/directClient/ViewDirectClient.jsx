@@ -1,20 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../../../Component/Layout/Layout";
 import { NavLink, useParams } from "react-router-dom";
 import CompanyDocument from "../common/CompanyDocument";
+import { axiosOther } from "../../../../http/axios/axios_new";
 
 const ViewDirectClient = () => {
   const { id } = useParams();
 
-  const allAgentListFromStorage = localStorage.getItem("directClientList");
-  const parsedAgentList = JSON.parse(allAgentListFromStorage);
+  const [directClientList, setDirectClientList] = useState({});
 
-  const filteredAgentList = parsedAgentList?.filter((list) => list.id == id);
-  const filteredObject =
-    filteredAgentList == undefined ? "" : filteredAgentList[0];
+  const getDirectClientListById = async () => {
+    const { data } = await axiosOther.post("directClientlist", {
+      id: id,
+      FirstName: "",
+    });
+    setDirectClientList(data?.DataList[0]);
+  };
 
-  console.log("filteredObject", filteredObject);
+  useEffect(()=>{
+    getDirectClientListById();
+  }, []);
 
+  const filteredObject = "";
   return (
     <Layout>
       <div className="container-fluid p-3 mb-4">
@@ -75,42 +82,42 @@ const ViewDirectClient = () => {
                   {/* set value here */}
                   <div className="row py-2 px-2">
                     <div className="col text-center font-size-11">
-                      {filteredObject?.FirstName +
-                        filteredObject?.MiddleName +
-                        filteredObject?.LastName}
+                      {directClientList?.FirstName +
+                        directClientList?.MiddleName +
+                        directClientList?.LastName}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.DOB}
+                      {directClientList?.DOB}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.AnniversaryDate}
+                      {directClientList?.AnniversaryDate}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.EmergencyContactName}
+                      {directClientList?.EmergencyContactName}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.EmergencyContactRelation}
+                      {directClientList?.EmergencyContactRelation}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.EmergencyContactNumber}
+                      {directClientList?.EmergencyContactNumber}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.Facebook}
+                      {directClientList?.Facebook}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.Twitter}
+                      {directClientList?.Twitter}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.LinkedIn}
+                      {directClientList?.LinkedIn}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.Instagram}
+                      {directClientList?.Instagram}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.Skype}
+                      {directClientList?.Skype}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.MSN_Id}
+                      {directClientList?.MSN_Id}
                     </div>
                     <div className="col text-center font-size-11">Anar</div>
                   </div>
@@ -157,55 +164,55 @@ const ViewDirectClient = () => {
                   {/* set value here */}
                   <div className="row py-2 px-2">
                     <div className="col text-center font-size-11">
-                      {filteredObject?.MarketType}
+                      {directClientList?.MarketType}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.Nationality}
+                      {directClientList?.Nationality}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.TourType}
+                      {directClientList?.TourType}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.MealPreference}
+                      {directClientList?.MealPreference}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.HolidayPreference}
+                      {directClientList?.HolidayPreference}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.SpecialAssisteance}
+                      {directClientList?.SpecialAssisteance}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.SeatPreference}
+                      {directClientList?.SeatPreference}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.AccomodationPreference}
+                      {directClientList?.AccomodationPreference}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.Country}
+                      {directClientList?.Country}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.State}
+                      {directClientList?.State}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.City}
+                      {directClientList?.City}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.Address}
+                      {directClientList?.Address}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.Remark1}
+                      {directClientList?.Remark1}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.Remark2}
+                      {directClientList?.Remark2}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.Remark3}
+                      {directClientList?.Remark3}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.PinCode}
+                      {directClientList?.PinCode}
                     </div>
                     <div className="col text-center font-size-11">
-                      {filteredObject?.SalesPerson}
+                      {directClientList?.SalesPerson}
                     </div>
                   </div>
                 </div>
@@ -227,7 +234,9 @@ const ViewDirectClient = () => {
                   </div>
                 </div>
               )}
-              <CompanyDocument partner_payload={{Fk_partnerid:1, Type:'Direct Client'}}/>
+              <CompanyDocument
+                partner_payload={{ Fk_partnerid: id, Type: "DirectClient" }}
+              />
             </div>
           </div>
         </div>

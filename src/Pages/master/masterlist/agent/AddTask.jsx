@@ -1,18 +1,22 @@
 import Layout from "../../../../Component/Layout/Layout";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Editor from "../../../../helper/Editor";
 import { addTaskInitialValue } from "../mastersInitialValues";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 import { memo } from "react";
+import { taskValidationSchema } from "../MasterValidations";
 
 const AddTask = () => {
-  const [formData, setFormData] = useState(addTaskInitialValue);
+  const navigate = useNavigate();
   const { state } = useLocation();
   const { Fk_partnerid } = state;
-
-  console.log("task-form-data", { ...formData, ...state });
+  const [formData, setFormData] = useState(addTaskInitialValue);
+  const [errors, setErrors] = useState({});
+  const [showAgentPopup, setShowAgentPopup] = useState(true);
+  const [agentList, setAgentList] = useState([]);
+  const [agentSearch, setAgentSearch] = useState("");
 
   const handleChangeFormData = (e) => {
     const { name, value } = e.target;
@@ -25,17 +29,56 @@ const AddTask = () => {
 
   const handleSubmitData = async () => {
     try {
+      await taskValidationSchema.validate(formData, { abortEarly: false });
       const { data } = await axiosOther.post("addupdatetasks", {
         ...formData,
         ...state,
       });
-      toast.success(data.Message);
+
+      if (data?.Status === 1) {
+        toast.success(data.Message);
+        navigate(`/master/agent/view/${Fk_partnerid}`);
+      }
+
       console.log("submitting", data);
     } catch (error) {
-      console.log(error);
+      if (error?.inner) {
+        const errorMessages = error?.inner.reduce((acc, crr) => {
+          acc[crr.path] = crr.message;
+          return acc;
+        }, {});
+        setErrors(errorMessages);
+      }
     }
   };
 
+  const handleAgentSearch = (e) => {
+    setAgentSearch(e.target.value);
+  };
+
+  const getAgentList = async () => {
+    const { data } = await axiosOther.post("agentlist", {
+      id: "",
+      BusinessType: "",
+    });
+    setAgentList(data?.DataList);
+    console.log("data", data);
+  };
+
+  useEffect(() => {
+    getAgentList();
+  }, [formData?.BusinessType]);
+
+  const handleSetDataToAgent = (agent, contact) => {
+    setFormData({
+      ...formData,
+      AgentContactPerson: contact?.Name,
+      EmailId: contact?.Email,
+      AgentName: agent?.CompanyName,
+    });
+  };
+
+  console.log("task-error", errors);
   return (
     <>
       <Layout>
@@ -60,13 +103,19 @@ const AddTask = () => {
               <div></div>
             </div>
             <div className="card-body mb-5 mt-3">
-              <div className="row row-gap-3 justify-content-between">
+              <div className="row row-gap-3 justify-content-between position-relative">
                 <div className="col-6">
                   <div className="row row-gap-3">
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
-                      <div className="d-flex justify-content-between ">
-                        <label className="m-0">Lead Source</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0">
+                          Lead Source <span className="text-danger">*</span>
+                        </label>
+                        {errors?.Fk_Leadsource && (
+                          <span className="font-size-10 text-danger">
+                            {errors?.Fk_Leadsource}
+                          </span>
+                        )}
                       </div>
                       <select
                         className="form-input-1"
@@ -80,9 +129,15 @@ const AddTask = () => {
                       </select>
                     </div>
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
-                      <div className="d-flex justify-content-between ">
-                        <label className="m-0">Business Type</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0">
+                          Bussiness Type <span className="text-danger">*</span>
+                        </label>
+                        {errors?.BusinessType && (
+                          <span className="font-size-10 text-danger">
+                            {errors?.BusinessType}
+                          </span>
+                        )}
                       </div>
                       <select
                         className="form-input-1"
@@ -97,24 +152,103 @@ const AddTask = () => {
                     </div>
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0">Agent</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                        <label className="m-0">
+                          Agent <span className="text-danger">*</span>
+                        </label>
+                        {errors?.Agent && (
+                          <span className="font-size-10 text-danger">
+                            {errors?.Agent}
+                          </span>
+                        )}
                       </div>
-                      <select
-                        className="form-input-1"
+                      <input
+                        type="text"
                         name="AgentName"
-                        value={formData.AgentName}
                         onChange={handleChangeFormData}
-                      >
-                        <option value="">Select</option>
-                        <option value="1">Rizwan</option>
-                        <option value="2">Ansar</option>
-                      </select>
+                        value={formData?.AgentName}
+                        placeholder="Search Agent"
+                        className="form-input-1"
+                        onClick={() => setShowAgentPopup(true)}
+                      />
                     </div>
+                    {showAgentPopup && formData.BusinessType !== "" && (
+                      <div className="custom-search-dropdown custom-top-pos">
+                        <div
+                          className="col-12 d-flex justify-content-end cursor-pointer p-0"
+                          onClick={() => setShowAgentPopup(!showAgentPopup)}
+                        >
+                          <i className="fa-solid fa-xmark font-size-15 font-weight-bold px-1"></i>
+                        </div>
+                        <div className="row w-100 align-items-center gap-1 m-0 px-1">
+                          {agentList
+                            ?.filter((agent) => {
+                              return formData?.AgentName != ""
+                                ? agent.CompanyName.toLowerCase().includes(
+                                    formData?.AgentName.toLowerCase()
+                                  )
+                                : agent;
+                            })
+                            .map((agent, ind) => {
+                              return (
+                                <div
+                                  className="col-12 d-flex flex-column py-1 rounded border"
+                                  key={ind + 1}
+                                >
+                                  <div>
+                                    <span className="font-weight-bold">
+                                      {agent?.CompanyName}
+                                    </span>
+                                  </div>
+                                  {agent?.ContactList[0]?.ContactDetail?.map(
+                                    (contact, ind) => {
+                                      return (
+                                        <div
+                                          className="d-flex justify-content-between p-2 rounded cursor-pointer alternate-color"
+                                          key={ind + 1}
+                                          onClick={() => {
+                                            handleSetDataToAgent(
+                                              agent,
+                                              contact
+                                            ),
+                                              setShowAgentPopup(
+                                                !showAgentPopup
+                                              );
+                                          }}
+                                        >
+                                          <span className="m-0 ">
+                                            {contact?.Name}
+                                          </span>
+                                          <span className="m-0 ">
+                                            {contact?.Phone}
+                                          </span>
+                                        </div>
+                                      );
+                                    }
+                                  )}
+                                </div>
+                              );
+                            })}
+                          {agentList == "" && (
+                            <div className="col-12 d-flex justify-content-center">
+                              <h6 className="text-secondary">
+                                There are no records for show
+                              </h6>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0">Contact Person Name</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                        <label className="m-0">
+                          ContactPersonName
+                          <span className="text-danger">*</span>
+                        </label>
+                        {errors?.AgentContactPerson && (
+                          <span className="font-size-10 text-danger">
+                            {errors?.AgentContactPerson}
+                          </span>
+                        )}
                       </div>
                       <input
                         type="text"
@@ -122,13 +256,20 @@ const AddTask = () => {
                         placeholder="Contact Person"
                         name="AgentContactPerson"
                         value={formData.AgentContactPerson}
-                        onChange={handleChangeFormData}
+                        // onChange={handleChangeFormData}
+                        readOnly
                       />
                     </div>
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0">Email Addres</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                        <label className="m-0">
+                          Email Address <span className="text-danger">*</span>
+                        </label>
+                        {errors?.EmailId && (
+                          <span className="font-size-10 text-danger">
+                            {errors?.EmailId}
+                          </span>
+                        )}
                       </div>
                       <input
                         type="text"
@@ -136,11 +277,21 @@ const AddTask = () => {
                         placeholder="Email Address"
                         name="EmailId"
                         value={formData.EmailId}
-                        onChange={handleChangeFormData}
+                        // onChange={handleChangeFormData}
+                        readOnly
                       />
                     </div>
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
-                      <label className="m-0">Country</label>
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0">
+                          Country <span className="text-danger">*</span>
+                        </label>
+                        {errors?.CountryId && (
+                          <span className="font-size-10 text-danger">
+                            {errors?.CountryId}
+                          </span>
+                        )}
+                      </div>
                       <select
                         className="form-input-1"
                         name="CountryId"
@@ -153,7 +304,16 @@ const AddTask = () => {
                       </select>
                     </div>
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
-                      <label className="m-0">Destination</label>
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0">
+                          Destination <span className="text-danger">*</span>
+                        </label>
+                        {errors?.Destination && (
+                          <span className="font-size-10 text-danger">
+                            {errors?.Destination}
+                          </span>
+                        )}
+                      </div>
                       <select
                         name="Destination"
                         value={formData.Destination}
@@ -170,9 +330,15 @@ const AddTask = () => {
                   <div className="row row-gap-3 mt-3">
                     <h1>Task Information</h1>
                     <div className="col-lg-3 col-md-3 col-sm-4 col-12">
-                      <div className="d-flex justify-content-between ">
-                        <label className="m-0">Start Date</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0">
+                          Start Date <span className="text-danger">*</span>
+                        </label>
+                        {errors?.Startdate && (
+                          <span className="font-size-10 text-danger">
+                            {errors?.Startdate}
+                          </span>
+                        )}
                       </div>
                       <input
                         type="date"
@@ -242,8 +408,17 @@ const AddTask = () => {
                     </div>
                     <div className="col-lg-3 col-md-3 col-sm-4 col-12">
                       <div className="d-flex justify-content-between ">
-                        <label className="m-0">Next Follow Up Date</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                        <label
+                          className={`m-0 ${
+                            errors?.NextFollowUpdate && "font-size-9"
+                          }`}
+                        >
+                          Next FollowUp Date
+                          <span className="text-danger">*</span>
+                          {errors?.NextFollowUpdate && (
+                            <span className="text-danger">Required</span>
+                          )}
+                        </label>
                       </div>
                       <input
                         type="date"
@@ -329,8 +504,14 @@ const AddTask = () => {
                     </div>
                     <div className="col-lg-9">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0">Task Subject</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                        <label className="m-0">
+                          Task Subject <span className="text-danger">*</span>
+                        </label>
+                        {errors?.TaskSubject && (
+                          <span className="font-size-10 text-danger">
+                            {errors?.TaskSubject}
+                          </span>
+                        )}
                       </div>
                       <input
                         type="text"
@@ -347,8 +528,14 @@ const AddTask = () => {
                   <div className="row row-gap-3">
                     <div className="col-lg-8 col-md-3 col-sm-4 col-12">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0">Sales Person</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                        <label className="m-0">
+                          Sales Person <span className="text-danger">*</span>
+                        </label>
+                        {errors?.SalesPerson && (
+                          <span className="font-size-10 text-danger">
+                            {errors?.SalesPerson}
+                          </span>
+                        )}
                       </div>
                       <select
                         className="form-input-1"
@@ -363,8 +550,14 @@ const AddTask = () => {
                     </div>
                     <div className="col-6">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0">Mobile Number</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                        <label className="m-0">
+                          Mobile Number <span className="text-danger">*</span>
+                        </label>
+                        {errors?.MobileNumber && (
+                          <span className="font-size-10 text-danger">
+                            {errors?.MobileNumber}
+                          </span>
+                        )}
                       </div>
                       <input
                         type="text"

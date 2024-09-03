@@ -3,10 +3,12 @@ import { addOfficeInitialValue } from "../mastersInitialValues";
 import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 import { memo } from "react";
+import { addAddressValidationSchema } from "../MasterValidations";
 
 const Office = ({ partner_payload }) => {
   const [formData, setFormData] = useState(addOfficeInitialValue);
   const [officeList, setOfficeList] = useState([]);
+  const [errors, setErrors] = useState({});
   const closeRef = useRef(null);
 
   const handleChangeFormData = (e) => {
@@ -16,6 +18,9 @@ const Office = ({ partner_payload }) => {
 
   const handleSubmitData = async () => {
     try {
+      await addAddressValidationSchema.validate(formData, {
+        abortEarly: false,
+      });
       const { data } = await axiosOther.post("addupdateoffice", {
         ...formData,
         ...partner_payload,
@@ -27,25 +32,31 @@ const Office = ({ partner_payload }) => {
       }
       console.log(data);
     } catch (err) {
-      console.log(err);
-      toast.error(err?.response?.data?.Errors?.Name[0]);
+      if (err?.inner) {
+        const errorMessage = err.inner.reduce((acc, curr) => {
+          acc[curr.path] = curr.message;
+          return acc;
+        }, {});
+        setErrors(errorMessage);
+      }
     }
   };
 
-  async function getOfficeListData(){
+  console.log('office-errors', errors);
+
+  async function getOfficeListData() {
     try {
       const { data } = await axiosOther.post("officelist", partner_payload);
       setOfficeList(data?.DataList);
     } catch (error) {
       console.log(error);
     }
-  };
-  
+  }
+
   useEffect(() => {
     getOfficeListData();
   }, []);
-  
-  
+
   return (
     <>
       <div className="">
@@ -83,9 +94,16 @@ const Office = ({ partner_payload }) => {
                 <div className="modal-body">
                   <div className="row row-gap-3">
                     <div className="col-4">
-                      <label htmlFor="officename" className="m-0">
-                        Office Name
-                      </label>
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="officename" className="m-0">
+                          Office Name <span className="text-danger">*</span>
+                        </label>
+                        {errors?.Name && (
+                          <span className="text-danger font-size-10">
+                            {errors?.Name}
+                          </span>
+                        )}
+                      </div>
                       <input
                         type="text"
                         className="form-control"
@@ -96,9 +114,12 @@ const Office = ({ partner_payload }) => {
                       />
                     </div>
                     <div className="col-4">
-                      <label htmlFor="country" className="m-0">
-                        Country
-                      </label>
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="country" className="m-0">
+                          Country <span className="text-danger">*</span>
+                        </label>
+                        {errors?.Country && <span className="text-danger font-size-10">{errors?.Country}</span>}
+                      </div>
                       <select
                         className="form-control"
                         name="Country"

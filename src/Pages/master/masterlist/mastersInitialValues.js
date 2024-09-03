@@ -213,7 +213,7 @@ export const addOfficeInitialValue = {
   UpdatedBy: 0,
 };
 
-export const addDocumentsInitialValue = {
+export const companyDocumentsInitialValue = {
   id: "",
   Type: "",
   Fk_partnerid: "",

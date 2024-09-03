@@ -3,13 +3,16 @@ import { agentBankDetailsInitialValue } from "../mastersInitialValues";
 import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 import { memo } from "react";
+import { bankDetailsValidationSchema } from "../MasterValidations";
+import { error } from "jquery";
 
 const BankDetails = ({ partner_payload }) => {
   const [formData, setFormData] = useState(agentBankDetailsInitialValue);
   const [bankList, setBankList] = useState([]);
+  const [errors, setErrors] = useState({});
   const closeRef = useRef(null);
 
-  console.log('bank-component-rendered')
+  console.log("bank-component-rendered");
 
   const handleBankDataChange = (e) => {
     const { name, value } = e.target;
@@ -22,6 +25,10 @@ const BankDetails = ({ partner_payload }) => {
 
   const submitBankData = async () => {
     try {
+      await bankDetailsValidationSchema.validate(formData, {
+        abortEarly: false,
+      });
+
       const { data } = await axiosOther.post("addupdatebankdetails", {
         ...formData,
         ...partner_payload,
@@ -33,7 +40,13 @@ const BankDetails = ({ partner_payload }) => {
       }
       console.log(data);
     } catch (error) {
-      console.log(error);
+      if (error?.inner) {
+        const errorMessages = error?.inner.reduce((acc, curr) => {
+          acc[curr?.path] = curr?.message;
+          return acc;
+        }, {});
+        setErrors(errorMessages);
+      }
     }
   };
 
@@ -45,6 +58,8 @@ const BankDetails = ({ partner_payload }) => {
   useEffect(() => {
     fetchingBankData();
   }, []);
+
+  console.log("bank-errors", errors);
 
   return (
     <>
@@ -84,9 +99,16 @@ const BankDetails = ({ partner_payload }) => {
                 <div className="modal-body">
                   <div className="row row-gap-2">
                     <div className="col-4">
-                      <label htmlFor="bankname" className="m-0">
-                        Bank Name
-                      </label>
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="bankname" className="m-0">
+                          Bank Name <span className="text-danger">*</span>
+                        </label>
+                        {errors?.BankName && (
+                          <span className="text-danger font-size-10">
+                            {errors?.BankName}
+                          </span>
+                        )}
+                      </div>
                       <input
                         type="text"
                         className="form-control"
@@ -110,9 +132,16 @@ const BankDetails = ({ partner_payload }) => {
                       />
                     </div>
                     <div className="col-4">
-                      <label htmlFor="branchname" className="m-0">
-                        Branch Name
-                      </label>
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="branchname" className="m-0">
+                          Branch Name <span className="text-danger">*</span>
+                        </label>
+                        {errors?.BankBranch && (
+                          <span className="text-danger font-size-10">
+                            {errors?.BankBranch}
+                          </span>
+                        )}
+                      </div>
                       <input
                         type="text"
                         className="form-control"
@@ -136,9 +165,16 @@ const BankDetails = ({ partner_payload }) => {
                       />
                     </div>
                     <div className="col-4">
-                      <label htmlFor="benifeciaryn" className="m-0">
-                        Benifeciary N
-                      </label>
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="benifeciaryn" className="m-0">
+                          Benifeciary N <span className="text-danger">*</span>
+                        </label>
+                        {errors?.BenificiryName && (
+                          <span className="text-danger font-size-10">
+                            {errors?.BenificiryName}
+                          </span>
+                        )}
+                      </div>
                       <input
                         type="text"
                         className="form-control"
@@ -162,9 +198,14 @@ const BankDetails = ({ partner_payload }) => {
                       />
                     </div>
                     <div className="col-4">
-                      <label htmlFor="accountnumber" className="m-0">
-                        Account Number
-                      </label>
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="accountnumber" className="m-0">
+                          Account Number
+                        </label>
+                        {errors?.AccountNumber && (
+                          <span className="text-danger font-size-10">{errors?.AccountNumber}</span>
+                        )}
+                      </div>
                       <input
                         type="text"
                         className="form-control"
@@ -188,9 +229,12 @@ const BankDetails = ({ partner_payload }) => {
                       />
                     </div>
                     <div className="col-4">
+                      <div className="d-flex justify-content-between">
                       <label htmlFor="ifsccode" className="m-0">
                         IFSC Code
                       </label>
+                      {errors?.IfscCode && <span className="text-danger font-size-10">{errors?.IfscCode}</span>}
+                      </div>
                       <input
                         type="text"
                         className="form-control"
@@ -236,27 +280,31 @@ const BankDetails = ({ partner_payload }) => {
             </tr>
           </thead>
           <tbody>
-            {bankList.length>0? (bankList.map((list, index) => {
-              return (
-                <tr key={index + 1}>
-                  <th className="py-1">{list?.BankName}</th>
-                  <td className="py-1">{list?.BankBranch}</td>
-                  <td className="py-1">{list?.BenificiryName}</td>
-                  <td className="py-1">{list?.AccountNumber}</td>
-                  <td className="py-1">{list?.IfscCode}</td>
-                  <td className="py-1">{list?.PhoneNumber}</td>
-                  <td className="py-1">{list?.EmailId}</td>
-                  <td className="py-1">{list?.SwiftCode}</td>
-                  <td className="py-1"></td>
-                  <td className="py-1">
-                    <i className="fa-solid fa-pen-to-square"></i>
-                    <i className="fa-solid fa-trash pl-2"></i>
-                  </td>
-                </tr>
-              );
-            })):( 
+            {bankList?.length > 0 ? (
+              bankList.map((list, index) => {
+                return (
+                  <tr key={index + 1}>
+                    <th className="py-1">{list?.BankName}</th>
+                    <td className="py-1">{list?.BankBranch}</td>
+                    <td className="py-1">{list?.BenificiryName}</td>
+                    <td className="py-1">{list?.AccountNumber}</td>
+                    <td className="py-1">{list?.IfscCode}</td>
+                    <td className="py-1">{list?.PhoneNumber}</td>
+                    <td className="py-1">{list?.EmailId}</td>
+                    <td className="py-1">{list?.SwiftCode}</td>
+                    <td className="py-1"></td>
+                    <td className="py-1">
+                      <i className="fa-solid fa-pen-to-square"></i>
+                      <i className="fa-solid fa-trash pl-2"></i>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
               <tr>
-                <td colSpan={10} className="fs-6">No Records Found</td>
+                <td colSpan={10} className="fs-6">
+                  No Records Found
+                </td>
               </tr>
             )}
           </tbody>

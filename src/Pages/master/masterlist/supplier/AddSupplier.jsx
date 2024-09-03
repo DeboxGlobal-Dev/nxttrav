@@ -4,6 +4,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import toast, { Toaster } from "react-hot-toast";
 import { supplierValidationSchema } from "../MasterValidations";
+import useImageUploader from "../../../../helper/custom_hook/useImageUploader";
+import { axiosOther } from "../../../../http/axios/axios_new";
 
 const options = [
   { value: "1", label: "Noida" },
@@ -60,12 +62,15 @@ const checkBoxArray = [
 ];
 
 const AddSupplier = () => {
+  const { imageData, handleImage } = useImageUploader();
+
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
   const [errors, setErrors] = useState([]);
+  
   const [formData, setFormData] = useState({
-    SupplierName: "",
+    Name: "",
     AliasName: "",
     Status: "1",
     PanInformation: "",
@@ -119,7 +124,7 @@ const AddSupplier = () => {
   // here handling multiple select box
   const handleMultiSelectChange = (selected) => {
     setSelectedOption(selected);
-    setFormData({ ...formData, Destinations: [...selected] });
+    setFormData({ ...formData, Destinations: selected });
   };
 
   // it's a callback funtion for checking every condition for all select checkbox
@@ -128,51 +133,15 @@ const AddSupplier = () => {
   // here handling submitting data
   const handleSubmitData = async () => {
     try {
+
       await supplierValidationSchema.validate(formData, {
         abortEarly: false,
       });
+
+      const {data} = await axiosOther.post("addupdatesupplier", formData);
+      console.log(data);
+
       setErrors({});
-
-      const getDataFromLocalStorage = localStorage.getItem("supplierList");
-      if (getDataFromLocalStorage == null) {
-        localStorage.setItem(
-          "supplierList",
-          JSON.stringify([
-            {
-              ...formData,
-              id: 1,
-            },
-          ])
-        );
-        toast.success("Data Added Successfully !");
-        setTimeout(() => {
-          navigate(`/master/supplier/view/1`);
-        }, 2000);
-        return null;
-      }
-      const lengthOfStoredData = JSON.parse(getDataFromLocalStorage)?.length;
-      const allDataListOfStorage = [...JSON.parse(getDataFromLocalStorage)];
-      console.log(" allDataListOfStorage", allDataListOfStorage);
-
-      localStorage.setItem(
-        "supplierList",
-        JSON.stringify([
-          ...allDataListOfStorage,
-          {
-            ...formData,
-            id: getDataFromLocalStorage == null ? 1 : lengthOfStoredData + 1,
-          },
-        ])
-      );
-      const getDataAfterAdded = localStorage.getItem("supplierList");
-      const lengthOfAfterStoredData = JSON.parse(getDataAfterAdded)?.length;
-
-      if (lengthOfStoredData + 1 == lengthOfAfterStoredData) {
-        toast.success("Data Added Successfully !");
-        setTimeout(() => {
-          navigate(`/master/supplier/view/${lengthOfAfterStoredData}`);
-        }, 2000);
-      }
     } catch (err) {
       if (err.inner) {
         const errorMessages = err.inner.reduce((acc, curr) => {
@@ -185,6 +154,8 @@ const AddSupplier = () => {
       }
     }
   };
+
+  console.log("all-form-data", formData);
 
   return (
     <Layout>
@@ -209,15 +180,22 @@ const AddSupplier = () => {
               <div className="col-6">
                 <div className="row row-gap-3">
                   <div className="col-6">
-                    <label htmlFor="contactinformation" className="m-0">
-                      Supplier Name
-                    </label>
+                    <div className="d-flex justify-content-between">
+                      <label htmlFor="contactinformation" className="m-0">
+                        Supplier Name <span className="text-danger ">*</span>
+                      </label>
+                      {errors?.Name && (
+                        <span className="font-size-12 text-danger m-0">
+                          {errors?.Name}
+                        </span>
+                      )}
+                    </div>
                     <input
                       type="text"
                       placeholder="Supplier Name"
                       className="form-input-1"
-                      name="SupplierName"
-                      value={formData?.SupplierName}
+                      name="Name"
+                      value={formData?.Name}
                       onChange={handleChangeFormData}
                     />
                   </div>
@@ -235,9 +213,13 @@ const AddSupplier = () => {
                     />
                   </div>
                   <div className="col-12">
-                    <label htmlFor="supplierservices" className="m-0">
-                      Supplier Services
-                    </label>
+                    <div className="d-flex justify-content-between">
+                      <label htmlFor="supplierservices" className="m-0">
+                        Supplier Services
+                        <span className="text-danger fs-6">*</span>
+                      </label>
+                      {errors?.SupplierServices && <span className="font-size-12 text-danger m-0">{errors?.SupplierServices}</span>}
+                    </div>
                     <div className="border p-2 rounded d-flex flex-column gap-1">
                       <div className="check-box d-flex gap-2 alin-items-center">
                         <input
@@ -281,7 +263,7 @@ const AddSupplier = () => {
                 <div className="row row-gap-3">
                   <div className="col-4">
                     <label htmlFor="status" className="m-0">
-                      Status
+                      Status <span className="text-danger">*</span>
                     </label>
                     <select
                       className="form-input-1"
@@ -479,6 +461,7 @@ const AddSupplier = () => {
                             id="firstagreement"
                             className="form-input-5"
                             value=""
+                            onChange={(e) => handleImage(e, "FirstAgreement")}
                             hidden
                           ></input>
                         </div>
@@ -503,6 +486,7 @@ const AddSupplier = () => {
                             id="secondagreement"
                             className="form-input-5"
                             value=""
+                            onChange={(e) => handleImage(e, "SecondAgreement")}
                             hidden
                           ></input>
                         </div>

@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { memo } from "react";
 import { addContactInitialValue } from "../mastersInitialValues";
 import { axiosOther } from "../../../../http/axios/axios_new";
+import { addContactPersonValidationSchema } from "../MasterValidations";
+import { error } from "jquery";
 
 const ContactPerson = ({ partner_payload }) => {
   const [formData, setFormData] = useState(addContactInitialValue);
-
-  console.log("contact-component-rendered");
+  const [contactList, setContactList] = useState([]);
+  const [errors, setErrors] = useState({});
 
   const handleChangeFormData = (e) => {
     const { name, value } = e.target;
@@ -60,17 +62,41 @@ const ContactPerson = ({ partner_payload }) => {
 
   const handleSubmitData = async () => {
     try {
+      await addContactPersonValidationSchema.validate(formData, {
+        abortEarly: false,
+      });
       const { data } = await axiosOther.post("addupdatecontact", {
         ...formData,
         ParentId: 36,
       });
-      console.log(data);
     } catch (error) {
-      console.log(error);
+      if (error?.inner) {
+        const errorMessages = error?.inner.reduce((acc, curr) => {
+          acc[curr?.path] = curr?.message;
+          return acc;
+        }, {});
+        setErrors(errorMessages);
+      }
     }
   };
 
-  console.log('formdata', formData);
+  const getContacList = async () => {
+    try {
+      const { data } = await axiosOther.post("contactlist", {
+        Fk_partnerid: 38,
+        BusinessType: "agent",
+      });
+      setContactList(data?.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getContacList();
+  }, []);
+
+  console.log("contactList", contactList);
 
   return (
     <>
@@ -108,9 +134,16 @@ const ContactPerson = ({ partner_payload }) => {
                 <div className="modal-body">
                   <div className="row row-gap-2">
                     <div className="col-4">
-                      <label htmlFor="officename" className="m-0">
-                        Office Name
-                      </label>
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="officename" className="m-0">
+                          Office Name <span className="text-danger">*</span>
+                        </label>
+                        {errors?.OfficeName && (
+                          <span className="text-danger font-size-10">
+                            {errors?.OfficeName}
+                          </span>
+                        )}
+                      </div>
                       <select
                         className="form-control"
                         name="OfficeName"
@@ -135,9 +168,17 @@ const ContactPerson = ({ partner_payload }) => {
                       />
                     </div>
                     <div className="col-4">
-                      <label htmlFor="title" className="m-0">
-                        Title
-                      </label>
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="title" className="m-0">
+                          Title{" "}
+                          <span className="text-danger font-size-10">*</span>
+                        </label>
+                        {
+                          <span className="text-danger font-size-10">
+                            {errors?.Title}
+                          </span>
+                        }
+                      </div>
                       <select
                         className="form-control"
                         name="Title"
@@ -151,9 +192,16 @@ const ContactPerson = ({ partner_payload }) => {
                       </select>
                     </div>
                     <div className="col-4">
-                      <label htmlFor="firstname" className="m-0">
-                        First Name
-                      </label>
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="firstname" className="m-0">
+                          First Name <span className="text-danger">*</span>
+                        </label>
+                        {errors?.FirstName && (
+                          <span className="text-danger font-size-10">
+                            {errors?.FirstName}
+                          </span>
+                        )}
+                      </div>
                       <input
                         type="text"
                         placeholder="First Name"
@@ -177,9 +225,16 @@ const ContactPerson = ({ partner_payload }) => {
                       />
                     </div>
                     <div className="col-4">
-                      <label htmlFor="divison" className="m-0">
-                        Divison
-                      </label>
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="divison" className="m-0">
+                          Divison <span className="text-danger">*</span>
+                        </label>
+                        {errors?.Division && (
+                          <span className="text-danger font-size-10">
+                            {errors?.Division}
+                          </span>
+                        )}
+                      </div>
                       <select
                         className="form-control"
                         name="Division"
@@ -191,9 +246,16 @@ const ContactPerson = ({ partner_payload }) => {
                       </select>
                     </div>
                     <div className="col-4">
-                      <label htmlFor="designation" className="m-0">
-                        Designation
-                      </label>
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="designation" className="m-0">
+                          Designation <span className="text-danger">*</span>
+                        </label>
+                        {errors?.Designation && (
+                          <span className="text-danger font-size-10">
+                            {errors?.Designation}
+                          </span>
+                        )}
+                      </div>
                       <input
                         type="text"
                         className="form-control"
@@ -218,13 +280,16 @@ const ContactPerson = ({ partner_payload }) => {
                       </select>
                     </div>
                     <div className="col-4">
-                      <label
-                        htmlFor="countrycode"
-                        className="m-0"
-                        
-                      >
-                        Country Code
-                      </label>
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="countrycode" className="m-0">
+                          Country Code <span className="text-danger">*</span>
+                        </label>
+                        {errors?.CountryCode && (
+                          <span className="text-danger font-size-10">
+                            {errors?.CountryCode}
+                          </span>
+                        )}
+                      </div>
                       <input
                         type="number"
                         className="form-control"
@@ -235,9 +300,12 @@ const ContactPerson = ({ partner_payload }) => {
                       />
                     </div>
                     <div className="col-4">
-                      <label htmlFor="phone" className="m-0">
-                        Phone
-                      </label>
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="phone" className="m-0">
+                          Phone <span className="text-danger">*</span>
+                        </label>
+                        {errors?.Phone && <span className="font-size-10 text-danger">{errors?.Phone}</span>}
+                      </div>
                       <input
                         type="text"
                         className="form-control"

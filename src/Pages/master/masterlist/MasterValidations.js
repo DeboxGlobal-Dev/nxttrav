@@ -956,9 +956,81 @@ export const agentMasterValidationSchema = yup.object().shape({
 });
 
 export const supplierValidationSchema = yup.object().shape({
-  SupplierName: yup.string().required("Required"),
+  Name: yup.string().required("Required"),
   Status: yup.string().required("Required"),
   SupplierServices: yup.array().min(1, "Required").required("Required"),
+});
+
+export const addAddressValidationSchema = yup.object().shape({
+  Name: yup.string().required("Required"),
+  Country: yup.string().required("Required"),
+});
+
+export const addContactPersonValidationSchema = yup.object().shape({
+  OfficeName: yup.string().required("Required"),
+  Title: yup.string().required("Required"),
+  FirstName: yup.string().required("Required"),
+  Division: yup.string().required("Required"),
+  Designation: yup.string().required("Required"),
+  CountryCode: yup.string().required("Required"),
+  Phone: yup.string().required("Required"),
+  Email: yup.string().email().required("Required"),
+});
+
+export const companyDocumentValidationSchema = yup.object().shape({
+  DocumentName: yup.string().required("Required"),
+  DocumentPath: yup.string().required("Required"),
+});
+
+export const bankDetailsValidationSchema = yup.object().shape({
+  BankName: yup.string().required("Required"),
+  BankBranch: yup.string().required("Required"),
+  BenificiryName: yup.string().required("Required"),
+  AccountNumber: yup.string().required("Required"),
+  IfscCode: yup.string().required("Required"),
+});
+
+export const callsValidationSchema = yup.object().shape({
+  Fk_Leadsource: yup.string().required("Required"),
+  BussinessType: yup.string().required("Required"),
+  Agent: yup.string().required("Required"),
+  AgentContactPerson: yup.string().required("Required"),
+  EmailId: yup.string().required("Required"),
+  CountryId: yup.string().required("Required"),
+  Destination: yup.string().required("Required"),
+  SalesPerson: yup.string().required("Required"),
+  MobileNumber: yup.string().required("Required"),
+  Startdate: yup.string().required("Required"),
+  NextFollowUpdate: yup.string().required("Required"),
+  CallAgenda: yup.string().required("Required"),
+});
+export const meetingsValidationSchema = yup.object().shape({
+  Fk_Leadsource: yup.string().required("Required"),
+  BusinessType: yup.string().required("Required"),
+  AgentName: yup.string().required("Required"),
+  AgentContactPerson: yup.string().required("Required"),
+  EmailId: yup.string().required("Required"),
+  CountryId: yup.string().required("Required"),
+  Destination: yup.string().required("Required"),
+  SalesPerson: yup.string().required("Required"),
+  MobileNumber: yup.string().required("Required"),
+  Startdate: yup.string().required("Required"),
+  NextFollowUpdate: yup.string().required("Required"),
+  MeetingAgenda: yup.string().required("Required"),
+});
+export const taskValidationSchema = yup.object().shape({
+  Fk_Leadsource: yup.string().required("Required"),
+  BusinessType: yup.string().required("Required"),
+  AgentName: yup.string().required("Required"),
+  AgentContactPerson: yup.string().required("Required"),
+  EmailId: yup.string().required("Required"),
+  CountryId: yup.string().required("Required"),
+  Destination: yup.string().required("Required"),
+  SalesPerson: yup.string().required("Required"),
+  MobileNumber: yup.string().required("Required"),
+  Startdate: yup.string().required("Required"),
+  NextFollowUpdate: yup.string().required("Required"),
+  TaskSubject: yup.string().required("Required"),
 });
 
 // Hotel Master Table Value in JSON-----------------------------------

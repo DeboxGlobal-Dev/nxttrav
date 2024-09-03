@@ -6,11 +6,13 @@ import { useState } from "react";
 import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 import { memo } from "react";
+import { meetingsValidationSchema } from "../MasterValidations";
 
 const AddMeeting = () => {
-  const  {state}  = useLocation();
+  const { state } = useLocation();
   const { Fk_partnerid } = state;
   const [formData, setFormData] = useState(meetingAddIntitalValue);
+  const [errors, setErrors] = useState({});
 
   const handleChangeFormData = (e) => {
     const { name, value } = e.target;
@@ -21,20 +23,31 @@ const AddMeeting = () => {
     setFormData({ ...formData, Description: content });
   };
 
+  console.log( {
+    ...formData,
+    ...state,
+  })
+
   const handleSubmitData = async () => {
     try {
+      await meetingsValidationSchema.validate(formData, { abortEarly: false });
+
       const { data } = await axiosOther.post("addupdatemeetings", {
         ...formData,
         ...state,
       });
+      console.log(data);
       toast.success(data.Message);
-      console.log("submitting-data", data);
     } catch (error) {
-      console.log(error);
+      if (error?.inner) {
+        const errorMessages = error?.inner.reduce((acc, crr) => {
+          acc[crr?.path] = crr?.message;
+          return acc;
+        }, {});
+        setErrors(errorMessages);
+      }
     }
   };
-
-  console.log("meeting-form-data", {...formData, ...state});
 
   return (
     <>
@@ -65,8 +78,14 @@ const AddMeeting = () => {
                   <div className="row row-gap-3">
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
                       <div className="d-flex justify-content-between ">
-                        <label className="m-0">Lead Source</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                        <label className="m-0">
+                          Lead Source <span className="text-danger">*</span>
+                        </label>
+                        {errors?.Fk_Leadsource && (
+                          <span className="font-size-10 text-danger">
+                            {errors?.Fk_Leadsource}
+                          </span>
+                        )}
                       </div>
                       <select
                         className="form-input-1"
@@ -81,8 +100,14 @@ const AddMeeting = () => {
                     </div>
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
                       <div className="d-flex justify-content-between ">
-                        <label className="m-0">Business Type</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                        <label className="m-0">
+                          Business Type <span className="text-danger">*</span>
+                        </label>
+                        {errors?.BusinessType && (
+                          <span className="font-size-10 text-danger pt-1">
+                            {errors?.BusinessType}
+                          </span>
+                        )}
                       </div>
                       <select
                         className="form-input-1"
@@ -97,8 +122,14 @@ const AddMeeting = () => {
                     </div>
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0">Agent</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                        <label className="m-0">
+                          Agent <span className="text-danger">*</span>
+                        </label>
+                        {errors?.AgentName && (
+                          <span className="font-size-10 text-danger pt-1">
+                            {errors?.AgentName}
+                          </span>
+                        )}
                       </div>
                       <select
                         className="form-input-1"
@@ -113,8 +144,15 @@ const AddMeeting = () => {
                     </div>
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0">Contact Person Name</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                        <label className="m-0">
+                          ContactPersonName{" "}
+                          <span className="text-danger">*</span>
+                        </label>
+                        {errors?.AgentContactPerson && (
+                          <span className="font-size-10 text-danger pt-1">
+                            {errors?.AgentContactPerson}
+                          </span>
+                        )}
                       </div>
                       <input
                         type="text"
@@ -127,8 +165,14 @@ const AddMeeting = () => {
                     </div>
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0">Email Addres</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                        <label className="m-0">
+                          Email Addres <span className="text-danger">*</span>
+                        </label>
+                        {errors?.EmailId && (
+                          <span className="font-size-10 text-danger pt-1">
+                            {errors?.EmailId}
+                          </span>
+                        )}
                       </div>
                       <input
                         type="text"
@@ -140,7 +184,16 @@ const AddMeeting = () => {
                       />
                     </div>
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
-                      <label className="m-0">Country</label>
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0">
+                          Country <span className="text-danger">*</span>
+                        </label>
+                        {errors?.CountryId && (
+                          <span className="font-size-10 text-danger pt-1">
+                            {errors?.CountryId}
+                          </span>
+                        )}
+                      </div>
                       <select
                         className="form-input-1"
                         name="CountryId"
@@ -153,7 +206,16 @@ const AddMeeting = () => {
                       </select>
                     </div>
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
-                      <label className="m-0">Destination</label>
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0">
+                          Destination <span className="text-danger">*</span>
+                        </label>
+                        {errors?.Destination && (
+                          <span className="font-size-10 text-danger pt-1">
+                            {errors?.Destination}
+                          </span>
+                        )}
+                      </div>
                       <select
                         name="Destination"
                         value={formData.Destination}
@@ -170,9 +232,15 @@ const AddMeeting = () => {
                   <div className="row row-gap-3 mt-3">
                     <h1>Meeting Information</h1>
                     <div className="col-lg-3 col-md-3 col-sm-4 col-12">
-                      <div className="d-flex justify-content-between ">
-                        <label className="m-0">Start Date</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0">
+                          Start Date <span className="text-danger">*</span>
+                        </label>
+                        {errors?.Startdate && (
+                          <span className="font-size-10 text-danger pt-1">
+                            {errors?.Startdate}
+                          </span>
+                        )}
                       </div>
                       <input
                         type="date"
@@ -242,8 +310,17 @@ const AddMeeting = () => {
                     </div>
                     <div className="col-lg-3 col-md-3 col-sm-4 col-12">
                       <div className="d-flex justify-content-between ">
-                        <label className="m-0">Next Follow Up Date</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                        <label
+                          className={`m-0 ${
+                            errors?.NextFollowUpdate && "font-size-9"
+                          }`}
+                        >
+                          Next FollowUp Date
+                          <span className="text-danger">*</span>
+                          {errors?.NextFollowUpdate && (
+                            <span className="text-danger">Required</span>
+                          )}
+                        </label>
                       </div>
                       <input
                         type="date"
@@ -345,8 +422,14 @@ const AddMeeting = () => {
                     </div>
                     <div className="col-lg-12">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0">Meeting Agenda</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                        <label className="m-0">
+                          Meeting Agenda <span className="text-danger">*</span>
+                        </label>
+                        {errors?.MeetingAgenda && (
+                          <span className="font-size-10 text-danger">
+                            {errors?.MeetingAgenda}
+                          </span>
+                        )}
                       </div>
                       <input
                         type="text"
@@ -363,8 +446,12 @@ const AddMeeting = () => {
                   <div className="row row-gap-3">
                     <div className="col-lg-8 col-md-3 col-sm-4 col-12">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0">Sales Person</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                        <label className="m-0">Sales Person <span className="text-danger">*</span></label>
+                        {errors?.SalesPerson && (
+                          <span className="font-size-10 text-danger">
+                            {errors?.SalesPerson}
+                          </span>
+                        )}
                       </div>
                       <select
                         className="form-input-1"
@@ -379,8 +466,12 @@ const AddMeeting = () => {
                     </div>
                     <div className="col-6">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0">Mobile Number</label>
-                        <span className="font-size-10 text-danger pt-1"></span>
+                        <label className="m-0">Mobile Number <span className="text-danger">*</span> </label>
+                        {errors?.MobileNumber && (
+                          <span className="font-size-10 text-danger pt-1">
+                            {errors?.MobileNumber}
+                          </span>
+                        )}
                       </div>
                       <input
                         type="text"

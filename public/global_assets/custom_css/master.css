@@ -704,6 +704,15 @@ a {
   overflow-y: auto;
   gap: 5px;
 }
+.custom-top-pos{
+  top: 12%;
+  left: 48.5%;
+  width: 50%;
+  max-height: 50%;
+}
+.custom-top-pos::-webkit-scrollbar{
+  width: 3px;
+}
 .alternate-color:nth-child(even) {
   background-color: #c2dbffad;
 }
