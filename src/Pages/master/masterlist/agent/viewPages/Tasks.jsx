@@ -10,9 +10,12 @@ const Tasks = ({ partner_payload }) => {
 
   const fetchTaskListData = async () => {
     try {
-      const { data } = await axiosOther.post("taskslist", partner_payload);
+      const { data } = await axiosOther.post("taskslist", {
+        Fk_partnerid: partner_payload?.Fk_partnerid,
+        BusinessType: partner_payload?.BusinessType,
+      });
       setTaskList(data?.DataList);
-      console.log("tasklist-data", data?.DataList);
+      // console.log("task-list", data);
     } catch (err) {
       console.log("task-list-err", err);
     }
@@ -23,11 +26,26 @@ const Tasks = ({ partner_payload }) => {
   }, []);
 
   const handleNavigate = () => {
-    navigate("/master/agent/view/task", { state: partner_payload });
+    navigate("/master/agent/view/task", { state: {payload:partner_payload} });
   };
 
-  console.log('task-component-rendered')
 
+  const handleEditData = (list) => {
+    navigate(`/master/agent/view/call`, {
+      state: { payload: partner_payload, data: list },
+    });
+  };
+
+  const handleDeleteData = async (id) => {
+    const { data } = await axiosOther.post("destroytasks", {
+      id: id,
+    });
+    if (data?.Status === 1) {
+      toast.success(data?.Message);
+      fetchTaskListData();
+    }
+    console.log(data);
+  };
   return (
     <>
       <div className="col-12 agent-view-table mt-4">
@@ -48,10 +66,11 @@ const Tasks = ({ partner_payload }) => {
               <th className="py-1">Status</th>
               <th className="py-1">Sales Person</th>
               <th className="py-1">Created At</th>
+              <th className="py-1">Action</th>
             </tr>
           </thead>
           <tbody>
-            {taskList?.length > 1 ? (
+            {taskList?.length > 0 ? (
               taskList?.map((list, index) => {
                 return (
                   <tr key={index + 1}>
@@ -60,6 +79,16 @@ const Tasks = ({ partner_payload }) => {
                     <td className="py-1">{list?.Status}</td>
                     <td className="py-1">{list?.SalesPerson}</td>
                     <td className="py-1">{list?.CreatedAt}</td>
+                    <td className="py-1 d-flex justify-content-center gap-2">
+                      <i
+                        className="fa-solid fa-pen-to-square fs-6 text-success"
+                        onClick={() => handleEditData(list)}
+                      ></i>
+                      <i
+                        className="fa-solid fa-trash fs-6 cursor-pointer text-danger"
+                        onClick={() => handleDeleteData(list?.id)}
+                      ></i>
+                    </td>
                   </tr>
                 );
               })

@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { memo } from "react";
 import { addContactInitialValue } from "../mastersInitialValues";
 import { axiosOther } from "../../../../http/axios/axios_new";
 import { addContactPersonValidationSchema } from "../MasterValidations";
-import { error } from "jquery";
+import toast, { Toaster } from "react-hot-toast";
 
 const ContactPerson = ({ partner_payload }) => {
   const [formData, setFormData] = useState(addContactInitialValue);
   const [contactList, setContactList] = useState([]);
   const [errors, setErrors] = useState({});
+  const modalRef = useRef(null);
+  const closeRef = useRef(null);
 
   const handleChangeFormData = (e) => {
     const { name, value } = e.target;
@@ -62,13 +64,26 @@ const ContactPerson = ({ partner_payload }) => {
 
   const handleSubmitData = async () => {
     try {
+      setErrors({});
       await addContactPersonValidationSchema.validate(formData, {
         abortEarly: false,
       });
+      console.log("contact-person", {
+        ...formData,
+        ParentId: partner_payload?.Fk_partnerid,
+      });
       const { data } = await axiosOther.post("addupdatecontact", {
         ...formData,
-        ParentId: 36,
+        ParentId: 11,
       });
+
+      console.log("adding", data);
+
+      if (data?.Status === 1) {
+        toast.success(data?.Message);
+        setFormData(addContactInitialValue);
+        closeRef.current.click();
+      }
     } catch (error) {
       if (error?.inner) {
         const errorMessages = error?.inner.reduce((acc, curr) => {
@@ -77,16 +92,18 @@ const ContactPerson = ({ partner_payload }) => {
         }, {});
         setErrors(errorMessages);
       }
+      console.log(error);
     }
   };
 
   const getContacList = async () => {
     try {
       const { data } = await axiosOther.post("contactlist", {
-        Fk_partnerid: 38,
+        ParentId: partner_payload?.Fk_partnerid,
         BusinessType: "agent",
       });
       setContactList(data?.DataList);
+      console.log("contact-list", data);
     } catch (err) {
       console.log(err);
     }
@@ -96,7 +113,21 @@ const ContactPerson = ({ partner_payload }) => {
     getContacList();
   }, []);
 
-  console.log("contactList", contactList);
+  const handleEditData = (data) => {
+    modalRef.current.click();
+    setFormData(data);
+  };
+
+  const handleDeleteData = async (id) => {
+    const { data } = await axiosOther.post("destroycontactperson", {
+      id: id,
+    });
+    if (data?.Status === 1) {
+      toast.success(data?.Message);
+      getContacList();
+    }
+    console.log(data);
+  };
 
   return (
     <>
@@ -107,9 +138,11 @@ const ContactPerson = ({ partner_payload }) => {
             data-toggle="modal"
             data-target="#addcontactperson"
             className="fs-6 font-weight-bold text-success cursor-pointer"
+            ref={modalRef}
           >
             + Add Contact Person
           </p>
+          <Toaster />
           <div
             className="modal fade"
             id="addcontactperson"
@@ -170,7 +203,7 @@ const ContactPerson = ({ partner_payload }) => {
                     <div className="col-4">
                       <div className="d-flex justify-content-between">
                         <label htmlFor="title" className="m-0">
-                          Title{" "}
+                          Title
                           <span className="text-danger font-size-10">*</span>
                         </label>
                         {
@@ -275,8 +308,8 @@ const ContactPerson = ({ partner_payload }) => {
                         value={formData?.Newsletter}
                         onChange={handleChangeFormData}
                       >
-                        <option value="1">Yes</option>
-                        <option value="0">No</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
                       </select>
                     </div>
                     <div className="col-4">
@@ -304,7 +337,11 @@ const ContactPerson = ({ partner_payload }) => {
                         <label htmlFor="phone" className="m-0">
                           Phone <span className="text-danger">*</span>
                         </label>
-                        {errors?.Phone && <span className="font-size-10 text-danger">{errors?.Phone}</span>}
+                        {errors?.Phone && (
+                          <span className="font-size-10 text-danger">
+                            {errors?.Phone}
+                          </span>
+                        )}
                       </div>
                       <input
                         type="text"
@@ -329,9 +366,16 @@ const ContactPerson = ({ partner_payload }) => {
                       />
                     </div>
                     <div className="col-4">
-                      <label htmlFor="email" className="m-0">
-                        Email
-                      </label>
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="firstname" className="m-0">
+                          Email <span className="text-danger">*</span>
+                        </label>
+                        {errors?.Email && (
+                          <span className="text-danger font-size-10">
+                            {errors?.Email}
+                          </span>
+                        )}
+                      </div>
                       <input
                         type="text"
                         className="form-control"
@@ -466,8 +510,8 @@ const ContactPerson = ({ partner_payload }) => {
                         value={formData?.Status}
                         onChange={handleChangeFormData}
                       >
-                        <option value="">Active</option>
-                        <option value="">InActive</option>
+                        <option value="Yes">Active</option>
+                        <option value="No">InActive</option>
                       </select>
                     </div>
                     <div className="col-12">
@@ -560,6 +604,7 @@ const ContactPerson = ({ partner_payload }) => {
                     id="cancel"
                     className="default-button"
                     data-dismiss="modal"
+                    ref={closeRef}
                   >
                     Close
                   </button>
@@ -575,26 +620,53 @@ const ContactPerson = ({ partner_payload }) => {
           <thead className="thead-dark">
             <tr>
               <th className="px-1">#</th>
-              <th className="py-1">Office Name</th>
-              <th className="py-1">Country</th>
-              <th className="py-1">Postal Zip</th>
-              <th className="py-1">GSTN</th>
-              <th className="py-1">Pan</th>
-              <th className="py-1">Address</th>
-              <th className="py-1">Action</th>
+              <th className="py-1">DIVISION</th>
+              <th className="py-1">CONTACT PERSON</th>
+              <th className="py-1">DESIGNATION</th>
+              <th className="py-1">COUNTRY CODE</th>
+              <th className="py-1">PHONE</th>
+              <th className="py-1">STATUS</th>
+              <th className="py-1">IMAGE 1</th>
+              <th className="py-1">IMAGE 2</th>
+              <th className="py-1">IMAGE 3</th>
+              <th className="py-1">ACTION</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th className="py-1">1</th>
-              <td className="py-1">Mark</td>
-              <td className="py-1">Otto</td>
-              <td className="py-1">@mdo</td>
-              <td className="py-1">@mdo</td>
-              <td className="py-1">@mdo</td>
-              <td className="py-1">@mdo</td>
-              <td className="py-1">@mdo</td>
-            </tr>
+            {contactList?.length > 0 ? (
+              contactList?.map((contact, index) => {
+                return (
+                  <tr key={index + 1}>
+                    <th className="py-1">{index + 1}</th>
+                    <td className="py-1">{contact?.Division}</td>
+                    <td className="py-1">{contact?.FirstName}</td>
+                    <td className="py-1">{contact?.Designation}</td>
+                    <td className="py-1">{contact?.CountryCode}</td>
+                    <td className="py-1">{contact?.Phone}</td>
+                    <td className="py-1">{contact?.Status}</td>
+                    <td className="py-1">view document</td>
+                    <td className="py-1">view document</td>
+                    <td className="py-1">view document</td>
+                    <td className="py-1">
+                      <i
+                        className="fa-solid fa-pen-to-square fs-6 cursor-pointer text-success"
+                        onClick={() => handleEditData(contact)}
+                      ></i>
+                      <i
+                        className="fa-solid fa-trash fs-6 cursor-pointer text-danger"
+                        onClick={() => handleDeleteData(list?.id)}
+                      ></i>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan="11" className="fs-6">
+                  No Record Found
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

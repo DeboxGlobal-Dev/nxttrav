@@ -1,5 +1,5 @@
 import Layout from "../../../../Component/Layout/Layout";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Editor from "../../../../helper/Editor";
 import { meetingAddIntitalValue } from "../mastersInitialValues";
 import { useState } from "react";
@@ -7,12 +7,16 @@ import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 import { memo } from "react";
 import { meetingsValidationSchema } from "../MasterValidations";
+import useDestinationSelect from "../../../../helper/custom_hook/useDestinationSelect";
 
 const AddMeeting = () => {
+  
+  const navigate = useNavigate();
   const { state } = useLocation();
   const { Fk_partnerid } = state;
   const [formData, setFormData] = useState(meetingAddIntitalValue);
   const [errors, setErrors] = useState({});
+  const {SelectInput, selectedDestination} = useDestinationSelect();
 
   const handleChangeFormData = (e) => {
     const { name, value } = e.target;
@@ -23,21 +27,28 @@ const AddMeeting = () => {
     setFormData({ ...formData, Description: content });
   };
 
-  console.log( {
+  console.log({
     ...formData,
     ...state,
-  })
+  });
 
   const handleSubmitData = async () => {
     try {
       await meetingsValidationSchema.validate(formData, { abortEarly: false });
+      setErrors({});
 
       const { data } = await axiosOther.post("addupdatemeetings", {
         ...formData,
+        Destination:selectedDestination,
         ...state,
       });
       console.log(data);
-      toast.success(data.Message);
+      if (data.Status === 1) {
+        toast.success(data.Message);
+        setTimeout(() => {
+          navigate(`/master/agent/view/${state?.Fk_partnerid}`);
+        }, 1500);
+      }
     } catch (error) {
       if (error?.inner) {
         const errorMessages = error?.inner.reduce((acc, crr) => {
@@ -205,7 +216,7 @@ const AddMeeting = () => {
                         <option value="2">Canada</option>
                       </select>
                     </div>
-                    <div className="col-lg-4 col-md-3 col-sm-4 col-12">
+                    <div className="col-12">
                       <div className="d-flex justify-content-between">
                         <label className="m-0">
                           Destination <span className="text-danger">*</span>
@@ -216,17 +227,7 @@ const AddMeeting = () => {
                           </span>
                         )}
                       </div>
-                      <select
-                        name="Destination"
-                        value={formData.Destination}
-                        onChange={handleChangeFormData}
-                        className="form-input-1"
-                      >
-                        <option value="">Select</option>
-                        <option value="1">Noida</option>
-                        <option value="2">Agra</option>
-                        <option value="2">Gurgaon</option>
-                      </select>
+                      <SelectInput/>
                     </div>
                   </div>
                   <div className="row row-gap-3 mt-3">
@@ -446,7 +447,9 @@ const AddMeeting = () => {
                   <div className="row row-gap-3">
                     <div className="col-lg-8 col-md-3 col-sm-4 col-12">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0">Sales Person <span className="text-danger">*</span></label>
+                        <label className="m-0">
+                          Sales Person <span className="text-danger">*</span>
+                        </label>
                         {errors?.SalesPerson && (
                           <span className="font-size-10 text-danger">
                             {errors?.SalesPerson}
@@ -466,7 +469,9 @@ const AddMeeting = () => {
                     </div>
                     <div className="col-6">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0">Mobile Number <span className="text-danger">*</span> </label>
+                        <label className="m-0">
+                          Mobile Number <span className="text-danger">*</span>{" "}
+                        </label>
                         {errors?.MobileNumber && (
                           <span className="font-size-10 text-danger pt-1">
                             {errors?.MobileNumber}

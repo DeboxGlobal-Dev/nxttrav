@@ -4,15 +4,14 @@ import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 import { memo } from "react";
 import { bankDetailsValidationSchema } from "../MasterValidations";
-import { error } from "jquery";
 
 const BankDetails = ({ partner_payload }) => {
   const [formData, setFormData] = useState(agentBankDetailsInitialValue);
   const [bankList, setBankList] = useState([]);
   const [errors, setErrors] = useState({});
   const closeRef = useRef(null);
+  const modalRef = useRef(null);
 
-  console.log("bank-component-rendered");
 
   const handleBankDataChange = (e) => {
     const { name, value } = e.target;
@@ -31,11 +30,13 @@ const BankDetails = ({ partner_payload }) => {
 
       const { data } = await axiosOther.post("addupdatebankdetails", {
         ...formData,
-        ...partner_payload,
+        ...partner_payload
       });
+      console.log('add-bank', data);
       if (data?.Status) {
         toast.success(data.Message);
         fetchingBankData();
+        setFormData(agentBankDetailsInitialValue);
         closeRef.current.click();
       }
       console.log(data);
@@ -50,6 +51,8 @@ const BankDetails = ({ partner_payload }) => {
     }
   };
 
+  // console.log('bank-form', formData);
+
   async function fetchingBankData() {
     const { data } = await axiosOther.post("bankdetailslist", partner_payload);
     setBankList(data?.DataList);
@@ -59,7 +62,21 @@ const BankDetails = ({ partner_payload }) => {
     fetchingBankData();
   }, []);
 
-  console.log("bank-errors", errors);
+  const handleEditData = (data) =>{
+    modalRef.current.click();
+    setFormData(data);
+  }
+
+  const handleDeleteData = async (id) => {
+    const { data } = await axiosOther.post("destroybankdetails", {
+      id: id,
+    });
+    if (data?.Status === 1) {
+      toast.success(data?.Message);
+      fetchingBankData();
+    }
+    console.log(data);
+  };
 
   return (
     <>
@@ -70,6 +87,7 @@ const BankDetails = ({ partner_payload }) => {
             data-toggle="modal"
             data-target="#bankdetails"
             className="fs-6 font-weight-bold text-success cursor-pointer"
+            ref={modalRef}
           >
             + Add Bank Details
           </p>
@@ -203,7 +221,9 @@ const BankDetails = ({ partner_payload }) => {
                           Account Number
                         </label>
                         {errors?.AccountNumber && (
-                          <span className="text-danger font-size-10">{errors?.AccountNumber}</span>
+                          <span className="text-danger font-size-10">
+                            {errors?.AccountNumber}
+                          </span>
                         )}
                       </div>
                       <input
@@ -230,10 +250,14 @@ const BankDetails = ({ partner_payload }) => {
                     </div>
                     <div className="col-4">
                       <div className="d-flex justify-content-between">
-                      <label htmlFor="ifsccode" className="m-0">
-                        IFSC Code
-                      </label>
-                      {errors?.IfscCode && <span className="text-danger font-size-10">{errors?.IfscCode}</span>}
+                        <label htmlFor="ifsccode" className="m-0">
+                          IFSC Code
+                        </label>
+                        {errors?.IfscCode && (
+                          <span className="text-danger font-size-10">
+                            {errors?.IfscCode}
+                          </span>
+                        )}
                       </div>
                       <input
                         type="text"
@@ -293,9 +317,12 @@ const BankDetails = ({ partner_payload }) => {
                     <td className="py-1">{list?.EmailId}</td>
                     <td className="py-1">{list?.SwiftCode}</td>
                     <td className="py-1"></td>
-                    <td className="py-1">
-                      <i className="fa-solid fa-pen-to-square"></i>
-                      <i className="fa-solid fa-trash pl-2"></i>
+                    <td className="py-1 d-flex justify-content-center gap-2">
+                      <i className="fa-solid fa-pen-to-square fs-6 text-success" onClick={()=>handleEditData(list)}></i>
+                      <i 
+                      className="fa-solid fa-trash fs-6 cursor-pointer text-danger"
+                      onClick={()=>handleDeleteData(list?.id)}
+                      ></i>
                     </td>
                   </tr>
                 );

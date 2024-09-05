@@ -6,46 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { supplierValidationSchema } from "../MasterValidations";
 import useImageUploader from "../../../../helper/custom_hook/useImageUploader";
 import { axiosOther } from "../../../../http/axios/axios_new";
-
-const options = [
-  { value: "1", label: "Noida" },
-  { value: "2", label: "Gurgaon" },
-  { value: "3", label: "Delhi" },
-  { value: "4", label: "Mumbai" },
-  { value: "5", label: "Dubai" },
-  { value: "6", label: "Reyadh" },
-  { value: "7", label: "Lahore" },
-  { value: "8", label: "Srinagar" },
-  { value: "9", label: "Wesbangal" },
-];
-
-const customStyle = {
-  control: (provided) => ({
-    ...provided,
-    backgroundColor: "white",
-    borderColor: "rgb(22, 155, 215)", // Change border color
-    boxShadow: "none",
-    "&:hover": {
-      borderColor: "rgb(22, 155, 215)", // Border color on hover
-    },
-  }),
-  multiValue: (provided) => ({
-    ...provided,
-    backgroundColor: "rgb(22, 155, 215)", // Background color of selected option
-  }),
-  multiValueLabel: (provided) => ({
-    ...provided,
-    color: "white", // Text color of selected option
-  }),
-  multiValueRemove: (provided) => ({
-    ...provided,
-    color: "white",
-    "&:hover": {
-      backgroundColor: "rgb(42, 205, 255)",
-      color: "white", // Color of remove icon on hover
-    },
-  }),
-};
+import useDestinationSelect from "../../../../helper/custom_hook/useDestinationSelect";
 
 const checkBoxArray = [
   "hotel",
@@ -63,12 +24,11 @@ const checkBoxArray = [
 
 const AddSupplier = () => {
   const { imageData, handleImage } = useImageUploader();
+  const { SelectInput, selectedDestination } = useDestinationSelect();
 
-  const navigate = useNavigate();
-  const [selectedOption, setSelectedOption] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
   const [errors, setErrors] = useState([]);
-  
+
   const [formData, setFormData] = useState({
     Name: "",
     AliasName: "",
@@ -122,10 +82,10 @@ const AddSupplier = () => {
   };
 
   // here handling multiple select box
-  const handleMultiSelectChange = (selected) => {
-    setSelectedOption(selected);
-    setFormData({ ...formData, Destinations: selected });
-  };
+  // const handleMultiSelectChange = (selected) => {
+  //   setSelectedOption(selected);
+  //   setFormData({ ...formData, Destinations: selected });
+  // };
 
   // it's a callback funtion for checking every condition for all select checkbox
   const handleEveryCheck = (element) => selectedServices.includes(element);
@@ -133,13 +93,20 @@ const AddSupplier = () => {
   // here handling submitting data
   const handleSubmitData = async () => {
     try {
+      // await supplierValidationSchema.validate(formData, {
+      //   abortEarly: false,
+      // });
 
-      await supplierValidationSchema.validate(formData, {
-        abortEarly: false,
+      console.log("submit-supplier", {
+        ...formData,
+        Destinations: selectedDestination,
       });
 
-      const {data} = await axiosOther.post("addupdatesupplier", formData);
-      console.log(data);
+      // const { data } = await axiosOther.post("addupdatesupplier", {
+      //   ...formData,
+      //   Destinations: selectedDestination,
+      // });
+      // console.log(data);
 
       setErrors({});
     } catch (err) {
@@ -150,12 +117,12 @@ const AddSupplier = () => {
         }, {});
         setErrors(errorMessages);
 
-        console.log("errorMessages", errorMessages);
+        // console.log("errorMessages", errorMessages);
       }
     }
   };
 
-  console.log("all-form-data", formData);
+  
 
   return (
     <Layout>
@@ -218,7 +185,11 @@ const AddSupplier = () => {
                         Supplier Services
                         <span className="text-danger fs-6">*</span>
                       </label>
-                      {errors?.SupplierServices && <span className="font-size-12 text-danger m-0">{errors?.SupplierServices}</span>}
+                      {errors?.SupplierServices && (
+                        <span className="font-size-12 text-danger m-0">
+                          {errors?.SupplierServices}
+                        </span>
+                      )}
                     </div>
                     <div className="border p-2 rounded d-flex flex-column gap-1">
                       <div className="check-box d-flex gap-2 alin-items-center">
@@ -292,13 +263,7 @@ const AddSupplier = () => {
                     <label htmlFor="destionation" className="m-0">
                       Destinations
                     </label>
-                    <Select
-                      value={selectedOption}
-                      onChange={handleMultiSelectChange}
-                      options={options}
-                      isMulti={true}
-                      styles={customStyle}
-                    />
+                    <SelectInput />
                   </div>
                   <div className="col-3">
                     <label htmlFor="paymentterm" className="m-0">

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { axiosOther } from "../../../../../http/axios/axios_new";
 import { memo } from "react";
+import toast from "react-hot-toast";
 
 const Calls = ({ partner_payload }) => {
   const [callList, setCallList] = useState([]);
@@ -9,9 +10,13 @@ const Calls = ({ partner_payload }) => {
 
   const getCallListData = async () => {
     try {
-      const { data } = await axiosOther.post("callslist", partner_payload);
+      const { data } = await axiosOther.post("callslist", {
+        Fk_partnerid: partner_payload?.Fk_partnerid,
+        BusinessType: partner_payload?.Type,
+      });
       setCallList(data?.DataList);
       console.log("calls-list", data);
+
     } catch (err) {
       console.log(err);
     }
@@ -22,10 +27,29 @@ const Calls = ({ partner_payload }) => {
   }, []);
 
   const handleNavigate = () => {
-    navigate(`/master/agent/view/call`, { state: partner_payload });
+    navigate(`/master/agent/view/call`, {
+      state: { payload: partner_payload },
+    });
   };
 
-  console.log('call-component-rendered')
+  const handleEditData = (list) => {
+    navigate(`/master/agent/view/call`, {
+      state: { payload: partner_payload, data: list },
+    });
+  };
+
+  const handleDeleteData = async (id) => {
+    const { data } = await axiosOther.post("destroycalls", {
+      id: id,
+    });
+    if (data?.Status === 1) {
+      toast.success(data?.Message);
+      getCallListData();
+    }
+    console.log(data);
+  };
+
+  // console.log("calls-list", callList);
   return (
     <>
       <div className="col-12 agent-view-table mt-4">
@@ -47,19 +71,30 @@ const Calls = ({ partner_payload }) => {
               <th className="py-1">Call Type</th>
               <th className="py-1">Sales Person</th>
               <th className="py-1">Created Date</th>
+              <th className="py-1">Action</th>
             </tr>
           </thead>
           <tbody>
-            {callList?.length > 1 ? (
+            {callList?.length > 0 ? (
               callList?.map((list, index) => {
                 return (
                   <tr key={index + 1}>
-                    <th className="py-1">{list?.CallSubject}</th>
-                    <td className="py-1">{list?.StartDate}</td>
+                    <th className="py-1">{list?.CallAgenda}</th>
+                    <td className="py-1">{list?.Startdate}</td>
                     <td className="py-1">{list?.CallStatus}</td>
                     <td className="py-1">{list?.CallType}</td>
                     <td className="py-1">{list?.SalesPerson}</td>
                     <td className="py-1">{list?.Created_At}</td>
+                    <td className="py-1 d-flex justify-content-center gap-2">
+                      <i
+                        className="fa-solid fa-pen-to-square fs-6 text-success"
+                        onClick={() => handleEditData(list)}
+                      ></i>
+                      <i 
+                      className="fa-solid fa-trash fs-6 cursor-pointer text-danger"
+                      onClick={()=>handleDeleteData(list?.id)}
+                      ></i>
+                    </td>
                   </tr>
                 );
               })

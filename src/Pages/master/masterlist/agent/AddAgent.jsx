@@ -8,7 +8,9 @@ import Editor from "../../../../helper/Editor";
 import { agentMasterValidationSchema } from "../MasterValidations";
 
 const AddAgent = () => {
+
   const navigate = useNavigate();
+
   const initialState = {
     businessTypeList: [],
     consortiaList: [],
@@ -21,6 +23,7 @@ const AddAgent = () => {
     preferredLanguage: [],
     countryList: [],
   };
+  
   const [agentInfoValue, setAgentInfoValue] = useState("");
   const [remarksValue, setRemarksValue] = useState("");
   const [errors, setErrors] = useState({});
@@ -135,22 +138,23 @@ const AddAgent = () => {
           abortEarly: false,
         }
       );
-
+      
       const { data } = await axiosOther.post("addupdateagent", {
         ...logoImageData,
         ...headerImageData,
         ...footerImageData,
         ...agentInputData,
       });
-
-      console.log("agent-post", data);
+     
 
       if (data.Status === 1) {
-        navigate(`/master/agent/view/${data?.AgentId}`);
         toast.success(data?.Message);
+        setTimeout(()=>{
+          navigate(`/master/agent/view/${data?.AgentId}`);
+        },1500);
       }
-      if (data.Status == -1) {
-        toast.error(data?.message);
+      if (data.Status === -1) {
+        toast.error(data?.Message);
       }
     } catch (err) {
       if (err.inner) {
@@ -159,12 +163,12 @@ const AddAgent = () => {
           return acc;
         }, {});
         setErrors(errorMessages);
-
-        console.log("errorMessages", errorMessages);
       }
+      console.log(err);
     }
   };
 
+  // console.log('errors', errors)
   const getApiListForDropdown = async () => {
     try {
       const { data } = await axiosOther.post("businesstypelist", {
@@ -268,7 +272,7 @@ const AddAgent = () => {
   const remarksChangeHandler = (content) => {
     setRemarksValue(content);
   };
-  
+
   return (
     <Layout>
       <div className="container-fluid p-3 mb-4">
@@ -299,7 +303,9 @@ const AddAgent = () => {
                     Bussiness Type <span className="text-danger">*</span>
                   </label>
                   {errors?.BussinessType && (
-                    <span className="text-danger font-size-10">{errors?.BussinessType}</span>
+                    <span className="text-danger font-size-10">
+                      {errors?.BussinessType}
+                    </span>
                   )}
                 </div>
                 <select
@@ -310,7 +316,6 @@ const AddAgent = () => {
                   value={agentInputData.BussinessType}
                 >
                   <option value="">select</option>
-                  <option value="1">Agent</option>
                   {allApiList?.businessTypeList?.map((list, index) => {
                     return (
                       <option value={list?.id} key={index + 1}>
@@ -342,7 +347,9 @@ const AddAgent = () => {
                     Sales Person <span className="text-danger">*</span>
                   </label>
                   {errors?.SalesPerson && (
-                    <span className="text-danger font-size-10">{errors?.SalesPerson}</span>
+                    <span className="text-danger font-size-10">
+                      {errors?.SalesPerson}
+                    </span>
                   )}
                 </div>
 
@@ -381,7 +388,9 @@ const AddAgent = () => {
                     Company Name <span className="text-danger">*</span>
                   </label>
                   {errors?.CompanyName && (
-                    <span className="text-danger font-size-10">{errors?.CompanyName}</span>
+                    <span className="text-danger font-size-10">
+                      {errors?.CompanyName}
+                    </span>
                   )}
                 </div>
                 <input
@@ -520,7 +529,9 @@ const AddAgent = () => {
                     <span className="text-danger">*</span>
                   </label>
                   {errors?.MarketType && (
-                    <span className="text-danger font-size-10">{errors?.MarketType}</span>
+                    <span className="text-danger font-size-10">
+                      {errors?.MarketType}
+                    </span>
                   )}
                 </div>
                 <select
@@ -576,7 +587,9 @@ const AddAgent = () => {
                     Nationality <span className="text-danger">*</span>
                   </label>
                   {errors?.Nationality && (
-                    <span className="text-danger font-size-10">{errors?.Nationality}</span>
+                    <span className="text-danger font-size-10">
+                      {errors?.Nationality}
+                    </span>
                   )}
                 </div>
                 <select
@@ -778,6 +791,7 @@ const AddAgent = () => {
                 <Editor
                   handleChangeEditor={agentInfoChangeHandler}
                   heightValue={"60%"}
+                  initialValue={agentInfoValue}
                 />
               </div>
               <div className="col-6">
@@ -785,6 +799,7 @@ const AddAgent = () => {
                 <Editor
                   handleChangeEditor={remarksChangeHandler}
                   heightValue={"60%"}
+                  initialValue={remarksValue}
                 />
               </div>
             </div>

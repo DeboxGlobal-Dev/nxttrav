@@ -7,15 +7,21 @@ import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 import { memo } from "react";
 import { callsValidationSchema } from "../MasterValidations";
-import { error } from "jquery";
+import useDestinationSelect from "../../../../helper/custom_hook/useDestinationSelect";
 
 const AddCall = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { Fk_partnerid, Type } = state;
-  const [formData, setFormData] = useState(agentAddCallInitialValue);
+  const { Fk_partnerid, Type } = state?.payload;
+  const updateData = state?.data;
+  const { SelectInput, selectedDestination } = useDestinationSelect();
+
+  const [formData, setFormData] = useState(
+    updateData == undefined
+      ? agentAddCallInitialValue
+      : { ...updateData, Destination: selectedDestination }
+  );
   const [errors, setErrors] = useState({});
-  
 
   const handleChangeFormData = (e) => {
     const { name, value } = e.target;
@@ -28,18 +34,21 @@ const AddCall = () => {
 
   const handleSubmitData = async () => {
     try {
-
-      await callsValidationSchema.validate(formData, { abortEarly: false });
-
+      await callsValidationSchema.validate(
+        { ...formData, Destination: selectedDestination },
+        { abortEarly: false }
+      );
       const { data } = await axiosOther.post("addupdatecalls", {
         ...formData,
-        ...state,
+        ...state?.payload,
+        Destination: selectedDestination,
       });
-
-      toast.success(data.Message);
-      setTimeout(() => {
-        navigate(`/master/agent/view/${Fk_partnerid}`);
-      }, 2000);
+      if (data?.Status === 1) {
+        toast.success(data.Message);
+        setTimeout(() => {
+          navigate(`/master/agent/view/${Fk_partnerid}`);
+        }, 2000);
+      }
       console.log(data);
     } catch (err) {
       if (err?.inner) {
@@ -107,9 +116,9 @@ const AddCall = () => {
                         <label className="m-0">
                           Business Type <span className="text-danger">*</span>
                         </label>
-                        {errors?.BussinessType && (
+                        {errors?.BusinessType && (
                           <span className="font-size-10 text-danger">
-                            {errors?.BussinessType}
+                            {errors?.BusinessType}
                           </span>
                         )}
                       </div>
@@ -207,19 +216,9 @@ const AddCall = () => {
                         <option value="2">Canada</option>
                       </select>
                     </div>
-                    <div className="col-lg-4 col-md-3 col-sm-4 col-12">
+                    <div className="col-12">
                       <label className="m-0">Destination</label>
-                      <select
-                        name="Destination"
-                        value={formData.Destination}
-                        onChange={handleChangeFormData}
-                        className="form-input-1"
-                      >
-                        <option value="">Select</option>
-                        <option value="1">Noida</option>
-                        <option value="2">Agra</option>
-                        <option value="2">Gurgaon</option>
-                      </select>
+                      <SelectInput />
                     </div>
                   </div>
                   <div className="row row-gap-3 mt-3">
@@ -460,7 +459,9 @@ const AddCall = () => {
                     </div>
                     <div className="col-6">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0">Mobile Number <span className="text-danger">*</span></label>
+                        <label className="m-0">
+                          Mobile Number <span className="text-danger">*</span>
+                        </label>
                         {errors?.MobileNumber && (
                           <span className="font-size-10 text-danger pt-1">
                             {errors?.MobileNumber}

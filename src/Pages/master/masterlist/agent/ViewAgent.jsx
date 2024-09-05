@@ -21,12 +21,12 @@ const ViewAgent = () => {
       BusinessType: 1,
     });
     setViewData(data?.DataList[0]);
-    console.log("view-api-function-rendered");
   }, []);
 
   useEffect(() => {
     getSingleAgentList();
   }, [id]);
+
 
   return (
     <Layout>

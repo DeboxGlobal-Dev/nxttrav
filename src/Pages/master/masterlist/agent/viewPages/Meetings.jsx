@@ -10,9 +10,11 @@ const Meetings = ({ partner_payload }) => {
   const fetchMeetingListData = async () => {
 
     try{
-      const { data } = await axiosOther.post("meetingslist", partner_payload);
+      const { data } = await axiosOther.post("meetingslist", {
+        Fk_partnerid:partner_payload?.Fk_partnerid,
+        BusinessType:partner_payload?.BusinessType
+      });
       setMeetingsList(data?.DataList);
-      console.log("meeting-list", data);
     }catch(error){
       console.log(error);
     }
@@ -21,12 +23,29 @@ const Meetings = ({ partner_payload }) => {
 
   useEffect(() => {
     fetchMeetingListData();
-  });
+  }, []);
 
   const handleNavigate = () => {
     navigate("/master/agent/view/meeting", { state: partner_payload });
   };
 
+  const handleEditData  = () =>{
+    
+  }
+
+  const handleDeleteData = async (id) => {
+    const { data } = await axiosOther.post("destroymeetings", {
+      id: id,
+    });
+    if (data?.Status === 1) {
+      toast.success(data?.Message);
+      fetchMeetingListData();
+    }
+    console.log(data);
+  };
+
+
+  // console.log('meeting-list', meetinsList)
   return (
     <>
       <div className="col-12 agent-view-table mt-4">
@@ -48,19 +67,27 @@ const Meetings = ({ partner_payload }) => {
               <th className="py-1">Meeting Outcome</th>
               <th className="py-1">Sales Person</th>
               <th className="py-1">Created Date</th>
+              <th className="py-1">Action</th>
             </tr>
           </thead>
           <tbody>
-            {meetinsList?.length > 1 ? (
+            {meetinsList?.length > 0 ? (
               meetinsList?.map((details, index) => {
                 return (
-                  <tr>
+                  <tr key={index+1}>
                     <th className="py-1">{details?.MeetingAgenda}</th>
-                    <td className="py-1">{details?.StartDate}</td>
+                    <td className="py-1">{details?.Startdate}</td>
                     <td className="py-1">{details?.MeetingStatus}</td>
                     <td className="py-1">{details?.MeetingOutcome}</td>
                     <td className="py-1">{details?.SalesPerson}</td>
                     <td className="py-1">{details?.Created_At}</td>
+                    <td className="py-1 d-flex justify-content-center gap-2">
+                      <i className="fa-solid fa-pen-to-square fs-6 text-success" onClick={()=>handleEditData(list)}></i>
+                      <i 
+                      className="fa-solid fa-trash fs-6 cursor-pointer text-danger"
+                      onClick={()=>handleDeleteData(list?.id)}
+                      ></i>
+                    </td>
                   </tr>
                 );
               })

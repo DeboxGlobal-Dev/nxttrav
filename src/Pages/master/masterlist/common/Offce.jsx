@@ -10,6 +10,7 @@ const Office = ({ partner_payload }) => {
   const [officeList, setOfficeList] = useState([]);
   const [errors, setErrors] = useState({});
   const closeRef = useRef(null);
+  const modalRef = useRef(null);
 
   const handleChangeFormData = (e) => {
     const { name, value } = e.target;
@@ -28,10 +29,12 @@ const Office = ({ partner_payload }) => {
       if (data?.Status === 1) {
         getOfficeListData();
         toast.success(data.Message);
+        setFormData(addOfficeInitialValue);
         closeRef.current.click();
       }
       console.log(data);
     } catch (err) {
+      const { Name } = err?.response?.data?.Errors;
       if (err?.inner) {
         const errorMessage = err.inner.reduce((acc, curr) => {
           acc[curr.path] = curr.message;
@@ -39,10 +42,12 @@ const Office = ({ partner_payload }) => {
         }, {});
         setErrors(errorMessage);
       }
+
+      if (err.response.status === 400) {
+        toast.error(Name[0]);
+      }
     }
   };
-
-  console.log('office-errors', errors);
 
   async function getOfficeListData() {
     try {
@@ -53,9 +58,27 @@ const Office = ({ partner_payload }) => {
     }
   }
 
+  console.log('office-payload', partner_payload);
+
   useEffect(() => {
     getOfficeListData();
   }, []);
+
+  const handleEditData = (list) => {
+    modalRef.current.click();
+    setFormData(list);
+  };
+
+  const handleDeleteData = async (id) =>{
+    const {data} = await axiosOther.post("destroyoffice", {
+      id:id
+    });
+    if(data?.Status === 1){
+      toast.success(data?.Message)
+      getOfficeListData();
+    }
+    console.log(data);
+  }
 
   return (
     <>
@@ -66,6 +89,7 @@ const Office = ({ partner_payload }) => {
             data-toggle="modal"
             data-target="#modal_form_vertical"
             className="fs-6 font-weight-bold text-success cursor-pointer"
+            ref={modalRef}
           >
             + Add Office
           </p>
@@ -118,7 +142,11 @@ const Office = ({ partner_payload }) => {
                         <label htmlFor="country" className="m-0">
                           Country <span className="text-danger">*</span>
                         </label>
-                        {errors?.Country && <span className="text-danger font-size-10">{errors?.Country}</span>}
+                        {errors?.Country && (
+                          <span className="text-danger font-size-10">
+                            {errors?.Country}
+                          </span>
+                        )}
                       </div>
                       <select
                         className="form-control"
@@ -292,8 +320,15 @@ const Office = ({ partner_payload }) => {
                     <td className="py-1">{list?.Gstn}</td>
                     <td className="py-1">{list?.Pan}</td>
                     <td className="py-1">{list?.Address}</td>
-                    <td className="py-1">
-                      <i className="fa-solid fa-pen-to-square fs-6 cursor-pointer"></i>
+                    <td className="py-1 d-flex gap-2 justify-content-center">
+                      <i
+                        className="fa-solid fa-pen-to-square fs-6 cursor-pointer text-success"
+                        onClick={() => handleEditData(list)}
+                      ></i>
+                      <i 
+                      className="fa-solid fa-trash fs-6 cursor-pointer text-danger"
+                      onClick={()=>handleDeleteData(list?.id)}
+                      ></i>
                     </td>
                   </tr>
                 );

@@ -979,7 +979,8 @@ export const addContactPersonValidationSchema = yup.object().shape({
 
 export const companyDocumentValidationSchema = yup.object().shape({
   DocumentName: yup.string().required("Required"),
-  DocumentPath: yup.string().required("Required"),
+  DocumentImageData: yup.string().required("Required"),
+  DocumentImageName: yup.string().required("Required"),
 });
 
 export const bankDetailsValidationSchema = yup.object().shape({
@@ -992,12 +993,12 @@ export const bankDetailsValidationSchema = yup.object().shape({
 
 export const callsValidationSchema = yup.object().shape({
   Fk_Leadsource: yup.string().required("Required"),
-  BussinessType: yup.string().required("Required"),
-  Agent: yup.string().required("Required"),
+  BusinessType: yup.string().required("Required"),
+  AgentName: yup.string().required("Required"),
   AgentContactPerson: yup.string().required("Required"),
   EmailId: yup.string().required("Required"),
   CountryId: yup.string().required("Required"),
-  Destination: yup.string().required("Required"),
+  Destination: yup.array().min(1, 'Required').required("Required"),
   SalesPerson: yup.string().required("Required"),
   MobileNumber: yup.string().required("Required"),
   Startdate: yup.string().required("Required"),

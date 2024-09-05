@@ -2,21 +2,31 @@ import Layout from "../../../../Component/Layout/Layout";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Editor from "../../../../helper/Editor";
 import { addTaskInitialValue } from "../mastersInitialValues";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 import { memo } from "react";
 import { taskValidationSchema } from "../MasterValidations";
+import useDestinationSelect from "../../../../helper/custom_hook/useDestinationSelect";
 
 const AddTask = () => {
+  
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { Fk_partnerid } = state;
-  const [formData, setFormData] = useState(addTaskInitialValue);
+  const { SelectInput, selectedDestination } = useDestinationSelect();
+  const { Fk_partnerid } = state?.payload;
+  const modalRef = useRef(null);
+  const [formData, setFormData] = useState(
+    updateData == undefined
+      ? addTaskInitialValue
+      : { ...updateData, Destination: selectedDestination }
+  );
+
   const [errors, setErrors] = useState({});
   const [showAgentPopup, setShowAgentPopup] = useState(true);
   const [agentList, setAgentList] = useState([]);
   const [agentSearch, setAgentSearch] = useState("");
+  const updateData = state?.data;
 
   const handleChangeFormData = (e) => {
     const { name, value } = e.target;
@@ -27,11 +37,13 @@ const AddTask = () => {
     setFormData({ ...formData, Description: content });
   };
 
+  console.log("formData", formData);
   const handleSubmitData = async () => {
     try {
       await taskValidationSchema.validate(formData, { abortEarly: false });
       const { data } = await axiosOther.post("addupdatetasks", {
         ...formData,
+        Destination: selectedDestination,
         ...state,
       });
 
@@ -39,8 +51,6 @@ const AddTask = () => {
         toast.success(data.Message);
         navigate(`/master/agent/view/${Fk_partnerid}`);
       }
-
-      console.log("submitting", data);
     } catch (error) {
       if (error?.inner) {
         const errorMessages = error?.inner.reduce((acc, crr) => {
@@ -78,7 +88,8 @@ const AddTask = () => {
     });
   };
 
-  console.log("task-error", errors);
+  const handleEditData = () => {};
+
   return (
     <>
       <Layout>
@@ -303,7 +314,7 @@ const AddTask = () => {
                         <option value="2">Canada</option>
                       </select>
                     </div>
-                    <div className="col-lg-4 col-md-3 col-sm-4 col-12">
+                    <div className="col-12">
                       <div className="d-flex justify-content-between">
                         <label className="m-0">
                           Destination <span className="text-danger">*</span>
@@ -314,17 +325,7 @@ const AddTask = () => {
                           </span>
                         )}
                       </div>
-                      <select
-                        name="Destination"
-                        value={formData.Destination}
-                        onChange={handleChangeFormData}
-                        className="form-input-1"
-                      >
-                        <option value="">Select</option>
-                        <option value="1">Noida</option>
-                        <option value="2">Agra</option>
-                        <option value="2">Gurgaon</option>
-                      </select>
+                      <SelectInput />
                     </div>
                   </div>
                   <div className="row row-gap-3 mt-3">
