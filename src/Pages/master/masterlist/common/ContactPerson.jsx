@@ -8,6 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 const ContactPerson = ({ partner_payload }) => {
   const [formData, setFormData] = useState(addContactInitialValue);
   const [contactList, setContactList] = useState([]);
+  const [divisionList, setDivisionList] = useState([]);
   const [errors, setErrors] = useState({});
   const modalRef = useRef(null);
   const closeRef = useRef(null);
@@ -74,7 +75,7 @@ const ContactPerson = ({ partner_payload }) => {
       });
       const { data } = await axiosOther.post("addupdatecontact", {
         ...formData,
-        ParentId: 11,
+        ParentId: partner_payload?.Fk_partnerid,
       });
 
       console.log("adding", data);
@@ -82,6 +83,7 @@ const ContactPerson = ({ partner_payload }) => {
       if (data?.Status === 1) {
         toast.success(data?.Message);
         setFormData(addContactInitialValue);
+        getContacList();
         closeRef.current.click();
       }
     } catch (error) {
@@ -100,7 +102,7 @@ const ContactPerson = ({ partner_payload }) => {
     try {
       const { data } = await axiosOther.post("contactlist", {
         ParentId: partner_payload?.Fk_partnerid,
-        BusinessType: "agent",
+        Type: "agent",
       });
       setContactList(data?.DataList);
       console.log("contact-list", data);
@@ -128,6 +130,18 @@ const ContactPerson = ({ partner_payload }) => {
     }
     console.log(data);
   };
+
+  useEffect(() => {
+    const getDivisionList = async () => {
+      try {
+        const { data } = await axiosOther.post("divisionlist");
+        setDivisionList(data?.DataList);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getDivisionList();
+  }, []);
 
   return (
     <>
@@ -274,8 +288,14 @@ const ContactPerson = ({ partner_payload }) => {
                         value={formData?.Division}
                         onChange={handleChangeFormData}
                       >
-                        <option value="1">Finance</option>
-                        <option value="2">Accounts</option>
+                        <option value="">Select</option>
+                        {
+                          divisionList?.map((division, index)=>{
+                            return(
+                              <option value={division?.id} key={index+1}>{division?.Name}</option>
+                            )
+                          })
+                        }
                       </select>
                     </div>
                     <div className="col-4">
@@ -647,14 +667,14 @@ const ContactPerson = ({ partner_payload }) => {
                     <td className="py-1">view document</td>
                     <td className="py-1">view document</td>
                     <td className="py-1">view document</td>
-                    <td className="py-1">
+                    <td className="py-1 d-flex gap-2 border-0 justify-content-center">
                       <i
                         className="fa-solid fa-pen-to-square fs-6 cursor-pointer text-success"
                         onClick={() => handleEditData(contact)}
                       ></i>
                       <i
                         className="fa-solid fa-trash fs-6 cursor-pointer text-danger"
-                        onClick={() => handleDeleteData(list?.id)}
+                        onClick={() => handleDeleteData(contact?.id)}
                       ></i>
                     </td>
                   </tr>

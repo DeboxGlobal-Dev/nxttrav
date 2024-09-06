@@ -6,7 +6,7 @@ import {
   roomInitial,
   valueAddInitial,
   suggestedPackageData,
-} from "./QuerySchema";
+} from "./QueryInitialValue";
 import { eachDayOfInterval, format } from "date-fns";
 import { axiosOther } from "../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
@@ -17,14 +17,14 @@ import "select2";
 import "jquery";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { axiosQuery } from "../../http/axios/axios_new";
-import { roomListStaticApi } from "./QuerySchema";
-import { Value } from "sass";
+import { roomListStaticApi } from "./QueryInitialValue";
+import { queryAddValidationSchema } from "./querValidationSchema";
 
 const Query = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const fiftyYear = [];
-
+  const [errors, setErrors] = useState([]);
   const [PaxTotal, setPaxTotal] = useState(0);
   const [TravelDate, setTravelDate] = useState({ ...travelInitial });
   const [PaxInfo, setPaxInfo] = useState({ ...paxInitial });
@@ -50,6 +50,7 @@ const Query = () => {
     Contact: "",
   });
 
+  console.log('errors-in-query', errors);
   const [showAgentPopup, setShowAgentPopup] = useState(true);
 
   const initialState = {
@@ -300,6 +301,7 @@ const Query = () => {
 
     gettingDataForDropdown2();
   }, [queryFields.BusinessType]);
+
   // Handling Submit Query Data
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -333,10 +335,15 @@ const Query = () => {
     } else if (document.activeElement.name === "SubmitButton") {
       setEmptyData(!emptyData);
       try {
-        // await validationSchema.validate(
-        //   { ...queryFields, TravelDate, PaxInfo, RoomInfo },
-        //   { abortEarly: false }
-        // );
+
+        await queryAddValidationSchema.validate({
+          ...queryFields,
+          TravelDate: [{ ...TravelDate }],
+          RoomInfo: [{ ...RoomInfo }],
+          PaxInfo: [{ ...PaxInfo }],
+          ValueAddServices: [{ ...valueAddServices }],
+        }, {abortEarly:false});
+
         const response = await axios.post(
           "http://20.197.55.39/api/addupdatequerymaster",
           {
@@ -347,9 +354,9 @@ const Query = () => {
             ValueAddServices: [{ ...valueAddServices }],
           }
         );
-        // console.log("SubmitingQueryForm", response);
+
         toast.success(response.data.Message);
-        console.log("response", response);
+
         setQueryFields({ ...queryInitial });
         setTravelDate({ ...travelInitial });
         setPaxInfo({ ...paxInitial });
@@ -360,17 +367,28 @@ const Query = () => {
 
         localStorage.removeItem("Query");
       } catch (err) {
-        // validationErrors : parameter
-        // const formattedErrors = {};
-        // validationErrors.inner.forEach((error) => {
-        //   formattedErrors[error.path] = error.message;
-        // });
-        // setErrors(formattedErrors);
-        // console.log("Errors From Yup...", formattedErrors);
         console.log(err);
+        if(err?.inner){
+          const errorMessage = err?.inner.reduce((acc, crr)=>{
+            acc[crr?.path] = crr?.message
+            return acc;
+          }, {});
+          setErrors(errorMessage);
+        }
       }
     } else if (document.activeElement.name === "UpdateButton") {
       try {
+        await queryAddValidationSchema.validate(
+          {
+            ...queryFields,
+            TravelDate: [{ ...TravelDate }],
+            RoomInfo: [{ ...RoomInfo }],
+            PaxInfo: [{ ...PaxInfo }],
+            ValueAddServices: [{ ...valueAddServices }],
+          },
+          { abortEarly: false }
+        );
+
         const response = await axiosQuery.post("addupdatequerymaster", {
           ...queryFields,
           TravelDate: [{ ...TravelDate }],
@@ -383,13 +401,6 @@ const Query = () => {
           navigate("/querylist");
         }, 2000);
       } catch (err) {
-        // validationErrors : parameter
-        // const formattedErrors = {};
-        // validationErrors.inner.forEach((error) => {
-        //   formattedErrors[error.path] = error.message;
-        // });
-        // setErrors(formattedErrors);
-        // console.log("Errors From Yup...", formattedErrors);
         console.log(err);
       }
     } else {
@@ -676,8 +687,6 @@ const Query = () => {
     });
   };
 
-  // console.log("query-type", dropdownState.queryType);
-
   return (
     <>
       <div className="container-fluid mt-2">
@@ -764,14 +773,10 @@ const Query = () => {
                       <div className="col-12 col-lg-4">
                         <div className="d-flex justify-content-between">
                           <label htmlFor="firstname" className="m-0">
-                            Bussiness Type{" "}
+                            Bussiness Type
                             <span className="text-danger">*</span>
                           </label>
-                          {/* {errors?.Status && (
-                            <span className="text-danger font-size-10">
-                              {errors?.Status}
-                            </span>
-                          )} */}
+                          {errors?.BusinessType && <span className="text-danger font-size-10 m-0">{errors?.BusinessType}</span>}
                         </div>
                         <select
                           className="form-input-2"
@@ -790,16 +795,16 @@ const Query = () => {
                         </select>
                       </div>
                       <div className="col-12 col-lg-8">
-                        <div className="d-flex justify-content-between">
+                        <div className="d-flex gap-2">
                           <label htmlFor="firstname" className="m-0">
                             Agent/Client Name
                             <span className="text-danger">*</span>
                           </label>
-                          {/* {errors?.Status && (
-                            <span className="text-danger font-size-10">
-                              {errors?.Status}
+                          {errors?.ClientType && (
+                            <span className="text-danger font-size-10 m-0">
+                              {errors?.ClientType}
                             </span>
-                          )} */}
+                          )}
                         </div>
                         <div className="d-flex">
                           <input
@@ -807,7 +812,7 @@ const Query = () => {
                             className="form-input-2"
                             placeholder="Enter Agent/Client Name"
                             name="ClientType"
-                            value={queryFields.ClientType}
+                            value={queryFields?.ClientType}
                             onChange={handleChange}
                             onClick={() => setShowAgentPopup(true)}
                           />
@@ -915,9 +920,9 @@ const Query = () => {
                         <div className="row w-100 align-items-center gap-1 m-0 px-1">
                           {dropdownState?.agentList
                             ?.filter((agent) => {
-                              return queryFields.ClientType != ""
+                              return queryFields?.ClientType != ""
                                 ? agent.CompanyName.toLowerCase().includes(
-                                    queryFields.ClientType.toLowerCase()
+                                    queryFields?.ClientType.toLowerCase()
                                   )
                                 : agent;
                             })
@@ -936,7 +941,7 @@ const Query = () => {
                                     (contact, ind) => {
                                       return (
                                         <div
-                                          className="d-flex justify-content-between p-2 rounded cursor-pointer alternate-color"
+                                          className="d-flex justify-content-between p-2 rounded cursor-pointer alternate-color mb-1"
                                           key={ind + 1}
                                           onClick={() => {
                                             handleSetDataToAgent(
@@ -961,13 +966,13 @@ const Query = () => {
                                 </div>
                               );
                             })}
-                          {dropdownState?.agentList == "" && (
-                            <div className="col-12 d-flex justify-content-center">
+                          <div className="col-12 d-flex justify-content-center">
+                            {dropdownState?.agentList == "" && (
                               <h6 className="text-secondary">
-                                There are no records for show
+                                Loading Data..
                               </h6>
-                            </div>
-                          )}
+                            )}
+                          </div>
                         </div>
                       </div>
                     )}
@@ -1000,11 +1005,11 @@ const Query = () => {
                             <i className="fa-solid fa-person pl-2"></i>{" "}
                             <span className="text-danger">*</span>
                           </label>
-                          {/* {errors?.Status && (
+                          {errors?.Adult && (
                             <span className="text-danger font-size-10">
-                              {errors?.Status}
+                              {errors?.Adult}
                             </span>
-                          )} */}
+                          )}
                         </div>
                         <Counter
                           value={state.counter1}
@@ -1417,7 +1422,7 @@ const Query = () => {
                   </div>
 
                   <div className="col-12 col-sm query-box-shadow py-1">
-                    <div className="row row-gap-2 p-0 pt-1 pb-2">
+                    <div className="row row-gap-2 p-0 pt-1 pb-2 ">
                       <div className="col-12 col-md-6 col-lg-8 d-flex align-items-center">
                         <p className="m-0 fs-6 font-weight-bold">
                           Travel Information
@@ -1429,8 +1434,6 @@ const Query = () => {
                           className="form-input-2"
                           name="Budget"
                           placeholder="Budget"
-                          // value={queryFields.Budget}
-                          // onChange={handleChange}
                         />
                       </div>
                       <div className="col-6 col-md-6 col-lg-4 form-check">
@@ -1517,11 +1520,11 @@ const Query = () => {
                               From Date
                               <span className="text-danger">*</span>
                             </label>
-                            {/* {errors?.Status && (
+                            {errors?.FromDate && (
                             <span className="text-danger font-size-10">
-                              {errors?.Status}
+                              {errors?.FromDate}
                             </span>
-                          )} */}
+                          )}
                           </div>
                           <input
                             type="date"
@@ -1539,16 +1542,16 @@ const Query = () => {
                             : "col-4 col-md-6 col-lg-3"
                         }
                       >
-                        <div className="d-flex justify-content-between">
+                        <div className="d-flex gap-2">
                           <label htmlFor="totalnights" className="m-0">
                             TotalNights
                             <span className="text-danger">*</span>
                           </label>
-                          {/* {errors?.Status && (
+                          {errors?.TotalNights && (
                             <span className="text-danger font-size-10">
-                              {errors?.Status}
+                              {errors?.TotalNights}
                             </span>
-                          )} */}
+                          )}
                         </div>
                         <input
                           type="text"
@@ -1567,7 +1570,7 @@ const Query = () => {
                       {TravelDate.TotalNights !== "" &&
                       TravelDate.FromDate !== "" &&
                       TravelDate.Type !== "2" ? (
-                        <div className="row p-2">
+                        <div className="row p-2 ">
                           <table className="table">
                             <thead>
                               <tr>

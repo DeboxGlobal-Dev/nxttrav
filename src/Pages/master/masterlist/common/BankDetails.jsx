@@ -317,7 +317,7 @@ const BankDetails = ({ partner_payload }) => {
                     <td className="py-1">{list?.EmailId}</td>
                     <td className="py-1">{list?.SwiftCode}</td>
                     <td className="py-1"></td>
-                    <td className="py-1 d-flex justify-content-center gap-2">
+                    <td className="py-1 d-flex justify-content-center gap-2 border-0">
                       <i className="fa-solid fa-pen-to-square fs-6 text-success" onClick={()=>handleEditData(list)}></i>
                       <i 
                       className="fa-solid fa-trash fs-6 cursor-pointer text-danger"

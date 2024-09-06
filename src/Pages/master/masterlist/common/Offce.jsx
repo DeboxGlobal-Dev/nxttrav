@@ -8,6 +8,9 @@ import { addAddressValidationSchema } from "../MasterValidations";
 const Office = ({ partner_payload }) => {
   const [formData, setFormData] = useState(addOfficeInitialValue);
   const [officeList, setOfficeList] = useState([]);
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [cityList, setCityList] = useState([]);
   const [errors, setErrors] = useState({});
   const closeRef = useRef(null);
   const modalRef = useRef(null);
@@ -58,7 +61,7 @@ const Office = ({ partner_payload }) => {
     }
   }
 
-  console.log('office-payload', partner_payload);
+  console.log("office-payload", partner_payload);
 
   useEffect(() => {
     getOfficeListData();
@@ -69,16 +72,52 @@ const Office = ({ partner_payload }) => {
     setFormData(list);
   };
 
-  const handleDeleteData = async (id) =>{
-    const {data} = await axiosOther.post("destroyoffice", {
-      id:id
+  const handleDeleteData = async (id) => {
+    const { data } = await axiosOther.post("destroyoffice", {
+      id: id,
     });
-    if(data?.Status === 1){
-      toast.success(data?.Message)
+    if (data?.Status === 1) {
+      toast.success(data?.Message);
       getOfficeListData();
     }
     console.log(data);
-  }
+  };
+
+  const getDataToServer = async () => {
+    try {
+      const countryData = await axiosOther.post("countrylist", {
+        Search: "",
+        Status: 1,
+      });
+      setCountryList(countryData.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+
+    try {
+      const stateData = await axiosOther.post("statelist", {
+        Search: "",
+        Status: 1,
+      });
+      setStateList(stateData.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const stateData = await axiosOther.post("citylist", {
+        Search: "",
+        Status: 1,
+      });
+      setCityList(stateData.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
+  
+
 
   return (
     <>
@@ -155,8 +194,13 @@ const Office = ({ partner_payload }) => {
                         onChange={handleChangeFormData}
                       >
                         <option value="">Select</option>
-                        <option value="1">India</option>
-                        <option value="2">Bangladesh</option>
+                        {
+                          countryList?.map((country, index)=>{
+                            return(
+                              <option value={country?.id} key={index+1}>{country?.Name}</option>
+                            )
+                          })
+                        }
                       </select>
                     </div>
                     <div className="col-4">
@@ -170,8 +214,13 @@ const Office = ({ partner_payload }) => {
                         onChange={handleChangeFormData}
                       >
                         <option value="">Select</option>
-                        <option value="1">Delhi</option>
-                        <option value="2">Dhanka</option>
+                        {
+                          stateList?.map((state, index)=>{
+                            return(
+                              <option value={state?.id} key={index+1}>{state?.Name}</option>
+                            )
+                          })
+                        }
                       </select>
                     </div>
                     <div className="col-4">
@@ -185,8 +234,13 @@ const Office = ({ partner_payload }) => {
                         onChange={handleChangeFormData}
                       >
                         <option value="">Select</option>
-                        <option value="1">New Delhi</option>
-                        <option value="2">Gurgaon</option>
+                        {
+                          cityList?.map((city,index)=>{
+                            return(
+                              <option value={city?.id} key={index+1}>{city?.Name}</option>
+                            )
+                          })
+                        }
                       </select>
                     </div>
                     <div className="col-4">
@@ -325,9 +379,9 @@ const Office = ({ partner_payload }) => {
                         className="fa-solid fa-pen-to-square fs-6 cursor-pointer text-success"
                         onClick={() => handleEditData(list)}
                       ></i>
-                      <i 
-                      className="fa-solid fa-trash fs-6 cursor-pointer text-danger"
-                      onClick={()=>handleDeleteData(list?.id)}
+                      <i
+                        className="fa-solid fa-trash fs-6 cursor-pointer text-danger"
+                        onClick={() => handleDeleteData(list?.id)}
                       ></i>
                     </td>
                   </tr>

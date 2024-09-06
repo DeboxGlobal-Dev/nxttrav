@@ -46,11 +46,11 @@ export const paxInitial = {
 };
 
 export const roomInitial = {
-  "SGLRoom": 1,
-  "DBLRoom": "",
-  "TPLRoom": "",
-  "TWINRoom": "",
-  "ExtraBed(A)": "",
+  SGLRoom: 1,
+  DBLRoom: "",
+  TPLRoom: "",
+  TWINRoom: "",
+  ExtraBed: "",
 };
 
 export const valueAddInitial = {

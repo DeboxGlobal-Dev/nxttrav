@@ -138,7 +138,12 @@ const AddAgent = () => {
           abortEarly: false,
         }
       );
-      
+      console.log({
+        ...logoImageData,
+        ...headerImageData,
+        ...footerImageData,
+        ...agentInputData,
+      });
       const { data } = await axiosOther.post("addupdateagent", {
         ...logoImageData,
         ...headerImageData,
@@ -146,6 +151,7 @@ const AddAgent = () => {
         ...agentInputData,
       });
      
+      
 
       if (data.Status === 1) {
         toast.success(data?.Message);

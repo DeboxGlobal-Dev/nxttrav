@@ -10,12 +10,8 @@ const Tasks = ({ partner_payload }) => {
 
   const fetchTaskListData = async () => {
     try {
-      const { data } = await axiosOther.post("taskslist", {
-        Fk_partnerid: partner_payload?.Fk_partnerid,
-        BusinessType: partner_payload?.BusinessType,
-      });
+      const { data } = await axiosOther.post("taskslist", partner_payload);
       setTaskList(data?.DataList);
-      // console.log("task-list", data);
     } catch (err) {
       console.log("task-list-err", err);
     }
@@ -31,7 +27,7 @@ const Tasks = ({ partner_payload }) => {
 
 
   const handleEditData = (list) => {
-    navigate(`/master/agent/view/call`, {
+    navigate(`/master/agent/view/task`, {
       state: { payload: partner_payload, data: list },
     });
   };
@@ -72,14 +68,15 @@ const Tasks = ({ partner_payload }) => {
           <tbody>
             {taskList?.length > 0 ? (
               taskList?.map((list, index) => {
+                console.log('task-list', list)
                 return (
                   <tr key={index + 1}>
-                    <th className="py-1">{list?.Subject}</th>
-                    <td className="py-1">{list?.StartDate}</td>
-                    <td className="py-1">{list?.Status}</td>
+                    <th className="py-1">{list?.TaskSubject}</th>
+                    <td className="py-1">{list?.Startdate}</td>
+                    <td className="py-1">{list?.TaskStatus}</td>
                     <td className="py-1">{list?.SalesPerson}</td>
                     <td className="py-1">{list?.CreatedAt}</td>
-                    <td className="py-1 d-flex justify-content-center gap-2">
+                    <td className="py-1 d-flex justify-content-center gap-2 border-0">
                       <i
                         className="fa-solid fa-pen-to-square fs-6 text-success"
                         onClick={() => handleEditData(list)}

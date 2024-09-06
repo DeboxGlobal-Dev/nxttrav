@@ -22,9 +22,6 @@ const QueryList = () => {
           "http://20.197.55.39/api/querymasterlist",
           postData
         );
-
-        console.log("query-list-data", data);
-
         setGetData(data.DataList);
         setFilterData(data.DataList);
 

@@ -2,7 +2,7 @@ import Layout from "../../../../Component/Layout/Layout";
 import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import Editor from "../../../../helper/Editor";
 import { agentAddCallInitialValue } from "../mastersInitialValues";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 import { memo } from "react";
@@ -15,12 +15,17 @@ const AddCall = () => {
   const { Fk_partnerid, Type } = state?.payload;
   const updateData = state?.data;
   const { SelectInput, selectedDestination } = useDestinationSelect();
+  const [countryList, setCountryList] = useState([]);
+  const [leadSourceList, setLeadSourceList] = useState([]);
+  const [BusinessTypeList, setBusinessTypeList] = useState([]);
 
   const [formData, setFormData] = useState(
     updateData == undefined
       ? agentAddCallInitialValue
       : { ...updateData, Destination: selectedDestination }
   );
+  const [showAgentPopup, setShowAgentPopup] = useState(true);
+  const [agentList, setAgentList] = useState([]);
   const [errors, setErrors] = useState({});
 
   const handleChangeFormData = (e) => {
@@ -38,6 +43,11 @@ const AddCall = () => {
         { ...formData, Destination: selectedDestination },
         { abortEarly: false }
       );
+      console.log("call-data-submiting", {
+        ...formData,
+        ...state?.payload,
+        Destination: selectedDestination,
+      });
       const { data } = await axiosOther.post("addupdatecalls", {
         ...formData,
         ...state?.payload,
@@ -47,9 +57,8 @@ const AddCall = () => {
         toast.success(data.Message);
         setTimeout(() => {
           navigate(`/master/agent/view/${Fk_partnerid}`);
-        }, 2000);
+        }, 1500);
       }
-      console.log(data);
     } catch (err) {
       if (err?.inner) {
         const errorMessages = err?.inner.reduce((acc, crr) => {
@@ -60,6 +69,63 @@ const AddCall = () => {
       }
     }
   };
+
+  const getAgentList = async () => {
+    const { data } = await axiosOther.post("agentlist", {
+      id: "",
+      BusinessType: "",
+    });
+    setAgentList(data?.DataList);
+  };
+
+  useEffect(() => {
+    getAgentList();
+  }, [formData?.BusinessType]);
+
+  const handleSetDataToAgent = (agent, contact) => {
+    setFormData({
+      ...formData,
+      AgentContactPerson: contact?.Name,
+      EmailId: contact?.Email,
+      AgentName: agent?.CompanyName,
+      AgentId: agent?.id,
+      AgentContactPersonId: 1,
+    });
+  };
+
+  const getDataToServer = async () => {
+    try {
+      const countryData = await axiosOther.post("countrylist", {
+        Search: "",
+        Status: 1,
+      });
+      setCountryList(countryData.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+
+    try {
+      const stateData = await axiosOther.post("leadlist", {
+        Search: "",
+        Status: 1,
+      });
+      setLeadSourceList(stateData.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const stateData = await axiosOther.post("businesstypelist", {
+        Search: "",
+        Status: 1,
+      });
+      setBusinessTypeList(stateData.data.DataList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);  
 
   return (
     <>
@@ -107,8 +173,13 @@ const AddCall = () => {
                         onChange={handleChangeFormData}
                       >
                         <option value="">Select</option>
-                        <option value="1">Facebook</option>
-                        <option value="2">Instagram</option>
+                        {leadSourceList?.map((source, index) => {
+                          return (
+                            <option value={source?.id} key={index + 1}>
+                              {source?.Name}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
@@ -129,8 +200,13 @@ const AddCall = () => {
                         onChange={handleChangeFormData}
                       >
                         <option value="">Select</option>
-                        <option value="1">Agent</option>
-                        <option value="2">B2B</option>
+                        {BusinessTypeList?.map((type, index) => {
+                          return (
+                            <option value={type?.id} key={index + 1}>
+                              {type?.Name}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
@@ -144,21 +220,88 @@ const AddCall = () => {
                           </span>
                         )}
                       </div>
-                      <select
+
+                      <input
+                        type="text"
+                        placeholder="Search Agent"
                         className="form-input-1"
                         name="AgentName"
                         value={formData.AgentName}
                         onChange={handleChangeFormData}
-                      >
-                        <option value="">Select</option>
-                        <option value="1">Rizwan</option>
-                        <option value="2">Ansar</option>
-                      </select>
+                        onClick={() => setShowAgentPopup(true)}
+                      />
                     </div>
+                    {showAgentPopup && formData.BusinessType !== "" && (
+                      <div className="custom-search-dropdown custom-top-pos">
+                        <div
+                          className="col-12 d-flex justify-content-end cursor-pointer p-0"
+                          onClick={() => setShowAgentPopup(!showAgentPopup)}
+                        >
+                          <i className="fa-solid fa-xmark font-size-15 font-weight-bold px-1"></i>
+                        </div>
+                        <div className="row w-100 align-items-center gap-1 m-0 px-1">
+                          {agentList
+                            ?.filter((agent) => {
+                              return formData?.AgentName != ""
+                                ? agent.CompanyName.toLowerCase().includes(
+                                    formData?.AgentName.toLowerCase()
+                                  )
+                                : agent;
+                            })
+                            .map((agent, ind) => {
+                              return (
+                                <div
+                                  className="col-12 d-flex flex-column py-1 rounded border"
+                                  key={ind + 1}
+                                >
+                                  <div>
+                                    <span className="font-weight-bold">
+                                      {agent?.CompanyName}
+                                    </span>
+                                  </div>
+                                  {agent?.ContactList[0]?.ContactDetail?.map(
+                                    (contact, ind) => {
+                                      return (
+                                        <div
+                                          className="d-flex justify-content-between p-2 rounded cursor-pointer alternate-color mb-1"
+                                          key={ind + 1}
+                                          onClick={() => {
+                                            handleSetDataToAgent(
+                                              agent,
+                                              contact
+                                            ),
+                                              setShowAgentPopup(
+                                                !showAgentPopup
+                                              );
+                                          }}
+                                        >
+                                          <span className="m-0 ">
+                                            {contact?.Name}
+                                          </span>
+                                          <span className="m-0 ">
+                                            {contact?.Phone}
+                                          </span>
+                                        </div>
+                                      );
+                                    }
+                                  )}
+                                </div>
+                              );
+                            })}
+                          {agentList == "" && (
+                            <div className="col-12 d-flex justify-content-center">
+                              <h6 className="text-secondary">
+                                There are no records for show
+                              </h6>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
                       <div className="d-flex justify-content-between">
                         <label className="m-0">
-                          Contact Person Name{" "}
+                          Contact Person Name
                           <span className="text-danger">*</span>
                         </label>
                         <span className="font-size-8 text-danger">
@@ -172,6 +315,7 @@ const AddCall = () => {
                         name="AgentContactPerson"
                         value={formData.AgentContactPerson}
                         onChange={handleChangeFormData}
+                        readOnly
                       />
                     </div>
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
@@ -192,6 +336,7 @@ const AddCall = () => {
                         name="EmailId"
                         value={formData.EmailId}
                         onChange={handleChangeFormData}
+                        readOnly
                       />
                     </div>
                     <div className="col-lg-4 col-md-3 col-sm-4 col-12">
@@ -212,8 +357,13 @@ const AddCall = () => {
                         onChange={handleChangeFormData}
                       >
                         <option value="">Select</option>
-                        <option value="1">India</option>
-                        <option value="2">Canada</option>
+                        {countryList?.map((country, index) => {
+                          return (
+                            <option value={country?.id} key={index + 1}>
+                              {country?.Name}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                     <div className="col-12">
@@ -500,6 +650,7 @@ const AddCall = () => {
                     <Editor
                       handleChangeEditor={handleEditorChangeValue}
                       style={{ heigh: "260px" }}
+                      initialValue={formData?.Description}
                     />
                   </div>
                 </div>

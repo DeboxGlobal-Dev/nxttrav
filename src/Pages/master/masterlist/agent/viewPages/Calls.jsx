@@ -10,13 +10,8 @@ const Calls = ({ partner_payload }) => {
 
   const getCallListData = async () => {
     try {
-      const { data } = await axiosOther.post("callslist", {
-        Fk_partnerid: partner_payload?.Fk_partnerid,
-        BusinessType: partner_payload?.Type,
-      });
+      const { data } = await axiosOther.post("callslist", partner_payload);
       setCallList(data?.DataList);
-      console.log("calls-list", data);
-
     } catch (err) {
       console.log(err);
     }
@@ -77,6 +72,7 @@ const Calls = ({ partner_payload }) => {
           <tbody>
             {callList?.length > 0 ? (
               callList?.map((list, index) => {
+                console.log("call-list", list);
                 return (
                   <tr key={index + 1}>
                     <th className="py-1">{list?.CallAgenda}</th>
@@ -85,7 +81,7 @@ const Calls = ({ partner_payload }) => {
                     <td className="py-1">{list?.CallType}</td>
                     <td className="py-1">{list?.SalesPerson}</td>
                     <td className="py-1">{list?.Created_At}</td>
-                    <td className="py-1 d-flex justify-content-center gap-2">
+                    <td className="py-1 d-flex justify-content-center gap-2 border-0">
                       <i
                         className="fa-solid fa-pen-to-square fs-6 text-success"
                         onClick={() => handleEditData(list)}

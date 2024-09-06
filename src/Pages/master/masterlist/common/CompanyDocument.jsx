@@ -284,9 +284,9 @@ const CompanyDocument = ({ partner_payload }) => {
                     <td className="py-1">{list?.IssueDate}</td>
                     <td className="py-1">{list?.ExpireDate}</td>
                     <td className="py-1">view document</td>
-                    <td className="py-1 d-flex gap-2 justify-content-center">
+                    <td className="py-1 d-flex gap-2 justify-content-center border-0">
                       <i
-                        className="fa-solid fa-pen-to-square fs-6 cursor-pointer"
+                        className="fa-solid fa-pen-to-square fs-6 cursor-pointer text-success"
                         onClick={() => handleEditData(list)}
                       ></i>
                       <i

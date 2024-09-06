@@ -2,7 +2,7 @@ import Layout from "../../../../Component/Layout/Layout";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Editor from "../../../../helper/Editor";
 import { addTaskInitialValue } from "../mastersInitialValues";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 import { memo } from "react";
@@ -10,12 +10,11 @@ import { taskValidationSchema } from "../MasterValidations";
 import useDestinationSelect from "../../../../helper/custom_hook/useDestinationSelect";
 
 const AddTask = () => {
-  
   const navigate = useNavigate();
   const { state } = useLocation();
   const { SelectInput, selectedDestination } = useDestinationSelect();
   const { Fk_partnerid } = state?.payload;
-  const modalRef = useRef(null);
+  const updateData = state?.data;
   const [formData, setFormData] = useState(
     updateData == undefined
       ? addTaskInitialValue
@@ -25,8 +24,6 @@ const AddTask = () => {
   const [errors, setErrors] = useState({});
   const [showAgentPopup, setShowAgentPopup] = useState(true);
   const [agentList, setAgentList] = useState([]);
-  const [agentSearch, setAgentSearch] = useState("");
-  const updateData = state?.data;
 
   const handleChangeFormData = (e) => {
     const { name, value } = e.target;
@@ -40,16 +37,21 @@ const AddTask = () => {
   console.log("formData", formData);
   const handleSubmitData = async () => {
     try {
-      await taskValidationSchema.validate(formData, { abortEarly: false });
+      await taskValidationSchema.validate(
+        { ...formData, Destination: selectedDestination },
+        { abortEarly: false }
+      );
       const { data } = await axiosOther.post("addupdatetasks", {
         ...formData,
         Destination: selectedDestination,
-        ...state,
+        ...state?.payload,
       });
-
+      console.log(data);
       if (data?.Status === 1) {
         toast.success(data.Message);
-        navigate(`/master/agent/view/${Fk_partnerid}`);
+        setTimeout(() => {
+          navigate(`/master/agent/view/${Fk_partnerid}`);
+        }, 1500);
       }
     } catch (error) {
       if (error?.inner) {
@@ -62,17 +64,12 @@ const AddTask = () => {
     }
   };
 
-  const handleAgentSearch = (e) => {
-    setAgentSearch(e.target.value);
-  };
-
   const getAgentList = async () => {
     const { data } = await axiosOther.post("agentlist", {
       id: "",
       BusinessType: "",
     });
     setAgentList(data?.DataList);
-    console.log("data", data);
   };
 
   useEffect(() => {
@@ -85,7 +82,11 @@ const AddTask = () => {
       AgentContactPerson: contact?.Name,
       EmailId: contact?.Email,
       AgentName: agent?.CompanyName,
+      AgentId: agent?.id,
+      AgentContactPersonId: 1,
     });
+
+    console.log("on-click-data", agent, contact);
   };
 
   const handleEditData = () => {};
@@ -214,7 +215,7 @@ const AddTask = () => {
                                     (contact, ind) => {
                                       return (
                                         <div
-                                          className="d-flex justify-content-between p-2 rounded cursor-pointer alternate-color"
+                                          className="d-flex justify-content-between p-2 rounded cursor-pointer alternate-color mb-1"
                                           key={ind + 1}
                                           onClick={() => {
                                             handleSetDataToAgent(
@@ -592,6 +593,7 @@ const AddTask = () => {
                     <Editor
                       handleChangeEditor={handleEditorChangeValue}
                       style={{ heigh: "260px" }}
+                      initialValue={formData?.Description}
                     />
                   </div>
                 </div>

@@ -713,8 +713,14 @@ a {
 .custom-top-pos::-webkit-scrollbar{
   width: 3px;
 }
-.alternate-color:nth-child(even) {
-  background-color: #c2dbffad;
+.alternate-color:nth-child(even){
+  background-color: #bad7ffad;
+}
+.alternate-color:nth-child(even):hover{
+  background-color: #94c1ffad;
+}
+.alternate-color:nth-child(odd):hover{
+  background-color: #d7e8ffad;
 }
 .primary-light-bg {
   background-color: #cee9ffbe;
@@ -771,6 +777,7 @@ a {
   border-radius: 5px;
   background-color: rgb(250, 250, 250);
 }
+
 .query-box-shadow input,
 select {
   background-color: rgb(250, 250, 250);
@@ -929,4 +936,22 @@ select {
 }
 .bottom-83{
   bottom: -83px;
+}
+.skeleton-box {
+  background-color: #9a9a9a; /* Light grey background */
+  border-radius: 4px; /* Rounded corners */
+  animation: skeleton-loading 1.5s infinite linear;
+}
+
+/* Animation for loading effect */
+@keyframes skeleton-loading {
+  0% {
+    background-color: #e9e9e9;
+  }
+  50% {
+    background-color: #bababa;
+  }
+  100% {
+    background-color: #adadad;
+  }
 }

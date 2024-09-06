@@ -13,7 +13,7 @@ import { axiosOther } from "../../../../http/axios/axios_new";
 const ViewAgent = () => {
   const { id } = useParams();
 
-  const [viewData, setViewData] = useState({});
+  const [viewData, setViewData] = useState("");
 
   const getSingleAgentList = useCallback(async () => {
     const { data } = await axiosOther.post("agentlist", {
@@ -26,7 +26,6 @@ const ViewAgent = () => {
   useEffect(() => {
     getSingleAgentList();
   }, [id]);
-
 
   return (
     <Layout>
@@ -124,38 +123,46 @@ const ViewAgent = () => {
               {/* images */}
               <div className="col-6">
                 <div className="card">
-                  <div className="card-body d-flex gap-2 p-1 ">
-                    {viewData?.CompanyLogoImageName && (
-                      <div className="card w-50 shadow-0 m-0">
-                        <img
-                          className="card-img-top image-style"
-                          src={viewData?.CompanyLogoImageName}
-                          alt="Card image cap"
-                        />
-                        <p className="card-text text-center">Company Logo</p>
-                      </div>
-                    )}
-                    {viewData?.AgentHeaderImageName && (
-                      <div className="card w-50 shadow-0 m-0">
-                        <img
-                          className="card-img-top image-style"
-                          src={viewData?.AgentHeaderImageName}
-                          alt="Card image cap"
-                        />
-                        <p className="card-text text-center">Agent Header</p>
-                      </div>
-                    )}
-                    {viewData?.AgentFooterImageName && (
-                      <div className="card w-50 shadow-0 m-0">
-                        <img
-                          className="card-img-top image-style"
-                          src={viewData?.AgentFooterImageName}
-                          alt="Card image cap"
-                        />
-                        <p className="card-text text-center">Agent Footer</p>
-                      </div>
-                    )}
-                  </div>
+                  {viewData != "" ? (
+                    <div className="card-body d-flex gap-2 p-1 ">
+                      {viewData?.CompanyLogoImageName && (
+                        <div className="card w-50 shadow-0 m-0">
+                          <img
+                            className="card-img-top image-style"
+                            src={viewData?.CompanyLogoImageName}
+                            alt="Card image cap"
+                          />
+                          <p className="card-text text-center">Company Logo</p>
+                        </div>
+                      )}
+                      {viewData?.AgentHeaderImageName && (
+                        <div className="card w-50 shadow-0 m-0">
+                          <img
+                            className="card-img-top image-style"
+                            src={viewData?.AgentHeaderImageName}
+                            alt="Card image cap"
+                          />
+                          <p className="card-text text-center">Agent Header</p>
+                        </div>
+                      )}
+                      {viewData?.AgentFooterImageName && (
+                        <div className="card w-50 shadow-0 m-0">
+                          <img
+                            className="card-img-top image-style"
+                            src={viewData?.AgentFooterImageName}
+                            alt="Card image cap"
+                          />
+                          <p className="card-text text-center">Agent Footer</p>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="card-body d-flex gap-2 p-1 ">
+                      <div className="card w-50 shadow-0 m-0 image-box shimmer"></div>
+                      <div className="card w-50 shadow-0 m-0 image-box shimmer"></div>
+                      <div className="card w-50 shadow-0 m-0 image-box shimmer"></div>
+                    </div>
+                  )}
                 </div>
               </div>
 

@@ -23,7 +23,7 @@ const DivisionMaster = () => {
   const [updateData, setUpdateData] = useState(false);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const postDataToServer = async () => {
+    const getDivisionList = async () => {
       try {
         const { data } = await axiosOther.post("divisionlist", postData);
         setLoading(false);
@@ -34,7 +34,7 @@ const DivisionMaster = () => {
       }
     };
 
-    postDataToServer();
+    getDivisionList();
   }, [updateData]);
 
   useEffect(() => {

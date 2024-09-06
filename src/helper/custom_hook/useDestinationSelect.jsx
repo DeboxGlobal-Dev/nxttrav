@@ -1,17 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
-
-const options = [
-  { value: "1", label: "Noida" },
-  { value: "2", label: "Gurgaon" },
-  { value: "3", label: "Delhi" },
-  { value: "4", label: "Mumbai" },
-  { value: "5", label: "Dubai" },
-  { value: "6", label: "Reyadh" },
-  { value: "7", label: "Lahore" },
-  { value: "8", label: "Srinagar" },
-  { value: "9", label: "Wesbangal" },
-];
+import { axiosOther } from "../../http/axios/axios_new";
 
 const customStyle = {
   control: (provided) => ({
@@ -43,18 +32,40 @@ const customStyle = {
 
 const useDestinationSelect = () => {
   const [selectedDestination, setSelectedDestination] = useState([]);
+  const [destinationList, setDestinationList] = useState([]);
 
   const handleMultiSelectChange = (selected) => {
     const selectedValue = selected
       ? selected.map((option) => option.value)
       : [];
-      setSelectedDestination(selectedValue);
+    setSelectedDestination(selectedValue);
   };
+
+  useEffect(() => {
+    const postDataToServer = async () => {
+      try {
+        const { data } = await axiosOther.post("destinationlist");
+        setDestinationList(data?.DataList);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    postDataToServer();
+  }, []);
+
+  const options = destinationList?.map((destination) => {
+    return {
+      value: destination?.id,
+      label: destination?.Name,
+    };
+  });
 
   const SelectInput = () => {
     return (
       <Select
-        value={options.filter((option) => selectedDestination.includes(option.value))}
+        value={options.filter((option) =>
+          selectedDestination.includes(option.value)
+        )}
         onChange={handleMultiSelectChange}
         options={options}
         isMulti={true}
