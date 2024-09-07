@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import Layout from "../../../Component/Layout/Layout";
-import "../../../../public/global_assets/custom_css/shimmer.css";
+import "../../../public/global_assets/custom_css/shimmer.css";
+import Layout from "./Layout";
 
-const MasterLoad = () => {
-
+const ComponentSkeleton = () => {
   return (
     <>
-      <Layout>
+     <Layout>
         <div className="container-fluid p-3 mb-4">
           <div
             className="card shadow-none border"
@@ -69,10 +68,9 @@ const MasterLoad = () => {
             </div>
           </div>
         </div>
-      </Layout>
+        </Layout>
     </>
   );
+}
 
-};
- 
-export default MasterLoad;
+export default ComponentSkeleton

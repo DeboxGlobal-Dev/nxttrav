@@ -15,7 +15,7 @@ const axiosOther = axios.create({
 });
 
 const axiosQuery = axios.create({
-  baseURL:"http://20.197.55.39/api/",
+  baseURL:"http://127.0.0.1:8000/api/",
   headers:{
     "Content-Type" :"application/json"
   }

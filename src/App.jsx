@@ -125,8 +125,7 @@ const SetPreferrence = lazy(()=> import("./Pages/query/SetPreferrence.jsx"));
 import JsonToExcel from "./Pages/template/JsonToExcel.jsx";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import MasterLoad from "./Pages/template/loadComponent/MasterLoad.jsx";
-
+import ComponentSkeleton from "./Component/Layout/ComponentSkeleton.jsx";
 
 
 const App = () => {
@@ -134,7 +133,7 @@ const App = () => {
     <>
     <ToastContainer />
       <Router>
-        <Suspense fallback={<MasterLoad/>}>
+        <Suspense fallback={<ComponentSkeleton/>}>
         <Routes>
           <Route path="/" element={<Protected><Home /></Protected>}/>
           <Route path="/mail" element={  <Protected><Mail /></Protected>}/>
