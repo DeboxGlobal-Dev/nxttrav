@@ -122,10 +122,10 @@ const AddSupplier = lazy(()=> import("./Pages/master/masterlist/supplier/AddSupp
 const ViewSupplier = lazy(()=> import("./Pages/master/masterlist/supplier/ViewSupplier.jsx"));
 const SetPreferrence = lazy(()=> import("./Pages/query/SetPreferrence.jsx"));
 
-import JsonToExcel from "./Pages/template/JsonToExcel.jsx";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ComponentSkeleton from "./Component/Layout/ComponentSkeleton.jsx";
+import JsonToExcel from "./helper/JsonToExcel.jsx";
 
 
 const App = () => {
