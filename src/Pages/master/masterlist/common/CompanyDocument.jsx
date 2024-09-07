@@ -4,11 +4,13 @@ import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 import { memo } from "react";
 import { companyDocumentValidationSchema } from "../MasterValidations";
+import useImageUploader from "../../../../helper/custom_hook/useImageUploader";
 
 const CompanyDocument = ({ partner_payload }) => {
   const [formData, setFormData] = useState(companyDocumentsInitialValue);
   const [imageName, setImageName] = useState("");
   const [documentList, setDocumentList] = useState([]);
+  const { imageData, handleImage } = useImageUploader();
   const [errors, setErrors] = useState({});
   const modalRef = useRef(null);
   const closeRef = useRef(null);
@@ -18,29 +20,20 @@ const CompanyDocument = ({ partner_payload }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImageName(file?.name);
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const base64String = reader.result;
-      setFormData({
-        ...formData,
-        DocumentImageData: base64String,
-        DocumentImageName: file?.name,
-      });
-    };
-  };
-
   const handleSubmitData = async () => {
     try {
-      await companyDocumentValidationSchema.validate(formData, {
-        abortEarly: false,
-      });
+      await companyDocumentValidationSchema.validate(
+        { ...formData, DocumentImageData: imageData?.DocumentImage?.data, DocumentImageName: imageData?.DocumentImage?.name },
+        {
+          abortEarly: false,
+        }
+      );
+      setErrors({});
 
       const { data } = await axiosOther.post("addupdatecompanydocument", {
         ...formData,
+        DocumentImageData: imageData?.DocumentImage?.data,
+        DocumentImageName: imageData?.DocumentImage?.name,
         ...partner_payload,
       });
 
@@ -66,7 +59,8 @@ const CompanyDocument = ({ partner_payload }) => {
       }
     }
   };
-
+ 
+  console.log('error', errors);
   async function getDocumentListData() {
     try {
       const { data } = await axiosOther.post(
@@ -214,7 +208,9 @@ const CompanyDocument = ({ partner_payload }) => {
                         <div className="form-input-1 border-0 primary-light-bg d-flex align-items-center justify-content-center gap-2 cursor-pointer">
                           <i className="fa-solid fa-cloud-arrow-up m-0 fs-5 dark-primary-color"></i>
                           <p className="m-0 dark-primary-color">
-                            {imageName ? imageName : "Upload Here.."}
+                            {imageData?.DocumentImage?.name
+                              ? imageData?.DocumentImage?.name
+                              : "Upload Here.."}
                           </p>
                         </div>
                       </label>
@@ -224,7 +220,7 @@ const CompanyDocument = ({ partner_payload }) => {
                         id="agentheader"
                         className="form-input-1"
                         value=""
-                        onChange={handleImageChange}
+                        onChange={(e) => handleImage(e, "DocumentImage")}
                         hidden
                       ></input>
                     </div>

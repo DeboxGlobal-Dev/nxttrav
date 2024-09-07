@@ -6,9 +6,9 @@ import { axiosOther } from "../../../../http/axios/axios_new";
 import { toast, Toaster } from "react-hot-toast";
 import Editor from "../../../../helper/Editor";
 import { agentMasterValidationSchema } from "../MasterValidations";
+import useImageUploader from "../../../../helper/custom_hook/useImageUploader";
 
 const AddAgent = () => {
-
   const navigate = useNavigate();
 
   const initialState = {
@@ -23,25 +23,14 @@ const AddAgent = () => {
     preferredLanguage: [],
     countryList: [],
   };
-  
+  const { imageData, handleImage } = useImageUploader();
+
   const [agentInfoValue, setAgentInfoValue] = useState("");
   const [remarksValue, setRemarksValue] = useState("");
   const [errors, setErrors] = useState({});
 
   const [agentInputData, setAgentInputData] = useState({
     ...agentMasterInitialValue,
-  });
-  const [logoImageData, setLogoImageData] = useState({
-    CompanyLogoImageName: "",
-    CompanyLogoImageData: "",
-  });
-  const [headerImageData, setHeaderImageData] = useState({
-    AgentHeaderImageName: "",
-    AgentHeaderImageData: "",
-  });
-  const [footerImageData, setFooterImageData] = useState({
-    AgentFooterImageName: "",
-    AgentFooterImageData: "",
   });
 
   const reducer = (state, action) => {
@@ -74,90 +63,36 @@ const AddAgent = () => {
     setAgentInputData({ ...agentInputData, [e.target.name]: e.target.value });
   };
 
-  const handleAgentLogoInputChange = (e) => {
-    const file = e.target.files[0];
-    file;
-
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onload = function () {
-        const base64String = reader.result;
-        setLogoImageData({
-          CompanyLogoImageName: file.name,
-          CompanyLogoImageData: base64String,
-        });
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleAgentHeaderImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onload = function () {
-        const base64String = reader.result;
-        setHeaderImageData({
-          AgentHeaderImageName: file.name,
-          AgentHeaderImageData: base64String,
-        });
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
-  const handleAgentFooterImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onload = function () {
-        const base64String = reader.result;
-        setFooterImageData({
-          AgentFooterImageName: file.name,
-          AgentFooterImageData: base64String,
-        });
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
-
   const postingDataIntoAgentApi = async () => {
     try {
       await agentMasterValidationSchema.validate(
         {
-          ...headerImageData,
-          ...footerImageData,
+          ...imageData,
           ...agentInputData,
         },
         {
           abortEarly: false,
         }
       );
-      console.log({
-        ...logoImageData,
-        ...headerImageData,
-        ...footerImageData,
-        ...agentInputData,
-      });
+      setErrors({});
+
       const { data } = await axiosOther.post("addupdateagent", {
-        ...logoImageData,
-        ...headerImageData,
-        ...footerImageData,
+        CompanyLogoImageData: imageData?.CompanyLogoImageData?.data,
+        CompanyLogoImageName: imageData?.CompanyLogoImageData?.name,
+        AgentHeaderImageData: imageData?.AgentHeaderImageData?.data,
+        AgentHeaderImageName: imageData?.AgentHeaderImageData?.name,
+        AgentFooterImageData: imageData?.AgentFooterImageData?.data,
+        AgentFooterImageName: imageData?.AgentFooterImageData?.name,
         ...agentInputData,
       });
-     
-      
+
+      console.log("add-agent-image", data);
 
       if (data.Status === 1) {
         toast.success(data?.Message);
-        setTimeout(()=>{
+        setTimeout(() => {
           navigate(`/master/agent/view/${data?.AgentId}`);
-        },1500);
+        }, 1500);
       }
       if (data.Status === -1) {
         toast.error(data?.Message);
@@ -278,6 +213,8 @@ const AddAgent = () => {
   const remarksChangeHandler = (content) => {
     setRemarksValue(content);
   };
+
+  
 
   return (
     <Layout>
@@ -712,9 +649,9 @@ const AddAgent = () => {
                   <div className="form-input-1 border-0 primary-light-bg d-flex align-items-center justify-content-center gap-2 cursor-pointer">
                     <i className="fa-solid fa-cloud-arrow-up m-0 fs-5 dark-primary-color"></i>
                     <p className="m-0 dark-primary-color">
-                      {logoImageData.CompanyLogoImageName != ""
-                        ? logoImageData.CompanyLogoImageName
-                        : "Upload Image"}
+                      {imageData.CompanyLogoImageData?.name
+                        ? imageData.CompanyLogoImageData?.name
+                        : "Upload Here..."}
                     </p>
                   </div>
                 </label>
@@ -723,7 +660,7 @@ const AddAgent = () => {
                   name="CompanyLogoImageData"
                   id="companylogo"
                   className="form-input-1"
-                  onChange={handleAgentLogoInputChange}
+                  onChange={(e) => handleImage(e, "CompanyLogoImageData")}
                   value=""
                   hidden
                 ></input>
@@ -744,9 +681,9 @@ const AddAgent = () => {
                   <div className="form-input-1 border-0 primary-light-bg d-flex align-items-center justify-content-center gap-2 cursor-pointer">
                     <i className="fa-solid fa-cloud-arrow-up m-0 fs-5 dark-primary-color"></i>
                     <p className="m-0 dark-primary-color">
-                      {headerImageData.AgentHeaderImageName != ""
-                        ? headerImageData.AgentHeaderImageName
-                        : "Upload Header"}
+                      {imageData.AgentHeaderImageData?.name
+                        ? imageData.AgentHeaderImageData?.name
+                        : "Upload Here..."}
                     </p>
                   </div>
                 </label>
@@ -755,7 +692,7 @@ const AddAgent = () => {
                   name="AgentHeaderImageData"
                   id="agentheader"
                   className="form-input-1"
-                  onChange={handleAgentHeaderImageChange}
+                  onChange={(e) => handleImage(e, "AgentHeaderImageData")}
                   value=""
                   hidden
                 ></input>
@@ -776,9 +713,9 @@ const AddAgent = () => {
                   <div className="form-input-1 border-0 primary-light-bg d-flex align-items-center justify-content-center gap-2 cursor-pointer">
                     <i className="fa-solid fa-cloud-arrow-up m-0 fs-5 dark-primary-color"></i>
                     <p className="m-0 dark-primary-color">
-                      {footerImageData.AgentFooterImageName != ""
-                        ? footerImageData.AgentFooterImageName
-                        : "Upload Footer"}
+                      {imageData.AgentFooterImageData?.name
+                        ? imageData.AgentFooterImageData?.name
+                        : "Upload Here..."}
                     </p>
                   </div>
                 </label>
@@ -787,7 +724,7 @@ const AddAgent = () => {
                   name="AgentFooterImageData"
                   id="agentfooter"
                   className="form-input-1"
-                  onChange={handleAgentFooterImageChange}
+                  onChange={(e) => handleImage(e, "AgentFooterImageData")}
                   value=""
                   hidden
                 ></input>

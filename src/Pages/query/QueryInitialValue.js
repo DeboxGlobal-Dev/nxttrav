@@ -22,7 +22,7 @@ export const queryInitial = {
   HotelType: "",
   MealPlan: "",
   TravelInfo: "",
-  PaxType: "",
+  PaxType: "1",
   SalesPerson: "",
   AssignUser: "",
   ContractPerson: "",
@@ -40,7 +40,7 @@ export const travelInitial = {
 };
 
 export const paxInitial = {
-  Adult: "",
+  Adult: "1",
   Child: "",
   Infant: "",
 };

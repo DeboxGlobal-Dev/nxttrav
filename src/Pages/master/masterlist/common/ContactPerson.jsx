@@ -4,12 +4,14 @@ import { addContactInitialValue } from "../mastersInitialValues";
 import { axiosOther } from "../../../../http/axios/axios_new";
 import { addContactPersonValidationSchema } from "../MasterValidations";
 import toast, { Toaster } from "react-hot-toast";
+import useImageUploader from "../../../../helper/custom_hook/useImageUploader";
 
 const ContactPerson = ({ partner_payload }) => {
   const [formData, setFormData] = useState(addContactInitialValue);
   const [contactList, setContactList] = useState([]);
   const [divisionList, setDivisionList] = useState([]);
   const [errors, setErrors] = useState({});
+  const { imageData, handleImage } = useImageUploader();
   const modalRef = useRef(null);
   const closeRef = useRef(null);
 
@@ -18,50 +20,6 @@ const ContactPerson = ({ partner_payload }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleBusinessCardFirstImage = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onload = () => {
-      const base64String = reader.result;
-      setFormData({
-        ...formData,
-        ImageNameOne: file.name,
-        ImageOneData: base64String,
-      });
-    };
-  };
-
-  const handleBusinessCardSecondImage = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onload = () => {
-      const base64String = reader.result;
-      setFormData({
-        ...formData,
-        ImageNameTwo: file.name,
-        ImageTwoData: base64String,
-      });
-    };
-  };
-
-  const handleBusinessCardThirdImage = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const base64String = reader.result;
-      setFormData({
-        ...formData,
-        ImageNameThree: file.name,
-        ImageThreeData: base64String,
-      });
-    };
-  };
 
   const handleSubmitData = async () => {
     try {
@@ -75,6 +33,12 @@ const ContactPerson = ({ partner_payload }) => {
       });
       const { data } = await axiosOther.post("addupdatecontact", {
         ...formData,
+        ImageNameOne: imageData?.FirstImage?.name,
+        ImageOneData: imageData?.FirstImage?.date,
+        ImageNameTwo: imageData?.SecondImage?.name,
+        ImageTwoData: imageData?.SecondImage?.data,
+        ImageNameThree: imageData?.ThirdImage?.name,
+        ImageThreeData: imageData?.ThirdImage?.data,
         ParentId: partner_payload?.Fk_partnerid,
       });
 
@@ -121,7 +85,7 @@ const ContactPerson = ({ partner_payload }) => {
   };
 
   const handleDeleteData = async (id) => {
-    const { data } = await axiosOther.post("destroycontactperson", {
+    const { data } = await axiosOther.post("destroycontact", {
       id: id,
     });
     if (data?.Status === 1) {
@@ -289,13 +253,13 @@ const ContactPerson = ({ partner_payload }) => {
                         onChange={handleChangeFormData}
                       >
                         <option value="">Select</option>
-                        {
-                          divisionList?.map((division, index)=>{
-                            return(
-                              <option value={division?.id} key={index+1}>{division?.Name}</option>
-                            )
-                          })
-                        }
+                        {divisionList?.map((division, index) => {
+                          return (
+                            <option value={division?.id} key={index + 1}>
+                              {division?.Name}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                     <div className="col-4">
@@ -548,8 +512,8 @@ const ContactPerson = ({ partner_payload }) => {
                             <div className="form-input-1 border-0 primary-light-bg d-flex align-items-center justify-content-center gap-2 cursor-pointer">
                               <i className="fa-solid fa-cloud-arrow-up m-0 fs-5 dark-primary-color"></i>
                               <p className="m-0 dark-primary-color">
-                                {formData?.ImageNameOne
-                                  ? formData?.ImageNameOne
+                                {imageData?.FirstImage?.name
+                                  ? imageData?.FirstImage?.name
                                   : " Upload Here.."}
                               </p>
                             </div>
@@ -559,8 +523,7 @@ const ContactPerson = ({ partner_payload }) => {
                             name="ImageData"
                             id="firstimage"
                             className="form-input-1"
-                            // value={firstImage}
-                            onChange={handleBusinessCardFirstImage}
+                            onChange={(e) => handleImage(e, "FirstImage")}
                             hidden
                           ></input>
                         </div>
@@ -573,8 +536,8 @@ const ContactPerson = ({ partner_payload }) => {
                             <div className="form-input-1 border-0 primary-light-bg d-flex align-items-center justify-content-center gap-2 cursor-pointer">
                               <i className="fa-solid fa-cloud-arrow-up m-0 fs-5 dark-primary-color"></i>
                               <p className="m-0 dark-primary-color">
-                                {formData?.ImageNameTwo
-                                  ? formData?.ImageNameTwo
+                                {imageData?.SecondImage?.name
+                                  ? imageData?.SecondImage?.name
                                   : " Upload Here.."}
                               </p>
                             </div>
@@ -584,8 +547,7 @@ const ContactPerson = ({ partner_payload }) => {
                             name="ImageData"
                             id="secondimage"
                             className="form-input-1"
-                            // value={secondImage.ImageData}
-                            onChange={handleBusinessCardSecondImage}
+                            onChange={(e) => handleImage(e, "SecondImage")}
                             hidden
                           ></input>
                         </div>
@@ -598,8 +560,8 @@ const ContactPerson = ({ partner_payload }) => {
                             <div className="form-input-1 border-0 primary-light-bg d-flex align-items-center justify-content-center gap-2 cursor-pointer">
                               <i className="fa-solid fa-cloud-arrow-up m-0 fs-5 dark-primary-color"></i>
                               <p className="m-0 dark-primary-color">
-                                {formData?.ImageNameThree
-                                  ? formData?.ImageNameThree
+                                {imageData?.ThirdImage?.name
+                                  ? imageData?.ThirdImage?.name
                                   : " Upload Here.."}
                               </p>
                             </div>
@@ -609,8 +571,7 @@ const ContactPerson = ({ partner_payload }) => {
                             name="ImageData"
                             id="thirdimage"
                             className="form-input-1"
-                            // value={thirdImage.ImageData}
-                            onChange={handleBusinessCardThirdImage}
+                            onChange={(e) => handleImage(e, "ThirdImage")}
                             hidden
                           ></input>
                         </div>

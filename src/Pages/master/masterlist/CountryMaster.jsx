@@ -176,7 +176,7 @@ const CountryMaster = () => {
                         <label>Status</label>
                         <Field
                           name="Status"
-                          className="form-control"
+                          className="form-control px-2"
                           component={"select"}
                         >
                           <option value={1}>Active</option>
@@ -187,7 +187,7 @@ const CountryMaster = () => {
                         <label>Set Default</label>
                         <Field
                           name="SetDefault"
-                          className="form-control"
+                          className="form-control px-1"
                           component={"select"}
                         >
                           <option value={0}>No</option>

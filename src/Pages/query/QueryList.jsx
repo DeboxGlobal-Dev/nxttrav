@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../Component/Layout/Layout";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import DataTable from "react-data-table-component";
-import axios from "axios";
 
 const QueryList = () => {
-  
+
+  const navigate = useNavigate();
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [postData, setPostData] = useState({
@@ -13,25 +13,29 @@ const QueryList = () => {
     Status: ""
   });
 
-  useEffect(() => {
+  const postDataToServer = async () => {
 
-    const postDataToServer = async () => {
-      try {
+    try {
+      // const { data } = await axios.post(
+        // "http://20.197.55.39/api/querymasterlist",
+        // postData
+      // );
+      const queryList = localStorage?.getItem("queryData");
 
-        const { data } = await axios.post(
-          "http://20.197.55.39/api/querymasterlist",
-          postData
-        );
-        setGetData(data.DataList);
-        setFilterData(data.DataList);
+      const finalList = JSON.parse(queryList);
 
-      } catch (error) {
-        console.log(error);
+      console.log(finalList);
+      if(queryList === null){
+        return
       }
-    };
 
-    postDataToServer();
-  }, []);
+      setGetData(finalList);
+      setFilterData(finalList);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const result = getData.filter((item) => {
@@ -41,13 +45,22 @@ const QueryList = () => {
     setFilterData(result);
   }, [postData]);
 
+  useEffect(() => {
+    postDataToServer();
+  }, []);
+
+  const handleQueryEdit = (data) =>{
+    navigate(`/querylist/queryview`, {state:data});
+  }
+
+
   const columns = [
     {
       name: "",
       selector: (row) => {
         return (
           <div className="btn-className">
-            <Link
+            {/* <Link
               to="/querylist/queryview"
               className="btn btn-warning"
               state={row}
@@ -57,12 +70,13 @@ const QueryList = () => {
                 backgroundColor: "#324148",
               }}
             >
+            </Link> */}
               <i
                 className="fa fa-pencil "
                 aria-hidden="true"
-                style={{ color: "#fffffff1", fontSize: "10px" }}
+                style={{ backgroundColor: "#26A69A", fontSize: "10px", color:'white', padding:'8px', borderRadius:'50%', cursor:"pointer" }}
+                onClick={()=>handleQueryEdit(row)}
               ></i>
-            </Link>
           </div>
         );
       },
@@ -71,64 +85,70 @@ const QueryList = () => {
       name: "Query Id",
       selector: (row) => {
         return (
-          <Link to={"/query_list/queryview/" + row.QueryId} className="linkCls">
-            {row.QueryId}
-          </Link>
+          // <Link to={"/querylist"} className="linkCls">
+          // </Link>
+          <span className="text-success">{row.QueryId}</span>
         );
       },
       sortable: true,
     },
     {
       name: "Type",
-      selector: (row) => row.ClientType,
+      selector: (row) => row.BusinessType === '1' ? 'Agent' : 'B2B',
       sortable: true,
     },
     {
-      name: "Lead Pax",
-      selector: (row) => row.LeadPax,
+      name: "Name",
+      selector: (row) => row.ClientType,
       sortable: true,
     },
     {
       name: "Query Date",
       selector: (row) => {
-        return (
-          <span>
-            {row.FromDate}
-          </span>
-        );
+        return <span>{row?.Traveldate}</span>;
       },
     },
     {
       name: "Tour Date",
-      selector: (row) =>{
-        return(
-          <span>
-            {row.ToDate}
-          </span>
-        )
+      selector: (row) => {
+        return <span>{row?.Traveldate}</span>;
       },
     },
     {
       name: "Destination",
-      selector: (row) => {row.ToDate},
+      selector: (row) => {
+        row.ToDate;
+      },
+    },
+    {
+      name: "Pax Type",
+      selector: (row) => {
+        return(
+          <span>{row?.PaxType == '1'? 'FIT' : 'GIT'}</span>
+        );
+      },
     },
     {
       name: "Query Type",
       selector: (row) => row.QueryType,
     },
     {
-      name: "Total Pax",
-      selector: (row) =>{
-        return(
+      name: "Lead Source",
+      selector: (row) => {
+        return (
           <span>
-            {row.PaxInfo[0].Adult+row.PaxInfo[0].Child+row.PaxInfo[0].Infant}
+            {row?.LeadSource}
           </span>
-        )
+        );
       },
     },
     {
-      name: "Estimated Value",
-      selector: (row) => "-",
+      name: "Priority",
+      selector: (row) => {
+        return (
+          <span>{row?.Priority}</span>
+        )
+      },
     },
     {
       name: "Payment Information",
@@ -164,14 +184,13 @@ const QueryList = () => {
                 <h5 className="card-title d-none d-sm-block">Query</h5>
               </div>
               <div className="col-xl-4 d-flex justify-content-end">
-                  <NavLink
-                    to="/querylist/queryview/"
-                    className="blue-button"
-                    aria-expanded="false"
-                  >
-                    + Create Query
-                  </NavLink>
-                
+                <NavLink
+                  to="/querylist/queryview/"
+                  className="blue-button"
+                  aria-expanded="false"
+                >
+                  + Create Query
+                </NavLink>
               </div>
             </div>
             <div className="card-body">
@@ -186,7 +205,7 @@ const QueryList = () => {
                     onChange={(e) => {
                       setPostData({
                         ...postData,
-                        Search: e.target.value
+                        Search: e.target.value,
                       });
                     }}
                   />

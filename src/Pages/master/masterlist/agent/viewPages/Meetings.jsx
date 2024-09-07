@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { axiosOther } from "../../../../../http/axios/axios_new";
 import { memo } from "react";
+import toast from "react-hot-toast";
 
 const Meetings = ({ partner_payload }) => {
   const navigate = useNavigate();

@@ -22,6 +22,7 @@ import { queryAddValidationSchema } from "./querValidationSchema";
 
 const Query = () => {
   const location = useLocation();
+  // console.log('query-location', location);
   const navigate = useNavigate();
   const fiftyYear = [];
   const [errors, setErrors] = useState([]);
@@ -50,7 +51,6 @@ const Query = () => {
     Contact: "",
   });
 
-  console.log('errors-in-query', errors);
   const [showAgentPopup, setShowAgentPopup] = useState(true);
 
   const initialState = {
@@ -302,6 +302,7 @@ const Query = () => {
     gettingDataForDropdown2();
   }, [queryFields.BusinessType]);
 
+  // console.log('query-errors', errors);
   // Handling Submit Query Data
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -335,28 +336,74 @@ const Query = () => {
     } else if (document.activeElement.name === "SubmitButton") {
       setEmptyData(!emptyData);
       try {
-
-        await queryAddValidationSchema.validate({
-          ...queryFields,
-          TravelDate: [{ ...TravelDate }],
-          RoomInfo: [{ ...RoomInfo }],
-          PaxInfo: [{ ...PaxInfo }],
-          ValueAddServices: [{ ...valueAddServices }],
-        }, {abortEarly:false});
-
-        const response = await axios.post(
-          "http://20.197.55.39/api/addupdatequerymaster",
+        await queryAddValidationSchema.validate(
           {
             ...queryFields,
-            TravelDate: [{ ...TravelDate }],
-            RoomInfo: [{ ...RoomInfo }],
-            PaxInfo: [{ ...PaxInfo }],
-            ValueAddServices: [{ ...valueAddServices }],
-          }
+            ...TravelDate,
+            ...RoomInfo,
+            ...PaxInfo,
+            ...valueAddServices,
+          },
+          { abortEarly: false }
         );
+        setErrors({});
 
-        toast.success(response.data.Message);
+        // const response = await axiosQuery.post(
+        //   "addupdatequerymaster",
+        //   {
+        //     ...queryFields,
+        //     TravelDate: [{ ...TravelDate }],
+        //     RoomInfo: [{ ...RoomInfo }],
+        //     PaxInfo: [{ ...PaxInfo }],
+        //     ValueAddServices: [{ ...valueAddServices }],
+        //   }
+        // );
+        const getList = localStorage?.getItem("queryData");
+        const finalList = JSON.parse(getList);
 
+        // console.log("lcoal-list-query", getList);
+        if (getList === null) {
+          localStorage?.setItem(
+            "queryData",
+            JSON.stringify([
+              {
+                ...queryFields,
+                id:1,
+                Traveldate:TravelDate?.FromDate,
+                TravelDate: [{ ...TravelDate }],
+                RoomInfo: [{ ...RoomInfo }],
+                PaxInfo: [{ ...PaxInfo }],
+                ValueAddServices: [{ ...valueAddServices }],
+              },
+            ])
+          );
+        } else if (finalList.length >= 1) {
+          localStorage?.setItem(
+            "queryData",
+            JSON.stringify([
+              ...finalList,
+              {
+                ...queryFields,
+                id: finalList.length + 1,
+                Traveldate:TravelDate?.FromDate,
+                TravelDate: [{ ...TravelDate }],
+                RoomInfo: [{ ...RoomInfo }],
+                PaxInfo: [{ ...PaxInfo }],
+                ValueAddServices: [{ ...valueAddServices }],
+              },
+            ])
+          );
+        }
+
+        const afterAddedList = localStorage.getItem("queryData");
+        // console.log("afterAddedList", JSON.parse(afterAddedList));
+
+        // toast.success(response.data.Message);
+        toast.success("Data Added Successfully.");
+
+        setTimeout(()=>{
+          navigate("/querylist")
+        }, 2000);
         setQueryFields({ ...queryInitial });
         setTravelDate({ ...travelInitial });
         setPaxInfo({ ...paxInitial });
@@ -368,9 +415,9 @@ const Query = () => {
         localStorage.removeItem("Query");
       } catch (err) {
         console.log(err);
-        if(err?.inner){
-          const errorMessage = err?.inner.reduce((acc, crr)=>{
-            acc[crr?.path] = crr?.message
+        if (err?.inner) {
+          const errorMessage = err?.inner.reduce((acc, crr) => {
+            acc[crr?.path] = crr?.message;
             return acc;
           }, {});
           setErrors(errorMessage);
@@ -378,30 +425,61 @@ const Query = () => {
       }
     } else if (document.activeElement.name === "UpdateButton") {
       try {
-        await queryAddValidationSchema.validate(
-          {
-            ...queryFields,
-            TravelDate: [{ ...TravelDate }],
-            RoomInfo: [{ ...RoomInfo }],
-            PaxInfo: [{ ...PaxInfo }],
-            ValueAddServices: [{ ...valueAddServices }],
-          },
-          { abortEarly: false }
+        // await queryAddValidationSchema.validate(
+        //   {
+        //     ...queryFields,
+        //     ...TravelDate,
+        //     ...RoomInfo,
+        //     ...PaxInfo,
+        //     ...valueAddServices,
+        //   },
+        //   { abortEarly: false }
+        // );
+        // setErrors({});
+
+        // const response = await axiosQuery.post("addupdatequerymaster", {
+        //   ...queryFields,
+        //   TravelDate: [{ ...TravelDate }],
+        //   RoomInfo: [{ ...RoomInfo }],
+        //   PaxInfo: [{ ...PaxInfo }],
+        //   ValueAddServices: [{ ...valueAddServices }],
+        // });
+        // toast.success(response.data.Message);  
+
+        const allData = localStorage.getItem('queryData');
+        const finalData = JSON.parse(allData);
+        const anotherAllData = finalData.filter((data)=> data?.id != location?.state?.id);
+        // console.log('finalData', finalData); 
+
+        localStorage?.setItem(
+          "queryData",
+          JSON.stringify([
+            ...anotherAllData,
+            {
+              ...queryFields,
+              id: location?.state?.id,
+              Traveldate:TravelDate?.FromDate,
+              TravelDate: [{ ...TravelDate }],
+              RoomInfo: [{ ...RoomInfo }],
+              PaxInfo: [{ ...PaxInfo }],
+              ValueAddServices: [{ ...valueAddServices }],
+            },
+          ])
         );
 
-        const response = await axiosQuery.post("addupdatequerymaster", {
-          ...queryFields,
-          TravelDate: [{ ...TravelDate }],
-          RoomInfo: [{ ...RoomInfo }],
-          PaxInfo: [{ ...PaxInfo }],
-          ValueAddServices: [{ ...valueAddServices }],
-        });
-        toast.success(response.data.Message);
+        toast.success('Data updated successfully !');
+
         setTimeout(() => {
           navigate("/querylist");
         }, 2000);
       } catch (err) {
-        console.log(err);
+        // if (err?.inner) {
+        //   const errorMessage = err?.inner.reduce((acc, crr) => {
+        //     acc[crr?.path] = crr?.message;
+        //     return acc;
+        //   }, {});
+        //   setErrors(errorMessage);
+        // }
       }
     } else {
       console.log("Hello Console");
@@ -684,6 +762,7 @@ const Query = () => {
       ...queryFields,
       SalesPerson: agent.SalesPerson,
       AssignUser: agent.OperationsPerson,
+      ClientType: agent?.CompanyName,
     });
   };
 
@@ -776,7 +855,11 @@ const Query = () => {
                             Bussiness Type
                             <span className="text-danger">*</span>
                           </label>
-                          {errors?.BusinessType && <span className="text-danger font-size-10 m-0">{errors?.BusinessType}</span>}
+                          {errors?.BusinessType && (
+                            <span className="text-danger font-size-10 m-0">
+                              {errors?.BusinessType}
+                            </span>
+                          )}
                         </div>
                         <select
                           className="form-input-2"
@@ -968,9 +1051,7 @@ const Query = () => {
                             })}
                           <div className="col-12 d-flex justify-content-center">
                             {dropdownState?.agentList == "" && (
-                              <h6 className="text-secondary">
-                                Loading Data..
-                              </h6>
+                              <h6 className="text-secondary">Loading Data..</h6>
                             )}
                           </div>
                         </div>
@@ -990,8 +1071,8 @@ const Query = () => {
                           id="paxtype"
                           component={"select"}
                           className="form-input-2"
-                          name="LeadPax"
-                          value={queryFields.LeadPax}
+                          name="PaxType"
+                          value={queryFields.PaxType}
                           onChange={handleChange}
                         >
                           <option value="1">FIT</option>
@@ -1063,7 +1144,7 @@ const Query = () => {
                           Hotel Category
                         </label>
                         <div className="row column-gap-2 row-gap-2">
-                          {dropdownState?.hotelCategory?.map((value, index) => {
+                          {/* {dropdownState?.hotelCategory?.map((value, index) => {
                             return (
                               <div
                                 className="col-2 form-div d-flex justify-content-center align-items-center"
@@ -1146,8 +1227,60 @@ const Query = () => {
                                 />
                               </div>
                             </>
-                          )}
-
+                          )} */}
+                          <div className="col-2 form-div d-flex justify-content-center align-items-center">
+                            <label htmlFor="one-star" className="m-0 pr-2">
+                              1*
+                            </label>
+                            <input
+                              className="form-check-input m-0 p-0 ml-3"
+                              type="radio"
+                              name="hotelType"
+                              id="one-star"
+                              value="1"
+                              onChange={handleChange}
+                              defaultChecked
+                            />
+                          </div>
+                          <div className="col-2 form-div d-flex justify-content-center align-items-center">
+                            <label htmlFor="two-star" className="m-0 pr-2">
+                              2*
+                            </label>
+                            <input
+                              className="form-check-input m-0 p-0 ml-3"
+                              type="radio"
+                              name="hotelType"
+                              id="two-star"
+                              value="2"
+                              onChange={handleChange}
+                            />
+                          </div>
+                          <div className="col-2 form-div d-flex justify-content-center align-items-center">
+                            <label htmlFor="three-star" className="m-0 pr-2">
+                              3*
+                            </label>
+                            <input
+                              className="form-check-input m-0 p-0 ml-3"
+                              type="radio"
+                              name="hotelType"
+                              id="three-star"
+                              value="3"
+                              onChange={handleChange}
+                            />
+                          </div>
+                          <div className="col-2 form-div d-flex justify-content-center align-items-center">
+                            <label htmlFor="four-star" className="m-0 pr-2">
+                              4*
+                            </label>
+                            <input
+                              className="form-check-input m-0 p-0 ml-3"
+                              type="radio"
+                              name="hotelType"
+                              id="four-star"
+                              value="4"
+                              onChange={handleChange}
+                            />
+                          </div>
                           <div className="col-2 form-div d-flex justify-content-center align-items-center">
                             <label htmlFor="all" className="m-0 pr-2">
                               All
@@ -1521,10 +1654,10 @@ const Query = () => {
                               <span className="text-danger">*</span>
                             </label>
                             {errors?.FromDate && (
-                            <span className="text-danger font-size-10">
-                              {errors?.FromDate}
-                            </span>
-                          )}
+                              <span className="text-danger font-size-10">
+                                {errors?.FromDate}
+                              </span>
+                            )}
                           </div>
                           <input
                             type="date"
@@ -1912,8 +2045,8 @@ const Query = () => {
                         id="leadreferenced"
                         className="form-input-3"
                         placeholder="#87738727667"
-                        name="LeadRefrencedId"
-                        value={queryFields.LeadRefrencedId}
+                        name="QueryId"
+                        value={queryFields.QueryId}
                         onChange={handleChange}
                       />
                     </div>

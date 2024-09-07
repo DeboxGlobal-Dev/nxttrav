@@ -374,7 +374,7 @@ const Office = ({ partner_payload }) => {
                     <td className="py-1">{list?.Gstn}</td>
                     <td className="py-1">{list?.Pan}</td>
                     <td className="py-1">{list?.Address}</td>
-                    <td className="py-1 d-flex gap-2 justify-content-center">
+                    <td className="py-1 d-flex gap-2 justify-content-center border-0">
                       <i
                         className="fa-solid fa-pen-to-square fs-6 cursor-pointer text-success"
                         onClick={() => handleEditData(list)}
