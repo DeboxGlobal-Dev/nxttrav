@@ -30,7 +30,7 @@ const Popup = () => {
               >
                 <img
                   className="image-hw cursor-pointer"
-                  src="\public\global_assets\images\qoutation\itenary.png"
+                  src="\global_assets\images\qoutation\itenary.png"
                   alt="activity"
                 />
                 <span className="span-font-size cursor-pointer">
@@ -45,7 +45,7 @@ const Popup = () => {
               >
                 <img
                   className="image-hw cursor-pointer"
-                  src="\public\global_assets\images\qoutation\flight.png"
+                  src="\global_assets\images\qoutation\flight.png"
                   alt="activity"
                 />
                 <span className="span-font-size cursor-pointer">Flight</span>
@@ -58,7 +58,7 @@ const Popup = () => {
               >
                 <img
                   className="image-hw cursor-pointer"
-                  src="\public\global_assets\images\qoutation\hotel.png"
+                  src="\global_assets\images\qoutation\hotel.png"
                   alt="activity"
                 />
                 <span className="span-font-size cursor-pointer">Hotel</span>
@@ -71,7 +71,7 @@ const Popup = () => {
               >
                 <img
                   className="image-hw cursor-pointer"
-                  src="\public\global_assets\images\qoutation\transfer.png"
+                  src="\global_assets\images\qoutation\transfer.png"
                   alt="activity"
                 />
                 <span className="span-font-size cursor-pointer">Transfer</span>
@@ -84,7 +84,7 @@ const Popup = () => {
               >
                 <img
                   className="image-hw cursor-pointer"
-                  src="\public\global_assets\images\qoutation\monument.png"
+                  src="\global_assets\images\qoutation\monument.png"
                   alt="activity"
                 />
                 <span className="span-font-size cursor-pointer">Monument</span>
@@ -97,7 +97,7 @@ const Popup = () => {
               >
                 <img
                   className="image-hw cursor-pointer"
-                  src="\public\global_assets\images\qoutation\enroute.png"
+                  src="\global_assets\images\qoutation\enroute.png"
                   alt="activity"
                 />
                 <span className="span-font-size cursor-pointer">Enroute</span>
@@ -110,7 +110,7 @@ const Popup = () => {
               >
                 <img
                   className="image-hw cursor-pointer"
-                  src="\public\global_assets\images\qoutation\restaurant.png"
+                  src="\global_assets\images\qoutation\restaurant.png"
                   alt="activity"
                 />
                 <span className="span-font-size cursor-pointer">
@@ -125,7 +125,7 @@ const Popup = () => {
               >
                 <img
                   className="image-hw cursor-pointer"
-                  src="\public\global_assets\images\qoutation\activity.png"
+                  src="\global_assets\images\qoutation\activity.png"
                   alt="activity"
                 />
                 <span className="span-font-size  cursor-pointer">Activity</span>
@@ -138,7 +138,7 @@ const Popup = () => {
               >
                 <img
                   className="image-hw cursor-pointer"
-                  src="\public\global_assets\images\qoutation\guide.png"
+                  src="\global_assets\images\qoutation\guide.png"
                   alt="activity"
                 />
                 <span className="span-font-size cursor-pointer">Guide</span>
@@ -151,7 +151,7 @@ const Popup = () => {
               >
                 <img
                   className="image-hw cursor-pointer"
-                  src="\public\global_assets\images\qoutation\transportation.png"
+                  src="\global_assets\images\qoutation\transportation.png"
                   alt="activity"
                 />
                 <span className="span-font-size cursor-pointer">
@@ -167,7 +167,7 @@ const Popup = () => {
               >
                 <img
                   className="image-hw cursor-pointer"
-                  src="\public\global_assets\images\qoutation\train.png"
+                  src="\global_assets\images\qoutation\train.png"
                   alt="activity"
                 />
                 <span className="span-font-size cursor-pointer">Trains</span>
@@ -180,7 +180,7 @@ const Popup = () => {
               >
                 <img
                   className="image-hw cursor-pointer"
-                  src="\public\global_assets\images\qoutation\add.png"
+                  src="\global_assets\images\qoutation\add.png"
                   alt="activity"
                 />
                 <span className="span-font-size cursor-pointer">Add Ons</span>

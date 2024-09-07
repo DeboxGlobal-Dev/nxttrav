@@ -27,7 +27,7 @@ const TaxInvoice = () => {
             <div className="row border-bottom yellow-bg py-3">
               <div className="col-5 d-flex justify-content-center align-items-center">
                 <img
-                  src="\public\assets\icons\general_master\debox.png"
+                  src="\assets\icons\general_master\debox.png"
                   alt="logo"
                   style={{ height: "80px", width: "150px" }}
                 />

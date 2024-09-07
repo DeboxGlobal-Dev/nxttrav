@@ -53,14 +53,14 @@ const QueryView = () => {
               <div className="d-flex align-items-center mb-3 mb-sm-0">
                 <div className="ml-3">
                   <img
-                    src="\public\global_assets\images\qoutation\Bell.png"
+                    src="\global_assets\images\qoutation\Bell.png"
                     alt="remainder"
                     style={{ height: "30px", width: "30px" }}
                   />
                 </div>
                 <div className="ml-3">
                   <img
-                    src="\public\global_assets\images\qoutation\remainder.png"
+                    src="\global_assets\images\qoutation\remainder.png"
                     alt="remainder"
                     style={{ height: "30px", width: "80px" }}
                   />

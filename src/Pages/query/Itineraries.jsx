@@ -98,10 +98,10 @@ const Itineraries = () => {
                     </div>
                     <div className="col-md col-sm-3 col-6">
                       <p className="font-size-10 text-secondary text-flow">
-                        Flight Class
+                        Flight className
                       </p>
                       <p className="font-size-10 font-weight-bold text-flow">
-                        First Class
+                        First className
                       </p>
                     </div>
                     <div className="col-md col-sm-3 col-6">
@@ -170,7 +170,7 @@ const Itineraries = () => {
                       </p>
                       <img
                         className="icon-img"
-                        src="\public\global_assets\images\qoutation\Departure1.png"
+                        src="\global_assets\images\qoutation\Departure1.png"
                         alt="arrival"
                       />
                     </div>
@@ -188,10 +188,10 @@ const Itineraries = () => {
                     </div>
                     <div className="col-md col-sm-3 col-6">
                       <p className="font-size-10 text-secondary text-flow">
-                        Flight Class
+                        Flight className
                       </p>
                       <p className="font-size-10 font-weight-bold text-flow">
-                        First Class
+                        First className
                       </p>
                     </div>
                     <div className="col-md col-sm-3 col-6">
@@ -241,7 +241,7 @@ const Itineraries = () => {
                         <p className="font-size-10 font-weight-bold">Action</p>
                         <p className="font-size-10 font-weight-bold">
                           <span className="p1-2 text-danger cursor-pointer">
-                            <i class="fa-solid fa-trash font-size-11 pr-1"></i>
+                            <i className="fa-solid fa-trash font-size-11 pr-1"></i>
                           </span>
                           <span className=" text-success cursor-pointer">
                             <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
@@ -262,7 +262,7 @@ const Itineraries = () => {
                       </p>
                       <img
                         className="icon-img"
-                        src="\public\global_assets\images\qoutation\monument.png"
+                        src="\global_assets\images\qoutation\monument.png"
                         alt="arrival"
                       />
                     </div>
@@ -310,7 +310,7 @@ const Itineraries = () => {
                         </p>
                         <p className="font-size-10 font-weight-bold">
                           <span className="p1-2 text-danger cursor-pointer">
-                            <i class="fa-solid fa-trash font-size-11 pr-1"></i>
+                            <i className="fa-solid fa-trash font-size-11 pr-1"></i>
                           </span>
                           <span className=" text-success cursor-pointer">
                             <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
@@ -331,7 +331,7 @@ const Itineraries = () => {
                       </p>
                       <img
                         className="icon-img"
-                        src="\public\global_assets\images\qoutation\monument.png"
+                        src="\global_assets\images\qoutation\monument.png"
                         alt="arrival"
                       />
                     </div>
@@ -379,7 +379,7 @@ const Itineraries = () => {
                         </p>
                         <p className="font-size-10 font-weight-bold">
                           <span className="p1-2 text-danger cursor-pointer">
-                            <i class="fa-solid fa-trash font-size-11 pr-1"></i>
+                            <i className="fa-solid fa-trash font-size-11 pr-1"></i>
                           </span>
                           <span className=" text-success cursor-pointer">
                             <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
@@ -400,7 +400,7 @@ const Itineraries = () => {
                       </p>
                       <img
                         className="icon-img"
-                        src="\public\global_assets\images\qoutation\hotel.png"
+                        src="\global_assets\images\qoutation\hotel.png"
                         alt="arrival"
                       />
                     </div>
@@ -478,7 +478,7 @@ const Itineraries = () => {
                       </p>
                       <img
                         className="icon-img"
-                        src="\public\global_assets\images\qoutation\activity.png"
+                        src="\global_assets\images\qoutation\activity.png"
                         alt="arrival"
                       />
                     </div>

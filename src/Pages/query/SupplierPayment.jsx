@@ -161,7 +161,7 @@ const SupplierPayment = () => {
             <div className="row align-items-center">
               <div className="col-1">
                 <img
-                  src="\public\global_assets\images\qoutation\transportation.png"
+                  src="\global_assets\images\qoutation\transportation.png"
                   style={{ height: "30px", width: "30px" }}
                   alt=""
                 />
@@ -193,7 +193,7 @@ const SupplierPayment = () => {
             <div className="row align-items-center">
               <div className="col-1">
                 <img
-                  src="\public\global_assets\images\qoutation\morning.png"
+                  src="\global_assets\images\qoutation\morning.png"
                   style={{ height: "30px", width: "30px" }}
                   alt=""
                 />
@@ -225,7 +225,7 @@ const SupplierPayment = () => {
             <div className="row align-items-center">
               <div className="col-1">
                 <img
-                  src="\public\global_assets\images\qoutation\monument.png"
+                  src="\global_assets\images\qoutation\monument.png"
                   style={{ height: "30px", width: "30px" }}
                   alt=""
                 />
