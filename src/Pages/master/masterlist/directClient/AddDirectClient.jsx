@@ -111,24 +111,26 @@ const AddDirectClient = () => {
   };
 
   const handleSumbitData = async () => {
-    try{
+    try {
       const { data } = await axiosOther.post("addupdatedirectClient", {
         ...formData,
         ContactInfo: contactFormDataArray,
         Documentation: documentationDataArray,
       });
 
-      console.log('direct-client',data);
-      if(data?.Status ===1){
+      console.log("direct-client", data);
+      if (data?.Status === 1) {
         toast.success(data?.Message);
-        setTimeout(()=>{
-          navigate(`/master/directclient/view/${data?.id}`, {state:data?.id})
-        },2000);
+        setTimeout(() => {
+          navigate(`/master/directclient/view/${data?.id}`, {
+            state: data?.id,
+          });
+        }, 2000);
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   console.log("errors-errors", errors);
 
@@ -161,7 +163,6 @@ const AddDirectClient = () => {
       Search: "",
       Status: "",
     });
-
   };
 
   useEffect(() => {
@@ -186,10 +187,7 @@ const AddDirectClient = () => {
                 >
                   Back
                 </NavLink>
-                <button
-                  className="btn btn-light"
-                  onClick={handleSumbitData}
-                >
+                <button className="btn btn-light" onClick={handleSumbitData}>
                   Save
                 </button>
                 <Toaster />

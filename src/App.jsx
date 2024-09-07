@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, {lazy, Suspense} from "react";
-import "./App.css";
-import "../public/global_assets/custom_css/master.css";
+import "./global_css/global.css";
 
 const Home = lazy(()=> import("./Pages/home/Home.jsx"));
 const Mail = lazy(()=> import("./Pages/mail/Mail.jsx"));

@@ -37,7 +37,7 @@ const Master = () => {
             <div className="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 master-head-img">
               <img
                 className="mt-2 mt-lg-0 mt-xl-0"
-                src="/public/assets/icons/main-menu.png"
+                src="/assets/icons/main-menu.png"
                 alt="main-menu"
               ></img>
             </div>
@@ -63,7 +63,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/business_type">
                     <div className="master-list-icon">
-                      <img src="assets/icons/process.png" alt="image" />
+                      <img src="/assets/icons/process.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "businesstypemaster".includes(
@@ -81,7 +81,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/state">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/united-states.png" alt="image" />
+                      <img src="/assets/icons/united-states.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "statemaster".includes(
@@ -98,7 +98,7 @@ const Master = () => {
 
                   <NavLink to="/master/language">
                     <div className="master-list-icon">
-                      <img src="assets/icons/languages.png" alt="image" />
+                      <img src="/assets/icons/languages.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "languagemaster".includes(
@@ -116,7 +116,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/city">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/city.png" alt="image" />
+                      <img src="/assets/icons/city.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "citymaster".includes(
@@ -133,7 +133,7 @@ const Master = () => {
 
                   <NavLink to="/master/division">
                     <div className="master-list-icon">
-                      <img src="assets/icons/split.png" alt="image" />
+                      <img src="/assets/icons/split.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "divisionmaster".includes(
@@ -151,7 +151,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/lead_source">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/conversion-rate.png" alt="image" />
+                      <img src="/assets/icons/conversion-rate.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "leadsourcemaster".includes(
@@ -167,7 +167,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/tour_type">
                     <div className="master-list-icon">
-                      <img src="assets/icons/tourtype.png" alt="image" />
+                      <img src="/assets/icons/tourtype.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "tourtype".includes(
@@ -185,7 +185,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/destination">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/destination.png" alt="image" />
+                      <img src="/assets/icons/destination.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "destinationmaster".includes(
@@ -201,7 +201,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/season">
                     <div className="master-list-icon">
-                      <img src="assets/icons/season.png" alt="image" />
+                      <img src="/assets/icons/season.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "seasonmaster".includes(
@@ -232,7 +232,7 @@ const Master = () => {
             <div className="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 master-head-img">
               <img
                 className="mt-2 mt-lg-0 mt-xl-0"
-                src="assets/icons/hotel.png"
+                src="/assets/icons/hotel.png"
                 alt="main-menu"
               ></img>
             </div>
@@ -242,7 +242,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/hotelmaster">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/document.png" alt="image" />
+                      <img src="/assets/icons/document.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "hotelmaster".includes(
@@ -258,7 +258,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/hotelcategory">
                     <div className="master-list-icon">
-                      <img src="assets/icons/hotel1.png" alt="image" />
+                      <img src="/assets/icons/hotel1.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "hotelcategorymaster".includes(
@@ -276,7 +276,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/roomtype">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/living-room.png" alt="image" />
+                      <img src="/assets/icons/living-room.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "roomtypemaster".includes(
@@ -292,7 +292,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/hotel_additional">
                     <div className="master-list-icon">
-                      <img src="assets/icons/hotel3.png" alt="image" />
+                      <img src="/assets/icons/hotel3.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "hoteladditionalmaster".includes(
@@ -310,7 +310,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/amenties">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/amenities.png" alt="image" />
+                      <img src="/assets/icons/amenities.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "amentiesmaster".includes(
@@ -326,7 +326,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/room_master">
                     <div className="master-list-icon">
-                      <img src="assets/icons/room.png" alt="image" />
+                      <img src="/assets/icons/room.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "roommaster".includes(
@@ -344,7 +344,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/hoteltype">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/hotel2.png" alt="image" />
+                      <img src="/assets/icons/hotel2.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "hoteltypemaster".includes(
@@ -360,7 +360,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/hotelchain">
                     <div className="master-list-icon">
-                      <img src="assets/icons/building.png" alt="image" />
+                      <img src="/assets/icons/building.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "hotelchainmaster".includes(
@@ -378,7 +378,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/hotelmeal">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/restaurant.png" alt="image" />
+                      <img src="/assets/icons/restaurant.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "hotelmealmaster".includes(
@@ -394,7 +394,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/resturant">
                     <div className="master-list-icon">
-                      <img src="assets/icons/restaurant-1.png" alt="image" />
+                      <img src="/assets/icons/restaurant-1.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "restaurantmaster".includes(
@@ -412,7 +412,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/weekend">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/countries.png" alt="image" />
+                      <img src="/assets/icons/countries.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "weekendmaster".includes(
@@ -428,7 +428,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/resturant_mealplan">
                     <div className="master-list-icon">
-                      <img src="assets/icons/process.png" alt="image" />
+                      <img src="/assets/icons/process.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "restaurantmealplan".includes(
@@ -457,17 +457,17 @@ const Master = () => {
                 SIGHTSEEING/ACTIVITY
               </p>
               <div className="row">
-                <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 master-head-img">
+                <div className="/col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 master-head-img">
                   <img
                     className="mt-2 mt-lg-0 mt-xl-0"
-                    src="assets/icons/sightseeing.png"
+                    src="/assets/icons/sightseeing.png"
                     alt="main-menu"
                   ></img>
                 </div>
                 <div className="col-7 p-0 ml-2">
                   <NavLink to="/master/monument">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/monument.png" alt="image" />
+                      <img src="/assets/icons/monument.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "monumentmaster".includes(
@@ -483,7 +483,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/sightseeing">
                     <div className="master-list-icon">
-                      <img src="assets/icons/binocular.png" alt="image" />
+                      <img src="/assets/icons/binocular.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "sightseeingmaster".includes(
@@ -508,14 +508,14 @@ const Master = () => {
                 <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 master-head-img">
                   <img
                     className="mt-2 mt-lg-0 mt-xl-0"
-                    src="assets/icons/tour-guide.png"
+                    src="/assets/icons/tour-guide.png"
                     alt="main-menu"
                   ></img>
                 </div>
                 <div className="col-7 p-0 ml-2">
                   <NavLink to="/master/tourescort">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/customer.png" alt="image" />
+                      <img src="/assets/icons/customer.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "tourescortmaster".includes(
@@ -532,7 +532,7 @@ const Master = () => {
                   <NavLink to="/master/tourescortprice">
                     <div className="master-list-icon">
                       <img
-                        src="assets/icons/technical-support.png"
+                        src="/assets/icons/technical-support.png"
                         alt="image"
                       />
                       <span
@@ -559,7 +559,7 @@ const Master = () => {
                 <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 master-head-img">
                   <img
                     className="mt-2 mt-lg-0 mt-xl-0"
-                    src="assets/icons/passport9.png"
+                    src="/assets/icons/passport9.png"
                     alt="main-menu"
                   ></img>
                 </div>
@@ -582,7 +582,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/visacost">
                     <div className="master-list-icon">
-                      <img src="assets/icons/visa.png" alt="image" />
+                      <img src="/assets/icons/visa.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "visacost".includes(
@@ -607,14 +607,14 @@ const Master = () => {
                 <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 master-head-img">
                   <img
                     className="mt-2 mt-lg-0 mt-xl-0"
-                    src="assets/icons/health-ins.png"
+                    src="/assets/icons/health-ins.png"
                     alt="main-menu"
                   ></img>
                 </div>
                 <div className="col-7 p-0 ml-2">
                   <NavLink to="/master/insurancetype">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/family.png" alt="image" />
+                      <img src="/assets/icons/family.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "insurancetype".includes(
@@ -630,7 +630,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/insurancecost">
                     <div className="master-list-icon">
-                      <img src="assets/icons/insur.png" alt="image" />
+                      <img src="/assets/icons/insur.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "insurancecost".includes(
@@ -662,14 +662,14 @@ const Master = () => {
                 <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 master-head-img">
                   <img
                     className="mt-2 mt-lg-0 mt-xl-0"
-                    src="assets/icons/passport8.png"
+                    src="/assets/icons/passport8.png"
                     alt="main-menu"
                   ></img>
                 </div>
                 <div className="col-7 p-0 ml-2">
                   <NavLink to="/master/passporttype">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/passport5.png" alt="image" />
+                      <img src="/assets/icons/passport5.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "passporttype".includes(
@@ -685,7 +685,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/passportcost">
                     <div className="master-list-icon">
-                      <img src="assets/icons/passport7.png" alt="image" />
+                      <img src="/assets/icons/passport7.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "passportcost".includes(
@@ -717,7 +717,7 @@ const Master = () => {
                 <div className="col-7 p-0 ml-2">
                   <NavLink to="/master/train">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/rail.png" alt="image" />
+                      <img src="/assets/icons/rail.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "trainmaster".includes(
@@ -733,7 +733,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/airline">
                     <div className="master-list-icon">
-                      <img src="assets/icons/travelling.png" alt="image" />
+                      <img src="/assets/icons/travelling.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "airlinemaster".includes(
@@ -758,14 +758,14 @@ const Master = () => {
                 <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 master-head-img">
                   <img
                     className="mt-2 mt-lg-0 mt-xl-0"
-                    src="assets/icons/other.png"
+                    src="/assets/icons/other.png"
                     alt="main-menu"
                   ></img>
                 </div>
                 <div className="col-7 p-0 ml-2">
                   <NavLink to="/master/additionalrequirement">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/gear.png" alt="image" />
+                      <img src="/assets/icons/gear.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "additionalrequirement".includes(
@@ -781,7 +781,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/operationrestriction">
                     <div className="master-list-icon">
-                      <img src="assets/icons/hotel1.png" alt="image" />
+                      <img src="/assets/icons/hotel1.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "operationrestriction".includes(
@@ -801,7 +801,7 @@ const Master = () => {
             <div className="col-md-2 col-sm-6 d-flex flex-column justify-content-end">
               <NavLink to="/master/agent">
                 <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                  <img src="assets/icons/destination.png" alt="image" />
+                  <img src="/assets/icons/destination.png" alt="image" />
                   <span
                     className={`pl-1 ${
                       "destinationmaster".includes(
@@ -817,7 +817,7 @@ const Master = () => {
               </NavLink>
               <NavLink to="/master/directclient">
                 <div className="master-list-icon">
-                  <img src="assets/icons/season.png" alt="image" />
+                  <img src="/assets/icons/season.png" alt="image" />
                   <span
                     className={`pl-1 ${
                       "seasonmaster".includes(
@@ -835,7 +835,7 @@ const Master = () => {
             <div className="col-md-2 col-sm-6 d-flex flex-column justify-content-center">
               <NavLink to="/master/supplier">
                 <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                  <img src="assets/icons/destination.png" alt="image" />
+                  <img src="/assets/icons/destination.png" alt="image" />
                   <span
                     className={`pl-1 ${
                       "destinationmaster".includes(
@@ -874,7 +874,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/transfermaster">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/document.png" alt="image" />
+                      <img src="/assets/icons/document.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "transfermaster".includes(
@@ -890,7 +890,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/vehicletype">
                     <div className="master-list-icon">
-                      <img src="assets/icons/hotel1.png" alt="image" />
+                      <img src="/assets/icons/hotel1.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "vehicletypemaster".includes(
@@ -908,7 +908,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/transfertype">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/living-room.png" alt="image" />
+                      <img src="/assets/icons/living-room.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "transfertype".includes(
@@ -924,7 +924,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/vehiclebrand">
                     <div className="master-list-icon">
-                      <img src="assets/icons/hotel3.png" alt="image" />
+                      <img src="/assets/icons/hotel3.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "vehiclebrandmaster".includes(
@@ -942,7 +942,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/transport">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/amenities.png" alt="image" />
+                      <img src="/assets/icons/amenities.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "transportmaster".includes(
@@ -958,7 +958,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/driver">
                     <div className="master-list-icon">
-                      <img src="assets/icons/room.png" alt="image" />
+                      <img src="/assets/icons/room.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "drivermaster".includes(
@@ -976,7 +976,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/vehiclemaster">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/hotel2.png" alt="image" />
+                      <img src="/assets/icons/hotel2.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "vehiclemaster".includes(
@@ -992,7 +992,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/fleet">
                     <div className="master-list-icon">
-                      <img src="assets/icons/building.png" alt="image" />
+                      <img src="/assets/icons/building.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "fleetmaster".includes(
@@ -1022,7 +1022,7 @@ const Master = () => {
             <div className="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 master-head-img">
               <img
                 className="mt-2 mt-lg-0 mt-xl-0"
-                src="assets/icons/ship1.png"
+                src="/assets/icons/ship1.png"
                 alt="main-menu"
               ></img>
             </div>
@@ -1031,7 +1031,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/cruisecompany">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/enterprise.png" alt="image" />
+                      <img src="/assets/icons/enterprise.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "cruisecompany".includes(
@@ -1049,7 +1049,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/cruisenamecompany">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/cruise1.png" alt="image" />
+                      <img src="/assets/icons/cruise1.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "cruisecompanyname".includes(
@@ -1067,7 +1067,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/cabintype">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/cabin.png" alt="image" />
+                      <img src="/assets/icons/cabin.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "cabintype".includes(
@@ -1085,7 +1085,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/cabincategory">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/cabin1.png" alt="image" />
+                      <img src="/assets/icons/cabin1.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "cabincategory".includes(
@@ -1103,7 +1103,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/cruisemaster">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/ship.png" alt="image" />
+                      <img src="/assets/icons/ship.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "cruisemaster".includes(
@@ -1133,7 +1133,7 @@ const Master = () => {
             <div className="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 master-head-img">
               <img
                 className="mt-2 mt-lg-0 mt-xl-0"
-                src="assets/icons/cruise4.png"
+                src="/assets/icons/cruise4.png"
                 alt="main-menu"
               ></img>
             </div>
@@ -1142,7 +1142,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/ferrycompany">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/ferry.png" alt="image" />
+                      <img src="/assets/icons/ferry.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "ferrycompany".includes(
@@ -1160,7 +1160,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/ferrymaster">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/ferry2.png" alt="image" />
+                      <img src="/assets/icons/ferry2.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "ferrymaster".includes(
@@ -1178,7 +1178,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/ferryseat">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/cruise2.png" alt="image" />
+                      <img src="/assets/icons/cruise2.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "ferryseatmaster".includes(
@@ -1196,7 +1196,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/ferryprice">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/cruise3.png" alt="image" />
+                      <img src="/assets/icons/cruise3.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "ferrypricemaster".includes(
@@ -1226,7 +1226,7 @@ const Master = () => {
             <div className="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 master-head-img">
               <img
                 className="mt-2 mt-lg-0 mt-xl-0"
-                src="assets/icons/itinerary3.png"
+                src="/assets/icons/itinerary3.png"
                 alt="main-menu"
                 style={{ width: "30px" }}
               ></img>
@@ -1236,7 +1236,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/itenaryrequirement">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/destination.png" alt="image" />
+                      <img src="/assets/icons/destination.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "itenararyrequirements".includes(
@@ -1252,7 +1252,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/lettermaster">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/letter.png" alt="image" />
+                      <img src="/assets/icons/letter.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "lettermaster".includes(
@@ -1270,7 +1270,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/itenararyoverview">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/itinerary2.png" alt="image" />
+                      <img src="/assets/icons/itinerary2.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "itenararyoverview".includes(
@@ -1287,7 +1287,7 @@ const Master = () => {
                   <NavLink to="/master/proposalsetting">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
                       <img
-                        src="assets/icons/business-proposal.png"
+                        src="/assets/icons/business-proposal.png"
                         alt="image"
                       />
                       <span
@@ -1307,7 +1307,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/emergencydetails">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/resume.png" alt="image" />
+                      <img src="/assets/icons/resume.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "emergencydetails".includes(
@@ -1325,7 +1325,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/fit">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/t&c2.png" alt="image" />
+                      <img src="/assets/icons/t&c2.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "fitinc&exct&c".includes(
@@ -1343,7 +1343,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/git">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/t&c1.png" alt="image" />
+                      <img src="/assets/icons/t&c1.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "gitinc&exct&c".includes(
@@ -1373,7 +1373,7 @@ const Master = () => {
             <div className="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 master-head-img">
               <img
                 className="mt-2 mt-lg-0 mt-xl-0"
-                src="assets/icons/budget1.png"
+                src="/assets/icons/budget1.png"
                 alt="main-menu"
               ></img>
             </div>
@@ -1382,7 +1382,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/currencymaster">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/exchange.png" alt="image" />
+                      <img src="/assets/icons/exchange.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "cruisemaster".includes(
@@ -1398,7 +1398,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/bankmaster">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/bank.png" alt="image" />
+                      <img src="/assets/icons/bank.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "bankmaster".includes(
@@ -1416,7 +1416,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/commissionmaster">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/commission.png" alt="image" />
+                      <img src="/assets/icons/commission.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "commissionmaster".includes(
@@ -1432,7 +1432,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/saccode">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/code.png" alt="image" />
+                      <img src="/assets/icons/code.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "saccodemaster".includes(
@@ -1450,7 +1450,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/taxmaster">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/taxes.png" alt="image" />
+                      <img src="/assets/icons/taxes.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "taxmaster".includes(
@@ -1466,7 +1466,7 @@ const Master = () => {
                   </NavLink>
                   <NavLink to="/master/paymenttype">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/payment-method.png" alt="image" />
+                      <img src="/assets/icons/payment-method.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "paymenttypemaster".includes(
@@ -1484,7 +1484,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/expensetype">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/expenses.png" alt="image" />
+                      <img src="/assets/icons/expenses.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "expensetypemaster".includes(
@@ -1502,7 +1502,7 @@ const Master = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 my-2 my-md-2 my-lg-0 my-xl-0 p-0 px-2">
                   <NavLink to="/master/expensehead">
                     <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
-                      <img src="assets/icons/expense1.png" alt="image" />
+                      <img src="/assets/icons/expense1.png" alt="image" />
                       <span
                         className={`pl-1 ${
                           "expenseheadmaster".includes(

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../../public/global_assets/custom_css/shimmer.css";
+import "../../global_css/shimer.css";
 import Layout from "./Layout";
 
 const ComponentSkeleton = () => {

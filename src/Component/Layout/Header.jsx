@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
-import logo from "../../../public/global_assets/images/logo_light.png";
-import placeholder from "../../../public/global_assets/images/placeholders/placeholder.jpg";
+import { NavLink } from "react-router-dom";
+import logo from "/global_assets/images/logo_light.png";
+import placeholder from "/global_assets/images/placeholders/placeholder.jpg";
 
 const Header = () => {
 
