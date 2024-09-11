@@ -5,6 +5,7 @@ import "./global_css/global.css";
 const Home = lazy(()=> import("./Pages/home/Home.jsx"));
 const Mail = lazy(()=> import("./Pages/mail/Mail.jsx"));
 const Query = lazy(()=> import("./Pages/query/Query.jsx"));
+const AddQuery = lazy(()=> import("./Pages/query/add_query/AddQuery.jsx"))
 const Master = lazy(()=> import("./Pages/master/Master.jsx"));
 const Login = lazy(()=> import("./Pages/auth/Login.jsx"));
 const Logout = lazy(()=> import("./Pages/auth/Logout.jsx"));
@@ -140,7 +141,7 @@ const App = () => {
           <Route path="/preferrence" element={<Protected><SetPreferrence/></Protected>}></Route>
           <Route path="/querylist/queryview" element={<Protected><QueryView /></Protected>}>
           <Route path="/querylist/queryview/preview" element={<Protected><Preview/></Protected>}></Route>
-            <Route index element={<Protected><Query/></Protected>}></Route>
+            <Route index element={<Protected><AddQuery/></Protected>}></Route>
             <Route path="quotation" element={<Protected><Quotation/></Protected>}>
               <Route index element={<Protected><Itineraries/></Protected>}></Route>
               <Route path="policies" element={<Protected><Polocies/></Protected>}></Route>

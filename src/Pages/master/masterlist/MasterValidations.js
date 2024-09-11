@@ -958,7 +958,7 @@ export const agentMasterValidationSchema = yup.object().shape({
 export const supplierValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
   Status: yup.string().required("Required"),
-  SupplierServices: yup.array().min(1, "Required").required("Required"),
+  SupplierService: yup.array().min(1, "Required").required("Required"),
 });
 
 export const addAddressValidationSchema = yup.object().shape({

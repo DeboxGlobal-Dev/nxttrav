@@ -30,6 +30,8 @@ const DirectClient = () => {
     postDataToServer();
   }, [updateData]);
 
+  console.log("direct-client", getData);;
+
   const columns = [
     {
       name: "Name",

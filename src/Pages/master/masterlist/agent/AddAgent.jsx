@@ -86,8 +86,6 @@ const AddAgent = () => {
         ...agentInputData,
       });
 
-      console.log("add-agent-image", data);
-
       if (data.Status === 1) {
         toast.success(data?.Message);
         setTimeout(() => {

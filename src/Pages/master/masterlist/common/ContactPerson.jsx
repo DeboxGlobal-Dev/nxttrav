@@ -20,16 +20,11 @@ const ContactPerson = ({ partner_payload }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-
   const handleSubmitData = async () => {
     try {
       setErrors({});
       await addContactPersonValidationSchema.validate(formData, {
         abortEarly: false,
-      });
-      console.log("contact-person", {
-        ...formData,
-        ParentId: partner_payload?.Fk_partnerid,
       });
       const { data } = await axiosOther.post("addupdatecontact", {
         ...formData,
@@ -41,8 +36,6 @@ const ContactPerson = ({ partner_payload }) => {
         ImageThreeData: imageData?.ThirdImage?.data,
         ParentId: partner_payload?.Fk_partnerid,
       });
-
-      console.log("adding", data);
 
       if (data?.Status === 1) {
         toast.success(data?.Message);
@@ -58,7 +51,6 @@ const ContactPerson = ({ partner_payload }) => {
         }, {});
         setErrors(errorMessages);
       }
-      console.log(error);
     }
   };
 
@@ -69,11 +61,12 @@ const ContactPerson = ({ partner_payload }) => {
         Type: "agent",
       });
       setContactList(data?.DataList);
-      console.log("contact-list", data);
     } catch (err) {
       console.log(err);
     }
   };
+
+  console.log('contact-list', contactList);
 
   useEffect(() => {
     getContacList();
@@ -92,7 +85,6 @@ const ContactPerson = ({ partner_payload }) => {
       toast.success(data?.Message);
       getContacList();
     }
-    console.log(data);
   };
 
   useEffect(() => {
@@ -655,4 +647,4 @@ const ContactPerson = ({ partner_payload }) => {
   );
 };
 
-export default memo(ContactPerson);
+export default React.memo(ContactPerson);

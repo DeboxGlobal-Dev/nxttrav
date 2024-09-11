@@ -943,6 +943,14 @@ select {
   animation: skeleton-loading 1.5s infinite linear;
 }
 
+.custom-table-scroll::-webkit-scrollbar{
+  display: none;
+}
+.custom-table-scroll:hover::-webkit-scrollbar{
+  display: block;
+  height: 4px;
+}
+
 /* Animation for loading effect */
 @keyframes skeleton-loading {
   0% {

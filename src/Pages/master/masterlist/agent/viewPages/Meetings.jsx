@@ -12,7 +12,6 @@ const Meetings = ({ partner_payload }) => {
     try {
       const { data } = await axiosOther.post("meetingslist", partner_payload);
       setMeetingsList(data?.DataList);
-      console.log("meeting-list", data);
     } catch (error) {
       console.log(error);
     }
@@ -42,10 +41,8 @@ const Meetings = ({ partner_payload }) => {
       toast.success(data?.Message);
       fetchMeetingListData();
     }
-    console.log(data);
   };
 
-  // console.log('meeting-list', meetinsList)
   return (
     <>
       <div className="col-12 agent-view-table mt-4">
@@ -73,7 +70,6 @@ const Meetings = ({ partner_payload }) => {
           <tbody>
             {meetinsList?.length > 0 ? (
               meetinsList?.map((details, index) => {
-                console.log("meeting-list", details);
                 return (
                   <tr key={index + 1}>
                     <th className="py-1">{details?.MeetingAgenda}</th>
@@ -109,4 +105,4 @@ const Meetings = ({ partner_payload }) => {
   );
 };
 
-export default memo(Meetings);
+export default React.memo(Meetings);

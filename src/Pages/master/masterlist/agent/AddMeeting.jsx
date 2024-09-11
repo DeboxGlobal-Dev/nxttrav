@@ -124,6 +124,8 @@ const AddMeeting = () => {
     getDataToServer();
   }, []);
 
+  console.log('add-meeting-component');
+
   return (
     <>
       <Layout>

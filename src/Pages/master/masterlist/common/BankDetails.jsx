@@ -32,14 +32,12 @@ const BankDetails = ({ partner_payload }) => {
         ...formData,
         ...partner_payload
       });
-      console.log('add-bank', data);
       if (data?.Status) {
         toast.success(data.Message);
         fetchingBankData();
         setFormData(agentBankDetailsInitialValue);
         closeRef.current.click();
       }
-      console.log(data);
     } catch (error) {
       if (error?.inner) {
         const errorMessages = error?.inner.reduce((acc, curr) => {
@@ -50,8 +48,6 @@ const BankDetails = ({ partner_payload }) => {
       }
     }
   };
-
-  // console.log('bank-form', formData);
 
   async function fetchingBankData() {
     const { data } = await axiosOther.post("bankdetailslist", partner_payload);
@@ -75,9 +71,8 @@ const BankDetails = ({ partner_payload }) => {
       toast.success(data?.Message);
       fetchingBankData();
     }
-    console.log(data);
   };
-
+  
   return (
     <>
       <div className="">
@@ -341,4 +336,4 @@ const BankDetails = ({ partner_payload }) => {
   );
 };
 
-export default memo(BankDetails);
+export default React.memo(BankDetails);

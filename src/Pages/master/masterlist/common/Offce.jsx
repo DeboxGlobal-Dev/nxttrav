@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { addOfficeInitialValue } from "../mastersInitialValues";
 import { axiosOther } from "../../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
-import { memo } from "react";
 import { addAddressValidationSchema } from "../MasterValidations";
 
 const Office = ({ partner_payload }) => {
@@ -21,11 +20,12 @@ const Office = ({ partner_payload }) => {
   };
 
   const handleSubmitData = async () => {
+
     try {
       await addAddressValidationSchema.validate(formData, {
         abortEarly: false,
       });
-      const { data } = await axiosOther.post("addupdateoffice", {
+      const { data } = await axiosOther.post("addupdateoffice",{
         ...formData,
         ...partner_payload,
       });
@@ -35,7 +35,6 @@ const Office = ({ partner_payload }) => {
         setFormData(addOfficeInitialValue);
         closeRef.current.click();
       }
-      console.log(data);
     } catch (err) {
       const { Name } = err?.response?.data?.Errors;
       if (err?.inner) {
@@ -61,8 +60,6 @@ const Office = ({ partner_payload }) => {
     }
   }
 
-  console.log("office-payload", partner_payload);
-
   useEffect(() => {
     getOfficeListData();
   }, []);
@@ -80,8 +77,9 @@ const Office = ({ partner_payload }) => {
       toast.success(data?.Message);
       getOfficeListData();
     }
-    console.log(data);
   };
+
+
 
   const getDataToServer = async () => {
     try {
@@ -116,8 +114,6 @@ const Office = ({ partner_payload }) => {
   useEffect(() => {
     getDataToServer();
   }, []);
-  
-
 
   return (
     <>
@@ -399,4 +395,4 @@ const Office = ({ partner_payload }) => {
   );
 };
 
-export default memo(Office);
+export default React.memo(Office);

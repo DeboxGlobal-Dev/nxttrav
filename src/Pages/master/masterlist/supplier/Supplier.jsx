@@ -10,16 +10,14 @@ const Supplier = () => {
   const [loading, setLoading] = useState(true);
   const [updateData, setUpdateData] = useState(false);
   const [postData, setPostData] = useState({
-    Id: "",
-    FirstName: "",
+    id: "",
+    Name: "",
   });
-
-
 
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("directClientlist", postData);
+        const { data } = await axiosOther.post("supplierlist", postData);
         setLoading(false);
         setFilterData(data?.DataList);
         setGetData(data?.DataList);
@@ -30,6 +28,8 @@ const Supplier = () => {
     postDataToServer();
   }, [updateData]);
 
+  console.log("supplier-list", getData);
+  
   const columns = [
     {
       name: "Action",

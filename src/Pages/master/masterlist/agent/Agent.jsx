@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../../http/axios/axios_new";
 
-
 const Agent = () => {
   const [filterData, setFilterData] = useState([]);
   const [getData, setGetData] = useState([]);
@@ -57,56 +56,32 @@ const Agent = () => {
     },
     {
       name: "Company Phone",
-      selector: (row) => (
-        <span>
-          {row?.CompanyPhoneNumber}
-        </span>
-      ),
+      selector: (row) => <span>{row?.CompanyPhoneNumber}</span>,
       sortable: true,
     },
     {
       name: "Company Email",
-      selector: (row) => (
-        <span>
-          {row?.CompanyEmailAddress}
-        </span>
-      ),
+      selector: (row) => <span>{row?.CompanyEmailAddress}</span>,
       sortable: true,
     },
     {
       name: "Assign Person",
-      selector: (row) => (
-        <span>
-         {row?.SalesPerson}
-        </span>
-      ),
+      selector: (row) => <span>{row?.SalesPerson}</span>,
       sortable: true,
     },
     {
       name: "Nationality",
-      selector: (row) => (
-        <span>
-          {row?.Nationality}
-        </span>
-      ),
+      selector: (row) => <span>{row?.Nationality}</span>,
       sortable: true,
     },
     {
       name: "Country",
-      selector: (row) => (
-        <span>
-        {row?.Country}
-        </span>
-      ),
+      selector: (row) => <span>{row?.Country}</span>,
       sortable: true,
     },
     {
       name: "Market Type",
-      selector: (row) => (
-        <span>
-          {row?.MarketType}
-        </span>
-      ),
+      selector: (row) => <span>{row?.MarketType}</span>,
       sortable: true,
     },
     {
