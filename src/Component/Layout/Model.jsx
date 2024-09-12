@@ -16,25 +16,27 @@ const Model = ({
   setUpdateData,
   updateData,
   imageValue,
-  setImageValue
+  setImageValue,
 }) => {
-  
   const closeModel = () => {
     document.getElementById("cancel").click();
   };
-  
+
   const handleSubmit = async (values, { resetForm }) => {
-    console.log('Submit Modal Value', {...values, ...imageValue});
-    
+    console.log("Submit Modal Value", { ...values, ...imageValue });
+
     try {
-      const response = await axiosOther.post(apiurl, {...values, ...imageValue});
+      const response = await axiosOther.post(apiurl, {
+        ...values,
+        ...imageValue,
+      });
       if (response.data.Status) {
         toast.success(response.data.Message);
         setUpdateData(!updateData);
         resetForm();
         closeModel();
         console.log(response);
-        imageValue != undefined && setImageValue({ImageName:""});
+        imageValue != undefined && setImageValue({ ImageName: "" });
       } else {
         toast.error(response.data.Name);
         console.log(response.data.Name);
@@ -66,18 +68,15 @@ const Model = ({
       >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
-            <div className="modal-header bg-info-700">
-              <h5 className="modal-title" id="exampleModalLabel">
+            <div className="modal-header bg-info-700 py-1">
+              <h5 className="modal-title m-0" id="exampleModalLabel">
                 {heading}
               </h5>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
+              <p className="m-0 cursor-pointer font-weight-normal" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" className="m-0 fs-3">
+                  &times;
+                </span>
+              </p>
             </div>
             <Formik
               method="POST"
@@ -89,7 +88,7 @@ const Model = ({
                 handleSubmit(values, { resetForm });
               }}
             >
-              {({ values, handleChange, handleBlur, setFieldValue}) =>{
+              {({ values, handleChange, handleBlur, setFieldValue }) => {
                 {
                   useEffect(() => {
                     setChangeValue(values);
@@ -97,23 +96,23 @@ const Model = ({
                 }
                 return (
                   <Form>
-                    <div className="modal-body">
+                    <div className="modal-body p-3">
                       {/* modal body */}
                       {children}
                       {/* /modal body */}
                     </div>
 
-                    <div className="modal-footer ">
+                    <div className="modal-footer p-3 pt-0">
+                      <button type="submit" className="modal-save-button">
+                        Save
+                      </button>
                       <button
                         type="button"
                         id="cancel"
-                        className="default-button"
+                        className="modal-close-button"
                         data-dismiss="modal"
                       >
                         Close
-                      </button>
-                      <button type="submit" className="green-button">
-                        Save
                       </button>
                     </div>
                   </Form>

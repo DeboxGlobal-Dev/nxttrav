@@ -98,7 +98,7 @@ const ItenaryRequirement = lazy(()=> import("./Pages/master/masterlist/ItenaryRe
 const Proposal = lazy(()=> import("./Pages/query/Proposal.jsx"));
 const Vouchers = lazy(()=> import("./Pages/query/Vouchers.jsx"));
 const Invoices = lazy(()=> import("./Pages/query/Invoices.jsx"));
-const Itineraries = lazy(()=> import("./Pages/query/Itineraries.jsx"));
+const Itineraries = lazy(()=> import("./Pages/query/itineraries/Itineraries.jsx"));
 const Polocies = lazy(()=> import("./Pages/query/Policies.jsx"));
 const Commission = lazy(()=> import("./Pages/query/Commission.jsx"));
 const Summary = lazy(()=> import("./Pages/query/Summary.jsx"));

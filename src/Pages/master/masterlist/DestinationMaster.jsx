@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo} from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
@@ -84,16 +84,16 @@ const DestinationMaster = () => {
     setIsEditing(true);
   };
 
-  const stateFiltered = useMemo(()=>{
-
-    const filteredState = stateList.filter((value)=> changeValue.CountryId==value.CountryId);
-      return filteredState;
-
+  const stateFiltered = useMemo(() => {
+    const filteredState = stateList.filter(
+      (value) => changeValue.CountryId == value.CountryId
+    );
+    return filteredState;
   }, [changeValue.CountryId, changeValue.StateId]);
 
-  const handleDescription = (content) =>{
+  const handleDescription = (content) => {
     console.log(content);
-  }
+  };
 
   const columns = [
     {
@@ -203,88 +203,91 @@ const DestinationMaster = () => {
                   updateData={updateData}
                   setUpdateData={setUpdateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label htmlFor="country">Country</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="CountryId"
-                        >
-                          <option value={""}>Select Country</option>
-                          {countryList.map((value, index) => {
-                            return (
-                              <option value={value.id} key={index + 1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>State</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="StateId"
-                        >
-                          <option value="">Select State</option>
-                          {stateFiltered.map((value, index) => {
-                            return (
-                              <option value={value.id} key={index + 1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-4 h-100">
-                        <label>Destination Name</label>
-                        <Field
-                          type="text"
-                          placeholder="Name"
-                          className="form-control"
-                          name="Name"
-                        />
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <label htmlFor="country" className="m-0 font-size-12">
+                        Country
+                      </label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="CountryId"
+                      >
+                        <option value="">Select Country</option>
+                        {countryList.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">State</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="StateId"
+                      >
+                        <option value="">Select State</option>
+                        {stateFiltered.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4 h-100">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          Destination Name{" "}
+                          <span className="text-danger">*</span>
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Set Default</label>
-                        <Field
-                          name="SetDefault"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={0}>
-                            No
-                          </option>
-                          <option value={1}>Yes</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-12">
-                        <label>Description</label>
-                        <Editor
-                          handleChangeEditor={handleDescription}
-                          heightValue="60%"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Description" />
-                        </span>
-                      </div>
+                      <Field
+                        type="text"
+                        placeholder="Name"
+                        className="form-input-6"
+                        name="Name"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Set Default</label>
+                      <Field
+                        name="SetDefault"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={0}>No</option>
+                        <option value={1}>Yes</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-12">
+                      <label className="m-0 font-size-12">Description</label>
+                      <Editor
+                        handleChangeEditor={handleDescription}
+                        heightValue="60%"
+                      />
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Description" />
+                      </span>
                     </div>
                   </div>
                 </Model>

@@ -8,33 +8,30 @@ import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const CityMaster = () => {
-
-
   console.log("CityMaster Loaded");
 
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
-  const [countryList,  setCountryList] = useState([]);
+  const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: ""
+    Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
-  const [loading,setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const getDataToServer = async () => {
-    console.log('First Action');
+    console.log("First Action");
     try {
       const countryData = await axiosOther.post("countrylist", {
         Search: "",
         Status: 1,
       });
       setCountryList(countryData.data.DataList);
-    
     } catch (err) {
       console.log(err);
     }
@@ -45,7 +42,6 @@ const CityMaster = () => {
         Status: 1,
       });
       setStateList(stateData.data.DataList);
-      
     } catch (err) {
       console.log(err);
     }
@@ -55,14 +51,14 @@ const CityMaster = () => {
   }, []);
 
   useEffect(() => {
-    console.log('Second Action');
+    console.log("Second Action");
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("citylist", postData);
         setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
-        console.log('CityList', data);
+        console.log("CityList", data);
       } catch (error) {
         console.log(error);
       }
@@ -72,7 +68,7 @@ const CityMaster = () => {
   }, [updateData]);
 
   useEffect(() => {
-    console.log('Third Action');
+    console.log("Third Action");
     const result = getData.filter((item) => {
       return item?.Name?.toLowerCase()?.match(postData?.Search?.toLowerCase());
     });
@@ -89,7 +85,6 @@ const CityMaster = () => {
   };
 
   const stateFiltered = useMemo(() => {
-    
     const filteredState = stateList.filter(
       (value) => changeValue.CountryId == value.CountryId
     );
@@ -182,67 +177,70 @@ const CityMaster = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-3">
-                        <label htmlFor="country">Country</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="CountryId"
-                        >
-                          <option value="">Select Country</option>
-                          {countryList.map((value, index) => {
-                            // console.log(value);
-                            return (
-                              <option value={value.id} key={index + 1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-3">
-                        <label>State</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="StateId"
-                        >
-                          <option value="">Select State</option>
-                          {stateFiltered?.map((value, index) => {
-                            console.log(value);
-                            return (
-                              <option value={value.id} key={index + 1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-3">
-                        <label>Name</label>
-                        <Field
-                          type="text"
-                          placeholder="City Name"
-                          className="form-control"
-                          name="Name"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
-                      </div>
-                      <div className="col-sm-3">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <label htmlFor="country" className="m-0 font-size-12">
+                        Country <span className="text-danger">*</span>
+                      </label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="CountryId"
+                      >
+                        <option value="">Select Country</option>
+                        {countryList.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">
+                        State <span className="text-danger">*</span>
+                      </label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="StateId"
+                      >
+                        <option value="">Select State</option>
+                        {stateFiltered?.map((value, index) => {
+                          console.log(value);
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">
+                        Name <span className="text-danger">*</span>
+                      </label>
+                      <Field
+                        type="text"
+                        placeholder="City Name"
+                        className="form-input-6"
+                        name="Name"
+                      />
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Name" />
+                      </span>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

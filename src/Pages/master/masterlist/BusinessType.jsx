@@ -45,11 +45,11 @@ const BusinessType = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    console.log(rowValue)
+    console.log(rowValue);
     setEditData({
       ...rowValue,
-      SetDefault: rowValue.SetDefault ==="Yes" ? 1:0,
-      Status: rowValue.Status ==="Active" ? 1:0,
+      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -90,7 +90,7 @@ const BusinessType = () => {
       selector: (row) => {
         return (
           <span>
-             <br /> {row.UpdatedBy}
+            <br /> {row.UpdatedBy}
           </span>
         );
       },
@@ -130,50 +130,48 @@ const BusinessType = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-4">
-                        <label>Business Type Name</label>
-                        <Field
-                          type="text"
-                          placeholder="Name"
-                          className="form-control"
-                          name="Name"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
-                      </div>
-                      <div className="col-sm-3">
-                        <label>Set Default</label>
-                        <Field
-                          name="SetDefault"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={0} selected>
-                            No
-                          </option>
-                          <option value={1}>Yes</option>
-                        </Field>
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="SetDefault" />
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Status" />
-                        </span>
-                      </div>
+                  <div className="row">
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Business Type Name</label>
+                      <Field
+                        type="text"
+                        placeholder="Name"
+                        className="form-input-6"
+                        name="Name"
+                      />
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Name" />
+                      </span>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Set Default</label>
+                      <Field
+                        name="SetDefault"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={0} selected>
+                          No
+                        </option>
+                        <option value={1}>Yes</option>
+                      </Field>
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="SetDefault" />
+                      </span>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Status" />
+                      </span>
                     </div>
                   </div>
                 </Model>

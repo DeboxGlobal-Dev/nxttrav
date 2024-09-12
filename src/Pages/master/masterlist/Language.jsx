@@ -17,7 +17,7 @@ const Language = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: ""
+    Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
@@ -50,7 +50,7 @@ const Language = () => {
     console.log(rowValue);
     setEditData({
       ...rowValue,
-      Status: rowValue.Status ==="Active" ? 1:0,
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -84,11 +84,7 @@ const Language = () => {
     {
       name: "Updated By",
       selector: (row) => {
-        return (
-          <span>
-            {row.UpdatedBy}
-          </span>
-        );
+        return <span>{row.UpdatedBy}</span>;
       },
     },
   ];
@@ -128,34 +124,32 @@ const Language = () => {
                   updateData={updateData}
                   setUpdateData={setUpdateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-6">
-                        <label>Name</label>
-                        <Field
-                          type="text"
-                          placeholder="Name"
-                          className="form-control"
-                          name="Name"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
-                      </div>
-                      <div className="col-sm-6">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Status" />
-                        </span>
-                      </div>
+                  <div className="row">
+                    <div className="col-sm-4">
+                      <label className="font-size-12 m-0">Name</label>
+                      <Field
+                        type="text"
+                        placeholder="Name"
+                        className="form-input-6"
+                        name="Name"
+                      />
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Name" />
+                      </span>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Status" />
+                      </span>
                     </div>
                   </div>
                 </Model>

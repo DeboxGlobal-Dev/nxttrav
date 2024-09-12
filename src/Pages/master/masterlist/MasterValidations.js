@@ -704,7 +704,7 @@ export const itineraryRequirementInitialValue = {
 // ------------------------VALIDATION SCHEMAS-------------------------- //
 
 export const countryValidationSchema = yup.object().shape({
-  Name: yup.string().min(3).max(20).required("Required"),
+  Name: yup.string().required("Required"),
   ShortName: yup.string().required("Required"),
 });
 export const stateValidationSchema = yup.object().shape({

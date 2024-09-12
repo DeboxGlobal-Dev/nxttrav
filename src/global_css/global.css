@@ -139,6 +139,17 @@ a {
   height: 30px;
   padding-left: 10px;
 }
+.form-input-6 {
+  width: 100%;
+  outline: none;
+  border: 1px solid rgb(163, 161, 161);
+  height: 25px;
+  padding-left: 6px;
+}
+.form-input-6::placeholder {
+  color: rgb(175, 175, 175);
+  font-size: 12px;
+}
 .margin-l {
   margin-left: 2px;
 }
@@ -704,22 +715,22 @@ a {
   overflow-y: auto;
   gap: 5px;
 }
-.custom-top-pos{
+.custom-top-pos {
   top: 12%;
   left: 48.5%;
   width: 50%;
   max-height: 50%;
 }
-.custom-top-pos::-webkit-scrollbar{
+.custom-top-pos::-webkit-scrollbar {
   width: 3px;
 }
-.alternate-color:nth-child(even){
+.alternate-color:nth-child(even) {
   background-color: #bad7ffad;
 }
-.alternate-color:nth-child(even):hover{
+.alternate-color:nth-child(even):hover {
   background-color: #94c1ffad;
 }
-.alternate-color:nth-child(odd):hover{
+.alternate-color:nth-child(odd):hover {
   background-color: #d7e8ffad;
 }
 .primary-light-bg {
@@ -934,7 +945,7 @@ select {
 .width-70 {
   width: 70px;
 }
-.bottom-83{
+.bottom-83 {
   bottom: -83px;
 }
 .skeleton-box {
@@ -943,12 +954,44 @@ select {
   animation: skeleton-loading 1.5s infinite linear;
 }
 
-.custom-table-scroll::-webkit-scrollbar{
+.custom-table-scroll::-webkit-scrollbar {
   display: none;
 }
-.custom-table-scroll:hover::-webkit-scrollbar{
+.custom-table-scroll:hover::-webkit-scrollbar {
   display: block;
   height: 4px;
+}
+.modal-save-button {
+  height: 25px;
+  width: 60px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #119ff1;
+  color: white;
+  border-radius: 2px;
+}
+.modal-close-button {
+  height: 25px;
+  width: 60px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(165, 165, 165);
+  border-radius: 2px;
+  background-color: rgb(253, 253, 253);
+}
+.modal-header{
+  height: 35px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tab-hover:hover{
+  background-color: rgb(183, 217, 252)
 }
 
 /* Animation for loading effect */

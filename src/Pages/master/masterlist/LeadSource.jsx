@@ -6,19 +6,18 @@ import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
 import {
   leadSourceInitialValue,
-  leadSourceValidationSchema
+  leadSourceValidationSchema,
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const LeadSource = () => {
-
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: ""
+    Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
@@ -49,7 +48,7 @@ const LeadSource = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    console.log('row value',rowValue);
+    console.log("row value", rowValue);
     setEditData({
       ...rowValue,
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
@@ -57,7 +56,7 @@ const LeadSource = () => {
     });
     setIsEditing(true);
   };
-  console.log('Edit Data', editData);
+  console.log("Edit Data", editData);
 
   const columns = [
     {
@@ -83,11 +82,7 @@ const LeadSource = () => {
     {
       name: "Status",
       selector: (row) => {
-        return (
-          <span>
-            {row.Status}
-          </span>
-        );
+        return <span>{row.Status}</span>;
       },
     },
     {
@@ -135,50 +130,48 @@ const LeadSource = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-4">
-                        <label htmlFor="country">Lead Source Name</label>
-                        <Field
-                          type="text"
-                          placeholder="Name"
-                          className="form-control"
-                          name="Name"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Status" />
-                        </span>
-                      </div>
-                      <div className="col-sm-2">
-                        <label>Set Default</label>
-                        <Field
-                          name="SetDefault"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={"0"}>
-                            No
-                          </option>
-                          <option value={"1"}>Yes</option>
-                        </Field>
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="SetDefault" />
-                        </span>
-                      </div>
+                  <div className="row">
+                    <div className="col-sm-4">
+                      <label htmlFor="country" className="m-0 font-size-12">
+                        Lead Source Name <span className="text-danger">*</span>
+                      </label>
+                      <Field
+                        type="text"
+                        placeholder="Name"
+                        className="form-input-6"
+                        name="Name"
+                      />
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Name" />
+                      </span>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Status" />
+                      </span>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Set Default</label>
+                      <Field
+                        name="SetDefault"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={"0"}>No</option>
+                        <option value={"1"}>Yes</option>
+                      </Field>
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="SetDefault" />
+                      </span>
                     </div>
                   </div>
                 </Model>
