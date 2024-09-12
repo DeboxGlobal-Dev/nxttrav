@@ -1,0 +1,246 @@
+import React, {useState} from "react";
+
+const TransferModal= () => {
+    const [isSearching, setIsSearching] = useState(false);
+    const [addNew, setAddNew] = useState(false);
+    const [formData, setFormData] = useState({
+      Unknown: "",
+      FromDestination: "",
+      ToDestination: "",
+      TransferType: "",
+      TransferName: "",
+      EnterName: "",
+    });
+    const [addFormData, setAddFormData] = useState({
+      TrnasferName:'',
+      VehicleType:'',
+      TransferType:'',
+      VehicleMode:''
+    }); 
+  
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+    };
+  
+    const handleAddDataChange = (e) =>{
+      const {name, value} = e.target;
+      setAddFormData({...formData, [name]:value});
+    }
+  
+    return (
+      <>
+        {!addNew && (
+          <div>
+            <div className="row px-2">
+              <div className="col-1 p-0 d-flex flex-column border p-1">
+                <label htmlFor="" className="m-0 font-size-9 font-weight-bold">
+                  --
+                </label>
+                <select
+                  name="Unknown"
+                  value={formData?.Unknown}
+                  onChange={handleChange}
+                  id=""
+                  className="font-size-10 border py-1 rounded"
+                >
+                  <option value="">Select</option>
+                  <option value="1">Destination</option>
+                </select>
+              </div>
+              <div className="col-2 p-0 d-flex flex-column border p-1">
+                <label htmlFor="" className="m-0 font-size-9 font-weight-bold">
+                  FROM DESTINATION
+                </label>
+                <select
+                  name="FromDestination"
+                  value={formData?.FromDestination}
+                  onChange={handleChange}
+                  id=""
+                  className="font-size-10 border py-1 rounded"
+                >
+                  <option value="">Select</option>
+                  <option value="1">Delhi</option>
+                </select>
+              </div>
+              <div className="col-2 p-0 d-flex flex-column border p-1">
+                <label htmlFor="" className="m-0 font-size-9 font-weight-bold">
+                  TO DESTINATION
+                </label>
+                <select
+                  name="ToDestination"
+                  value={formData?.ToDestination}
+                  onChange={handleChange}
+                  id=""
+                  className="font-size-10 border py-1 rounded"
+                >
+                  <option value="">All</option>
+                </select>
+              </div>
+              <div className="col-2 p-0 d-flex flex-column border p-1">
+                <label htmlFor="" className="m-0 font-size-9 font-weight-bold">
+                  TRANSFER TYPE
+                </label>
+                <select
+                  name="TransferType"
+                  value={formData?.TransferType}
+                  onChange={handleChange}
+                  id=""
+                  className="font-size-10 border py-1 rounded"
+                >
+                  <option value="">All</option>
+                </select>
+              </div>
+              <div className="col-2 p-0 d-flex flex-column border p-1">
+                <label htmlFor="" className="m-0 font-size-9 font-weight-bold">
+                  TRANSFER NAME
+                </label>
+                <select
+                  name="TransferName"
+                  value={formData?.TransferName}
+                  onChange={handleChange}
+                  id=""
+                  className="font-size-10 border py-1 rounded"
+                >
+                  <option value="">All</option>
+                </select>
+              </div>
+              <div className="col-2 p-0 d-flex flex-column border p-1">
+                <label htmlFor="" className="m-0 font-size-9 font-weight-bold">
+                  ENTER NAME
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter Keyword"
+                  className="font-size-10 border py-1 rounded outline-0"
+                  name="EnterName"
+                  value={formData?.EnterName}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="col-1 p-0 d-flex justify-content-center align-items-center  border">
+                <p
+                  className="m-0 font-size-10 px-2 py-1 bg-success rounded cursor-pointer"
+                  onClick={() => setIsSearching(true)}
+                >
+                  Search
+                </p>
+              </div>
+            </div>
+            {isSearching && (
+              <div className="mt-4">
+                <div className="d-flex justify-content-end">
+                  <button
+                    className="btn btn-success border font-size-10"
+                    onClick={() => setAddNew(true)}
+                  >
+                    {" "}
+                    + Add New
+                  </button>
+                </div>
+                <div className="row mt-1">
+                  <div className="col">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th className="p-0 text-center font-size-12 py-1">
+                            Supplier Name
+                          </th>
+                          <th className="p-0 text-center font-size-12 py-1">
+                            Transfer Name
+                          </th>
+                          <th className="p-0 text-center font-size-12 py-1">
+                            Transfer Type
+                          </th>
+                          <th className="p-0 text-center font-size-12 py-1">
+                            Vehicle Type/Name
+                          </th>
+                          <th className="p-0 text-center font-size-12 py-1">
+                            Vehicle Cost
+                          </th>
+                          <th className="p-0 text-center font-size-12 py-1">
+                            No Of Vehicle
+                          </th>
+                          <th className="p-0 text-center font-size-12 py-1">
+                            Pax Slab
+                          </th>
+                          <th className="p-0 text-center font-size-12 py-1">
+                            <button className="btn py-1 px-2 bg-success font-size-10">
+                              Select All
+                            </button>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+        {addNew && (
+          <div>
+            <div className="row row-gap-2 mt-2 position-relative">
+              <div className="col-3">
+                <label htmlFor="" className="m-0">
+                  TRANSFER NAME
+                </label>
+                <input
+                  type="text"
+                  placeholder="Transfer Name"
+                  className="form-input-5"
+                  name="TrnasferName"
+                  value={addFormData?.TrnasferName}
+                  onChange={handleAddDataChange}
+                />
+              </div>
+              <div className="col-3">
+                <label htmlFor="" className="m-0">
+                  VEHICLE TYPE
+                </label>
+                <select name="VehicleType" id="" className="form-input-5" value={addFormData?.VehicleType} onChange={handleAddDataChange}>
+                  <option value="">All Vehicle Type</option>
+                </select>
+              </div>
+              <div className="col-3">
+                <label htmlFor="" className="m-0">
+                  TRANSFER TYPE
+                </label>
+                <select name="TransferType" id="" className="form-input-5" value={addFormData?.TransferType} onChange={handleAddDataChange}>
+                  <option value="">Arrival</option>
+                </select>
+              </div>
+              <div className="col-3">
+                <label htmlFor="" className="m-0">
+                  VEHICLE MODE
+                </label>
+                <select name="VehicleMode" id="" className="form-input-5" value={addFormData?.VehicleMode} onChange={handleAddDataChange}>
+                  <option value="">All Vehicle</option>
+                </select>
+              </div>
+              <button
+                className="position-absolute right-160 bottom-80 modal-save-button bg-secondary"
+                onClick={() => setAddNew(false)}
+              >
+                Back
+              </button>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  };
+
+  export default TransferModal;

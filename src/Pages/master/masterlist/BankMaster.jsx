@@ -7,7 +7,7 @@ import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
   bankInitialValue,
-  bankMasterValidationSchema
+  bankMasterValidationSchema,
 } from "./MasterValidations";
 
 const BankMaster = () => {
@@ -23,8 +23,8 @@ const BankMaster = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [imageValue, setImageValue] = useState({
-    ImageData:'',
-    ImageName:''
+    ImageData: "",
+    ImageName: "",
   });
 
   useEffect(() => {
@@ -34,7 +34,6 @@ const BankMaster = () => {
         setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
-        
       } catch (error) {
         console.log(error);
       }
@@ -52,8 +51,8 @@ const BankMaster = () => {
 
   const handleEditClick = (rowValue) => {
     setImageValue({
-      ImageData:"",
-      ImageName:""
+      ImageData: "",
+      ImageName: "",
     });
     setEditData({
       ...rowValue,
@@ -63,22 +62,21 @@ const BankMaster = () => {
     setIsEditing(true);
   };
 
-  const hanldeBankChange = (e) =>{
+  const hanldeBankChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    reader.onload = () =>{
+    reader.onload = () => {
       const base64 = reader.result;
-      const base64String = base64.split(',')[1];
+      const base64String = base64.split(",")[1];
       setImageValue({
-        ImageData:base64String,
-        ImageName:file.name
-      })
+        ImageData: base64String,
+        ImageName: file.name,
+      });
     };
 
     reader.readAsDataURL(file);
   };
-
 
   const columns = [
     {
@@ -91,7 +89,11 @@ const BankMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          <img src={row.ImageName} alt="image" style={{height:'30px', width:'30px'}}></img>
+          <img
+            src={row.ImageName}
+            alt="image"
+            style={{ height: "30px", width: "30px" }}
+          ></img>
         </span>
       ),
       sortable: true,
@@ -157,7 +159,7 @@ const BankMaster = () => {
           >
             <div
               className="card-header header-elements-inline bg-info-700 py-2"
-              style={{padding:"10px"}}
+              style={{ padding: "10px" }}
             >
               <div className="col-xl-10 d-flex align-items-center">
                 <h5 className="card-title d-none d-sm-block">Bank Master</h5>
@@ -185,124 +187,122 @@ const BankMaster = () => {
                   imageValue={imageValue}
                   setImageValue={setImageValue}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label>Bank Name</label>
-                        <Field
-                          type="text"
-                          name="BankName"
-                          placeholder="SAC Code"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Account Type</label>
-                        <Field
-                          name="AccountType"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Saving</option>
-                          <option value={2}>Current</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Account Number</label>
-                        <Field
-                          type="text"
-                          name="AccountNumber"
-                          placeholder="Account Number"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Branch IFSC</label>
-                        <Field
-                          type="text"
-                          name="BranchIfsc"
-                          placeholder="Branch IFSC"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Benificiary Name</label>
-                        <Field
-                          type="text"
-                          name="BeneficiaryName"
-                          placeholder="Benificiary Name"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Branch Address</label>
-                        <Field
-                          type="text"
-                          name="BranchAddress"
-                          placeholder="Branch Address"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Branch Swift Code</label>
-                        <Field
-                          type="text"
-                          name="BranchSwiftCode"
-                          placeholder="Branch Swift Code"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>UPI ID</label>
-                        <Field
-                          type="text"
-                          name="UpiId"
-                          placeholder="UPI ID"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Attach QR Code Image</label>
-                        <input
-                          type="file"
-                          name="ImageData"
-                          className="form-control"
-                          onChange={hanldeBankChange}
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Set Default</label>
-                        <Field
-                          name="SetDefault"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Yes</option>
-                          <option value={0}>No</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Show/Hide</label>
-                        <Field
-                          name="ShowHide"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Yes</option>
-                          <option value={0}>No</option>
-                        </Field>
-                      </div>
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Bank Name</label>
+                      <Field
+                        type="text"
+                        name="BankName"
+                        placeholder="SAC Code"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-2">Account Type</label>
+                      <Field
+                        name="AccountType"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Saving</option>
+                        <option value={2}>Current</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Account Number</label>
+                      <Field
+                        type="text"
+                        name="AccountNumber"
+                        placeholder="Account Number"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Branch IFSC</label>
+                      <Field
+                        type="text"
+                        name="BranchIfsc"
+                        placeholder="Branch IFSC"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Benificiary Name</label>
+                      <Field
+                        type="text"
+                        name="BeneficiaryName"
+                        placeholder="Benificiary Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Branch Address</label>
+                      <Field
+                        type="text"
+                        name="BranchAddress"
+                        placeholder="Branch Address"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Branch Swift Code</label>
+                      <Field
+                        type="text"
+                        name="BranchSwiftCode"
+                        placeholder="Branch Swift Code"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">UPI ID</label>
+                      <Field
+                        type="text"
+                        name="UpiId"
+                        placeholder="UPI ID"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Attach QR Code Image</label>
+                      <input
+                        type="file"
+                        name="ImageData"
+                        className="form-input-6 border-0"
+                        onChange={hanldeBankChange}
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Set Default</label>
+                      <Field
+                        name="SetDefault"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Yes</option>
+                        <option value={0}>No</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Show/Hide</label>
+                      <Field
+                        name="ShowHide"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Yes</option>
+                        <option value={0}>No</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

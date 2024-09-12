@@ -168,10 +168,10 @@ const TourEscortPrice = () => {
                       </Field>
                     </div>
                     <div className="col-sm-4">
-                      <label>Destination</label>
+                      <label className="m-0 font-size-6">Destination</label>
                       <Field
                         name="Destination"
-                        className="form-control"
+                        className="form-input-6"
                         component={"select"}
                       >
                         <option value="0">ALL</option>
@@ -185,22 +185,24 @@ const TourEscortPrice = () => {
                       </Field>
                     </div>
                     <div className="col-sm-4">
-                      <label>Tour Escort Service</label>
+                      <label className="m-0 font-size-12">
+                        Tour Escort Service
+                      </label>
                       <Field
                         type="text"
                         name="TourEscortService"
                         placeholder="Tour Escort Service"
-                        className="form-control"
+                        className="form-input-6"
                       />
                       <span className="font-size-10 text-danger">
                         <ErrorMessage name="Name" />
                       </span>
                     </div>
                     <div className="col-sm-4">
-                      <label>Status</label>
+                      <label className="m-0 font-size-12">Status</label>
                       <Field
                         name="Status"
-                        className="form-control"
+                        className="form-input-6"
                         component={"select"}
                       >
                         <option value="1">Active</option>
@@ -208,10 +210,10 @@ const TourEscortPrice = () => {
                       </Field>
                     </div>
                     <div className="col-sm-4">
-                      <label>Set Default</label>
+                      <label className="m-0 font-size-12">Set Default</label>
                       <Field
                         name="Default"
-                        className="form-control"
+                        className="form-input-6"
                         component={"select"}
                       >
                         <option value="0">No</option>

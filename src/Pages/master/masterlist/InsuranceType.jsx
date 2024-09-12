@@ -26,7 +26,10 @@ const InsuranceType = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("insurancetypemasterlist", postData);
+        const { data } = await axiosOther.post(
+          "insurancetypemasterlist",
+          postData
+        );
         setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
@@ -50,7 +53,7 @@ const InsuranceType = () => {
     setEditData({
       id: rowValue.Id,
       InsuranceType: rowValue.InsuranceType,
-      Status: rowValue.Status === "Active" ? 1:0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -113,31 +116,33 @@ const InsuranceType = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-6">
-                        <label>Insurance Type</label>
-                        <Field
-                          type="text"
-                          name="InsuranceType"
-                          placeholder="Insurance Type"
-                          className="form-control"
-                        />
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <div className="d-flex justify-content-betwen">
+                        <label className="m-0 font-size-12">
+                          Insurance Type
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="InsuranceType" />
                         </span>
                       </div>
-                      <div className="col-sm-6">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                      <Field
+                        type="text"
+                        name="InsuranceType"
+                        placeholder="Insurance Type"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-6">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

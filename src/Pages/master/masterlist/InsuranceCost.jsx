@@ -25,7 +25,6 @@ const InsuranceCost = () => {
   const [insuranceType, setInsuranceType] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   const getDataToServer = async () => {
     try {
       const insuranceData = await axiosOther.post("insurancetypemasterlist", {
@@ -44,7 +43,10 @@ const InsuranceCost = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("insurancecostmasterlist", postData);
+        const { data } = await axiosOther.post(
+          "insurancecostmasterlist",
+          postData
+        );
         setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
@@ -67,7 +69,7 @@ const InsuranceCost = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      Status: rowValue.Status === "Active" ?1:0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -95,14 +97,14 @@ const InsuranceCost = () => {
     },
     {
       name: "Rate Sheet",
-      selector: (row) => (<button className="btn btn-primary">+Add/View</button>),
+      selector: (row) => <button className="btn btn-primary">+Add/View</button>,
       sortable: true,
     },
     {
       name: "Status",
-      selector: (row) =>row.Status,
-      sortable: true
-    }
+      selector: (row) => row.Status,
+      sortable: true,
+    },
   ];
 
   return (
@@ -141,46 +143,46 @@ const InsuranceCost = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-4">
-                        <label>Insurance Name</label>
-                        <Field
-                          type="text"
-                          name="InsuranceName"
-                          placeholder="Insurance Name"
-                          className="form-control"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="InsuranceName" />
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Insurance Type</label>
-                        <Field
-                          name="InsuranceType"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="">Select Insurance</option>
-                          {
-                            insuranceType?.map((value, index)=>{
-                              return <option value={value.id} key={index+1}>{value?.InsuranceType}</option>
-                            })
-                          }
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                  <div className="row">
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Insurance Name</label>
+                      <Field
+                        type="text"
+                        name="InsuranceName"
+                        placeholder="Insurance Name"
+                        className="form-input-6"
+                      />
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="InsuranceName" />
+                      </span>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Insurance Type</label>
+                      <Field
+                        name="InsuranceType"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="">Select Insurance</option>
+                        {insuranceType?.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value?.InsuranceType}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

@@ -46,7 +46,7 @@ const VisaType = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -110,32 +110,31 @@ const VisaType = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-6">
-                        <label>Visa Type</label>
-                        <Field
-                          type="text"
-                          name="Name"
-                          placeholder="Visa Type"
-                          className="form-control"
-                        />
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Visa Type</label>
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name"/>
-
+                          <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-6">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                      <Field
+                        type="text"
+                        name="Name"
+                        placeholder="Visa Type"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-6">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

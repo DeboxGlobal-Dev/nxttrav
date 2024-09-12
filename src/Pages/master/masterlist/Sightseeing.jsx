@@ -20,7 +20,7 @@ const Sightseeing = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: ""
+    Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
@@ -68,22 +68,22 @@ const Sightseeing = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      Status: rowValue.Status==="Active"? 1:0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
 
-  const handleImportantNoteEditor = (content) =>{
+  const handleImportantNoteEditor = (content) => {
     console.log(content);
   };
 
-  const handleDescriptionEditor = (content) =>{
+  const handleDescriptionEditor = (content) => {
     console.log(content);
   };
 
-  const handleInclusionEditor = (content) =>{
+  const handleInclusionEditor = (content) => {
     console.log(content);
-  }
+  };
 
   const columns = [
     {
@@ -178,106 +178,108 @@ const Sightseeing = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label>Sightseeing Name</label>
-                        <Field
-                          type="text"
-                          name="SightseeingName"
-                          placeholder="Monument Name"
-                          className="form-control"
-                        />
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          Sightseeing Name
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="SightseeingName" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Destination</label>
-                        <Field
-                          name="Destination"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="">Select Destination</option>
-                          {
-                            destinationList.map((value, index)=>{
-                              return <option value={value.id} key={index+1}>{value.Name}</option>
-                            })
-                          }
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Transfer Type</label>
-                        <Field
-                          name="TransferType"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="">Ticket Only</option>
-                          <option value={1}>ALL</option>
-                          <option value={2}>SIC</option>
-                          <option value={3}>PVT</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>
-                          SetDefault for Qoutation
-                        </label>
-                        <Field
-                          name="DefaultQuotation"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={0}>No</option>
-                          <option value={1}>Yes</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>
-                          SetDefault for Proposal
-                        </label>
-                        <Field
-                          name="DefaultProposal"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={0}>No</option>
-                          <option value={1}>Yes</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-12 mt-2">
-                        <label className="m-0">Description</label>
-                        <Editor
-                          handleChangeEditor={handleDescriptionEditor}
-                           heightValue="60%"
-                        />
-                      </div>
-                      <div className="col-sm-12 mt-4">
-                        <label className="m-0">Inclusion / Exclusion & Timing</label>
-                          <Editor 
-                            handleChangeEditor={handleInclusionEditor}
-                             heightValue="60%"
-                          />
-                      </div>
-                      <div className="col-sm-12 mt-4">
-                        <label className="m-0">Important Note</label>
-                        <Editor
-                          handleChangeEditor={handleImportantNoteEditor}
-                           heightValue="60%"
-                        />
-                      </div>
+                      <Field
+                        type="text"
+                        name="SightseeingName"
+                        placeholder="Monument Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Destination</label>
+                      <Field
+                        name="Destination"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="">Select Destination</option>
+                        {destinationList.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Transfer Type</label>
+                      <Field
+                        name="TransferType"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="">Ticket Only</option>
+                        <option value={1}>ALL</option>
+                        <option value={2}>SIC</option>
+                        <option value={3}>PVT</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">SetDefault for Qoutation</label>
+                      <Field
+                        name="DefaultQuotation"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={0}>No</option>
+                        <option value={1}>Yes</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">SetDefault for Proposal</label>
+                      <Field
+                        name="DefaultProposal"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={0}>No</option>
+                        <option value={1}>Yes</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-12 mt-2">
+                      <label className="m-0">Description</label>
+                      <Editor
+                        handleChangeEditor={handleDescriptionEditor}
+                        heightValue="60%"
+                      />
+                    </div>
+                    <div className="col-sm-12 mt-4">
+                      <label className="m-0">
+                        Inclusion / Exclusion & Timing
+                      </label>
+                      <Editor
+                        handleChangeEditor={handleInclusionEditor}
+                        heightValue="60%"
+                      />
+                    </div>
+                    <div className="col-sm-12 mt-4">
+                      <label className="m-0">Important Note</label>
+                      <Editor
+                        handleChangeEditor={handleImportantNoteEditor}
+                        heightValue="60%"
+                      />
                     </div>
                   </div>
                 </Model>

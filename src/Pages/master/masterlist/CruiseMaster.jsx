@@ -4,7 +4,10 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
-import { cruiseMasterInitialValue, cruiseMasterValidationSchema } from "./MasterValidations";
+import {
+  cruiseMasterInitialValue,
+  cruiseMasterValidationSchema,
+} from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 import Editor from "../../../helper/Editor";
 
@@ -34,7 +37,7 @@ const CruiseMaster = () => {
   useEffect(() => {
     getDataToServer();
   }, []);
-  
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -56,17 +59,17 @@ const CruiseMaster = () => {
 
     setFilterData(result);
   }, [postData]);
-  
+
   const handleEditClick = (rowValue) => {
     console.log(rowValue);
     setEditData({
       ...rowValue,
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
 
-  const handleDetailEditor = (content) =>{
+  const handleDetailEditor = (content) => {
     console.log(content);
   };
 
@@ -166,86 +169,90 @@ const CruiseMaster = () => {
                   updateData={updateData}
                   setUpdateData={setUpdateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label>Cruise Package Name</label>
-                        <Field
-                          type="text"
-                          placeholder="Cruise Package Name"
-                          className="form-control"
-                          name="CruisePackageName"
-                        />
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <div className="m-0 font-size-12">
+                        <label className="m-0 font-size-12">
+                          Cruise Package Name
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="CruisePackageName" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Destination</label>
-                        <Field
-                          name="Destination"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="0">ALL</option>
-                          {
-                            destinationList.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
-                            })
-                          }
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label htmlFor="running">Running Days</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="RunningDays"
-                          id="running"
-                        >
-                          <option value={"1"}>Monday</option>
-                          <option value={"2"}>Tuesday</option>
-                          <option value={"3"}>Wednesday</option>
-                          <option value={"4"}>Thirsday</option>
-                          <option value={"4"}>Friday</option>
-                          <option value={"4"}>Saturday</option>
-                          <option value={"4"}>Sunday</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Arrival Time</label>
-                        <Field
-                          type="date"
-                          className="form-control"
-                          name="ArrivalTime"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Departure Time</label>
-                        <Field
-                          type="date"
-                          className="form-control"
-                          name="DepartureTime"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-12">
-                        <label>Detail</label>
-                        <Editor
-                          handleChangeEditor={handleDetailEditor}
-                           heightValue="60%"
-                        />
-                      </div>
+                      <Field
+                        type="text"
+                        placeholder="Cruise Package Name"
+                        className="form-input-6"
+                        name="CruisePackageName"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Destination</label>
+                      <Field
+                        name="Destination"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="0">ALL</option>
+                        {destinationList.map((value, index) => {
+                          return (
+                            <option value={value.Id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label htmlFor="running" className="m-0 font-size-12">Running Days</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="RunningDays"
+                        id="running"
+                      >
+                        <option value={"1"}>Monday</option>
+                        <option value={"2"}>Tuesday</option>
+                        <option value={"3"}>Wednesday</option>
+                        <option value={"4"}>Thirsday</option>
+                        <option value={"4"}>Friday</option>
+                        <option value={"4"}>Saturday</option>
+                        <option value={"4"}>Sunday</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Arrival Time</label>
+                      <Field
+                        type="date"
+                        className="form-input-6"
+                        name="ArrivalTime"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Departure Time</label>
+                      <Field
+                        type="date"
+                        className="form-input-6"
+                        name="DepartureTime"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-12">
+                      <label className="m-0">Detail</label>
+                      <Editor
+                        handleChangeEditor={handleDetailEditor}
+                        heightValue="60%"
+                      />
                     </div>
                   </div>
                 </Model>

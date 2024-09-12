@@ -4,7 +4,10 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
-import { cruiseNameCompanyInitialValue, cruiseNameCompanyValidationSchema } from "./MasterValidations";
+import {
+  cruiseNameCompanyInitialValue,
+  cruiseNameCompanyValidationSchema,
+} from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const CruiseNameCompany = () => {
@@ -19,15 +22,18 @@ const CruiseNameCompany = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [imageValue, setImageValue] = useState({
-    ImageData:'',
-    ImageName:''
+    ImageData: "",
+    ImageName: "",
   });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("cruisenamemasterlist", postData);
+        const { data } = await axiosOther.post(
+          "cruisenamemasterlist",
+          postData
+        );
         setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
@@ -46,32 +52,32 @@ const CruiseNameCompany = () => {
 
     setFilterData(result);
   }, [postData]);
-  
+
   const handleEditClick = (rowValue) => {
     console.log(rowValue);
     setImageValue({
-      ImageData:"",
-      ImageName:""
+      ImageData: "",
+      ImageName: "",
     });
     setEditData({
       ...rowValue,
       CountryId: rowValue.CountryName === "India" ? "1" : "2",
       StateId: rowValue.StateName === "Rajsthan" ? "1" : "2",
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
 
-  const handleCruiseImage = (e) =>{
+  const handleCruiseImage = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    reader.onload = () =>{
+    reader.onload = () => {
       const base64 = reader.result;
-      const base64String = base64.split(',')[1];
+      const base64String = base64.split(",")[1];
       setImageValue({
-        ImageData:base64String,
-        ImageName:file.name
+        ImageData: base64String,
+        ImageName: file.name,
       });
     };
     reader.readAsDataURL(file);
@@ -88,8 +94,11 @@ const CruiseNameCompany = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          <img src={row.ImageName} 
-          alt="cruise-image" style={{height:'30px', width:'30px'}}></img>
+          <img
+            src={row.ImageName}
+            alt="cruise-image"
+            style={{ height: "30px", width: "30px" }}
+          ></img>
         </span>
       ),
       sortable: true,
@@ -141,7 +150,9 @@ const CruiseNameCompany = () => {
               style={{ padding: "10px" }}
             >
               <div className="col-xl-10 d-flex align-items-center">
-                <h5 className="card-title d-none d-sm-block">Cruise Name Company</h5>
+                <h5 className="card-title d-none d-sm-block">
+                  Cruise Name Company
+                </h5>
               </div>
               <div className="col-xl-2 d-flex justify-content-end">
                 {/* Bootstrap Modal */}
@@ -166,56 +177,60 @@ const CruiseNameCompany = () => {
                   imageValue={imageValue}
                   setImageValue={setImageValue}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-6">
-                        <label htmlFor="country">Cruise Name Comapany</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="CruiseCompany"
-                        >
-                          <option value={""}>Select</option>
-                          <option value={"1"}>ABC</option>
-                          <option value={"2"}>DEF</option>
-                          <option value={"3"}>GHJ</option>
-                        </Field>
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="country" className="m-0 font-size-12">
+                          Cruise Name Comapany
+                        </label>
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="CruiseCompany"/>
+                          <ErrorMessage name="CruiseCompany" />
                         </span>
                       </div>
-                      <div className="col-sm-6">
-                        <label>Cruise Name</label>
-                        <Field
-                          type="text"
-                          placeholder="Cruise Name"
-                          className="form-control"
-                          name="CruiseName"
-                        />
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="CruiseCompany"
+                      >
+                        <option value={""}>Select</option>
+                        <option value={"1"}>ABC</option>
+                        <option value={"2"}>DEF</option>
+                        <option value={"3"}>GHJ</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-betwen">
+                        <label className="m-0 font-size-12">Cruise Name</label>
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="CruiseName"/>
+                          <ErrorMessage name="CruiseName" />
                         </span>
                       </div>
-                      <div className="col-sm-6">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-6">
-                        <label>Cruise Image</label>
-                        <input
-                          type="file"
-                          className="form-control"
-                          name="ImageData"
-                          onChange={handleCruiseImage}
-                        />
-                      </div>
+                      <Field
+                        type="text"
+                        placeholder="Cruise Name"
+                        className="form-input-6"
+                        name="CruiseName"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Cruise Image</label>
+                      <input
+                        type="file"
+                        className="form-input-6 border-0"
+                        name="ImageData"
+                        onChange={handleCruiseImage}
+                      />
                     </div>
                   </div>
                 </Model>

@@ -180,112 +180,110 @@ const GIT = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-6">
-                        <label>Name</label>
-                        <Field
-                          type="text"
-                          name="Name"
-                          placeholder="Name"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-6">
-                        <label>Destination</label>
-                        <Field
-                          name="Destination"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="0">ALL</option>
-                          {destinationList.map((value, index) => {
-                            return (
-                              <option value={value.Id} key={index + 1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-12">
-                        <label className="m-0">Inclusion</label>
-                        <Editor
-                          handleChangeEditor={handleInclusionEditor}
-                          heightValue="60%"
-                        />
-                      </div>
-                      <div className="col-sm-12 mt-4">
-                        <label className="m-0">Exclusion</label>
-                        <Editor
-                          handleChangeEditor={handleExlusionEditor}
-                          heightValue="60%"
-                        />
-                      </div>
-                      <div className="col-sm-12 mt-4">
-                        <label className="m-0">Terms Condition</label>
-                        <Editor
-                          handleChangeEditor={handleTermsConditionEditor}
-                          heightValue="60%"
-                        />
-                      </div>
-                      <div className="col-sm-12 mt-4">
-                        <label className="m-0">Cancelation</label>
-                        <Editor
-                          handleChangeEditor={handleCancelationEditor}
-                          heightValue="60%"
-                        />
-                      </div>
-                      <div className="col-sm-12 mt-4">
-                        <label className="m-0">Service Upgradation</label>
-                        <Editor
-                          handleChangeEditor={handleServiceUpgradationEditor}
-                          heightValue="60%"
-                        />
-                      </div>
-                      <div className="col-sm-12 mt-4">
-                        <label className="m-0">Optional Tour</label>
-                        <Editor
-                          handleChangeEditor={handleOptionTourEditor}
-                          heightValue="60%"
-                        />
-                      </div>
-                      <div className="col-sm-12 mt-4">
-                        <label className="m-0">Payment Policy</label>
-                        <Editor
-                          handleChangeEditor={handlePaymentPolicyEditor}
-                          heightValue="60%"
-                        />
-                      </div>
-                      <div className="col-sm-12 mt-4">
-                        <label className="m-0">Remarks</label>
-                        <Editor
-                          handleChangeEditor={handleRemarkEditor}
-                          heightValue="60%"
-                        />
-                      </div>
-                      <div className="col-sm-6 mt-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-6 mt-4">
-                        <label>Default</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={0}>No</option>
-                          <option value={1}>Yes</option>
-                        </Field>
-                      </div>
+                  <div className="row row-gap-3">
+                    <div className="col-sm-6">
+                      <label className="m-0 font-size-12">Name</label>
+                      <Field
+                        type="text"
+                        name="Name"
+                        placeholder="Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-6">
+                      <label className="m-0 font-size-12">Destination</label>
+                      <Field
+                        name="Destination"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="0">ALL</option>
+                        {destinationList.map((value, index) => {
+                          return (
+                            <option value={value.Id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-12">
+                      <label className="m-0">Inclusion</label>
+                      <Editor
+                        handleChangeEditor={handleInclusionEditor}
+                        heightValue="60%"
+                      />
+                    </div>
+                    <div className="col-sm-12 mt-4">
+                      <label className="m-0">Exclusion</label>
+                      <Editor
+                        handleChangeEditor={handleExlusionEditor}
+                        heightValue="60%"
+                      />
+                    </div>
+                    <div className="col-sm-12 mt-4">
+                      <label className="m-0">Terms Condition</label>
+                      <Editor
+                        handleChangeEditor={handleTermsConditionEditor}
+                        heightValue="60%"
+                      />
+                    </div>
+                    <div className="col-sm-12 mt-4">
+                      <label className="m-0">Cancelation</label>
+                      <Editor
+                        handleChangeEditor={handleCancelationEditor}
+                        heightValue="60%"
+                      />
+                    </div>
+                    <div className="col-sm-12 mt-4">
+                      <label className="m-0">Service Upgradation</label>
+                      <Editor
+                        handleChangeEditor={handleServiceUpgradationEditor}
+                        heightValue="60%"
+                      />
+                    </div>
+                    <div className="col-sm-12 mt-4">
+                      <label className="m-0">Optional Tour</label>
+                      <Editor
+                        handleChangeEditor={handleOptionTourEditor}
+                        heightValue="60%"
+                      />
+                    </div>
+                    <div className="col-sm-12 mt-4">
+                      <label className="m-0">Payment Policy</label>
+                      <Editor
+                        handleChangeEditor={handlePaymentPolicyEditor}
+                        heightValue="60%"
+                      />
+                    </div>
+                    <div className="col-sm-12 mt-4">
+                      <label className="m-0">Remarks</label>
+                      <Editor
+                        handleChangeEditor={handleRemarkEditor}
+                        heightValue="60%"
+                      />
+                    </div>
+                    <div className="col-sm-6 mt-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-6 mt-4">
+                      <label className="m-0 font-size-12">Default</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={0}>No</option>
+                        <option value={1}>Yes</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

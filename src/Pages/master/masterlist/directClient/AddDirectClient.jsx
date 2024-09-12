@@ -35,7 +35,6 @@ const AddDirectClient = () => {
     const length = contactListArray.length;
     const lastValue = contactListArray[length - 1];
     setContactListArray([...contactListArray, lastValue + 1]);
-
     setContactFormDataArray((prevArr) => [...prevArr, directClientContact]);
   };
 

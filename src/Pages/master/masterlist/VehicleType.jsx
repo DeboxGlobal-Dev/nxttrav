@@ -5,10 +5,12 @@ import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
-import { vehicleTypeInitialValue, vehicleTypeValidationSchema } from "./MasterValidations";
+import {
+  vehicleTypeInitialValue,
+  vehicleTypeValidationSchema,
+} from "./MasterValidations";
 
 const VehicleType = () => {
-
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -22,7 +24,10 @@ const VehicleType = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("vehicletypemasterlist", postData);
+        const { data } = await axiosOther.post(
+          "vehicletypemasterlist",
+          postData
+        );
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -36,15 +41,14 @@ const VehicleType = () => {
     const result = getData.filter((item) => {
       return item?.Name?.toLowerCase()?.match(postData?.Search?.toLowerCase());
     });
-    
+
     setFilterData(result);
   }, [postData]);
-
 
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      Status: rowValue.Status==="Active"? 1:0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -122,41 +126,40 @@ const VehicleType = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-4">
-                        <label>Vehicle Type</label>
-                        <Field
-                          type="text"
-                          name="Name"
-                          placeholder="Vehicle Type"
-                          className="form-control"
-                        />
+                  <div className="row">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Vehicle Type</label>
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
+                          <ErrorMessage name="Name"/>
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Capacity</label>
-                        <Field
-                          type="text"
-                          name="PaxCapacity"
-                          placeholder="Capacity"
-                          className="form-control"
-                        />
-                        
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                      <Field
+                        type="text"
+                        name="Name"
+                        placeholder="Vehicle Type"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Capacity</label>
+                      <Field
+                        type="text"
+                        name="PaxCapacity"
+                        placeholder="Capacity"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>
@@ -182,7 +185,7 @@ const VehicleType = () => {
                     name="Status"
                     value={postData.Status}
                     onChange={(e) =>
-                      setPostData({ ...postData, Status:e.target.value })
+                      setPostData({ ...postData, Status: e.target.value })
                     }
                   >
                     <option>Select Status</option>

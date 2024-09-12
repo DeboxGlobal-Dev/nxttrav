@@ -4,7 +4,10 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
-import {  resturantInitialValue, resturantValidationSchema } from "./MasterValidations";
+import {
+  resturantInitialValue,
+  resturantValidationSchema,
+} from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const Resturant = () => {
@@ -24,8 +27,8 @@ const Resturant = () => {
   const [destinationList, setDestinationList] = useState([]);
   const [divisionList, setDivisionList] = useState([]);
   const [imageValue, setImageValue] = useState({
-    ImageData:'',
-    ImageName:''
+    ImageData: "",
+    ImageName: "",
   });
 
   const getDataToServer = async () => {
@@ -84,7 +87,10 @@ const Resturant = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("restaurantmasterlist", postData);
+        const { data } = await axiosOther.post(
+          "restaurantmasterlist",
+          postData
+        );
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -104,12 +110,12 @@ const Resturant = () => {
 
   const handleEditClick = (rowValue) => {
     setImageValue({
-      ImageData:"",
-      ImageName:""
+      ImageData: "",
+      ImageName: "",
     });
     setValueForEdit({
       ...rowValue,
-      Status:rowValue.Status==="Active"? 1:0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -125,7 +131,11 @@ const Resturant = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-         <img src={row.ImageName} alt="image" style={{height:'30px', height:'30px'}}></img>
+          <img
+            src={row.ImageName}
+            alt="image"
+            style={{ height: "30px", height: "30px" }}
+          ></img>
         </span>
       ),
       sortable: true,
@@ -164,7 +174,6 @@ const Resturant = () => {
     return filteredState;
   }, [changeValue.CountryId, changeValue.StateId]);
 
-
   const cityFiltered = useMemo(() => {
     const filteredCity = cityList.filter(
       (value) => changeValue.StateId == value.StateId
@@ -172,16 +181,15 @@ const Resturant = () => {
     return filteredCity;
   }, [changeValue.cityId, changeValue.StateId, changeValue.CountryId]);
 
-
-  const handleRestaurantImage = (e) =>{
+  const handleRestaurantImage = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
-    reader.onload = () =>{
+    reader.onload = () => {
       const base64 = reader.result;
-      const base64String = base64.split(',')[1];
+      const base64String = base64.split(",")[1];
       setImageValue({
-        ImageData:base64String,
-        ImageName:file.name
+        ImageData: base64String,
+        ImageName: file.name,
       });
     };
     reader.readAsDataURL(file);
@@ -215,8 +223,8 @@ const Resturant = () => {
                   apiurl={"addupdaterestaurantmaster"}
                   initialValues={resturantInitialValue}
                   validationSchema={resturantValidationSchema}
-                  editData = {editData}
-                  isEditing= {isEditing}
+                  editData={editData}
+                  isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
@@ -224,264 +232,321 @@ const Resturant = () => {
                   imageValue={imageValue}
                   setImageValue={setImageValue}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label>Restaurant Name</label>
-                        <Field
-                          type="text"
-                          placeholder="Restaurant Name"
-                          className="form-control"
-                          name="Name"
-                        />
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          Restaurant Name
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label htmlFor="">Destination</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="DestinationId"
-                        >
-                          <option value={"0"}>Select Destination</option>
-                          {
-                            destinationList.map((value, index)=>{
-                              return <option value={value.id} key={index+1}>{value.Name}</option>
-                            })
-                          }
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Address</label>
-                        <Field
-                          type="text"
-                          placeholder="Address"
-                          className="form-control"
-                          name="Address"
-                        />
+                      <Field
+                        type="text"
+                        placeholder="Restaurant Name"
+                        className="form-input-6"
+                        name="Name"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label htmlFor="" className="m-0 font-size-12">
+                        Destination
+                      </label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="DestinationId"
+                      >
+                        <option value={"0"}>Select Destination</option>
+                        {destinationList.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Address</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Address" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Country</label>
-                        <Field
-                          name="CountryId"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={0}>Select</option>
-                          {countryList.map((value, index) => {
-                            return (
-                              <option value={value.id} key={index + 1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
+                      <Field
+                        type="text"
+                        placeholder="Address"
+                        className="form-input-6"
+                        name="Address"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Country</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="CountryId" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>State</label>
-                        <Field
-                          name="StateId"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={0}>Select</option>
-                          {stateFiltered.map((value, index) => {
-                            return (
-                              <option value={value.id} key={index + 1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
+                      <Field
+                        name="CountryId"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={0}>Select</option>
+                        {countryList.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">State</label>
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="StateId"/>
+                          <ErrorMessage name="StateId" />
                         </span>
                       </div>
+                      <Field
+                        name="StateId"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={0}>Select</option>
+                        {stateFiltered.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
 
-                      <div className="col-sm-4">
-                        <label>City</label>
-                        <Field
-                          name="CityId"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={0}>Select</option>
-                          {cityFiltered.map((value, index) => {
-                            return (
-                              <option value={value.id} key={index + 1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">City</label>
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="CityId"/>
+                          <ErrorMessage name="CityId" />
                         </span>
                       </div>
+                      <Field
+                        name="CityId"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={0}>Select</option>
+                        {cityFiltered.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
 
-                      <div className="col-sm-4">
-                        <label>Supplier</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="SelfSupplier"
-                        >
-                          <option value="1">Yes</option>
-                          <option value="0">No</option>
-                        </Field>
-                      </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Supplier</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="SelfSupplier"
+                      >
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </Field>
+                    </div>
 
-                      <div className="col-sm-4">
-                        <label>Pin Code</label>
-                        <Field
-                          type="text"
-                          placeholder="Pin Code"
-                          className="form-control"
-                          name="PinCode"
-                        />
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Pin Code</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="PinCode" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>GSTN</label>
-                        <Field
-                          type="text"
-                          placeholder="GSTN"
-                          className="form-control"
-                          name="GSTN"
-                        />
+                      <Field
+                        type="text"
+                        placeholder="Pin Code"
+                        className="form-input-6"
+                        name="PinCode"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-betwen">
+                        <label className="m-0 font-size-12">GSTN</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="GSTN" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Image Upload</label>
-                        <input
-                          type="file"
-                          name="ImageData"
-                          className="form-control"
-                          onChange={handleRestaurantImage}
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Image"/>
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Status" />
-                        </span>
-                      </div>
+                      <Field
+                        type="text"
+                        placeholder="GSTN"
+                        className="form-input-6"
+                        name="GSTN"
+                      />
                     </div>
-                    <div className="row mt-3 row-gap-1">
-                      <label className="">Contact Person</label>
-                      <div className="col-sm-3 px-1">
-                        <Field
-                          className="form-control px-1"
-                          component={"select"}
-                          name="ContactType"
-                        >
-                          <option value={""}>Select Contact</option>
-                          {
-                            divisionList.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
-                            })
-                          }
-                        </Field>
-                      </div>
-                      <div className="col-sm-3 px-1">
-                        <Field
-                          type="text"
-                          placeholder="Contact Person"
-                          className="form-control"
-                          name="ContactName"
-                        />
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Image Upload</label>
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ContactName"/>
+                          <ErrorMessage name="Image" />
                         </span>
                       </div>
-                      <div className="col-sm-3 px-1">
-                        <Field
-                          type="text"
-                          placeholder="Designation"
-                          className="form-control"
-                          name="ContactDesignation"
-                        />
-                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ContactDesignation"/>
-                        </span>
-                      </div>
-                      <div className="col-sm-3 px-1">
-                        <Field
-                          type="text"
-                          placeholder="+91"
-                          className="form-control"
-                          name="CountryCode"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="CountryCode"/>
-                        </span>
-                      </div>
-                      <div className="col-sm-3 px-1">
-                        <Field
-                          type="text"
-                          placeholder="Phone 1"
-                          className="form-control"
-                          name="Phone1"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Phone1"/>
-                        </span>
-                      </div>
-                      <div className="col-sm-3 px-1">
-                        <Field
-                          type="text"
-                          placeholder="Phone 2"
-                          className="form-control"
-                          name="Phone2"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Phone2"/>
-                        </span>
-                      </div>
-                      <div className="col-sm-3 ">
-                        <Field
-                          type="text"
-                          placeholder="Phone 3"
-                          className="form-control"
-                          name="Phone3"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Phone3"/>
-                        </span>
-                      </div>
-                      <div className="col-sm-3 px-1">
-                        <Field
-                          type="email"
-                          placeholder="Email"
-                          className="form-control"
-                          name="ContactEmail"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ContactEmail"/>
-                        </span>
+                      <input
+                        type="file"
+                        name="ImageData"
+                        className="form-input-6 border-0"
+                        onChange={handleRestaurantImage}
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
+                    </div>
+                  </div>
+                  <div className="row mt-3">
+                    <label className="m-0 font-size-12">Contact Details</label>
+                    <div className="col-12 border m-0 "></div>
+                    <div className="col-12 mt-3">
+                      <div className="row row-gap-3">
+                        <div className="col-sm-4">
+                          <label htmlFor="" className="m-0 font-size-12">
+                            Contact Person
+                          </label>
+                          <Field
+                            className="form-input-6"
+                            component={"select"}
+                            name="ContactType"
+                          >
+                            <option value={""}>Select Contact</option>
+                            {divisionList.map((value, index) => {
+                              return (
+                                <option value={value.Id} key={index + 1}>
+                                  {value.Name}
+                                </option>
+                              );
+                            })}
+                          </Field>
+                        </div>
+                        <div className="col-sm-4">
+                          <div className="d-flex justify-content-between">
+                            <label htmlFor="" className="m-0 font-size-12">
+                              Name
+                            </label>
+                            <span className="font-size-10 text-danger">
+                              <ErrorMessage name="ContactName" />
+                            </span>
+                          </div>
+                          <Field
+                            type="text"
+                            placeholder="Contact Person"
+                            className="form-input-6"
+                            name="ContactName"
+                          />
+                        </div>
+                        <div className="col-sm-4 ">
+                          <div className="d-flex justify-content-between">
+                            <label htmlFor="" className="m-0 font-size-12">
+                              Designation
+                            </label>
+                            <span className="font-size-10 text-danger">
+                              <ErrorMessage name="ContactDesignation" />
+                            </span>
+                          </div>
+                          <Field
+                            type="text"
+                            placeholder="Designation"
+                            className="form-input-6"
+                            name="ContactDesignation"
+                          />
+                        </div>
+                        <div className="col-sm-4">
+                          <div className="row">
+                            <div className="col-3 pr-0">
+                              <div className="d-flex justify-content-between">
+                                <label htmlFor="" className="m-0 font-size-12">
+                                  Code
+                                </label>
+                                <span className="font-size-10 text-danger">
+                                  <ErrorMessage name="CountryCode" />
+                                </span>
+                              </div>
+                              <Field
+                                type="text"
+                                placeholder="+91"
+                                className="form-input-6"
+                                name="CountryCode"
+                              />
+                            </div>
+                            <div className="col-9">
+                              <div className="d-flex justify-content-between">
+                                <label htmlFor="" className="m-0 font-size-12">
+                                  Phone
+                                </label>
+                                <span className="font-size-12 text-danger">
+                                  <ErrorMessage name="Phone1" />
+                                </span>
+                              </div>
+                              <Field
+                                type="text"
+                                placeholder="Phone 1"
+                                className="form-input-6"
+                                name="Phone1"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-sm-4">
+                          <label htmlFor="" className="m-0 font-size-12">
+                            Phone 2
+                          </label>
+                          <Field
+                            type="text"
+                            placeholder="Phone 2"
+                            className="form-input-6"
+                            name="Phone2"
+                          />
+                        </div>
+                        <div className="col-sm-4">
+                          <label htmlFor="" className="m-0 font-size-12">
+                            Phone 3
+                          </label>
+                          <Field
+                            type="text"
+                            placeholder="Phone 3"
+                            className="form-input-6"
+                            name="Phone3"
+                          />
+                          <span className="font-size-10 text-danger">
+                            <ErrorMessage name="Phone3" />
+                          </span>
+                        </div>
+                        <div className="col-sm-4">
+                          <label htmlFor="" className="m-0 font-size-12">
+                            Email
+                          </label>
+                          <Field
+                            type="email"
+                            placeholder="Email"
+                            className="form-input-6"
+                            name="ContactEmail"
+                          />
+                          <span className="font-size-10 text-danger">
+                            <ErrorMessage name="ContactEmail" />
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>

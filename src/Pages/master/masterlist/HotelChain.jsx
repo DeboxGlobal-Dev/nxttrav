@@ -22,7 +22,7 @@ const HotelChain = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -155,7 +155,7 @@ const HotelChain = () => {
                       <Field
                         type="text"
                         placeholder="Hotel Chain Name"
-                        className="form-input-6 rounded-0"
+                        className="form-input-6"
                         name="Name"
                       />
                     </div>
@@ -169,7 +169,7 @@ const HotelChain = () => {
                       <Field
                         type="text"
                         placeholder="Location"
-                        className="form-input-6 rounded-0"
+                        className="form-input-6"
                         name="Location"
                       />
                     </div>
@@ -185,7 +185,7 @@ const HotelChain = () => {
                       <Field
                         type="text"
                         placeholder="Hotel Website"
-                        className="form-input-6 rounded-0"
+                        className="form-input-6"
                         name="HotelWebsite"
                       />
                     </div>
@@ -194,14 +194,14 @@ const HotelChain = () => {
                       <Field
                         type="text"
                         placeholder="Self Supplier"
-                        className="form-input-6 rounded-0"
+                        className="form-input-6"
                         name="SelfSupplier"
                       />
                     </div>
                     <div className="col-sm-4">
                       <label className="m-0 font-size-12">Status</label>
                       <Field
-                        className="form-input-6 rounded-0"
+                        className="form-input-6"
                         component={"select"}
                         name="Status"
                       >
@@ -218,7 +218,7 @@ const HotelChain = () => {
                             Contact Person
                           </label>
                           <Field
-                            className="form-input-6 rounded-0"
+                            className="form-input-6"
                             component={"select"}
                             name="ContactType"
                           >
@@ -233,7 +233,7 @@ const HotelChain = () => {
                           <Field
                             type="text"
                             placeholder="Contact Person"
-                            className="form-input-6 rounded-0"
+                            className="form-input-6"
                             name="ContactName"
                           />
                         </div>
@@ -244,7 +244,7 @@ const HotelChain = () => {
                           <Field
                             type="text"
                             placeholder="Designation"
-                            className="form-input-6 rounded-0"
+                            className="form-input-6"
                             name="ContactDesignation"
                           />
                         </div>
@@ -255,7 +255,7 @@ const HotelChain = () => {
                               <Field
                                 type="text"
                                 placeholder="+91"
-                                className="form-input-6 rounded-0"
+                                className="form-input-6"
                                 name="ContactCountryCode"
                               />
                             </div>
@@ -264,7 +264,7 @@ const HotelChain = () => {
                               <Field
                                 type="text"
                                 placeholder="Phone"
-                                className="form-input-6 rounded-0"
+                                className="form-input-6"
                                 name="ContactMobile"
                               />
                             </div>
@@ -275,7 +275,7 @@ const HotelChain = () => {
                           <Field
                             type="text"
                             placeholder="Email"
-                            className="form-input-6 rounded-0"
+                            className="form-input-6"
                             name="ContactEmail"
                           />
                         </div>

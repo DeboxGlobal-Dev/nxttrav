@@ -28,7 +28,6 @@ const Monument = () => {
   const [weekendList, setWeekendList] = useState([]);
 
   const getDataToServer = async () => {
-
     try {
       const destination = await axiosOther.post("destinationlist", {
         Search: "",
@@ -48,7 +47,6 @@ const Monument = () => {
     } catch (err) {
       console.log("Erro Occured", err);
     }
-
   };
 
   useEffect(() => {
@@ -84,11 +82,9 @@ const Monument = () => {
     setIsEditing(true);
   };
 
-
-  const handleDescriptionEditor = (content) =>{
+  const handleDescriptionEditor = (content) => {
     console.log(content);
   };
-  
 
   const columns = [
     {
@@ -181,123 +177,130 @@ const Monument = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label>Monument Name</label>
-                        <Field
-                          type="text"
-                          name="MonumentName"
-                          placeholder="Monument Name"
-                          className="form-control"
-                        />
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          Monument Name
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Destination</label>
-                        <Field
-                          name="Destination"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="">Select Destination</option>
-                          {destinationList.map((value, index) => {
-                            return (
-                              <option value={value.Id} key={index + 1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Transfer Type</label>
-                        <Field
-                          name="TransferType"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="1">Ticket Only</option>
-                          <option value="2">ALL</option>
-                          <option value="3">SIC</option>
-                          <option value="4">PVT</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Closed On Days</label>
-                        <Field
-                          name="ClosedOnDays"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="1">Sunday</option>
-                          <option value="2">Monday</option>
-                          <option value="3">Tuesday</option>
-                          <option value="4">Wednesday</option>
-                          <option value="5">Thirsday</option>
-                          <option value="6">Friday</option>
-                          <option value="7">Saturday</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>SetDefault for Qoutation</label>
-                        <Field
-                          name="DefaultQuotation"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="1">Yes</option>
-                          <option value="0">No</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>SetDefault for Proposal</label>
-                        <Field
-                          name="DefaultProposal"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="0">No</option>
-                          <option value="1">Yes</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Weekend Days</label>
-                        <Field
-                          name="WeekendDays"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="">Select Weekend</option>
-                          {
-                            weekendList.map((value, index)=>{
-                              console.log('Weeks', value);
-                              return <option value={value.Id} key={index+1}>{value.WeekendDays}</option>
-                            })
-                          }
-                         
-                        </Field>
-                      </div>
-                      <div className="col-sm-12">
-                        <label>Description</label>
-                        <Editor
-                          handleChangeEditor={handleDescriptionEditor}
-                          heightValue="60%"
-                        />
-                      </div>
+                      <Field
+                        type="text"
+                        name="MonumentName"
+                        placeholder="Monument Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Destination</label>
+                      <Field
+                        name="Destination"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="">Select Destination</option>
+                        {destinationList.map((value, index) => {
+                          return (
+                            <option value={value.Id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Transfer Type</label>
+                      <Field
+                        name="TransferType"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="1">Ticket Only</option>
+                        <option value="2">ALL</option>
+                        <option value="3">SIC</option>
+                        <option value="4">PVT</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Closed On Days</label>
+                      <Field
+                        name="ClosedOnDays"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="1">Sunday</option>
+                        <option value="2">Monday</option>
+                        <option value="3">Tuesday</option>
+                        <option value="4">Wednesday</option>
+                        <option value="5">Thirsday</option>
+                        <option value="6">Friday</option>
+                        <option value="7">Saturday</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-0">
+                        SetDefault for Qoutation
+                      </label>
+                      <Field
+                        name="DefaultQuotation"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">
+                        SetDefault for Proposal
+                      </label>
+                      <Field
+                        name="DefaultProposal"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Weekend Days</label>
+                      <Field
+                        name="WeekendDays"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="">Select Weekend</option>
+                        {weekendList.map((value, index) => {
+                          console.log("Weeks", value);
+                          return (
+                            <option value={value.Id} key={index + 1}>
+                              {value.WeekendDays}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-12">
+                      <label className="m-0 font-size-12">Description</label>
+                      <Editor
+                        handleChangeEditor={handleDescriptionEditor}
+                        heightValue="60%"
+                      />
                     </div>
                   </div>
                 </Model>

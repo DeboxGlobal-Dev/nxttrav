@@ -4,10 +4,10 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
-import { Field, ErrorMessage } from "formik"; 
+import { Field, ErrorMessage } from "formik";
 import {
   currencyMasterInitialValue,
-  currencyMasterValidationSchema
+  currencyMasterValidationSchema,
 } from "./MasterValidations";
 
 const CurrencyMaster = () => {
@@ -62,11 +62,11 @@ const CurrencyMaster = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    console.log('Row Value', rowValue);
+    console.log("Row Value", rowValue);
     setEditData({
       ...rowValue,
       Status: rowValue.Status === "Active" ? 1 : 0,
-      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0
+      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -151,75 +151,73 @@ const CurrencyMaster = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label>Country</label>
-                        <Field
-                          name="CountryId"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="">Select Country</option>
-                          {countryList.map((value, index) => {
-                            return (
-                              <option value={value.Id} key={index+1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Country</label>
+                      <Field
+                        name="CountryId"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="">Select Country</option>
+                        {countryList.map((value, index) => {
+                          return (
+                            <option value={value.Id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Country Code</label>
+                        <span className="font-size-10 text-danger pt-1">
+                          <ErrorMessage name="CountryCode" />
+                        </span>
                       </div>
-                      <div className="col-sm-4">
-                        <div className="d-flex justify-content-between">
-                          <label className="">Country Code</label>
-                          <span className="font-size-10 text-danger pt-1">
-                            <ErrorMessage name="CountryCode" />
-                          </span>
-                        </div>
-                        <Field
-                          type="text"
-                          name="CountryCode"
-                          placeholder="Currency Code"
-                          className="form-control"
-                        />
+                      <Field
+                        type="text"
+                        name="CountryCode"
+                        placeholder="Currency Code"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Currency Name</label>
+                        <span className="font-size-10 text-danger pt-1">
+                          <ErrorMessage name="Currencyname" />
+                        </span>
                       </div>
-                      <div className="col-sm-4">
-                        <div className="d-flex justify-content-between">
-                          <label className="">Currency Name</label>
-                          <span className="font-size-10 text-danger pt-1">
-                            <ErrorMessage name="Currencyname" />
-                          </span>
-                        </div>
-                        <Field
-                          type="text"
-                          name="Currencyname"
-                          placeholder="Currency Name"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Set Default</label>
-                        <Field
-                          name="SetDefault"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Yes</option>
-                          <option value={0}>No</option>
-                        </Field>
-                      </div>
+                      <Field
+                        type="text"
+                        name="Currencyname"
+                        placeholder="Currency Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="font-size-12 m-0">Set Default</label>
+                      <Field
+                        name="SetDefault"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Yes</option>
+                        <option value={0}>No</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

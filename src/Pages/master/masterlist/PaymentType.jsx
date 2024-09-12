@@ -105,7 +105,7 @@ const PaymentType = () => {
           >
             <div
               className="card-header header-elements-inline bg-info-700 py-2"
-              style={{padding:"10px"}}
+              style={{ padding: "10px" }}
             >
               <div className="col-xl-10 d-flex align-items-center">
                 <h5 className="card-title d-none d-sm-block">Payment Type</h5>
@@ -131,28 +131,26 @@ const PaymentType = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-6">
-                        <label>Payment Type</label>
-                        <Field
-                          type="text"
-                          name="PaymentTypeName"
-                          placeholder="Payment Type"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-6">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                  <div className="row row-gap-3">
+                    <div className="col-sm-6">
+                      <label className="m-0 font-size-12">Payment Type</label>
+                      <Field
+                        type="text"
+                        name="PaymentTypeName"
+                        placeholder="Payment Type"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-6">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

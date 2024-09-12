@@ -99,7 +99,6 @@ const SACCode = () => {
         );
       },
     },
-    
   ];
   return (
     <>
@@ -111,7 +110,7 @@ const SACCode = () => {
           >
             <div
               className="card-header header-elements-inline bg-info-700 py-2"
-              style={{padding:"10px"}}
+              style={{ padding: "10px" }}
             >
               <div className="col-xl-10 d-flex align-items-center">
                 <h5 className="card-title d-none d-sm-block">SAC Code</h5>
@@ -137,53 +136,51 @@ const SACCode = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label>Service Type</label>
-                        <Field
-                          name="ServiceType"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={0}>Select</option>
-                          <option value={1}>Hotel</option>
-                          <option value={2}>Transport</option>
-                          <option value={3}>Guid</option>
-                          <option value={4}>Tour</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>SAC Code</label>
-                        <Field
-                          type="text"
-                          name="SacCode"
-                          placeholder="SAC Code"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Set Default</label>
-                        <Field
-                          name="SetDefault"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={0}>No</option>
-                          <option value={1}>Yes</option>
-                        </Field>
-                      </div>
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Service Type</label>
+                      <Field
+                        name="ServiceType"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={0}>Select</option>
+                        <option value={1}>Hotel</option>
+                        <option value={2}>Transport</option>
+                        <option value={3}>Guid</option>
+                        <option value={4}>Tour</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">SAC Code</label>
+                      <Field
+                        type="text"
+                        name="SacCode"
+                        placeholder="SAC Code"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Set Default</label>
+                      <Field
+                        name="SetDefault"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={0}>No</option>
+                        <option value={1}>Yes</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

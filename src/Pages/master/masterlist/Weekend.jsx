@@ -47,7 +47,7 @@ const Weekend = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      Status: rowValue.Status==="Active"? 1:0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -115,43 +115,45 @@ const Weekend = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-4">
-                        <label>Weekend Name</label>
-                        <Field
-                          type="text"
-                          placeholder="Weekend Name"
-                          className="form-control"
-                          name="Name"
-                        />
+                  <div className="row">
+                    <div className="col-sm-4">
+                      <div className="m-0 font-size-12">
+                        <label className="m-0 font-size-12">Weekend Name</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Weekend Days</label>
-                        <Field
-                          type="text"
-                          placeholder="Weekend Days"
-                          className="form-control"
-                          name="WeekendDays"
-                        />
+                      <Field
+                        type="text"
+                        placeholder="Weekend Name"
+                        className="form-input-6"
+                        name="Name"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Weekend Days</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="WeekendDays" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                      </div>
+                      <Field
+                        type="text"
+                        placeholder="Weekend Days"
+                        className="form-input-6"
+                        name="WeekendDays"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

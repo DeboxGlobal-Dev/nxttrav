@@ -6,7 +6,7 @@ import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
 import {
   restaurantMealInitialValue,
-  restaurantMealValidationSchema
+  restaurantMealValidationSchema,
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
@@ -21,7 +21,7 @@ const ResturantMealPlan = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
-  
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
@@ -40,14 +40,14 @@ const ResturantMealPlan = () => {
     const result = getData.filter((item) => {
       return item?.Name?.toLowerCase()?.match(postData?.Search?.toLowerCase());
     });
-    
+
     setFilterData(result);
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      Status:rowValue.Status==="Active" ? 1 : 0,
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -81,11 +81,7 @@ const ResturantMealPlan = () => {
     {
       name: "Updated By",
       selector: (row) => {
-        return (
-          <span>
-             {row.UpdatedBy}
-          </span>
-        );
+        return <span>{row.UpdatedBy}</span>;
       },
     },
   ];
@@ -125,32 +121,34 @@ const ResturantMealPlan = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-6">
-                        <label htmlFor="mealplan">Meal Plan</label>
-                        <Field
-                          type="text"
-                          placeholder="Meal Name"
-                          className="form-control"
-                          name="Name"
-                          id="mealplan"
-                        />
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="mealplan" className="m-0 font-size-12">
+                          Meal Plan
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-6">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                      </div>
+                      <Field
+                        type="text"
+                        placeholder="Meal Name"
+                        className="form-input-6"
+                        name="Name"
+                        id="mealplan"
+                      />
+                    </div>
+                    <div className="col-sm-6">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

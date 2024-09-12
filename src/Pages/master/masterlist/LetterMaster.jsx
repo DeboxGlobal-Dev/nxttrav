@@ -147,44 +147,42 @@ const LetterMaster = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-6">
-                        <label>Name</label>
-                        <Field
-                          type="text"
-                          name="Name"
-                          placeholder="Name"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-6">
-                        <label>Greetings Note</label>
-                        <Field
-                          type="text"
-                          name="GreetingNote"
-                          placeholder="Name"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-6">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-12">
-                        <label>Welcome Note</label>
-                        <Editor
-                          handleChangeEditor={handleWelcomeNoteEditor}
-                          heightValue="60%"
-                        />
-                      </div>
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Name</label>
+                      <Field
+                        type="text"
+                        name="Name"
+                        placeholder="Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Greetings Note</label>
+                      <Field
+                        type="text"
+                        name="GreetingNote"
+                        placeholder="Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-4"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-12">
+                      <label className="m-0 font-size-12">Welcome Note</label>
+                      <Editor
+                        handleChangeEditor={handleWelcomeNoteEditor}
+                        heightValue="60%"
+                      />
                     </div>
                   </div>
                 </Model>

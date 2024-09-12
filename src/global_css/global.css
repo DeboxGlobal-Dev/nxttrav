@@ -936,8 +936,8 @@ select {
 .width-80 {
   width: 80px;
 }
-.bottom-92 {
-  bottom: -92px;
+.bottom-80 {
+  bottom: -80px;
 }
 .right-160 {
   right: 160px;
@@ -945,8 +945,8 @@ select {
 .width-70 {
   width: 70px;
 }
-.bottom-83 {
-  bottom: -83px;
+.bottom-70{
+  bottom: -70px;
 }
 .skeleton-box {
   background-color: #9a9a9a; /* Light grey background */
