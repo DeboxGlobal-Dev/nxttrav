@@ -1067,6 +1067,15 @@ select {
 .grab-cursor{
   cursor: grab;
 }
+.vertical-text{
+  writing-mode: vertical-rl;
+  transform: rotate(180deg); 
+  font-size: 14px;
+  text-align: center;
+}
+.drag-width{
+  width: 50px;
+}
 
 /* Animation for loading effect */
 @keyframes skeleton-loading {

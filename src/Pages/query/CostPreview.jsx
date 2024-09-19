@@ -1,51 +1,41 @@
 import React, { useRef } from "react";
-import { saveAs } from 'file-saver';
-import JSZip from 'jszip';
-import Docxtemplater from 'docxtemplater';
+import { saveAs } from "file-saver";
+import JSZip from "jszip";
+import Docxtemplater from "docxtemplater";
 
 const CostPreview = () => {
   const previewRef = useRef();
 
-  const handlePdfConvert = () => {};  
+  const handlePdfConvert = () => {};
 
-  const handleWordConvert = async() => {
-     try {
-      const response = await fetch('/template.docx');
-      if (!response.ok) throw new Error('Network response was not ok');
-      const arrayBuffer = await response.arrayBuffer();
+  const handleWordConvert = async () => {
+    const htmlData = `
+        <html>
+          <head>
+  
+          </head>
+          <body>
+            <div class="container">
+              ${previewRef.current.innerHTML}
+            </div>
+          </body>
+        </html>
+      `;
 
-      const zip = new JSZip();
-      zip.loadAsync(arrayBuffer).then(zip => {
-        const doc = new Docxtemplater(zip);
-
-        doc.setData({
-          title: "Sample Title",
-          body: "This is a sample paragraph."
-        });
-
-        try {
-          doc.render();
-        } catch (error) {
-          console.error("Error rendering the document", error);
-        }
-
-        const blob = doc.getZip().generate({
-          type: 'blob',
-          mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        });
-
-        saveAs(blob, 'document.docx');
-      });
-    } catch (error) {
-      console.error('Error fetching or processing the document template:', error);
-    }
-    
+    const blob = new Blob([htmlData], {
+      type: "application/msword",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "document.doc";
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
-  
   return (
     <>
-      <div className="bg-primary" >
+      <div className="bg-primary">
         <div className="container">
           <div className="row">
             <div className="col-12 d-flex justify-content-between align-items-center py-2">

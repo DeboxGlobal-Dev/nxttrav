@@ -17,7 +17,7 @@ const SupplierSelection = () => {
         </div>
       </div>
       <div className="col-12">
-        <table class="table table-bordered">
+        <table className="table table-bordered">
           <thead>
             <tr>
               <th
@@ -70,7 +70,7 @@ const SupplierSelection = () => {
         </table>
       </div>
       <div className="col-12 mt-2">
-        <table class="table table-bordered">
+        <table className="table table-bordered">
           <thead>
             <tr>
               <th

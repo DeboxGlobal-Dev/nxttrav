@@ -15,12 +15,10 @@ const DayWiseItinerary = ({ heading }) => {
     const updatedService = serviceList.filter(
       (service, index) => index != activeCard
     );
-
-    
     updatedService.splice(position, 0, { ...serviceToMove });
     setServiceList(updatedService);
   };
-  
+
   console.log("serviceList", serviceList);
   return (
     <div className="col-12 col-lg-10">
@@ -78,7 +76,7 @@ const DayWiseItinerary = ({ heading }) => {
                       </div>
                     );
                   })}
-                  <div className="col  d-flex justify-content-md-end">
+                  <div className="col pr-0 d-flex justify-content-md-end">
                     <div className="d-flex flex-column">
                       <p className="font-size-10 font-weight-bold">Action</p>
                       <p className="font-size-10 font-weight-bold">
@@ -89,6 +87,11 @@ const DayWiseItinerary = ({ heading }) => {
                           <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
                         </span>
                       </p>
+                    </div>
+                  </div>
+                  <div className=" p-0 d-flex justify-content-md-end" style={{width:'30px'}}>
+                    <div className="d-flex flex-column bg-primary vertical-text p-0">
+                      DRAG
                     </div>
                   </div>
                 </div>

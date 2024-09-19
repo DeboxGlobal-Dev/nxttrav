@@ -20,7 +20,7 @@ const HotelAvailability = () => {
           </button>
         </div>
         <div className="col-10 p-0 border mt-1">
-          <table class="table">
+          <table className="table">
             <thead>
               <tr>
                 <th className="text-center">Destination</th>
@@ -63,7 +63,7 @@ const HotelAvailability = () => {
           </button>
         </div>
         <div className="col-10 p-0 border mt-1">
-          <table class="table">
+          <table className="table">
             <thead>
               <tr>
                 <th className="text-center">Destination</th>
@@ -106,7 +106,7 @@ const HotelAvailability = () => {
           </button>
         </div>
         <div className="col-10 p-0 border mt-1">
-          <table class="table">
+          <table className="table">
             <thead>
               <tr>
                 <th className="text-center">Destination</th>
@@ -149,7 +149,7 @@ const HotelAvailability = () => {
           </button>
         </div>
         <div className="col-10 p-0 border mt-1">
-          <table class="table">
+          <table className="table">
             <thead>
               <tr>
                 <th className="text-center">Destination</th>

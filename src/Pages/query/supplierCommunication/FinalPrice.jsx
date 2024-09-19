@@ -42,7 +42,7 @@ const FinalPrice = () => {
             <p className="m-0">
               <span className="font-size-11">Room Type -</span>{" "}
               <span className="font-weight-bold font-size-11">
-                Classic Room
+                classNameic Room
               </span>
             </p>
           </div>
