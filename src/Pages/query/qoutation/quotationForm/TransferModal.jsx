@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 
 const TransferModal= () => {
+
     const [isSearching, setIsSearching] = useState(false);
     const [addNew, setAddNew] = useState(false);
     const [formData, setFormData] = useState({
@@ -11,22 +12,25 @@ const TransferModal= () => {
       TransferName: "",
       EnterName: "",
     });
+
     const [addFormData, setAddFormData] = useState({
       TrnasferName:'',
       VehicleType:'',
       TransferType:'',
       VehicleMode:''
     }); 
-  
+    
     const handleChange = (e) => {
       const { name, value } = e.target;
       setFormData({ ...formData, [name]: value });
     };
-  
+    
     const handleAddDataChange = (e) =>{
       const {name, value} = e.target;
-      setAddFormData({...formData, [name]:value});
+      setAddFormData({...addFormData, [name]:value});
     }
+
+    console.log("addFormData", addFormData);
   
     return (
       <>
@@ -140,7 +144,7 @@ const TransferModal= () => {
                 </div>
                 <div className="row mt-1">
                   <div className="col">
-                    <table class="table table-bordered">
+                    <table className="table table-bordered">
                       <thead>
                         <tr>
                           <th className="p-0 text-center font-size-12 py-1">
@@ -200,7 +204,7 @@ const TransferModal= () => {
                 <input
                   type="text"
                   placeholder="Transfer Name"
-                  className="form-input-5"
+                  className="form-input-6"
                   name="TrnasferName"
                   value={addFormData?.TrnasferName}
                   onChange={handleAddDataChange}
@@ -210,24 +214,30 @@ const TransferModal= () => {
                 <label htmlFor="" className="m-0">
                   VEHICLE TYPE
                 </label>
-                <select name="VehicleType" id="" className="form-input-5" value={addFormData?.VehicleType} onChange={handleAddDataChange}>
+                <select name="VehicleType" id="" className="form-input-6" value={addFormData?.VehicleType} onChange={handleAddDataChange}>
                   <option value="">All Vehicle Type</option>
+                  <option value="1">Car</option>
+                  <option value="2">Bus</option>
                 </select>
               </div>
               <div className="col-3">
                 <label htmlFor="" className="m-0">
                   TRANSFER TYPE
                 </label>
-                <select name="TransferType" id="" className="form-input-5" value={addFormData?.TransferType} onChange={handleAddDataChange}>
-                  <option value="">Arrival</option>
+                <select name="TransferType" id="" className="form-input-6" value={addFormData?.TransferType} onChange={handleAddDataChange}>
+                  <option value="">Select</option>
+                  <option value="1">Arrival</option>
+                  <option value="2">Unarrival</option>
                 </select>
               </div>
               <div className="col-3">
                 <label htmlFor="" className="m-0">
                   VEHICLE MODE
                 </label>
-                <select name="VehicleMode" id="" className="form-input-5" value={addFormData?.VehicleMode} onChange={handleAddDataChange}>
+                <select name="VehicleMode" id="" className="form-input-6" value={addFormData?.VehicleMode} onChange={handleAddDataChange}>
                   <option value="">All Vehicle</option>
+                  <option value="1">4 Seater</option>
+                  <option value="2">6 Seater</option>
                 </select>
               </div>
               <button

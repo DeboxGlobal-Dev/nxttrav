@@ -84,7 +84,7 @@ const AddCompany = lazy(()=> import("./Component/settings/AddCompany.jsx"));
 const Setting = lazy(()=> import("./Component/settings/Setting.jsx"));
 const SettingEmail = lazy(()=> import("./Component/settings/SettingEmail.jsx"));
 const SettingProfile = lazy(()=> import("./Component/settings/SettingProfile.jsx"));
-const QueryDetails = lazy(()=> import("./Pages/query/QueryDetails.jsx"));
+const Costsheet = lazy(()=> import("./Pages/query/costsheet/Costsheet.jsx"));
 const Quotation = lazy(()=> import("./Pages/query/Quotation.jsx"));
 const ClientComm = lazy(()=> import("./Pages/query/ClientComm.jsx"));
 const SupplierComm = lazy(()=> import("./Pages/query/SupplierComm.jsx"));
@@ -121,6 +121,7 @@ const Supplier = lazy(()=> import("./Pages/master/masterlist/supplier/Supplier.j
 const AddSupplier = lazy(()=> import("./Pages/master/masterlist/supplier/AddSupplier.jsx"));
 const ViewSupplier = lazy(()=> import("./Pages/master/masterlist/supplier/ViewSupplier.jsx"));
 const SetPreferrence = lazy(()=> import("./Pages/query/SetPreferrence.jsx"));
+const CostPreview = lazy(()=> import("./Pages/query/CostPreview.jsx"));
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -148,7 +149,7 @@ const App = () => {
               <Route path="commission" element={<Protected><Commission/></Protected>}></Route>
               <Route path="summary" element={<Protected><Summary/></Protected>}></Route>
             </Route>
-            <Route path="costsheet" element={<Protected><QueryDetails/></Protected>}></Route>
+            <Route path="costsheet" element={<Protected><Costsheet/></Protected>}></Route>
             <Route path="payments" element={<Protected><Payments/></Protected>}>
               {/* <Route index element={<Protected><SupplierPayment/></Protected>}></Route>
               <Route path="agentpayments" element={<Protected><AgentPayment/></Protected>}></Route>
@@ -262,6 +263,7 @@ const App = () => {
           <Route path="/login" element={<Login/>}/>
           <Route path="/logout"element={<Protected><Logout/></Protected>}/>
           <Route path="/excelconverter" element={<JsonToExcel/>}></Route>
+          <Route path="/costpreview" element={<CostPreview/>}></Route>
         </Routes>
         </Suspense>
       </Router>

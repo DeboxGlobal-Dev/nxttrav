@@ -1,5 +1,4 @@
-
-import React, {useState} from 'react';
+import React, { useState } from "react";
 
 const FlightModal = () => {
   const [addNew, setAddNew] = useState(false);
@@ -181,11 +180,11 @@ const FlightModal = () => {
       {addNew && (
         <div>
           <div className="row mt-2 position-relative">
-            <div className="col-12">
+            <div className="col-4">
               <label htmlFor="">FLIGHT NAME</label>
               <input
                 type="text"
-                className="form-input-5"
+                className="form-input-6"
                 placeholder="Flight Name"
                 name="FlightName"
                 value={addFormData?.FlightName}

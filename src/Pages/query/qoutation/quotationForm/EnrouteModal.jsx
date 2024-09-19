@@ -27,6 +27,8 @@ const EnrouteModal = () => {
       const {name, value} = e.target;
       setAddFormData({...addFormData, [name]:value});
     }
+
+    console.log("addFormData", addFormData);
   
     return (
       <>
@@ -145,7 +147,7 @@ const EnrouteModal = () => {
                 <input
                   type="text"
                   placeholder="Enroute Name"
-                  className="form-input-5"
+                  className="form-input-6"
                   name="EnrouteName"
                   value={addFormData?.EnrouteName}
                   onChange={handleAddDataChange}
@@ -155,7 +157,7 @@ const EnrouteModal = () => {
                 <label htmlFor="" className="m-0">
                   Currency
                 </label>
-                <select name="Currency" id="" className="form-input-5" value={addFormData?.Currency} onChange={handleAddDataChange}>
+                <select name="Currency" id="" className="form-input-6" value={addFormData?.Currency} onChange={handleAddDataChange}>
                   <option value="">INR</option>
                   <option value="">DINAR</option>
                 </select>
@@ -166,7 +168,7 @@ const EnrouteModal = () => {
                 </label>
                 <input
                   type="text"
-                  className="form-input-5"
+                  className="form-input-6"
                   placeholder="Per pax cost"
                   name="PerPaxCost"
                   value={addFormData?.PerPaxCost}
@@ -177,7 +179,7 @@ const EnrouteModal = () => {
                 <label htmlFor="" className="m-0">
                   Destination
                 </label>
-                <select name="Destination" id="" className="form-input-5" value={addFormData?.Destination} onChange={handleAddDataChange}>
+                <select name="Destination" id="" className="form-input-6" value={addFormData?.Destination} onChange={handleAddDataChange}>
                   <option value="">Noida</option>
                   <option value="">Delhi</option>
                 </select>
@@ -186,7 +188,7 @@ const EnrouteModal = () => {
                 <label htmlFor="" className="m-0">
                   Default
                 </label>
-                <select name="Default" id="" className="form-input-5" value={addFormData?.Default} onChange={handleAddDataChange}>
+                <select name="Default" id="" className="form-input-6" value={addFormData?.Default} onChange={handleAddDataChange}>
                   <option value="">Noida</option>
                   <option value="">Delhi</option>
                 </select>
@@ -195,7 +197,7 @@ const EnrouteModal = () => {
                 <label htmlFor="" className="m-0">
                   Status
                 </label>
-                <select name="Status" id="" className="form-input-5" value={addFormData?.Status} onChange={handleAddDataChange}>
+                <select name="Status" id="" className="form-input-6" value={addFormData?.Status} onChange={handleAddDataChange}>
                   <option value="">Active</option>
                   <option value="">InActive</option>
                 </select>
@@ -204,7 +206,7 @@ const EnrouteModal = () => {
                 <label htmlFor="" className="m-0">
                   DESCRIPTION
                 </label>
-                <textarea name="Description" id="" className="form-input-5 h-100" value={addFormData?.Description} onChange={handleAddDataChange}></textarea>
+                <textarea name="Description" id="" className="form-input-6 h-100" value={addFormData?.Description} onChange={handleAddDataChange}></textarea>
               </div>
               <button
                 className="position-absolute right-160 bottom-80 modal-save-button bg-secondary "

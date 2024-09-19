@@ -9,6 +9,31 @@ const contactDetails = {
   Email: "",
 };
 
+const addFormIntiailValue = {
+  HotelChain: "",
+  HotelAmenities: "",
+  HotelName: "",
+  RoomType: "",
+  Destination: "",
+  Supplier: "",
+  HotelCategory: "",
+  Country: "",
+  State: "",
+  City: "",
+  PinCode: "",
+  HotelLink: "",
+  Address: "",
+  WeekendDays: "",
+  Gstn: "",
+  Days: "",
+  HotelStatus: "",
+  CheckInTime: "",
+  CheckOutTime: "",
+  HotelConfirmation: "",
+  Policy: "",
+  TandC: "",
+};
+
 const HotelModal = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [addNew, setAddNew] = useState(false);
@@ -26,30 +51,7 @@ const HotelModal = () => {
     To: "",
   });
 
-  const [addFormData, setAddFormData] = useState({
-    HotelChain: "",
-    HotelAmenities: "",
-    HotelName: "",
-    RoomType: "",
-    Destination: "",
-    Supplier: "",
-    HotelCategory: "",
-    Country: "",
-    State: "",
-    City: "",
-    PinCode: "",
-    HotelLink: "",
-    Address: "",
-    WeekendDays: "",
-    Gstn: "",
-    Days: "",
-    HotelStatus: "",
-    CheckInTime: "",
-    CheckOutTime: "",
-    HotelConfirmation: "",
-    Policy: "",
-    TandC: "",
-  });
+  const [addFormData, setAddFormData] = useState(addFormIntiailValue);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,8 +63,8 @@ const HotelModal = () => {
   };
 
   const handleAddDataChange = (e) => {
-    const { name, value } = useState();
-    setAddFormData({ ...addFormData, [naem]: value });
+    const { name, value } = e.target;
+    setAddFormData({ ...addFormData, [name]: value });
   };
 
   const handleIncreaseContactDeatails = () => {
@@ -78,9 +80,7 @@ const HotelModal = () => {
       return newArr;
     });
   };
-
-  console.log("ContactFormArray", contactFormArray);
-
+  
   return (
     <>
       {!addNew && (
@@ -316,8 +316,7 @@ const HotelModal = () => {
               <label className="m-0">HOTEL CHAIN</label>
               <select
                 name="HotelChain"
-                id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.HotelChain}
                 onChange={handleAddDataChange}
               >
@@ -330,7 +329,7 @@ const HotelModal = () => {
               <select
                 name="HotelAmenities"
                 id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.HotelAmenities}
                 onChange={handleAddDataChange}
               >
@@ -342,7 +341,7 @@ const HotelModal = () => {
               <label className="m-0">HOTEL NAME</label>
               <input
                 type="text"
-                className="form-input-5"
+                className="form-input-6"
                 placeholder="Hotel Name"
                 name="HotelName"
                 value={addFormData?.HotelName}
@@ -354,7 +353,7 @@ const HotelModal = () => {
               <select
                 name="RoomType"
                 id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.RoomType}
                 onChange={handleAddDataChange}
               >
@@ -367,7 +366,7 @@ const HotelModal = () => {
               <select
                 name="Destination"
                 id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.Destination}
                 onChange={handleAddDataChange}
               >
@@ -380,7 +379,7 @@ const HotelModal = () => {
               <select
                 name="Supplier"
                 id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.Supplier}
                 onChange={handleAddDataChange}
               >
@@ -393,7 +392,7 @@ const HotelModal = () => {
               <select
                 name="HotelCategory"
                 id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.HotelCategory}
                 onChange={handleAddDataChange}
               >
@@ -406,7 +405,7 @@ const HotelModal = () => {
               <select
                 name="Country"
                 id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.Country}
                 onChange={handleAddDataChange}
               >
@@ -419,7 +418,7 @@ const HotelModal = () => {
               <select
                 name="State"
                 id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.State}
                 onChange={handleAddDataChange}
               >
@@ -432,7 +431,7 @@ const HotelModal = () => {
               <select
                 name="City"
                 id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.City}
                 onChange={handleAddDataChange}
               >
@@ -444,7 +443,7 @@ const HotelModal = () => {
               <label className="m-0">PIN CODE</label>
               <input
                 type="text"
-                className="form-input-5"
+                className="form-input-6"
                 placeholder="Pin Code"
                 name="PinCode"
                 value={addFormData?.PinCode}
@@ -455,7 +454,7 @@ const HotelModal = () => {
               <label className="m-0">HOTEL LINK</label>
               <input
                 type="text"
-                className="form-input-5"
+                className="form-input-6"
                 placeholder="Hotel Link"
                 name="HotelLink"
                 value={addFormData?.HotelLink}
@@ -466,7 +465,7 @@ const HotelModal = () => {
               <label className="m-0">ADDRESS</label>
               <input
                 type="text"
-                className="form-input-5"
+                className="form-input-6"
                 placeholder="Address"
                 name="Address"
                 value={addFormData?.Address}
@@ -477,7 +476,7 @@ const HotelModal = () => {
               <label className="m-0">WEEKEND DAYS</label>
               <input
                 type="text"
-                className="form-input-5"
+                className="form-input-6"
                 placeholder="Weekend Days"
                 name="WeekendDays"
                 value={addFormData?.WeekendDays}
@@ -488,7 +487,7 @@ const HotelModal = () => {
               <label className="m-0">GSTN</label>
               <input
                 type="text"
-                className="form-input-5"
+                className="form-input-6"
                 placeholder="GSTN"
                 name="Gstn"
                 value={addFormData?.Gstn}
@@ -499,7 +498,7 @@ const HotelModal = () => {
               <label className="m-0">DAYS</label>
               <input
                 type="text"
-                className="form-input-5"
+                className="form-input-6"
                 placeholder="GSTN"
                 name="Days"
                 value={addFormData?.Days}
@@ -510,7 +509,7 @@ const HotelModal = () => {
               <label className="m-0">HOTEL STATUS</label>
               <input
                 type="text"
-                className="form-input-5"
+                className="form-input-6"
                 placeholder="GSTN"
                 name="HotelStatus"
                 value={addFormData?.HotelStatus}
@@ -521,7 +520,7 @@ const HotelModal = () => {
               <label className="m-0">CHECK IN TIME</label>
               <input
                 type="text"
-                className="form-input-5"
+                className="form-input-6"
                 placeholder="GSTN"
                 name="CheckInTime"
                 value={addFormData?.CheckInTime}
@@ -532,7 +531,7 @@ const HotelModal = () => {
               <label className="m-0">CHECK OUT TIME</label>
               <input
                 type="text"
-                className="form-input-5"
+                className="form-input-6"
                 placeholder="GSTN"
                 name="CheckOutTime"
                 value={addFormData?.CheckOutTime}
@@ -555,7 +554,7 @@ const HotelModal = () => {
                 <div className="col-12" key={index + 1}>
                   <div className="row">
                     <div className="col-2">
-                      <select name="" id="" className="form-input-5">
+                      <select name="" id="" className="form-input-6">
                         <option value="">Operations</option>
                       </select>
                     </div>
@@ -563,7 +562,7 @@ const HotelModal = () => {
                       <input
                         type="text"
                         placeholder="Contact Person"
-                        className="form-input-5"
+                        className="form-input-6"
                         name="Name"
                         value={field.Name}
                         onChange={(e) => handleContactForm(e, index)}
@@ -573,7 +572,7 @@ const HotelModal = () => {
                       <input
                         type="text"
                         placeholder="Designation"
-                        className="form-input-5"
+                        className="form-input-6"
                         name="Designation"
                         value={field.Designation}
                         onChange={(e) => handleContactForm(e, index)}
@@ -585,7 +584,7 @@ const HotelModal = () => {
                           <input
                             type="text"
                             placeholder="+91"
-                            className="form-input-5"
+                            className="form-input-6"
                             name="CountryCode"
                             value={field.CountryCode}
                             onChange={(e) => handleContactForm(e, index)}
@@ -595,7 +594,7 @@ const HotelModal = () => {
                           <input
                             type="text"
                             placeholder="9887878770"
-                            className="form-input-5"
+                            className="form-input-6"
                             name="Phone"
                             value={field.Phone}
                             onChange={(e) => handleContactForm(e, index)}
@@ -607,7 +606,7 @@ const HotelModal = () => {
                       <input
                         type="text"
                         placeholder="exampl@gmail.com"
-                        className="form-input-5"
+                        className="form-input-6"
                         name="Email"
                         value={field.Email}
                         onChange={(e) => handleContactForm(e, index)}
@@ -619,17 +618,17 @@ const HotelModal = () => {
             })}
             <div className="col-12">
               <label className="m-0">HOTEL INFORMATION</label>
-              <textarea type="textarea" className="form-input-5 h-auto" />
+              <textarea type="textarea" className="form-input-6 h-auto" />
             </div>
             <div className="col-12">
               <label className="m-0">POLICY</label>
-              <textarea type="textarea" className="form-input-5 h-auto" />
+              <textarea type="textarea" className="form-input-6 h-auto" />
             </div>
             <div className="col-12">
               <label className="m-0">T&C</label>
               <textarea
                 type="textarea"
-                className="form-input-5 h-auto"
+                className="form-input-6 h-auto"
                 name="TandC"
                 value={addFormData?.TandC}
                 onChange={handleAddDataChange}

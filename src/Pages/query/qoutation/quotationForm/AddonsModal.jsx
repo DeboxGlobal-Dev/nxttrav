@@ -166,12 +166,12 @@ const AddonsModal = () => {
       {addNew && (
         <div>
           <div className="row mt-2 position-relative">
-            <div className="col-12">
+            <div className="col-4">
               <label htmlFor="">ADDITIONAL NAME</label>
               <input
                 type="text"
                 placeholder="Additional Name"
-                className="form-input-5"
+                className="form-input-6"
                 name="AdditionalName"
                 value={addFormData?.AdditionalName}
                 onChange={handleAddDataChange}

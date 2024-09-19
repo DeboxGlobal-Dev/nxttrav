@@ -37,6 +37,8 @@ const TransportationModal = () => {
     setAddFormData({ ...addFormData, [name]: value });
   };
 
+  console.log("addFormData", addFormData);
+
   return (
     <>
       {!addNew && (
@@ -270,7 +272,7 @@ const TransportationModal = () => {
               <label className="m-0">TRANSPORTATION NAME</label>
               <input
                 type="text"
-                className="form-input-5"
+                className="form-input-6"
                 placeholder="Transportation Name"
                 name="TransportationName"
                 value={addFormData?.TransportationName}
@@ -282,7 +284,7 @@ const TransportationModal = () => {
               <select
                 name="VehicleType"
                 id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.VehicleType}
                 onChange={handleAddDataChange}
               >
@@ -295,7 +297,7 @@ const TransportationModal = () => {
               <select
                 name="TransportationType"
                 id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.TransportationType}
                 onChange={handleAddDataChange}
               >
@@ -308,7 +310,7 @@ const TransportationModal = () => {
               <select
                 name="VehicleModel"
                 id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.VehicleModel}
                 onChange={handleAddDataChange}
               >

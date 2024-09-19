@@ -1,6 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import data from "../quotationdata";
 
 const DayWiseItinerary = ({ heading }) => {
+  const [serviceList, setServiceList] = useState(data);
+  const [activeCard, setActiveCard] = useState(null);
+
+  const handleDropServiceCard = (position) => {
+    console.log(`${activeCard} is going to place at the ${position}`);
+
+    if (activeCard == null || activeCard === undefined) return null;
+
+    const serviceToMove = serviceList[activeCard];
+
+    const updatedService = serviceList.filter(
+      (service, index) => index != activeCard
+    );
+
+    
+    updatedService.splice(position, 0, { ...serviceToMove });
+    setServiceList(updatedService);
+  };
+  
+  console.log("serviceList", serviceList);
   return (
     <div className="col-12 col-lg-10">
       <div className="light-primary-bg mt-2 d-inline-block p-1 rounded">
@@ -18,483 +39,63 @@ const DayWiseItinerary = ({ heading }) => {
           adipisci
         </p>
       </div>
-      <div className="col-12 p-0 mt-2">
-        {/* row */}
-        <div className="row border-bottom mb-2 row-gap-2">
-          <div className="col-md-1 col-12">
-            <div className="row">
-              <div className="col-12 d-flex flex-column align-items-md-center">
-                <p className="font-weight-bold font-size-11 m-0">Arrival</p>
-                <img
-                  className="icon-img"
-                  src="\public\global_assets\images\qoutation\arrival.png"
-                  alt="arrival"
-                />
+      <div className="col-12 p-0 mt-2 gap-1">
+        {serviceList?.map((value, index) => {
+          return (
+            <div
+              key={index + 1}
+              className="row border-bottom py-1 row-gap-2 service-drag-card grab-cursor"
+              draggable
+              onDragStart={() => setActiveCard(index)}
+              onDrop={() => handleDropServiceCard(index)}
+              onDragOver={(e) => e.preventDefault()}
+            >
+              <div className="col-md-1 col-12">
+                <div className="row">
+                  <div className="col-12 d-flex flex-column align-items-md-center">
+                    <p className="font-weight-bold font-size-11 m-0">
+                      {value?.Name?.Name}
+                    </p>
+                    <img
+                      className="icon-img"
+                      src={value?.Name?.Logo}
+                      alt="arrival"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="col-md-11 col-12">
-            <div className="row">
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Flight Name/Number
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  Air India-13287
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Flight className
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  First className
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Arrival-Departure
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  New Delhi-Mumbai
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Arrival Date/Time
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  10:30
-                  <i className="fa-solid fa-pen-to-square text-success font-size-11 pl-2 cursor-pointer"></i>
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Departure Date/Time
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  11:35
-                  <i className="fa-solid fa-pen-to-square text-success font-size-11 pl-2 cursor-pointer"></i>
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Adult Cost
-                </p>
-                <p className="font-size-10 font-weight-bold">INR 1500</p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Child Cost
-                </p>
-                <p className="font-size-10 font-weight-bold">INR 1200</p>
-              </div>
-              <div className="col-md col-sm-3 col-6 d-flex justify-content-md-end">
-                <div className="d-flex flex-column">
-                  <p className="font-size-10 font-weight-bold text-flow">
-                    Action
-                  </p>
-                  <p className="font-size-10 font-weight-bold">
-                    <span className="p1-2 text-danger cursor-pointer">
-                      <i className="fa-solid fa-trash font-size-11 pr-1"></i>
-                    </span>
-                    <span className=" text-success cursor-pointer">
-                      <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
-                    </span>
-                  </p>
+              <div className="col-md-11 col-12">
+                <div className="row">
+                  {value?.Columns.map((col, index) => {
+                    return (
+                      <div className="col-md col-sm-3 col-6" key={index + 1}>
+                        <p className="font-size-10 text-secondary text-flow">
+                          {col?.Label}
+                        </p>
+                        <p className="font-size-10 font-weight-bold text-flow">
+                          {col?.Data}
+                        </p>
+                      </div>
+                    );
+                  })}
+                  <div className="col  d-flex justify-content-md-end">
+                    <div className="d-flex flex-column">
+                      <p className="font-size-10 font-weight-bold">Action</p>
+                      <p className="font-size-10 font-weight-bold">
+                        <span className="p1-2 text-danger cursor-pointer">
+                          <i className="fa-solid fa-trash font-size-11 pr-1"></i>
+                        </span>
+                        <span className=" text-success cursor-pointer">
+                          <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        {/* row */}
-        <div className="row border-bottom mb-2">
-          <div className="col-md-1 col-12">
-            <div className="row">
-              <div className="col-12 d-flex flex-column align-items-md-center">
-                <p className="font-weight-bold font-size-11 m-0 text-flow">
-                  Departure
-                </p>
-                <img
-                  className="icon-img"
-                  src="\global_assets\images\qoutation\Departure1.png"
-                  alt="arrival"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-11 col-12">
-            <div className="row">
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Flight Name/Number
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  Air India - 13287
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Flight className
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  First className
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Arrival - Departure
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  New Delhi - Mumbai
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Arrival Date/Time
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  10:30
-                  <i className="fa-solid fa-pen-to-square text-success font-size-11 pl-2 cursor-pointer"></i>
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Departure Date/Time
-                </p>
-                <p className="font-size-10 font-weight-bold text-flwo">
-                  11:35
-                  <i className="fa-solid fa-pen-to-square text-success font-size-11 pl-2 cursor-pointer"></i>
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Adult Cost
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  INR 1500
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Child Cost
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  INR 1200
-                </p>
-              </div>
-              <div className="col  d-flex justify-content-md-end">
-                <div className="d-flex flex-column">
-                  <p className="font-size-10 font-weight-bold">Action</p>
-                  <p className="font-size-10 font-weight-bold">
-                    <span className="p1-2 text-danger cursor-pointer">
-                      <i className="fa-solid fa-trash font-size-11 pr-1"></i>
-                    </span>
-                    <span className=" text-success cursor-pointer">
-                      <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* row */}
-        <div className="row border-bottom mb-2">
-          <div className="col-md-1 col-12">
-            <div className="row">
-              <div className="col-12 d-flex flex-column align-items-md-center">
-                <p className="font-weight-bold font-size-11 m-0 text-flow">
-                  Monument
-                </p>
-                <img
-                  className="icon-img"
-                  src="\global_assets\images\qoutation\monument.png"
-                  alt="arrival"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-11 col-12">
-            <div className="row">
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Monument Name
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  Birla Temple/Laxmi Narayan Temple
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Adult Cost
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">1200</p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Child Cost
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">1000</p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Start/End Time
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  10:30 - 05-30
-                  <i className="fa-solid fa-pen-to-square text-success font-size-11 pl-2 cursor-pointer"></i>
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6 d-flex justify-content-md-end">
-                <div className="d-flex flex-column">
-                  <p className="font-size-10 font-weight-bold text-flow">
-                    Action
-                  </p>
-                  <p className="font-size-10 font-weight-bold">
-                    <span className="p1-2 text-danger cursor-pointer">
-                      <i className="fa-solid fa-trash font-size-11 pr-1"></i>
-                    </span>
-                    <span className=" text-success cursor-pointer">
-                      <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* row */}
-        <div className="row border-bottom mb-2">
-          <div className="col-md-1 col-12">
-            <div className="row">
-              <div className="col-12  d-flex flex-column align-items-md-center">
-                <p className="font-weight-bold font-size-11 m-0 text-flow">
-                  Monument
-                </p>
-                <img
-                  className="icon-img"
-                  src="\global_assets\images\qoutation\monument.png"
-                  alt="arrival"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-11 col-12">
-            <div className="row">
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Monument Name
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  Birla Temple/Laxmi Narayan Temple
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Adult Cost
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">1200</p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flwo">
-                  Child Cost
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">1000</p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Start/End Time
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  10:30 - 05-30
-                  <i className="fa-solid fa-pen-to-square text-success font-size-11 pl-2 cursor-pointer"></i>
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6 d-flex justify-content-md-end">
-                <div className="d-flex flex-column">
-                  <p className="font-size-10 font-weight-bold text-flow">
-                    Action
-                  </p>
-                  <p className="font-size-10 font-weight-bold">
-                    <span className="p1-2 text-danger cursor-pointer">
-                      <i className="fa-solid fa-trash font-size-11 pr-1"></i>
-                    </span>
-                    <span className=" text-success cursor-pointer">
-                      <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* row */}
-        <div className="row border-bottom mb-2">
-          <div className="col-md-1 col-12">
-            <div className="row">
-              <div className="col-12 d-flex flex-column align-items-md-center">
-                <p className="font-weight-bold font-size-11 m-0 text-flow">
-                  Hotel
-                </p>
-                <img
-                  className="icon-img"
-                  src="\global_assets\images\qoutation\hotel.png"
-                  alt="arrival"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-11 col-12">
-            <div className="row">
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Hotel Name
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  Africa Avenue 5 Star
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Service Type
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">Guest</p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Meal Plan
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">CP</p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Tariff Type
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  Normal
-                  <i className="fa-solid fa-pen-to-square text-success font-size-11 pl-2 cursor-pointer"></i>
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">Double</p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  INR 8300*5
-                  <i className="fa-solid fa-pen-to-square text-success font-size-11 pl-2 cursor-pointer"></i>
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6 d-flex justify-content-md-end">
-                <div className="d-flex flex-column">
-                  <p className="font-size-10 font-weight-bold text-flow">
-                    Action
-                  </p>
-                  <p className="font-size-10 font-weight-bold">
-                    <span className="p1-2 text-danger cursor-pointer">
-                      <i className="fa-solid fa-trash font-size-11 pr-1"></i>
-                    </span>
-                    <span className=" text-success cursor-pointer">
-                      <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* row */}
-        <div className="row border-bottom mb-2">
-          <div className="col-md-1 col-12">
-            <div className="row">
-              <div className="col-12 d-flex flex-column align-items-md-center">
-                <p className="font-weight-bold font-size-11 m-0 text-flow">
-                  Activity
-                </p>
-                <img
-                  className="icon-img"
-                  src="\global_assets\images\qoutation\activity.png"
-                  alt="arrival"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-11 col-12">
-            <div className="row">
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Activity Name
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  Africa Avenue 5 Star
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Pax Slab
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  10 Pax
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Per Pax Cost
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  INR 1200
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flwo">
-                  Arrival Date/Time
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  10:30
-                  <i className="fa-solid fa-pen-to-square text-success font-size-11 pl-2 cursor-pointer"></i>
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Departure Date/Time
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  11:35
-                  <i className="fa-solid fa-pen-to-square text-success font-size-11 pl-2 cursor-pointer"></i>
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Adult Cost
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  INR 1500
-                </p>
-              </div>
-              <div className="col-md col-sm-3 col-6">
-                <p className="font-size-10 text-secondary text-flow">
-                  Child Cost
-                </p>
-                <p className="font-size-10 font-weight-bold text-flow">
-                  INR 1200
-                </p>
-              </div>
-              <div className="col d-flex justify-content-md-end">
-                <div className="d-flex flex-column">
-                  <p className="font-size-10 font-weight-bold text-flow">
-                    Action
-                  </p>
-                  <p className="font-size-10 font-weight-bold">
-                    <span className="p1-2 text-danger cursor-pointer">
-                      <i className="fa-solid fa-trash font-size-11 pr-1"></i>
-                    </span>
-                    <span className=" text-success cursor-pointer">
-                      <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </div>
   );

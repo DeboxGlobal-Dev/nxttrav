@@ -23,6 +23,8 @@ const MonumentModal = () => {
       const {name, value} = e.target;
       setAddFormData({...addFormData, [name]:value});
     }
+
+    console.log("addFormData", addFormData);
   
     return (
       <>
@@ -191,14 +193,14 @@ const MonumentModal = () => {
         {addNew && (
           <div>
             <div className="row position-relative">
-              <div className="col-12">
-                <label htmlFor="" className="">
+              <div className="col-4">
+                <label htmlFor="" className="m-0">
                   ENTRANCE NAME
                 </label>
                 <input
                   type="text"
                   placeholder="Entrance Name"
-                  className="form-input-5"
+                  className="form-input-6"
                   name="EntranceName"
                   value={addFormData?.EntranceName}
                   onChange={handleAddDataChange}

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 const ActivityModal = () => {
   const [addNew, setAddNew] = useState(false);
@@ -29,6 +29,9 @@ const ActivityModal = () => {
     const { name, value } = e.target;
     setAddFormData({ ...addFormData, [name]: value });
   };
+
+  console.log("addFormData", addFormData);
+
   return (
     <>
       {!addNew && (
@@ -387,11 +390,13 @@ const ActivityModal = () => {
               <select
                 name="Type"
                 id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.Type}
                 onChange={handleAddDataChange}
               >
                 <option value="">Select</option>
+                <option value="1">Client</option>
+                <option value="2">Supplier</option>
               </select>
             </div>
             <div className="col-3">
@@ -401,11 +406,13 @@ const ActivityModal = () => {
               <select
                 name="ActivityName"
                 id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.ActivityName}
                 onChange={handleAddDataChange}
               >
                 <option value="">Select</option>
+                <option value="1">Swiming</option>
+                <option value="2">Running</option>
               </select>
             </div>
             <div className="col-3">
@@ -415,11 +422,13 @@ const ActivityModal = () => {
               <select
                 name="Destination"
                 id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.Destination}
                 onChange={handleAddDataChange}
               >
                 <option value="">Select</option>
+                <option value="1">Noida</option>
+                <option value="2">Delhi</option>
               </select>
             </div>
             <div className="col-3">
@@ -428,12 +437,13 @@ const ActivityModal = () => {
               </label>
               <select
                 name="Default"
-                id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.Default}
                 onChange={handleAddDataChange}
               >
                 <option value="">Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </select>
             </div>
             <div className="col-3">
@@ -443,11 +453,13 @@ const ActivityModal = () => {
               <select
                 name="SelectSupplier"
                 id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.SelectSupplier}
                 onChange={handleAddDataChange}
               >
                 <option value="">Select</option>
+                <option value="1">Agent</option>
+                <option value="2">B2B</option>
               </select>
             </div>
             <div className="col-3">
@@ -457,11 +469,13 @@ const ActivityModal = () => {
               <select
                 name="Status"
                 id=""
-                className="form-input-5"
+                className="form-input-6"
                 value={addFormData?.Status}
                 onChange={handleAddDataChange}
               >
                 <option value="">Select</option>
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
               </select>
             </div>
             <div className="col-12">
@@ -471,7 +485,7 @@ const ActivityModal = () => {
               <textarea
                 name="Description"
                 id=""
-                className="form-input-5 h-100"
+                className="form-input-6 h-100"
                 value={addFormData?.Description}
                 onChange={handleAddDataChange}
               ></textarea>

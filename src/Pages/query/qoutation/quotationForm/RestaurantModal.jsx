@@ -21,6 +21,8 @@ const RestaurantModal = () => {
       const {name, value} = e.target;
       setAddFormData({...addFormData, [name]:value});
     }
+
+    console.log("addFormData", addFormData);
     return (
       <>
         {!addNew && (
@@ -140,12 +142,12 @@ const RestaurantModal = () => {
         {addNew && (
           <div>
             <div className="row mt-2 position-relative">
-              <div className="col-12">
+              <div className="col-4">
                 <label htmlFor="">RESTAURANT NAME</label>
                 <input
                   type="text"
                   placeholder="Restaurant Name"
-                  className="form-input-5"
+                  className="form-input-6"
                   name="RestaurantName"
                   value={addFormData?.RestaurantName}
                   onChange={handleAddDataChange}

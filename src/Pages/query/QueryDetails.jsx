@@ -1,4 +1,6 @@
 import React from "react";
+
+//This component is not using anywhere
 const QueryDetails = () => {
   return (
     <>

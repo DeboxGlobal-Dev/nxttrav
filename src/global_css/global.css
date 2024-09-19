@@ -87,6 +87,13 @@ a {
 .backgroundColor-4 {
   background-color: rgb(210, 255, 210);
 }
+.backgroundColor-5 {
+  background-color: rgba(206, 237, 252, 0.94);
+}
+.backgroundColor-6 {
+  background-color: #229799;
+}
+
 /* /master page custom css */
 
 /*  form input custom style*/
@@ -844,6 +851,9 @@ select {
 .yellow-bg {
   background-color: rgb(255, 255, 181);
 }
+.yellow-bg-1 {
+  background-color: rgb(255, 255, 160);
+}
 .yellow-text {
   color: rgb(244, 195, 19);
 }
@@ -945,7 +955,7 @@ select {
 .width-70 {
   width: 70px;
 }
-.bottom-70{
+.bottom-70 {
   bottom: -70px;
 }
 .skeleton-box {
@@ -983,15 +993,79 @@ select {
   border-radius: 2px;
   background-color: rgb(253, 253, 253);
 }
-.modal-header{
+.modal-header {
   height: 35px;
   padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.tab-hover:hover{
-  background-color: rgb(183, 217, 252)
+.tab-hover:hover {
+  background-color: rgb(183, 217, 252);
+}
+.bg-successs {
+  background-color: #32ad80a8;
+}
+.preview-img {
+  height: 300px;
+  object-fit: cover;
+  background-repeat: no-repeat;
+  background-position: start;
+}
+.preview-img-1 {
+  height: 120px;
+  width: 200px;
+  object-fit: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.preview-heading {
+  background-color: #229799;
+  color: white;
+  padding: 7px 200px 2px 20px;
+  font-family: Arial, sans-serif;
+  text-transform: uppercase;
+  clip-path: polygon(0 0, 80% 0, 100% 100%, 100% 100%, 0 100%);
+}
+.preview-endOfTour-heading {
+  background-color: #229799;
+  color: white;
+  padding: 7px 10px 2px 20px;
+  font-family: Arial, sans-serif;
+  text-transform: uppercase;
+  clip-path: polygon(55% 0%, 100% 0%, 100% 100%, 100% 148%, 50% 100%);
+}
+.heading-bottom-border {
+  border: 2px solid #229799;
+}
+.second-preview-heading {
+  background-color: #48cfcb;
+  color: white;
+  font-size: 16px;
+  padding: 2px 200px 2px 20px;
+  font-family: Arial, sans-serif;
+  text-transform: uppercase;
+  clip-path: polygon(0 0, 80% 0, 72% 50%, 80% 100%, 0 100%);
+}
+.dotted-border {
+  border-bottom: 1.5px dotted black;
+}
+.padding-2-3 {
+  padding: 2px 3px;
+}
+.cost-preview-A4-width {
+  width: 794px;
+}
+.cost-preview-client-logo-height {
+  height: 50px;
+  object-fit: contain;
+}
+.service-drag-card:active{
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+.grab-cursor{
+  cursor: grab;
 }
 
 /* Animation for loading effect */

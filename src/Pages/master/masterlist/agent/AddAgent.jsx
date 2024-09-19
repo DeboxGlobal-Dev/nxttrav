@@ -7,6 +7,7 @@ import { toast, Toaster } from "react-hot-toast";
 import Editor from "../../../../helper/Editor";
 import { agentMasterValidationSchema } from "../MasterValidations";
 import useImageUploader from "../../../../helper/custom_hook/useImageUploader";
+import { map } from "jquery";
 
 const AddAgent = () => {
   const navigate = useNavigate();
@@ -24,7 +25,6 @@ const AddAgent = () => {
     countryList: [],
   };
   const { imageData, handleImage } = useImageUploader();
-
   const [agentInfoValue, setAgentInfoValue] = useState("");
   const [remarksValue, setRemarksValue] = useState("");
   const [errors, setErrors] = useState({});
@@ -211,8 +211,6 @@ const AddAgent = () => {
   const remarksChangeHandler = (content) => {
     setRemarksValue(content);
   };
-
-  
 
   return (
     <Layout>

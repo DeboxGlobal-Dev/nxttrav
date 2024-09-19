@@ -165,14 +165,14 @@ const TrainModal = () => {
       {addNew && (
         <div>
           <div className="row position-relative mt-2">
-            <div className="col-12">
+            <div className="col-4">
               <label htmlFor="" className="">
                 TRAIN NAME
               </label>
               <input
                 type="text"
                 placeholder="Train Name"
-                className="form-input-5"
+                className="form-input-6"
                 name="TrainName"
                 value={addFormData?.TrainName}
                 onChange={handleAddDataChange}

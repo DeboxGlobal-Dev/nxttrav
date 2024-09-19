@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { addQueryContext } from "./Addquery";
+import { addQueryContext } from "./AddQuery";
 
 const Accomodation = () => {
   

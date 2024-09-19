@@ -353,12 +353,12 @@ const GuideModal = () => {
       {addNew && (
         <div>
           <div className="row position-relative">
-            <div className="col-12">
+            <div className="col-4">
               <label htmlFor="">GUIDE SERVICE</label>
               <input
                 type="text"
                 placeholder="Guide Service"
-                className="form-input-5"
+                className="form-input-6"
                 name="GuideService"
                 value={addFormData?.GuideService}
                 onChange={handleAddDataChange}
