@@ -4,7 +4,10 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
-import { cabinTypeInitialValue, cabinTypeValidationSchema } from "./MasterValidations";
+import {
+  cabinTypeInitialValue,
+  cabinTypeValidationSchema,
+} from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const CabinType = () => {
@@ -23,7 +26,7 @@ const CabinType = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("cabintypemasterlist" , postData);
+        const { data } = await axiosOther.post("cabintypemasterlist", postData);
         setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
@@ -42,14 +45,14 @@ const CabinType = () => {
 
     setFilterData(result);
   }, [postData]);
-  
+
   const handleEditClick = (rowValue) => {
     console.log(rowValue);
     setEditData({
       ...rowValue,
       CountryId: rowValue.CountryName === "India" ? "1" : "2",
       StateId: rowValue.StateName === "Rajsthan" ? "1" : "2",
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -135,46 +138,44 @@ const CabinType = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label htmlFor="">Cruise Name</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="CruiseName"
-                        >
-                          <option value={""}>Cruise Name</option>
-                          <option value={1}>DEF</option>
-                          <option value={2}>GHJ</option>
-                        </Field>
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="CruiseName" />
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Cabin Type</label>
-                        <Field
-                          type="text"
-                          placeholder="Cabin Type"
-                          className="form-control"
-                          name="CabinType"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="CabinType" />
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <label htmlFor="" className="m-0 font-size-12">Cruise Name</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="CruiseName"
+                      >
+                        <option value={""}>Cruise Name</option>
+                        <option value={1}>DEF</option>
+                        <option value={2}>GHJ</option>
+                      </Field>
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="CruiseName" />
+                      </span>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Cabin Type</label>
+                      <Field
+                        type="text"
+                        placeholder="Cabin Type"
+                        className="form-input-6"
+                        name="CabinType"
+                      />
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="CabinType" />
+                      </span>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

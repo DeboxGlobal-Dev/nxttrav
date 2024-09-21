@@ -25,7 +25,6 @@ const TourEscortPrice = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
 
-  
   const getDataToServer = async () => {
     try {
       const destination = await axiosOther.post("destinationlist", {
@@ -47,7 +46,7 @@ const TourEscortPrice = () => {
         const { data } = await axiosOther.post("tourescortpricelist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
-        console.log('DATA',data.DataList);
+        console.log("DATA", data.DataList);
       } catch (error) {
         console.log(error);
       }
@@ -57,7 +56,9 @@ const TourEscortPrice = () => {
 
   useEffect(() => {
     const result = getData.filter((item) => {
-      return item?.Status?.toLowerCase()?.match(postData?.Search?.toLowerCase());
+      return item?.Status?.toLowerCase()?.match(
+        postData?.Search?.toLowerCase()
+      );
     });
 
     setFilterData(result);
@@ -154,68 +155,70 @@ const TourEscortPrice = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label>Service Type</label>
-                        <Field
-                          name="ServiceType"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="10">Guide</option>
-                          <option value="20">Porter</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Destination</label>
-                        <Field
-                          name="Destination"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="0">ALL</option>
-                          {
-                            destinationList.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
-                            })
-                          }
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Tour Escort Service</label>
-                        <Field
-                          type="text"
-                          name="TourEscortService"
-                          placeholder="Tour Escort Service"
-                          className="form-control"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Set Default</label>
-                        <Field
-                          name="Default"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="0">No</option>
-                          <option value="1">Yes</option>
-                        </Field>
-                      </div>
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Service Type</label>
+                      <Field
+                        name="ServiceType"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="10">Guide</option>
+                        <option value="20">Porter</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-6">Destination</label>
+                      <Field
+                        name="Destination"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="0">ALL</option>
+                        {destinationList.map((value, index) => {
+                          return (
+                            <option value={value.Id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">
+                        Tour Escort Service
+                      </label>
+                      <Field
+                        type="text"
+                        name="TourEscortService"
+                        placeholder="Tour Escort Service"
+                        className="form-input-6"
+                      />
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Name" />
+                      </span>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Set Default</label>
+                      <Field
+                        name="Default"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

@@ -5,8 +5,10 @@ import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
-import { countryInitialValue, countryValidationSchema } from "./MasterValidations";
-
+import {
+  countryInitialValue,
+  countryValidationSchema,
+} from "./MasterValidations";
 
 const FleetMaster = () => {
   const [getData, setGetData] = useState([]);
@@ -20,8 +22,8 @@ const FleetMaster = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [imageValue, setImageValue] = useState({
-    ImageData:'',
-    ImageName:''
+    ImageData: "",
+    ImageName: "",
   });
   const [loading, setLoading] = useState(true);
 
@@ -47,34 +49,33 @@ const FleetMaster = () => {
     setFilterData(result);
   }, [updateData]);
 
-
   const handleEditClick = (rowValue) => {
     setImageValue({
-      ImageData:"",
-      ImageName:""
+      ImageData: "",
+      ImageName: "",
     });
     setEditData({
       ...rowValue,
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
 
-  const handleFleetChange = (e) =>{
+  const handleFleetChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    reader.onload = () =>{
+    reader.onload = () => {
       const base64 = reader.result;
-      const base64String = base64.split(',')[1];
+      const base64String = base64.split(",")[1];
       setImageValue({
-        ImageData:base64String,
-        ImageName:file.name
+        ImageData: base64String,
+        ImageName: file.name,
       });
-    }
+    };
     reader.readAsDataURL(file);
-  }
+  };
 
   const columns = [
     {
@@ -161,251 +162,251 @@ const FleetMaster = () => {
                   imageValue={imageValue}
                   setImageValue={setImageValue}
                 >
-                  <div className="card-body">
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
-                        <label>Vehicle Type</label>
-                        <Field
-                          name="SetDefault"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>12 Seater</option>
-                          <option value={2}>12 Seater Traveller</option>
-                          <option value={3}>14 Seater Traveller</option>
-                        </Field>
+                      <label className="m-0 font-size-12">Vehicle Type</label>
+                      <Field
+                        name="SetDefault"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>12 Seater</option>
+                        <option value={2}>12 Seater Traveller</option>
+                        <option value={3}>14 Seater Traveller</option>
+                      </Field>
                     </div>
                     <div className="col-sm-4">
-                        <label>Chassis Number</label>
-                        <Field
-                          type="text"
-                          name="ChassisNumber"
-                          placeholder="Chassis"
-                          className="form-control"
-                        />
+                      <label className="m-0 font-size-12">Chassis Number</label>
+                      <Field
+                        type="text"
+                        name="ChassisNumber"
+                        placeholder="Chassis"
+                        className="form-input-6"
+                      />
                     </div>
                     <div className="col-sm-4">
-                        <label>Brand</label>
-                        <Field
-                          name="Brand"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>None</option>
-                          <option value={2}>Toyota</option>
-                          <option value={3}>Tempo Traveller</option>
-                        </Field>
+                      <label className="m-0 font-size-12">Brand</label>
+                      <Field
+                        name="Brand"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>None</option>
+                        <option value={2}>Toyota</option>
+                        <option value={3}>Tempo Traveller</option>
+                      </Field>
                     </div>
                     <div className="col-sm-4">
-                        <label>Engine Number</label>
-                        <Field
-                          type="text"
-                          name="EngineNumber"
-                          placeholder="Engine"
-                          className="form-control"
-                        />
+                      <label className="m-0 font-size-12">Engine Number</label>
+                      <Field
+                        type="text"
+                        name="EngineNumber"
+                        placeholder="Engine"
+                        className="form-input-6"
+                      />
                     </div>
                     <div className="col-sm-4">
-                        <label>Vehicle</label>
-                        <Field
-                          name="Vehicle"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Select Vehicle</option>
-                          <option value={2}>Volvo Bus</option>
-                        </Field>
+                      <label className="m-0 font-size-12">Vehicle</label>
+                      <Field
+                        name="Vehicle"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Select Vehicle</option>
+                        <option value={2}>Volvo Bus</option>
+                      </Field>
                     </div>
                     <div className="col-sm-4">
-                        <label>Company Name</label>
-                        <Field
-                          type="text"
-                          name="CompanyName"
-                          placeholder="Company Name"
-                          className="form-control"
-                        />
+                      <label className="m-0 font-size-12">Company Name</label>
+                      <Field
+                        type="text"
+                        name="CompanyName"
+                        placeholder="Company Name"
+                        className="form-input-6"
+                      />
                     </div>
                     <div className="col-sm-4">
-                        <label>Color</label>
-                        <Field
-                          type="text"
-                          name="Color"
-                          placeholder="Color"
-                          className="form-control"
-                        />
+                      <label className="m-0 font-size-12">Color</label>
+                      <Field
+                        type="text"
+                        name="Color"
+                        placeholder="Color"
+                        className="form-input-6"
+                      />
                     </div>
                     <div className="col-sm-4">
-                        <label>Policy Number</label>
-                        <Field
-                          type="text"
-                          name="PolicyNumber"
-                          placeholder="Policy Number"
-                          className="form-control"
-                        />
+                      <label className="m-0 font-size-12">Policy Number</label>
+                      <Field
+                        type="text"
+                        name="PolicyNumber"
+                        placeholder="Policy Number"
+                        className="form-input-6"
+                      />
                     </div>
                     <div className="col-sm-4">
-                        <label>Fuel Type</label>
-                        <Field
-                          name="FuelType"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Petrol</option>
-                          <option value={2}>Diesel</option>
-                          <option value={3}>CNG</option>
-                          <option value={4}>Electric</option>
-                        </Field>
+                      <label className="m-0 font-size-12">Fuel Type</label>
+                      <Field
+                        name="FuelType"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Petrol</option>
+                        <option value={2}>Diesel</option>
+                        <option value={3}>CNG</option>
+                        <option value={4}>Electric</option>
+                      </Field>
                     </div>
                     <div className="col-sm-4">
-                        <label>Issue Date</label>
-                        <Field
-                          type="date"
-                          name="IssueDate"
-                          className="form-control"
-                        />
+                      <label className="m-0 font-size-12">Issue Date</label>
+                      <Field
+                        type="date"
+                        name="IssueDate"
+                        className="form-input-6"
+                      />
                     </div>
                     <div className="col-sm-4">
-                        <label className="font-size-10">Seating Capacity (Including Driver)</label>
-                        <Field
-                          type="text"
-                          name="SeatingCapacity"
-                          placeholder="Capacity"
-                          className="form-control"
-                        />
+                      <label className="font-size-10 m-0">
+                        Seating Capacity (Including Driver)
+                      </label>
+                      <Field
+                        type="text"
+                        name="SeatingCapacity"
+                        placeholder="Capacity"
+                        className="form-input-6"
+                      />
                     </div>
-                      <div className="col-sm-4">
-                        <label>Assigned Driver</label>
-                        <Field
-                          name="AssignedDriver"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>None</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Category Vehicle-Group</label>
-                        <Field
-                          type="text"
-                          name="CategoryVehicle"
-                          placeholder="Vehicle-Group"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Registration Number</label>
-                        <Field
-                          type="text"
-                          name="RegistrationNumber"
-                          placeholder="Vehicle-Group"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Registered Owner Name</label>
-                        <Field
-                          type="text"
-                          name="RegisteredOwnerName"
-                          placeholder="Vehicle-Group"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Pollution Permits Expire</label>
-                        <Field
-                          type="date"
-                          name="PollutionPermitsExpire"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Registration Date</label>
-                        <Field
-                          type="date"
-                          name="RegistrationDate"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Car Photo</label>
-                        <Field
-                          type="file"
-                          name="ImageData"
-                          className="form-control"
-                          onChange={handleFleetChange}
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Due Date</label>
-                        <Field
-                          type="date"
-                          name="DueDate"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Premium Amount</label>
-                        <Field
-                          type="text"
-                          name="PremiumAmount"
-                          placeholder="Premium Amount"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Cover Amount</label>
-                        <Field
-                          type="text"
-                          name="CoverAmount"
-                          placeholder="Cover Amount"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Address</label>
-                        <Field
-                          type="text"
-                          name="Address"
-                          placeholder="Address"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Expiry Date</label>
-                        <Field
-                          type="date"
-                          name="ExpiryDate"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Type</label>
-                        <Field
-                          type="text"
-                          name="Type"
-                          placeholder="Premium Amount"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Expiry Date</label>
-                        <Field
-                          type="date"
-                          name="ExpiryDate"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Assigned Driver</label>
+                      <Field
+                        name="AssignedDriver"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>None</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Category Vehicle-Group</label>
+                      <Field
+                        type="text"
+                        name="CategoryVehicle"
+                        placeholder="Vehicle-Group"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Registration Number</label>
+                      <Field
+                        type="text"
+                        name="RegistrationNumber"
+                        placeholder="Vehicle-Group"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Registered Owner Name</label>
+                      <Field
+                        type="text"
+                        name="RegisteredOwnerName"
+                        placeholder="Vehicle-Group"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Pollution Permits Expire</label>
+                      <Field
+                        type="date"
+                        name="PollutionPermitsExpire"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Registration Date</label>
+                      <Field
+                        type="date"
+                        name="RegistrationDate"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Car Photo</label>
+                      <Field
+                        type="file"
+                        name="ImageData"
+                        className="form-input-6 border-0"
+                        onChange={handleFleetChange}
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Due Date</label>
+                      <Field
+                        type="date"
+                        name="DueDate"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Premium Amount</label>
+                      <Field
+                        type="text"
+                        name="PremiumAmount"
+                        placeholder="Premium Amount"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Cover Amount</label>
+                      <Field
+                        type="text"
+                        name="CoverAmount"
+                        placeholder="Cover Amount"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Address</label>
+                      <Field
+                        type="text"
+                        name="Address"
+                        placeholder="Address"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Expiry Date</label>
+                      <Field
+                        type="date"
+                        name="ExpiryDate"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Type</label>
+                      <Field
+                        type="text"
+                        name="Type"
+                        placeholder="Premium Amount"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Expiry Date</label>
+                      <Field
+                        type="date"
+                        name="ExpiryDate"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

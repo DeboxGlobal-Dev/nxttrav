@@ -19,16 +19,19 @@ const ExpenseHead = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: ""
+    Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
-  const [updateData, setUpdateData]= useState(false);
+  const [updateData, setUpdateData] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("expenseheadmasterlist", postData);
+        const { data } = await axiosOther.post(
+          "expenseheadmasterlist",
+          postData
+        );
         setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
@@ -50,7 +53,7 @@ const ExpenseHead = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -107,7 +110,7 @@ const ExpenseHead = () => {
           >
             <div
               className="card-header header-elements-inline bg-info-700 py-2"
-              style={{padding:"10px"}}
+              style={{ padding: "10px" }}
             >
               <div className="col-xl-10 d-flex align-items-center">
                 <h5 className="card-title d-none d-sm-block">Expense Head</h5>
@@ -133,28 +136,26 @@ const ExpenseHead = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-6">
-                        <label>Expense Head</label>
-                        <Field
-                          type="text"
-                          name="ExpenseHead"
-                          placeholder="Expense Head"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-6">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                  <div className="row row-gap-3">
+                    <div className="col-sm-6">
+                      <label className="m-0 font-size-12">Expense Head</label>
+                      <Field
+                        type="text"
+                        name="ExpenseHead"
+                        placeholder="Expense Head"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-6">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

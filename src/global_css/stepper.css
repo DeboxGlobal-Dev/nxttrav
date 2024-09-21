@@ -1,0 +1,57 @@
+.stepper {
+  display: flex;
+  gap: 1px;
+  align-items: center;
+}
+
+.step {
+  position: relative;
+  padding: 7px 20px;
+  background-color: #4caf50; /* Default color for completed */
+  color: white;
+  text-align: end;
+  font-size: 12px;
+  font-weight: 500;
+  margin-right: 5px;
+  clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%, 12% 50%);
+  white-space: nowrap;
+}
+
+.step.completed {
+  /* background-color: #4caf50; Green for completed */
+  background-color: #32ad80; /* Green for completed */
+}
+
+.step.active {
+  background-color: #2196f3; /* Blue for current step */
+}
+
+.step.upcoming {
+  background-color: #e0e0e0; /* Grey for upcoming steps */
+  color: #7b7b7b;
+  clip-path: polygon(0 0, 80% 0, 100% 50%, 80% 100%, 0 100%, 17% 50%);
+}
+
+.step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -20px;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-left: 20px solid #4caf50; /* Change border color based on step status */
+  border-top: 25px solid transparent;
+  border-bottom: 25px solid transparent;
+}
+
+.step.active::after {
+  border-left-color: #0066cc; /* Blue arrow for active step */
+}
+
+.step.upcoming::after {
+  border-left-color: #e0e0e0; /* Grey arrow for upcoming step */
+}
+
+.step:first-child {
+  clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%);
+}

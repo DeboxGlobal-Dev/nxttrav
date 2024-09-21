@@ -14,7 +14,7 @@ const Tasks = ({ partner_payload }) => {
       const { data } = await axiosOther.post("taskslist", partner_payload);
       setTaskList(data?.DataList);
     } catch (err) {
-      console.log("task-list-err", err);
+      console.log(err);
     }
   };
 
@@ -23,9 +23,10 @@ const Tasks = ({ partner_payload }) => {
   }, []);
 
   const handleNavigate = () => {
-    navigate("/master/agent/view/task", { state: {payload:partner_payload} });
+    navigate("/master/agent/view/task", {
+      state: { payload: partner_payload },
+    });
   };
-
 
   const handleEditData = (list) => {
     navigate(`/master/agent/view/task`, {
@@ -41,8 +42,8 @@ const Tasks = ({ partner_payload }) => {
       toast.success(data?.Message);
       fetchTaskListData();
     }
-    console.log(data);
   };
+
   return (
     <>
       <div className="col-12 agent-view-table mt-4">
@@ -69,7 +70,6 @@ const Tasks = ({ partner_payload }) => {
           <tbody>
             {taskList?.length > 0 ? (
               taskList?.map((list, index) => {
-                console.log('task-list', list)
                 return (
                   <tr key={index + 1}>
                     <th className="py-1">{list?.TaskSubject}</th>
@@ -104,4 +104,4 @@ const Tasks = ({ partner_payload }) => {
   );
 };
 
-export default memo(Tasks);
+export default React.memo(Tasks);

@@ -8,7 +8,6 @@ import { Field } from "formik";
 import { visaCostInitialValue } from "./MasterValidations";
 
 const VisaCost = () => {
-
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -21,7 +20,6 @@ const VisaCost = () => {
   const [updateData, setUpdateData] = useState(false);
   const [countryList, setCountryList] = useState([]);
   const [visaList, setVisaList] = useState([]);
-
 
   const getDataToServer = async () => {
     try {
@@ -63,7 +61,6 @@ const VisaCost = () => {
   }, [updateData]);
 
   useEffect(() => {
-    
     const result = getData.filter((item) => {
       return item?.Name?.toLowerCase()?.match(postData?.Search?.toLowerCase());
     });
@@ -72,13 +69,11 @@ const VisaCost = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-
     setEditData({
       ...rowValue,
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
-
   };
 
   const columns = [
@@ -149,49 +144,51 @@ const VisaCost = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-4">
-                        <label>Country</label>
-                        <Field
-                          name="Country"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="">Select Country</option>
-                          {
-                            countryList.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
-                            })
-                          }
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Visa Type</label>
-                        <Field
-                          name="VisaType"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="">Select Visa</option>
-                          {
-                            visaList.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
-                            })
-                          }
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                  <div className="row">
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Country</label>
+                      <Field
+                        name="Country"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="">Select Country</option>
+                        {countryList.map((value, index) => {
+                          return (
+                            <option value={value.Id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Visa Type</label>
+                      <Field
+                        name="VisaType"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="">Select Visa</option>
+                        {visaList.map((value, index) => {
+                          return (
+                            <option value={value.Id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

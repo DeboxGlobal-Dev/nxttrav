@@ -12,7 +12,6 @@ const Profile = () => {
                 <div className="card-body text-center">
                   <div
                     className="card-img-actions d-inline-block mb-3 profile"
-              
                   >
                     <img
                       className="img-fluid rounded-circle"

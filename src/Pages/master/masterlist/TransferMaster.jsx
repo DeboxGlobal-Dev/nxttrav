@@ -22,7 +22,7 @@ const TransferMaster = () => {
   const [destinationList, setDestinationList] = useState([]);
 
   const getDataToServer = async () => {
-    try { 
+    try {
       const destination = await axiosOther.post("destinationlist", {
         Search: "",
         Status: 1,
@@ -64,14 +64,14 @@ const TransferMaster = () => {
       ...rowValue,
       CountryId: rowValue.CountryName === "India" ? "1" : "2",
       StateId: rowValue.StateName === "Rajsthan" ? "1" : "2",
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
 
-  const handleDetailEditor = (content) =>{
+  const handleDetailEditor = (content) => {
     console.log(content);
-  }
+  };
 
   const columns = [
     {
@@ -161,78 +161,82 @@ const TransferMaster = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-5">
-                        <label>Transfer/Transportation Name</label>
-                        <Field
-                          type="text"
-                          name="Name"
-                          placeholder="Transportation"
-                          className="form-control"
-                        />
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          Transfer/Transportation Name
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Destination</label>
-                        <Field
-                          name="Destination"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="0">ALL</option>
-                          {
-                            destinationList.map((value, index)=>{
-                              return <option value={value.Id} key={index+1}>{value.Name}</option>
-                            })
-                          }
-                        </Field>
-                      </div>
-                      <div className="col-sm-3">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Transfer Type</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>All</option>
-                          <option value={2}>Arrivale</option>
-                          <option value={3}>Departure</option>
-                          <option value={4}>SightSeeing</option>
-                          <option value={5}>Normal</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Default For Proposal</label>
-                        <Field
-                          name="SetDefault"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={0}>No</option>
-                          <option value={1}>Yes</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-12">
-                        <label>Detail</label>
-                        <Editor
-                          handleChangeEditor={handleDetailEditor}
-                           heightValue="60%"
-                        />
-                      </div>
+                      <Field
+                        type="text"
+                        name="Name"
+                        placeholder="Transportation"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Destination</label>
+                      <Field
+                        name="Destination"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="0">ALL</option>
+                        {destinationList.map((value, index) => {
+                          return (
+                            <option value={value.Id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Transfer Type</label>
+                      <Field
+                        name="Status"
+                        className="form-input-4"
+                        component={"select"}
+                      >
+                        <option value={1}>All</option>
+                        <option value={2}>Arrivale</option>
+                        <option value={3}>Departure</option>
+                        <option value={4}>SightSeeing</option>
+                        <option value={5}>Normal</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Default For Proposal</label>
+                      <Field
+                        name="SetDefault"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={0}>No</option>
+                        <option value={1}>Yes</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-12">
+                      <label className="m-0 font-size-12">Detail</label>
+                      <Editor
+                        handleChangeEditor={handleDetailEditor}
+                        heightValue="60%"
+                      />
                     </div>
                   </div>
                 </Model>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Layout from "../../../../Component/Layout/Layout";
 import { NavLink, useParams } from "react-router-dom";
 import Office from "../common/Offce";
@@ -15,17 +15,21 @@ const ViewAgent = () => {
 
   const [viewData, setViewData] = useState("");
 
-  const getSingleAgentList = useCallback(async () => {
+  const getSingleAgentList = async () => {
     const { data } = await axiosOther.post("agentlist", {
       id: id,
       BusinessType: 1,
     });
     setViewData(data?.DataList[0]);
-  }, []);
+  };
 
   useEffect(() => {
     getSingleAgentList();
   }, [id]);
+
+  const props_payload = useMemo(() => (
+    { Fk_partnerid: id, Type: "agent" }
+  ), [id]);
 
   return (
     <Layout>
@@ -168,7 +172,7 @@ const ViewAgent = () => {
 
               {/* Office Address */}
               <div className="col-6 agent-view-table">
-                <Office partner_payload={{ Fk_partnerid: id, Type: "agent" }} />
+                <Office partner_payload={props_payload} />
               </div>
               {/* Contact Person */}
               <div className="col-12 agent-view-table mt-4">

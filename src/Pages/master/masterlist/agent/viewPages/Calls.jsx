@@ -16,7 +16,6 @@ const Calls = ({ partner_payload }) => {
       console.log(err);
     }
   };
-
   useEffect(() => {
     getCallListData();
   }, []);
@@ -41,10 +40,8 @@ const Calls = ({ partner_payload }) => {
       toast.success(data?.Message);
       getCallListData();
     }
-    console.log(data);
   };
 
-  // console.log("calls-list", callList);
   return (
     <>
       <div className="col-12 agent-view-table mt-4">
@@ -72,7 +69,6 @@ const Calls = ({ partner_payload }) => {
           <tbody>
             {callList?.length > 0 ? (
               callList?.map((list, index) => {
-                console.log("call-list", list);
                 return (
                   <tr key={index + 1}>
                     <th className="py-1">{list?.CallAgenda}</th>
@@ -86,9 +82,9 @@ const Calls = ({ partner_payload }) => {
                         className="fa-solid fa-pen-to-square fs-6 text-success"
                         onClick={() => handleEditData(list)}
                       ></i>
-                      <i 
-                      className="fa-solid fa-trash fs-6 cursor-pointer text-danger"
-                      onClick={()=>handleDeleteData(list?.id)}
+                      <i
+                        className="fa-solid fa-trash fs-6 cursor-pointer text-danger"
+                        onClick={() => handleDeleteData(list?.id)}
                       ></i>
                     </td>
                   </tr>
@@ -108,4 +104,4 @@ const Calls = ({ partner_payload }) => {
   );
 };
 
-export default memo(Calls);
+export default React.memo(Calls);

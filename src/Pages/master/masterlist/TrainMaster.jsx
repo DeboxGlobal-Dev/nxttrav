@@ -22,8 +22,8 @@ const TrainMaster = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [imageValue, setImageValue] = useState({
-    ImageData:'',
-    ImageName:''
+    ImageData: "",
+    ImageName: "",
   });
 
   useEffect(() => {
@@ -49,31 +49,31 @@ const TrainMaster = () => {
 
   const handleEditClick = (rowValue) => {
     setImageValue({
-      ImageData:rowValue.ImageData,
-      imageValue:rowValue.ImageName
+      ImageData: rowValue.ImageData,
+      imageValue: rowValue.ImageName,
     });
     setEditData({
       ...rowValue,
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
 
-  const handleImageChange = (e) =>{
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    reader.onload = () =>{
+    reader.onload = () => {
       const base64 = reader.result;
-      const base64String = base64.split(',')[1];
+      const base64String = base64.split(",")[1];
       setImageValue({
-        ImageData:base64String,
-        ImageName:file.name
+        ImageData: base64String,
+        ImageName: file.name,
       });
     };
 
     reader.readAsDataURL(file);
-  }
+  };
 
   const columns = [
     {
@@ -86,7 +86,11 @@ const TrainMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          <img src={row.ImageName} alt="image" style={{height:'30px', height:'30px'}}></img>
+          <img
+            src={row.ImageName}
+            alt="image"
+            style={{ height: "30px", height: "30px" }}
+          ></img>
         </span>
       ),
       sortable: true,
@@ -98,7 +102,11 @@ const TrainMaster = () => {
     },
     {
       name: "AddedBy",
-      selector: (row) => <span>Admin <br /> {row.AddedBy}</span>,
+      selector: (row) => (
+        <span>
+          Admin <br /> {row.AddedBy}
+        </span>
+      ),
       sortable: true,
     },
     {
@@ -114,11 +122,7 @@ const TrainMaster = () => {
     {
       name: "Status",
       selector: (row) => {
-        return (
-          <span>
-          {row.Status}
-          </span>
-        );
+        return <span>{row.Status}</span>;
       },
     },
   ];
@@ -154,46 +158,46 @@ const TrainMaster = () => {
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
-                  setChangeValue = {setChangeValue}
+                  setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                   imageValue={imageValue}
                   setImageValue={setImageValue}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-4">
-                        <label>Train Name</label>
-                        <Field
-                          type="text"
-                          name="Name"
-                          placeholder="Enter Name"
-                          className="form-control"
-                        />
+                  <div className="row">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Train Name</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Image</label>
-                        <input
-                          type="file"
-                          name="ImageData"
-                          className="form-control"
-                          onChange={handleImageChange}
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                      <Field
+                        type="text"
+                        name="Name"
+                        placeholder="Enter Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Image</label>
+                      <input
+                        type="file"
+                        name="ImageData"
+                        className="form-input-6 border-0"
+                        onChange={handleImageChange}
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

@@ -26,29 +26,28 @@ const VehicleBrand = () => {
   // getDataToServer for Dropdown
 
   const getDataToServer = async () => {
-
     try {
-      const {data} = await axiosOther.post("vehicletypemasterlist", {
+      const { data } = await axiosOther.post("vehicletypemasterlist", {
         Search: "",
-        Status: 1
+        Status: 1,
       });
       setVehicleTypeData(data.DataList);
       console.log(data.DataList);
     } catch (err) {
       console.log(err);
-    };
-
+    }
   };
   useEffect(() => {
     getDataToServer();
   }, []);
-  
-
 
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("vehiclebrandmasterlist", postData);
+        const { data } = await axiosOther.post(
+          "vehiclebrandmasterlist",
+          postData
+        );
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -159,47 +158,49 @@ const VehicleBrand = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
+                  <div className="row">
                     <div className="col-sm-4">
-                        <label>Vehicle Type</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="VehicleType"
-                        >
-                          <option value="">Select Vehicle </option>
-                          {
-                            vehicleTypeData.map((vehicle)=>{
-                              console.log("vehicl-di", vehicle.id);
-                              return <option value={vehicle.id} key={vehicle.id}>{vehicle.Name}</option>
-                            })
-                          }
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Brand Name</label>
-                        <Field
-                          type="text"
-                          name="Name"
-                          placeholder="Brand Name"
-                          className="form-control"
-                        />
+                      <label className="m-0 font-size-12">Vehicle Type</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="VehicleType"
+                      >
+                        <option value="">Select Vehicle </option>
+                        {vehicleTypeData.map((vehicle) => {
+                          console.log("vehicl-di", vehicle.id);
+                          return (
+                            <option value={vehicle.id} key={vehicle.id}>
+                              {vehicle.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Brand Name</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                      <Field
+                        type="text"
+                        name="Name"
+                        placeholder="Brand Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

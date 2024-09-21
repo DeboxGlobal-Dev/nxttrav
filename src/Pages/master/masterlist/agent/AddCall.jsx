@@ -43,11 +43,6 @@ const AddCall = () => {
         { ...formData, Destination: selectedDestination },
         { abortEarly: false }
       );
-      console.log("call-data-submiting", {
-        ...formData,
-        ...state?.payload,
-        Destination: selectedDestination,
-      });
       const { data } = await axiosOther.post("addupdatecalls", {
         ...formData,
         ...state?.payload,
@@ -126,6 +121,9 @@ const AddCall = () => {
   useEffect(() => {
     getDataToServer();
   }, []);  
+
+
+  console.log('add-call-component')
 
   return (
     <>

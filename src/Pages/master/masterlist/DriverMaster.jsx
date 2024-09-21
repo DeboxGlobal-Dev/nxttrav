@@ -24,16 +24,14 @@ const DriverMaster = () => {
   const [updateData, setUpdateData] = useState(false);
   const [countryList, setCountryList] = useState([]);
   const [imageValue, setImageValue] = useState({
-    LicenseData:'',
-    LicenseName:''
+    LicenseData: "",
+    LicenseName: "",
   });
   const [anotherImage, setAnotherImage] = useState({
-    ImageData:'',
-    ImageName:''
+    ImageData: "",
+    ImageName: "",
   });
-  
 
-  
   const getDataToServer = async () => {
     try {
       const destination = await axiosOther.post("countrylist", {
@@ -48,7 +46,6 @@ const DriverMaster = () => {
   useEffect(() => {
     getDataToServer();
   }, []);
-
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -74,49 +71,49 @@ const DriverMaster = () => {
 
   const handleEditClick = (rowValue) => {
     setImageValue({
-      ImageData:"",
-      ImageName:""
+      ImageData: "",
+      ImageName: "",
     });
     setAnotherImage({
-      LicenseData:"",
-      LicenseName:""
+      LicenseData: "",
+      LicenseName: "",
     });
     setEditData({
       ...rowValue,
-      Status:rowValue.Status==="Active"? 1:0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
 
-  const handleDriverChange1 = (e) =>{
+  const handleDriverChange1 = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    reader.onload = () =>{
+    reader.onload = () => {
       const base64 = reader.result;
-      const base64String = base64.split(',')[1];
+      const base64String = base64.split(",")[1];
       setImageValue({
-        LicenseData:base64String,
-        LicenseName:file.name
-      })
-    };  
+        LicenseData: base64String,
+        LicenseName: file.name,
+      });
+    };
     reader.readAsDataURL(file);
-  }
+  };
 
-  const handleDriverChange2 = (e) =>{
+  const handleDriverChange2 = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    reader.onload = () =>{
+    reader.onload = () => {
       const base64 = reader.result;
-      const base64String = base64.split(',')[1];
+      const base64String = base64.split(",")[1];
       setAnotherImage({
-        ImageData:base64String,
-        ImageName:file.name
-      })
-    };  
+        ImageData: base64String,
+        ImageName: file.name,
+      });
+    };
     reader.readAsDataURL(file);
-  }
+  };
 
   // console.log('image-value', imageValue);
   const columns = [
@@ -130,14 +127,24 @@ const DriverMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          <img src={row.ImageName} style={{height:'30PX', width:'30px'}} alt="profile-image"></img>
+          <img
+            src={row.ImageName}
+            style={{ height: "30PX", width: "30px" }}
+            alt="profile-image"
+          ></img>
         </span>
       ),
       sortable: true,
     },
     {
       name: "Document",
-      selector: (row) => <img src={row.LicenseName} style={{height:'30PX', width:'30px'}} alt="License-image"></img>,
+      selector: (row) => (
+        <img
+          src={row.LicenseName}
+          style={{ height: "30PX", width: "30px" }}
+          alt="License-image"
+        ></img>
+      ),
       sortable: true,
     },
     {
@@ -231,150 +238,167 @@ const DriverMaster = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
-                  imageValue={{...imageValue,...anotherImage}}
+                  imageValue={{ ...imageValue, ...anotherImage }}
                   setImageValue={setImageValue}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label>Country</label>
-                        <Field
-                          name="Country"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Select Country</option>
-                          {
-                            countryList.map((value, index)=>{
-                              return <option value={value.id} key={index + 1}>{value.Name}</option>
-                            })
-                          }
-                        </Field>
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Country</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Country" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Driver Name</label>
-                        <Field
-                          type="text"
-                          name="DriverName"
-                          placeholder="Driver Name"
-                          className="form-control"
-                        />
+                      <Field
+                        name="Country"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Select Country</option>
+                        {countryList.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Driver Name</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="DriverName" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Mobile Number</label>
-                        <Field
-                          type="text"
-                          name="MobileNumber"
-                          placeholder="Mobile Number"
-                          className="form-control"
-                        />
+                      <Field
+                        type="text"
+                        name="DriverName"
+                        placeholder="Driver Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          Mobile Number
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="MobileNumber" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>WhatsApp Number</label>
-                        <Field
-                          type="text"
-                          name="WhatsappNumber"
-                          placeholder="WhatsAppNumber"
-                          className="form-control"
-                        />
+                      <Field
+                        type="text"
+                        name="MobileNumber"
+                        placeholder="Mobile Number"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          WhatsApp Number
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="WhatsAppNumber" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Alternate Mobile Number</label>
-                        <Field
-                          type="text"
-                          name="AlternateMobileNo"
-                          placeholder="Enter Short Name"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>License Number</label>
-                        <Field
-                          type="text"
-                          name="LicenseNumber"
-                          placeholder="License Number"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Birthdate</label>
-                        <Field
-                          type="date"
-                          name="BirthDate"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Valid Upto</label>
-                        <Field
-                          type="date"
-                          name="ValidUpto"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Passport Number</label>
-                        <Field
-                          type="text"
-                          name="PassportNumber"
-                          placeholder="Enter Short Name"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Address</label>
-                        <Field
-                          type="text"
-                          name="Address"
-                          placeholder="Address"
-                          className="form-control"
-                        />
+                      <Field
+                        type="text"
+                        name="WhatsappNumber"
+                        placeholder="WhatsAppNumber"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="font-size-12 m-0">
+                        Alternate Mobile Number
+                      </label>
+                      <Field
+                        type="text"
+                        name="AlternateMobileNo"
+                        placeholder="Enter Short Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">License Number</label>
+                      <Field
+                        type="text"
+                        name="LicenseNumber"
+                        placeholder="License Number"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Birthdate</label>
+                      <Field
+                        type="date"
+                        name="BirthDate"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Valid Upto</label>
+                      <Field
+                        type="date"
+                        name="ValidUpto"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">
+                        Passport Number
+                      </label>
+                      <Field
+                        type="text"
+                        name="PassportNumber"
+                        placeholder="Enter Short Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Address</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Address" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Upload License</label>
-                        <input
-                          type="file"
-                          name="LicenseData"
-                          className="form-control"
-                          onChange={handleDriverChange1}
-                          // value={imageValue.LicenseData}
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Image</label>
-                        <input
-                          type="file"
-                          name="ImageData"
-                          className="form-control"
-                          onChange={handleDriverChange2}
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                      <Field
+                        type="text"
+                        name="Address"
+                        placeholder="Address"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Upload License</label>
+                      <input
+                        type="file"
+                        name="LicenseData"
+                        className="form-input-6 border-0"
+                        onChange={handleDriverChange1}
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Image</label>
+                      <input
+                        type="file"
+                        name="ImageData"
+                        className="form-input-6 border-0"
+                        onChange={handleDriverChange2}
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

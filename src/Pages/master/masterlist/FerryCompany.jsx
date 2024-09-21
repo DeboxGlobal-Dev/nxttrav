@@ -76,7 +76,7 @@ const FerryCompany = () => {
     console.log(rowValue);
     setEditData({
       ...rowValue,
-      Status: rowValue.Status ==="Active"?1:0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -190,144 +190,157 @@ const FerryCompany = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label>Ferry Company Name</label>
-                        <Field
-                          type="text"
-                          name="FerryCompanyName"
-                          placeholder="Cruise Company"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Destination</label>
-                        <Field
-                          name="Destination"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="0">ALL</option>
-                          {destinationList.map((value, index) => {
-                            return (
-                              <option value={value.Id} key={index + 1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Website</label>
-                        <Field
-                          type="text"
-                          name="Website"
-                          placeholder="Website"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Self Supplier</label>
-                        <Field
-                          name="SelfSupplier"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="1">Yes</option>
-                          <option value="0">No</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Contact Person Division</label>
-                        <Field
-                          name="Type"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="0">Select Division</option>
-
-                          {devisioinList?.map((value, index) => {
-                            return (
-                              <option value={value.Id} key={index + 1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Contact Person</label>
-                        <Field
-                          type="text"
-                          name="ContactPers"
-                          placeholder="Contact Person"
-                          className="form-control"
-                        />
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">
+                        Ferry Company Name
+                      </label>
+                      <Field
+                        type="text"
+                        name="FerryCompanyName"
+                        placeholder="Cruise Company"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Destination</label>
+                      <Field
+                        name="Destination"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="0">ALL</option>
+                        {destinationList.map((value, index) => {
+                          return (
+                            <option value={value.Id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Website</label>
+                      <Field
+                        type="text"
+                        name="Website"
+                        placeholder="Website"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Self Supplier</label>
+                      <Field
+                        name="SelfSupplier"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">
+                        Contact Person Division
+                      </label>
+                      <Field
+                        name="Type"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="0">Select Division</option>
+                        {devisioinList?.map((value, index) => {
+                          return (
+                            <option value={value.Id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          Contact Person
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="ShortName" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Designation</label>
-                        <Field
-                          type="text"
-                          name="Designation"
-                          placeholder="Designation"
-                          className="form-control"
-                        />
+                      <Field
+                        type="text"
+                        name="ContactPers"
+                        placeholder="Contact Person"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Designation</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="ShortName" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Country Code</label>
-                        <Field
-                          type="text"
-                          name="CountryCode"
-                          placeholder="+91"
-                          className="form-control"
-                          value="+91"
-                        />
+                      <Field
+                        type="text"
+                        name="Designation"
+                        placeholder="Designation"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Country Code</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="ShortName" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Phone</label>
-                        <Field
-                          type="text"
-                          name="Phone"
-                          placeholder="Phone"
-                          className="form-control"
-                        />
+                      <Field
+                        type="text"
+                        name="CountryCode"
+                        placeholder="+91"
+                        className="form-input-6"
+                        value="+91"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label  className="m-0 font-size-12">Phone</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="ShortName" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Email</label>
-                        <Field
-                          type="email"
-                          name="Email"
-                          placeholder="Email"
-                          className="form-control"
-                        />
+                      <Field
+                        type="text"
+                        name="Phone"
+                        placeholder="Phone"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Email</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="ShortName" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                      <Field
+                        type="email"
+                        name="Email"
+                        placeholder="Email"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

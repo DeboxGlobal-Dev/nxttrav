@@ -8,8 +8,8 @@ const SupplierComm = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="col-12 p-0 mt-3">
-          <ul class="nav nav-tabs custom-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
+          <ul className="nav nav-tabs custom-tabs" id="myTab" role="tablist">
+            <li className="nav-item" role="presentation">
               <button
                 class="nav-link custom-tab-link active"
                 id="supp-comm-tab"
@@ -23,9 +23,9 @@ const SupplierComm = () => {
                 Supplier Communication
               </button>
             </li>
-            <li class="nav-item" role="presentation">
+            <li className="nav-item" role="presentation">
               <button
-                class="nav-link custom-tab-link"
+                className="nav-link custom-tab-link"
                 id="supp-conf-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#supp-conf"
@@ -37,9 +37,9 @@ const SupplierComm = () => {
                 Supplier Confirmation
               </button>
             </li>
-            <li class="nav-item" role="presentation">
+            <li className="nav-item" role="presentation">
               <button
-                class="nav-link custom-tab-link" 
+                className="nav-link custom-tab-link"
                 id="supp-vouch-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#supp-vouch"
@@ -51,9 +51,9 @@ const SupplierComm = () => {
                 Supplier Voucher
               </button>
             </li>
-            <li class="nav-item" role="presentation">
+            <li className="nav-item" role="presentation">
               <button
-                class="nav-link custom-tab-link"
+                className="nav-link custom-tab-link"
                 id="hotel-ava-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#hotel-ava"
@@ -65,9 +65,9 @@ const SupplierComm = () => {
                 Hotel Availability
               </button>
             </li>
-            <li class="nav-item" role="presentation">
+            <li className="nav-item" role="presentation">
               <button
-                class="nav-link custom-tab-link"
+                className="nav-link custom-tab-link"
                 id="hotel-room-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#hotel-room"
@@ -80,9 +80,9 @@ const SupplierComm = () => {
               </button>
             </li>
           </ul>
-          <div class="tab-content" id="myTabContent">
+          <div className="tab-content" id="myTabContent">
             <div
-              class="tab-pane fade show active"
+              className="tab-pane fade show active"
               id="supp-comm"
               role="tabpanel"
               aria-labelledby="supp-comm-tab"
@@ -90,7 +90,7 @@ const SupplierComm = () => {
               <h1>Supplier Communication</h1>
             </div>
             <div
-              class="tab-pane fade"
+              className="tab-pane fade"
               id="supp-conf"
               role="tabpanel"
               aria-labelledby="supp-conf-tab"
@@ -98,7 +98,7 @@ const SupplierComm = () => {
               <SupplierConfirmation />
             </div>
             <div
-              class="tab-pane fade"
+              className="tab-pane fade"
               id="supp-vouch"
               role="tabpanel"
               aria-labelledby="supp-vouch-tab"
@@ -106,7 +106,7 @@ const SupplierComm = () => {
               <h1>Supplier Voucher</h1>
             </div>
             <div
-              class="tab-pane fade"
+              className="tab-pane fade"
               id="hotel-ava"
               role="tabpanel"
               aria-labelledby="hotel-ava-tab"
@@ -115,7 +115,7 @@ const SupplierComm = () => {
               <HotelAvailability />
             </div>
             <div
-              class="tab-pane fade"
+              className="tab-pane fade"
               id="hotel-room"
               role="tabpanel"
               aria-labelledby="hotel-room-tab"

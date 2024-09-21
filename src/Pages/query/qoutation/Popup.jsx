@@ -1,19 +1,17 @@
 import React from "react";
 import QoutationModal from "./QoutationModal";
-import {
-  ItenararyModalForm,
-  HotelModalForm,
-  GuideModalForm,
-  ActivityModalForm,
-  MonumentModalForm,
-  TransferModalForm,
-  FlightModalForm,
-  EnrouteModalForm,
-  RestaurantModalForm,
-  TransportationModalForm,
-  TrainModalForm,
-  AddOnsModalForm
-} from "./QouttionAllForm";
+import HotelModal from "./quotationForm/HotelModal";
+import ItineraryModal from "./quotationForm/ItinerarayModal";
+import TransferModal from "./quotationForm/TransferModal";
+import MonumentModal from "./quotationForm/MonumnetModal";
+import EnrouteModal from "./quotationForm/EnrouteModal";
+import RestaurantModal from "./quotationForm/RestaurantModal";
+import ActivityModal from "./quotationForm/ActivityModal";
+import GuideModal from "./quotationForm/GuideModal";
+import TransportationModal from "./quotationForm/TransportationModal";
+import TrainModal from "./quotationForm/TrainModal";
+import AddonsModal from "./quotationForm/AddonsModal";
+import FlightModal from "./quotationForm/FlightModal";
 
 const Popup = () => {
   return (
@@ -191,75 +189,84 @@ const Popup = () => {
           {/* all modals */}
 
           <QoutationModal TabclassName={"bd-itenarary-modal-lg"} Title="Delhi">
-            <ItenararyModalForm />
+            <ItineraryModal />
           </QoutationModal>
 
-          <QoutationModal TabclassName={"bd-flight-modal-lg"} Title="Flight Title">
-            <FlightModalForm/>
+          <QoutationModal
+            TabclassName={"bd-flight-modal-lg"}
+            Title="Flight Title"
+          >
+            <FlightModal />
           </QoutationModal>
 
           <QoutationModal
             TabclassName={"bd-hotel-modal-lg"}
             Title=" Guest Hotel | Thu 22 Aug 2024  |  Pax Type: FIT  "
           >
-            <HotelModalForm />
+            <HotelModal />
           </QoutationModal>
 
           <QoutationModal
             TabclassName={"bd-transfer-modal-lg"}
             Title="Transfer Title"
           >
-            <TransferModalForm/>
+            <TransferModal />
           </QoutationModal>
 
           <QoutationModal
             TabclassName={"bd-monument-modal-lg"}
             Title="Monument Modal"
           >
-            <MonumentModalForm/>
+            <MonumentModal />
           </QoutationModal>
 
           <QoutationModal
             TabclassName={"bd-enroute-modal-lg"}
             Title="Enroute Modal"
           >
-            <EnrouteModalForm/>
+            <EnrouteModal />
           </QoutationModal>
 
           <QoutationModal
             TabclassName={"bd-restaurant-modal-lg"}
             Title="Restaurant Modal"
           >
-            <RestaurantModalForm/>
+            <RestaurantModal />
           </QoutationModal>
 
           <QoutationModal
             TabclassName={"bd-activity-modal-lg"}
             Title="Activity | Experiences | Thu 22 Aug 2024 "
           >
-            <ActivityModalForm />
+            <ActivityModal />
           </QoutationModal>
 
           <QoutationModal
             TabclassName={"bd-guide-modal-lg"}
             Title="Guide | Fri 23 Aug 2024 "
           >
-            <GuideModalForm />
+            <GuideModal />
           </QoutationModal>
 
           <QoutationModal
             TabclassName={"bd-transportation-modal-lg"}
             Title="Transportation"
           >
-            <TransportationModalForm/>
+            <TransportationModal />
           </QoutationModal>
 
-          <QoutationModal TabclassName={"bd-train-modal-lg"} Title="Train Modal">
-            <TrainModalForm/>
+          <QoutationModal
+            TabclassName={"bd-train-modal-lg"}
+            Title="Train Modal"
+          >
+            <TrainModal />
           </QoutationModal>
 
-          <QoutationModal TabclassName={"bd-addons-modal-lg"} Title="Add Ons Title">
-            <AddOnsModalForm />
+          <QoutationModal
+            TabclassName={"bd-addons-modal-lg"}
+            Title="Add Ons Title"
+          >
+            <AddonsModal />
           </QoutationModal>
         </div>
       </div>

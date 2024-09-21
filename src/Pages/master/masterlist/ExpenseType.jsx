@@ -156,13 +156,12 @@ const ExpenseType = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
                     <div className="row row-gap-3">
                       <div className="col-sm-4">
-                        <label>Expense Head</label>
+                        <label className="m-0 font-size-12">Expense Head</label>
                         <Field
                           name="ExpenseHead"
-                          className="form-control"
+                          className="form-input-6"
                           component={"select"}
                         >
                           <option value={1}>Select Head</option>
@@ -174,19 +173,19 @@ const ExpenseType = () => {
                         </Field>
                       </div>
                       <div className="col-sm-4">
-                        <label>Expense Type</label>
+                        <label className="m-0 font-size-12">Expense Type</label>
                         <Field
                           type="text"
                           name="ExpenseType"
                           placeholder="Expense Type"
-                          className="form-control"
+                          className="form-input-6"
                         />
                       </div>
                       <div className="col-sm-4">
-                        <label>Status</label>
+                        <label className="m-0 font-size-12">Status</label>
                         <Field
                           name="Status"
-                          className="form-control"
+                          className="form-input-6"
                           component={"select"}
                         >
                           <option value={1}>Active</option>
@@ -194,7 +193,7 @@ const ExpenseType = () => {
                         </Field>
                       </div>
                     </div>
-                  </div>
+                  
                 </Model>
               </div>
             </div>

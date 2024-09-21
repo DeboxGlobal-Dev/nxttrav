@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../../Component/Layout/Layout";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import CustomizedSteppers from "./CustomizedSteppers";
-import Stepper from "./Stepper";
+import Stepper from "../../helper/Stepper";
 
 const QueryView = () => {
   const quotationBasePath = "/querylist/queryview/quotation" ;
@@ -68,7 +68,7 @@ const QueryView = () => {
               </div>
             </div>
           </div>
-          <div className="d-flex m-0">
+          <div className="col-12 px-4">
               <Stepper />
           </div>
           <div className="col-xl-12 px-4 mt-2" style={{ padding: 0 }}>

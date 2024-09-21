@@ -6,10 +6,10 @@ import FinalPrice from "./FinalPrice";
 const SupplierConfirmation = () => {
   return (
     <div>
-      <ul class="nav nav-tabs sup-com-custom-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
+      <ul className="nav nav-tabs sup-com-custom-tabs" id="myTab" role="tablist">
+        <li className="nav-item" role="presentation">
           <button
-            class="nav-link sup-com-custom-tab-link active"
+            className="nav-link sup-com-custom-tab-link active"
             id="supplier-selection"
             data-bs-toggle="tab"
             data-bs-target="#supplier-selection-control"
@@ -21,9 +21,9 @@ const SupplierConfirmation = () => {
             Supplier Selection
           </button>
         </li>
-        <li class="nav-item" role="presentation">
+        <li className="nav-item" role="presentation">
           <button
-            class="nav-link sup-com-custom-tab-link"
+            className="nav-link sup-com-custom-tab-link"
             id="reservation-request"
             data-bs-toggle="tab"
             data-bs-target="#reservation-request-control"
@@ -35,9 +35,9 @@ const SupplierConfirmation = () => {
             Reservation Request
           </button>
         </li>
-        <li class="nav-item" role="presentation">
+        <li className="nav-item" role="presentation">
           <button
-            class="nav-link sup-com-custom-tab-link"
+            className="nav-link sup-com-custom-tab-link"
             id="final-price"
             data-bs-toggle="tab"
             data-bs-target="#final-price-control"
@@ -50,9 +50,9 @@ const SupplierConfirmation = () => {
           </button>
         </li>
       </ul>
-      <div class="tab-content" id="myTabContent">
+      <div className="tab-content" id="myTabContent">
         <div
-          class="tab-pane fade show active"
+          className="tab-pane fade show active"
           id="supplier-selection-control"
           role="tabpanel"
           aria-labelledby="supplier-selection"
@@ -60,7 +60,7 @@ const SupplierConfirmation = () => {
           <SupplierSelection />
         </div>
         <div
-          class="tab-pane fade show"
+          className="tab-pane fade show"
           id="reservation-request-control"
           role="tabpanel"
           aria-labelledby="reservation-request"
@@ -68,7 +68,7 @@ const SupplierConfirmation = () => {
           <ReservationRequest />
         </div>
         <div
-          class="tab-pane fade show"
+          className="tab-pane fade show"
           id="final-price-control"
           role="tabpanel"
           aria-labelledby="final-price"

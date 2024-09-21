@@ -23,7 +23,11 @@ const CompanyDocument = ({ partner_payload }) => {
   const handleSubmitData = async () => {
     try {
       await companyDocumentValidationSchema.validate(
-        { ...formData, DocumentImageData: imageData?.DocumentImage?.data, DocumentImageName: imageData?.DocumentImage?.name },
+        {
+          ...formData,
+          DocumentImageData: imageData?.DocumentImage?.data,
+          DocumentImageName: imageData?.DocumentImage?.name,
+        },
         {
           abortEarly: false,
         }
@@ -36,8 +40,6 @@ const CompanyDocument = ({ partner_payload }) => {
         DocumentImageName: imageData?.DocumentImage?.name,
         ...partner_payload,
       });
-
-      console.log(data);
 
       if (data.Status === 1) {
         toast.success(data.Message);
@@ -59,8 +61,7 @@ const CompanyDocument = ({ partner_payload }) => {
       }
     }
   };
- 
-  console.log('error', errors);
+
   async function getDocumentListData() {
     try {
       const { data } = await axiosOther.post(
@@ -295,7 +296,7 @@ const CompanyDocument = ({ partner_payload }) => {
               })
             ) : (
               <tr>
-                <td colSpan="7" className="fs-6">
+                <td colSpan="7" className="fs-6 text-center">
                   No Records Found
                 </td>
               </tr>
@@ -307,4 +308,4 @@ const CompanyDocument = ({ partner_payload }) => {
   );
 };
 
-export default memo(CompanyDocument);
+export default React.memo(CompanyDocument);

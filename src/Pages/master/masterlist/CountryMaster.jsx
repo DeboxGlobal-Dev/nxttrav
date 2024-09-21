@@ -7,11 +7,10 @@ import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
   countryInitialValue,
-  countryValidationSchema
+  countryValidationSchema,
 } from "./MasterValidations";
 
 const CountryMaster = () => {
-  
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -19,14 +18,13 @@ const CountryMaster = () => {
   const [loading, setLoading] = useState(true);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: ""
+    Status: "",
   });
-  
+
   const [updateData, setUpdateData] = useState(false);
   const [changeValue, setChangeValue] = useState("");
-  
+
   useEffect(() => {
-      
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("countrylist", postData);
@@ -44,12 +42,12 @@ const CountryMaster = () => {
     const result = getData.filter((item) => {
       return item?.Name?.toLowerCase()?.match(postData?.Search?.toLowerCase());
     });
-  
+
     setFilterData(result);
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    console.log('Row-Value---',rowValue);
+    console.log("Row-Value---", rowValue);
     setEditData({
       ...rowValue,
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
@@ -146,54 +144,60 @@ const CountryMaster = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-3">
-                        <label>Name</label>
-                        <Field
-                          type="text"
-                          name="Name"
-                          placeholder="Enter Name"
-                          className="form-control"
-                        />
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          Name <span className="text-danger">*</span>
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-3">
-                        <label>Short Name</label>
-                        <Field
-                          type="text"
-                          name="ShortName"
-                          placeholder="Enter Short Name"
-                          className="form-control"
-                        />
+                      <Field
+                        type="text"
+                        name="Name"
+                        placeholder="Enter Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          Short Name <span className="text-danger">*</span>
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="ShortName" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control px-2"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-2">
-                        <label>Set Default</label>
-                        <Field
-                          name="SetDefault"
-                          className="form-control px-1"
-                          component={"select"}
-                        >
-                          <option value={0}>No</option>
-                          <option value={1}>Yes</option>
-                        </Field>
-                      </div>
+                      <Field
+                        type="text"
+                        name="ShortName"
+                        placeholder="Enter Short Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Set Default</label>
+                      <Field
+                        name="SetDefault"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={0}>No</option>
+                        <option value={1}>Yes</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

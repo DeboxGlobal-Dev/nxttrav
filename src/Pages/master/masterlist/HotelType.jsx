@@ -47,10 +47,10 @@ const HotelType = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    console.log('Row Value', rowValue);
+    console.log("Row Value", rowValue);
     setEditData({
       ...rowValue,
-      Status: rowValue.Status==="Active"? 1:0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -126,58 +126,64 @@ const HotelType = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-2">
-                      <div className="col-sm-4">
-                        <label>Name</label>
-                        <Field
-                          type="text"
-                          placeholder="Name"
-                          className="form-control"
-                          name="Name"
-                        />
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Name</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Upload Keyword</label>
-                        <Field
-                          type="text"
-                          placeholder="Keyword"
-                          className="form-control"
-                          name="UploadKeyword"
-                        />
+                      <Field
+                        type="text"
+                        placeholder="Name"
+                        className="form-input-6"
+                        name="Name"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          Upload Keyword
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="UploadKeyword" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Proposal Priority</label>
-                        <Field
-                          type="text"
-                          placeholder="Priority"
-                          className="form-control"
-                          name="ProposalPriority"
-                        />
+                      <Field
+                        type="text"
+                        placeholder="Keyword"
+                        className="form-input-6"
+                        name="UploadKeyword"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Proposal Priority</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="ProposalPriority" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Status" />
-                        </span>
-                      </div>
+                      <Field
+                        type="text"
+                        placeholder="Priority"
+                        className="form-input-6"
+                        name="ProposalPriority"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Status" />
+                      </span>
                     </div>
                   </div>
                 </Model>

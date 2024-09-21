@@ -13,7 +13,6 @@ import "jquery";
 import "select2";
 
 const TourEscort = () => {
-  
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -30,8 +29,8 @@ const TourEscort = () => {
   const [destinationList, setDestinationList] = useState([]);
   const [languageList, setLanguageList] = useState([]);
   const [imageValue, setImageValue] = useState({
-    TourEscortImageName:'',
-    TourEscortImageData:''
+    TourEscortImageName: "",
+    TourEscortImageData: "",
   });
 
   const getDataToServer = async () => {
@@ -91,13 +90,12 @@ const TourEscort = () => {
 
   useEffect(() => {
     const postDataToServer = async () => {
-
       try {
         const { data } = await axiosOther.post(
           "tourescortmasterlist",
           postData
         );
-        console.log('TourEscortAPI-Data',data.DataList)
+        console.log("TourEscortAPI-Data", data.DataList);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -115,32 +113,29 @@ const TourEscort = () => {
     setFilterData(result);
   }, [postData]);
 
-  const handleEscortImage = (e) =>{
+  const handleEscortImage = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
-    reader.onload =()=>{
+    reader.onload = () => {
       const base64 = reader.result;
-      const base64String = base64.split(',')[1]
+      const base64String = base64.split(",")[1];
       setImageValue({
-        TourEscortImageData:base64String,
-        TourEscortImageName:file.name,
+        TourEscortImageData: base64String,
+        TourEscortImageName: file.name,
       });
     };
     reader.readAsDataURL(file);
-    console.log('image-boject-', URL.createObjectURL(e.target.files[0]));
+    console.log("image-boject-", URL.createObjectURL(e.target.files[0]));
   };
-  
 
   const handleEditClick = (rowValue) => {
-    console.log('RowValue', rowValue);
+    console.log("RowValue", rowValue);
 
     setImageValue({
-      TourEscortImageName:"",
-      TourEscortImageData:""
-    })
-    setEditData({...rowValue,
-      Status:rowValue.Status==="Active"?1:0
+      TourEscortImageName: "",
+      TourEscortImageData: "",
     });
+    setEditData({ ...rowValue, Status: rowValue.Status === "Active" ? 1 : 0 });
     setIsEditing(true);
   };
 
@@ -169,7 +164,13 @@ const TourEscort = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {<img src={row.TourEscortImageName} alt='image' style={{height:'30px', width:'30px'}}></img>}
+          {
+            <img
+              src={row.TourEscortImageName}
+              alt="image"
+              style={{ height: "30px", width: "30px" }}
+            ></img>
+          }
         </span>
       ),
       sortable: true,
@@ -259,268 +260,276 @@ const TourEscort = () => {
                   imageValue={imageValue}
                   setImageValue={setImageValue}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label>Service Type</label>
-                        <Field
-                          name="ServiceType"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="1">Tour Escort</option>
-                          <option value="2">Tour Manager</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Name</label>
-                        <Field
-                          type="text"
-                          name="Name"
-                          placeholder="Name"
-                          className="form-control"
-                        />
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Service Type</label>
+                      <Field
+                        name="ServiceType"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="1">Tour Escort</option>
+                        <option value="2">Tour Manager</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Name</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Mobile Number</label>
-                        <Field
-                          type="text"
-                          name="MobileNumber"
-                          placeholder="Number"
-                          className="form-control"
-                        />
+                      <Field
+                        type="text"
+                        name="Name"
+                        placeholder="Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          Mobile Number
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="MobileNumber" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Whatsapp Number</label>
-                        <Field
-                          type="text"
-                          name="WhatsAppNumber"
-                          placeholder="Number"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Alternate Number</label>
-                        <Field
-                          type="text"
-                          name="AlternateNumber"
-                          placeholder="Number"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Email</label>
-                        <Field
-                          type="email"
-                          name="Email"
-                          placeholder="Email"
-                          className="form-control"
-                        />
+                      <Field
+                        type="text"
+                        name="MobileNumber"
+                        placeholder="Number"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">
+                        Whatsapp Number
+                      </label>
+                      <Field
+                        type="text"
+                        name="WhatsAppNumber"
+                        placeholder="Number"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">
+                        Alternate Number
+                      </label>
+                      <Field
+                        type="text"
+                        name="AlternateNumber"
+                        placeholder="Number"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Email</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Email" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Tour Escort License</label>
-                        <Field
-                          type="text"
-                          name="TourEscortLicenseOne"
-                          placeholder="Licence"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>License Expiry</label>
-                        <Field
-                          type="date"
-                          name="LicenseExpiry"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Destination</label>
-                        <Field
-                          name="Destination"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="">Select Destination</option>
-                          {destinationList.map((value, index) => {
-                            return (
-                              <option value={value.id} key={index + 1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Language</label>
-                        <Field
-                          name="Language"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="">Select Language</option>
-                          {languageList.map((value, index) => {
-                            return (
-                              <option value={value.id} key={index + 1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label className="font-size-10">
-                          Tour Escort / Tour Manager Image
-                        </label>
-                        <input
-                          type="file"
-                          name="TourEscortImageData"
-                          className="form-control"
-                          onChange={handleEscortImage}
-                          accept="image/*"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Supplier</label>
-                        <Field
-                          name="Supplier"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="1">Yes</option>
-                          <option value="0">No</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Tour Escort License</label>
-                        <Field
-                          type="text"
-                          name="TourEscortLicenseTwo"
-                          placeholder="Licence"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Contact Person</label>
-                        <Field
-                          type="text"
-                          name="ContactPerson"
-                          placeholder="Person"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Designation</label>
-                        <Field
-                          type="text"
-                          name="Designation"
-                          placeholder="Designation"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Country</label>
-                        <Field
-                          name="Country"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="">Select</option>
-                          {countryList.map((value, index) => {
-                            return (
-                              <option value={value.id} key={index + 1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>State</label>
-                        <Field
-                          name="State"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="">Select</option>
-                          {stateFiltered.map((value, index) => {
-                            return (
-                              <option value={value.id} key={index + 1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>City</label>
-                        <Field
-                          name="City"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="">Select</option>
-                          {cityFiltered.map((value, index) => {
-                            return (
-                              <option value={value.id} key={index + 1}>
-                                {value.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Pin Code</label>
-                        <Field
-                          type="text"
-                          name="PinCode"
-                          placeholder="Pin Code"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Details</label>
-                        <Field
-                          as="textarea"
-                          name="Detail"
-                          placeholder="Details"
-                          className="form-control"
-                          style={{ height: "38px" }}
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Address</label>
-                        <Field
-                          as="textarea"
-                          name="Address"
-                          placeholder="Address"
-                          className="form-control"
-                          style={{ height: "38px" }}
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Address" />
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">InActive</option>
-                        </Field>
-                      </div>
+                      <Field
+                        type="email"
+                        name="Email"
+                        placeholder="Email"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Tour Escort License</label>
+                      <Field
+                        type="text"
+                        name="TourEscortLicenseOne"
+                        placeholder="Licence"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">License Expiry</label>
+                      <Field
+                        type="date"
+                        name="LicenseExpiry"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Destination</label>
+                      <Field
+                        name="Destination"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="">Select Destination</option>
+                        {destinationList.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Language</label>
+                      <Field
+                        name="Language"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="">Select Language</option>
+                        {languageList.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-10">
+                        Tour Escort / Tour Manager Image
+                      </label>
+                      <input
+                        type="file"
+                        name="TourEscortImageData"
+                        className="form-input-6 border-0"
+                        onChange={handleEscortImage}
+                        accept="image/*"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Supplier</label>
+                      <Field
+                        name="Supplier"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Tour Escort License</label>
+                      <Field
+                        type="text"
+                        name="TourEscortLicenseTwo"
+                        placeholder="Licence"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Contact Person</label>
+                      <Field
+                        type="text"
+                        name="ContactPerson"
+                        placeholder="Person"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Designation</label>
+                      <Field
+                        type="text"
+                        name="Designation"
+                        placeholder="Designation"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Country</label>
+                      <Field
+                        name="Country"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="">Select</option>
+                        {countryList.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">State</label>
+                      <Field
+                        name="State"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="">Select</option>
+                        {stateFiltered.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">City</label>
+                      <Field
+                        name="City"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="">Select</option>
+                        {cityFiltered.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Pin Code</label>
+                      <Field
+                        type="text"
+                        name="PinCode"
+                        placeholder="Pin Code"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Details</label>
+                      <Field
+                        as="textarea"
+                        name="Detail"
+                        placeholder="Details"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Address</label>
+                      <Field
+                        as="textarea"
+                        name="Address"
+                        placeholder="Address"
+                        className="form-input-6"
+                      />
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Address" />
+                      </span>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">InActive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

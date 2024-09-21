@@ -22,7 +22,6 @@ import { queryAddValidationSchema } from "./querValidationSchema";
 
 const Query = () => {
   const location = useLocation();
-  // console.log('query-location', location);
   const navigate = useNavigate();
   const fiftyYear = [];
   const [errors, setErrors] = useState([]);
@@ -276,7 +275,7 @@ const Query = () => {
         console.log(err);
       }
     };
-    gettingDataForDropdown();
+    // gettingDataForDropdown();
   }, []);
 
   useEffect(() => {
@@ -302,7 +301,6 @@ const Query = () => {
     gettingDataForDropdown2();
   }, [queryFields.BusinessType]);
 
-  // console.log('query-errors', errors);
   // Handling Submit Query Data
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -361,7 +359,6 @@ const Query = () => {
         const getList = localStorage?.getItem("queryData");
         const finalList = JSON.parse(getList);
 
-        // console.log("lcoal-list-query", getList);
         if (getList === null) {
           localStorage?.setItem(
             "queryData",
@@ -396,7 +393,6 @@ const Query = () => {
         }
 
         const afterAddedList = localStorage.getItem("queryData");
-        // console.log("afterAddedList", JSON.parse(afterAddedList));
 
         // toast.success(response.data.Message);
         toast.success("Data Added Successfully.");
@@ -449,7 +445,6 @@ const Query = () => {
         const allData = localStorage.getItem('queryData');
         const finalData = JSON.parse(allData);
         const anotherAllData = finalData.filter((data)=> data?.id != location?.state?.id);
-        // console.log('finalData', finalData); 
 
         localStorage?.setItem(
           "queryData",
@@ -638,7 +633,6 @@ const Query = () => {
     const { Adult, Child, Infant } = value?.PaxInfo[0];
     const roomValue = value.RoomInfo[0];
     const dateValue = value.TravelDate[0];
-    // console.log("Suggested-pacakge-date", dateValue);
 
     setQueryFields({ ...queryValue });
     setRoomInfo({ ...roomValue });

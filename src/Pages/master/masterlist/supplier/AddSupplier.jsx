@@ -7,6 +7,7 @@ import { supplierValidationSchema } from "../MasterValidations";
 import useImageUploader from "../../../../helper/custom_hook/useImageUploader";
 import { axiosOther } from "../../../../http/axios/axios_new";
 import useDestinationSelect from "../../../../helper/custom_hook/useDestinationSelect";
+import { supplierAddInitialValue } from "../mastersInitialValues";
 
 const checkBoxArray = [
   "hotel",
@@ -25,22 +26,12 @@ const checkBoxArray = [
 const AddSupplier = () => {
   const { imageData, handleImage } = useImageUploader();
   const { SelectInput, selectedDestination } = useDestinationSelect();
+  const navigate = useNavigate();
 
   const [selectedServices, setSelectedServices] = useState([]);
   const [errors, setErrors] = useState([]);
 
-  const [formData, setFormData] = useState({
-    Name: "",
-    AliasName: "",
-    Status: "1",
-    PanInformation: "",
-    SupplierServices: [],
-    Destinations: [],
-    PaymentTerm: "cash",
-    ConfirmationType: "manual",
-    LocalAgent: "No",
-    Agreement: "No",
-  });
+  const [formData, setFormData] = useState(supplierAddInitialValue);
 
   // here handling checkbox value from form
   const handleCheckboxChange = (e) => {
@@ -51,16 +42,16 @@ const AddSupplier = () => {
       setSelectedServices([...selectedServices, value]);
       setFormData({
         ...formData,
-        SupplierServices: [...selectedServices, value],
+        SupplierService: [...selectedServices, value],
       });
     } else if (value == "allSelected" && checked) {
       // set all check box
       setSelectedServices(checkBoxArray);
-      setFormData({ ...formData, SupplierServices: [checkBoxArray] });
+      setFormData({ ...formData, SupplierService: [...checkBoxArray] });
     } else if (value == "allSelected" && !checked) {
       //remove al checkbox
       setSelectedServices([]);
-      setFormData({ ...formData, SupplierServices: [] });
+      setFormData({ ...formData, SupplierService: [] });
     } else {
       // Remove the unchecked value from the array
       setSelectedServices(
@@ -68,7 +59,7 @@ const AddSupplier = () => {
       );
       setFormData({
         ...formData,
-        SupplierServices: [
+        SupplierService: [
           selectedServices.filter((service) => service !== value),
         ],
       });
@@ -81,34 +72,26 @@ const AddSupplier = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // here handling multiple select box
-  // const handleMultiSelectChange = (selected) => {
-  //   setSelectedOption(selected);
-  //   setFormData({ ...formData, Destinations: selected });
-  // };
-
   // it's a callback funtion for checking every condition for all select checkbox
   const handleEveryCheck = (element) => selectedServices.includes(element);
 
   // here handling submitting data
   const handleSubmitData = async () => {
     try {
-      // await supplierValidationSchema.validate(formData, {
-      //   abortEarly: false,
-      // });
-
-      console.log("submit-supplier", {
-        ...formData,
-        Destinations: selectedDestination,
+      await supplierValidationSchema.validate(formData, {
+        abortEarly: false,
       });
 
-      // const { data } = await axiosOther.post("addupdatesupplier", {
-      //   ...formData,
-      //   Destinations: selectedDestination,
-      // });
-      // console.log(data);
-
+      const { data } = await axiosOther.post("addupdatesupplier", {
+        ...formData,
+        Destination: selectedDestination,
+      });
       setErrors({});
+      
+      if(data?.Status === 1){
+        toast.success(data?.Message);
+      }
+
     } catch (err) {
       if (err.inner) {
         const errorMessages = err.inner.reduce((acc, curr) => {
@@ -116,13 +99,9 @@ const AddSupplier = () => {
           return acc;
         }, {});
         setErrors(errorMessages);
-
-        // console.log("errorMessages", errorMessages);
       }
     }
   };
-
-  
 
   return (
     <Layout>
@@ -185,9 +164,9 @@ const AddSupplier = () => {
                         Supplier Services
                         <span className="text-danger fs-6">*</span>
                       </label>
-                      {errors?.SupplierServices && (
+                      {errors?.SupplierService && (
                         <span className="font-size-12 text-danger m-0">
-                          {errors?.SupplierServices}
+                          {errors?.SupplierService}
                         </span>
                       )}
                     </div>
@@ -196,7 +175,7 @@ const AddSupplier = () => {
                         <input
                           type="checkbox"
                           id="allselect"
-                          name="SupplierServices"
+                          name="SupplierService"
                           value={"allSelected"}
                           onChange={handleCheckboxChange}
                           checked={checkBoxArray.every(handleEveryCheck)}
@@ -242,8 +221,8 @@ const AddSupplier = () => {
                       value={formData.Status}
                       onChange={handleChangeFormData}
                     >
-                      <option value="1">Active</option>
-                      <option value="2">InActive</option>
+                      <option value="Yes">Active</option>
+                      <option value="No">InActive</option>
                     </select>
                   </div>
                   <div className="col-8">
@@ -261,7 +240,7 @@ const AddSupplier = () => {
                   </div>
                   <div className="col-12">
                     <label htmlFor="destionation" className="m-0">
-                      Destinations
+                      Destination
                     </label>
                     <SelectInput />
                   </div>
@@ -275,7 +254,7 @@ const AddSupplier = () => {
                           type="radio"
                           id="cash"
                           name="PaymentTerm"
-                          value="cash"
+                          value="Cash"
                           onChange={handleChangeFormData}
                           defaultChecked
                         />
@@ -288,7 +267,7 @@ const AddSupplier = () => {
                           type="radio"
                           id="credit"
                           name="PaymentTerm"
-                          value="credit"
+                          value="Credit"
                           onChange={handleChangeFormData}
                         />
                         <label htmlFor="credit" className="font-size-12 m-0">
@@ -307,7 +286,7 @@ const AddSupplier = () => {
                           type="radio"
                           id="auto"
                           name="ConfirmationType"
-                          value="auto"
+                          value="Auto"
                           onChange={handleChangeFormData}
                         />
                         <label
@@ -323,7 +302,7 @@ const AddSupplier = () => {
                           type="radio"
                           id="manual"
                           name="ConfirmationType"
-                          value="manual"
+                          value="Manual"
                           onChange={handleChangeFormData}
                           defaultChecked
                         />
@@ -463,9 +442,11 @@ const AddSupplier = () => {
                       Default Destionation
                     </label>
                     <select
-                      name="Destination"
+                      name="DefaultDestination"
                       id="destination"
                       className="form-input-1"
+                      onChange={handleChangeFormData}
+                      value={formData?.DefaultDestination}
                     >
                       <option value="">Select</option>
                       <option value="1">New Delhi</option>

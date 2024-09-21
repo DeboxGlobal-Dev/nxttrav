@@ -47,9 +47,9 @@ const RoomMaster = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      Status: rowValue.Status==="Active"? 1:0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
-    setIsEditing(true)
+    setIsEditing(true);
   };
 
   const columns = [
@@ -108,31 +108,31 @@ const RoomMaster = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-5">
-                        <label>Room Name</label>
-                        <Field
-                          type="text"
-                          placeholder="Room Name"
-                          className="form-control"
-                          name="Name"
-                        />
+                  <div className="row">
+                    <div className="col-sm-5">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Room Name</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-5">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                      </div>
+                      <Field
+                        type="text"
+                        placeholder="Room Name"
+                        className="form-input-6"
+                        name="Name"
+                      />
+                    </div>
+                    <div className="col-sm-5">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

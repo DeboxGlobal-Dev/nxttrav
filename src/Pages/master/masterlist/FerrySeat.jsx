@@ -7,7 +7,7 @@ import { axiosOther } from "../../../http/axios/axios_new";
 import { Field } from "formik";
 import {
   ferrySeatMasterInitialValue,
-  ferrySeatValidationSchema
+  ferrySeatValidationSchema,
 } from "./MasterValidations";
 
 const FerrySeat = () => {
@@ -21,8 +21,7 @@ const FerrySeat = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
-  const [loading , setLoading ] = useState(true); 
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -49,7 +48,7 @@ const FerrySeat = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -132,28 +131,26 @@ const FerrySeat = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-6">
-                        <label>Ferry Seat</label>
-                        <Field
-                          type="text"
-                          name="FerrySeat"
-                          placeholder="Ferry Seat"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-6">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                  <div className="row row-gap-3">
+                    <div className="col-sm-6">
+                      <label className="m-0 font-size-12">Ferry Seat</label>
+                      <Field
+                        type="text"
+                        name="FerrySeat"
+                        placeholder="Ferry Seat"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-6">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

@@ -223,158 +223,158 @@ const AdditionalRequirement = () => {
                   imageValue={imageValue}
                   setImageValue={setImageValue}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label>Additional Name</label>
-                        <Field
-                          type="text"
-                          name="Name"
-                          placeholder="Name"
-                          className="form-control"
-                        />
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Additional Name</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Destination</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="DestinationId"
-                        >
-                          <option value="">Select Destination</option>
-                          {destinationList?.map((value, index) => {
-                            return (
-                              <option value={value?.id} key={index + 1}>
-                                {value?.Name}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>TAX SLAB(%)</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="TaxSlab"
-                        >
-                          <option value="">Select Tax Slab</option>
-                          {taxSlabList?.map((value, index) => {
-                            return (
-                              <option value={value?.id} key={index + 1}>
-                                {value?.TaxSlabName}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Markup Apply</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="MarkupApply"
-                        >
-                          <option value={1}>Yes</option>
-                          <option value={0}>No</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Currency</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="CurrencyId"
-                        >
-                          <option value="">Select Currency</option>
-                          {currencyList.map((value, index) => {
-                            return (
-                              <option value={value?.id} key={index + 1}>
-                                {value?.Currencyname}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Cost Type</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="CostType"
-                        >
-                          <option value={1}>Per Person</option>
-                          <option value={2}>Group Cost</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Adult Cost</label>
-                        <Field
-                          type="text"
-                          name="AdultCost"
-                          placeholder="Adult Cost"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Child Cost</label>
-                        <Field
-                          type="text"
-                          name="ChildCost"
-                          placeholder="Child Cost"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Infant Cost</label>
-                        <Field
-                          type="text"
-                          name="InfantCost"
-                          placeholder="Infant Cost"
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Show In Proposal</label>
-                        <Field
-                          name="ShowInProposal"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Yes</option>
-                          <option value={0}>No</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Add Image</label>
-                        <input
-                          name="ImageData"
-                          className="form-control"
-                          type="file"
-                          onChange={handleImageChange}
-                        />
-                      </div>
-                      <div className="col-sm-12">
-                        <label>Details</label>
-                        <Editor
-                          handleChangeEditor={handleDetailEditor}
-                          heightValue="60%"
-                        />
-                      </div>
+                      <Field
+                        type="text"
+                        name="Name"
+                        placeholder="Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Destination</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="DestinationId"
+                      >
+                        <option value="">Select Destination</option>
+                        {destinationList?.map((value, index) => {
+                          return (
+                            <option value={value?.id} key={index + 1}>
+                              {value?.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">TAX SLAB(%)</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="TaxSlab"
+                      >
+                        <option value="">Select Tax Slab</option>
+                        {taxSlabList?.map((value, index) => {
+                          return (
+                            <option value={value?.id} key={index + 1}>
+                              {value?.TaxSlabName}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size">Markup Apply</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="MarkupApply"
+                      >
+                        <option value={1}>Yes</option>
+                        <option value={0}>No</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-0">Currency</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="CurrencyId"
+                      >
+                        <option value="">Select Currency</option>
+                        {currencyList.map((value, index) => {
+                          return (
+                            <option value={value?.id} key={index + 1}>
+                              {value?.Currencyname}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Cost Type</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="CostType"
+                      >
+                        <option value={1}>Per Person</option>
+                        <option value={2}>Group Cost</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Adult Cost</label>
+                      <Field
+                        type="text"
+                        name="AdultCost"
+                        placeholder="Adult Cost"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Child Cost</label>
+                      <Field
+                        type="text"
+                        name="ChildCost"
+                        placeholder="Child Cost"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Infant Cost</label>
+                      <Field
+                        type="text"
+                        name="InfantCost"
+                        placeholder="Infant Cost"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="font-size-12 m-0">Show In Proposal</label>
+                      <Field
+                        name="ShowInProposal"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Yes</option>
+                        <option value={0}>No</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Add Image</label>
+                      <input
+                        name="ImageData"
+                        className="form-input-6 border-0"
+                        type="file"
+                        onChange={handleImageChange}
+                      />
+                    </div>
+                    <div className="col-sm-12">
+                      <label className="m-0 font-size-12">Details</label>
+                      <Editor
+                        handleChangeEditor={handleDetailEditor}
+                        heightValue="60%"
+                      />
                     </div>
                   </div>
                 </Model>

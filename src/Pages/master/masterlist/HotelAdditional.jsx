@@ -169,48 +169,48 @@ const HotelAdditional = () => {
                   imageValue={imageValue}
                   setImageValue={setImageValue}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label>Additonal Name</label>
-                        <Field
-                          type="text"
-                          placeholder="Additional Name"
-                          className="form-control"
-                          name="Name"
-                        />
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Additonal Name</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Image</label>
-                        <input
-                          type="file"
-                          id="file"
-                          name="ImageData"
-                          className="form-control"
-                          onChange={handleImageChange}
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-12">
-                        <label>Details</label>
-                        <Editor
-                          handleChangeEditor={handleDetailEditor}
-                          heightValue="60%"
-                        />
-                      </div>
+                      <Field
+                        type="text"
+                        placeholder="Additional Name"
+                        className="form-input-6"
+                        name="Name"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Image</label>
+                      <input
+                        type="file"
+                        id="file"
+                        name="ImageData"
+                        className="form-input-6 border-0"
+                        onChange={handleImageChange}
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-12">
+                      <label className="m-0 font-size-12">Details</label>
+                      <Editor
+                        handleChangeEditor={handleDetailEditor}
+                        heightValue="60%"
+                      />
                     </div>
                   </div>
                 </Model>

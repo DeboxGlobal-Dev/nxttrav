@@ -5,6 +5,7 @@ import "./global_css/global.css";
 const Home = lazy(()=> import("./Pages/home/Home.jsx"));
 const Mail = lazy(()=> import("./Pages/mail/Mail.jsx"));
 const Query = lazy(()=> import("./Pages/query/Query.jsx"));
+const AddQuery = lazy(()=> import("./Pages/query/add_query/AddQuery.jsx"))
 const Master = lazy(()=> import("./Pages/master/Master.jsx"));
 const Login = lazy(()=> import("./Pages/auth/Login.jsx"));
 const Logout = lazy(()=> import("./Pages/auth/Logout.jsx"));
@@ -83,7 +84,7 @@ const AddCompany = lazy(()=> import("./Component/settings/AddCompany.jsx"));
 const Setting = lazy(()=> import("./Component/settings/Setting.jsx"));
 const SettingEmail = lazy(()=> import("./Component/settings/SettingEmail.jsx"));
 const SettingProfile = lazy(()=> import("./Component/settings/SettingProfile.jsx"));
-const QueryDetails = lazy(()=> import("./Pages/query/QueryDetails.jsx"));
+const Costsheet = lazy(()=> import("./Pages/query/costsheet/Costsheet.jsx"));
 const Quotation = lazy(()=> import("./Pages/query/Quotation.jsx"));
 const ClientComm = lazy(()=> import("./Pages/query/ClientComm.jsx"));
 const SupplierComm = lazy(()=> import("./Pages/query/SupplierComm.jsx"));
@@ -97,7 +98,7 @@ const ItenaryRequirement = lazy(()=> import("./Pages/master/masterlist/ItenaryRe
 const Proposal = lazy(()=> import("./Pages/query/Proposal.jsx"));
 const Vouchers = lazy(()=> import("./Pages/query/Vouchers.jsx"));
 const Invoices = lazy(()=> import("./Pages/query/Invoices.jsx"));
-const Itineraries = lazy(()=> import("./Pages/query/Itineraries.jsx"));
+const Itineraries = lazy(()=> import("./Pages/query/itineraries/Itineraries.jsx"));
 const Polocies = lazy(()=> import("./Pages/query/Policies.jsx"));
 const Commission = lazy(()=> import("./Pages/query/Commission.jsx"));
 const Summary = lazy(()=> import("./Pages/query/Summary.jsx"));
@@ -120,6 +121,7 @@ const Supplier = lazy(()=> import("./Pages/master/masterlist/supplier/Supplier.j
 const AddSupplier = lazy(()=> import("./Pages/master/masterlist/supplier/AddSupplier.jsx"));
 const ViewSupplier = lazy(()=> import("./Pages/master/masterlist/supplier/ViewSupplier.jsx"));
 const SetPreferrence = lazy(()=> import("./Pages/query/SetPreferrence.jsx"));
+const CostPreview = lazy(()=> import("./Pages/query/CostPreview.jsx"));
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -140,14 +142,14 @@ const App = () => {
           <Route path="/preferrence" element={<Protected><SetPreferrence/></Protected>}></Route>
           <Route path="/querylist/queryview" element={<Protected><QueryView /></Protected>}>
           <Route path="/querylist/queryview/preview" element={<Protected><Preview/></Protected>}></Route>
-            <Route index element={<Protected><Query/></Protected>}></Route>
+            <Route index element={<Protected><AddQuery/></Protected>}></Route>
             <Route path="quotation" element={<Protected><Quotation/></Protected>}>
               <Route index element={<Protected><Itineraries/></Protected>}></Route>
               <Route path="policies" element={<Protected><Polocies/></Protected>}></Route>
               <Route path="commission" element={<Protected><Commission/></Protected>}></Route>
               <Route path="summary" element={<Protected><Summary/></Protected>}></Route>
             </Route>
-            <Route path="costsheet" element={<Protected><QueryDetails/></Protected>}></Route>
+            <Route path="costsheet" element={<Protected><Costsheet/></Protected>}></Route>
             <Route path="payments" element={<Protected><Payments/></Protected>}>
               {/* <Route index element={<Protected><SupplierPayment/></Protected>}></Route>
               <Route path="agentpayments" element={<Protected><AgentPayment/></Protected>}></Route>
@@ -261,6 +263,7 @@ const App = () => {
           <Route path="/login" element={<Login/>}/>
           <Route path="/logout"element={<Protected><Logout/></Protected>}/>
           <Route path="/excelconverter" element={<JsonToExcel/>}></Route>
+          <Route path="/costpreview" element={<CostPreview/>}></Route>
         </Routes>
         </Suspense>
       </Router>

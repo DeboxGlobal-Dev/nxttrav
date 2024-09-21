@@ -5,10 +5,9 @@ import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
-import {stateInitialValue, stateValidationSchema} from "./MasterValidations";
+import { stateInitialValue, stateValidationSchema } from "./MasterValidations";
 
 const StateMaster = () => {
-
   console.log("StateMaster Loaded");
 
   const [getData, setGetData] = useState([]);
@@ -24,18 +23,16 @@ const StateMaster = () => {
   const [updateData, setUpdateData] = useState(false);
 
   const getDataToServer = async () => {
-    try{
-      const countryData = await axiosOther.post(
-        "countrylist",{
-          Search: "",
-          Status: 1,
-        }
-      );
+    try {
+      const countryData = await axiosOther.post("countrylist", {
+        Search: "",
+        Status: 1,
+      });
       setCountry(countryData.data.DataList);
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
     getDataToServer();
@@ -63,9 +60,9 @@ const StateMaster = () => {
 
   const handleEditClick = (rowValue) => {
     console.log(rowValue);
-    setEditData({ 
+    setEditData({
       ...rowValue,
-      Status: (rowValue.Status==='Active') ? 1 : 0,
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -115,7 +112,7 @@ const StateMaster = () => {
           </span>
         );
       },
-    }
+    },
   ];
 
   return (
@@ -151,46 +148,46 @@ const StateMaster = () => {
                   updateData={updateData}
                   setUpdateData={setUpdateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-4">
-                        <label>Country</label>
-                        <Field
-                          name="CountryId"
-                          className="form-control"
-                          component={"select"}
-                        >
+                  <div className="row">
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Country <span className="text-danger">*</span></label>
+                      <Field
+                        name="CountryId"
+                        className="form-input-6"
+                        component={"select"}
+                      >
                         <option value="">Select</option>
                         {country.map((value) => {
                           return (
-                            <option value={value.id} key={value.id} >{value.Name}</option>
-                          )
+                            <option value={value.id} key={value.id}>
+                              {value.Name}
+                            </option>
+                          );
                         })}
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Name</label>
-                        <Field
-                          type="text"
-                          name="Name"
-                          placeholder="Enter Name"
-                          className="form-control"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Name <span className="text-danger">*</span></label>
+                      <Field
+                        type="text"
+                        name="Name"
+                        placeholder="Enter Name"
+                        className="form-input-6"
+                      />
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Name" />
+                      </span>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>
@@ -251,4 +248,3 @@ const StateMaster = () => {
 };
 
 export default StateMaster;
-

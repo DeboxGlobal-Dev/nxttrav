@@ -41,20 +41,20 @@ const FerryPrice = () => {
 
     setFilterData(result);
   }, [postData]);
-  
+
   const handleEditClick = (rowValue) => {
     console.log(rowValue);
     setEditData({
       ...rowValue,
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
 
-  const handleDetailEditor = (content)=>{
+  const handleDetailEditor = (content) => {
     console.log(content);
   };
-  
+
   const columns = [
     {
       name: "Name",
@@ -141,88 +141,76 @@ const FerryPrice = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label>Ferry Transer Name</label>
-                        <Field
-                          type="text"
-                          placeholder="Ferry Transer Name"
-                          className="form-control"
-                          name="Name"
-                        />
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          Ferry Transer Name
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label htmlFor="country">From Destination</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="countryId"
-                        >
-                          <option value={"1"}>Noida</option>
-                          <option value={"2"}>Gurgaon</option>
-                          <option value={"3"}>Delhi</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label htmlFor="country">To Destination</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="countryId"
-                        >
-                          <option value={"2"}>Gurgaon</option>
-                          <option value={"3"}>Delhi</option>
-                          <option value={"1"}>Noida</option>
-                        </Field>
-                      </div>
-                    
-                      <div className="col-sm-4">
-                        <label>Arrival Time</label>
-                        <Field
-                          type="time"
-                          className="form-control"
-                          name="Name"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Departure Time</label>
-                        <Field
-                          type="time"
-                          className="form-control"
-                          name="Name"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-12">
-                        <label>Detail</label>
-                        <Editor
-                          handleChangeEditor={handleDetailEditor}
-                           heightValue="60%"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
-                      </div>
+                      <Field
+                        type="text"
+                        placeholder="Ferry Transer Name"
+                        className="form-input-6"
+                        name="Name"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label htmlFor="country" className="m-0 font-size-12">From Destination</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="countryId"
+                      >
+                        <option value={"1"}>Noida</option>
+                        <option value={"2"}>Gurgaon</option>
+                        <option value={"3"}>Delhi</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label htmlFor="country" className="m-0 font-size-12">To Destination</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Destination"
+                      >
+                        <option value={"2"}>Gurgaon</option>
+                        <option value={"3"}>Delhi</option>
+                        <option value={"1"}>Noida</option>
+                      </Field>
+                    </div>
+
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Arrival Time</label>
+                      <Field type="time" className="form-input-6" name="ArrivalTime" />
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Name" />
+                      </span>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Departure Time</label>
+                      <Field type="time" className="form-input-6" name="DepartureTime" />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-12">
+                      <label className="m-0 font-size-12">Detail</label>
+                      <Editor
+                        handleChangeEditor={handleDetailEditor}
+                        heightValue="60%"
+                      />
                     </div>
                   </div>
                 </Model>

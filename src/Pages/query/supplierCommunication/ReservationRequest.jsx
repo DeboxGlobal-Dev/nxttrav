@@ -105,7 +105,7 @@ const ReservationRequest = () => {
           </div>
         </div>
         <div className="row mt-3 border-bottom pb-3">
-        <table class="table table-bordered">
+        <table className="table table-bordered">
           <thead>
             <tr className="">
               <th className="text-center py-1">Quotation</th>
@@ -202,7 +202,7 @@ const ReservationRequest = () => {
           </div>
         </div>
         <div className="row mt-3 border-bottom pb-3">
-        <table class="table table-bordered">
+        <table className="table table-bordered">
           <thead>
             <tr className="">
               <th className="text-center py-1">Quotation</th>

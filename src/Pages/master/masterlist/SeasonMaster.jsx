@@ -21,7 +21,7 @@ const SeasonMaster = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
-  let data =JSON.stringify({"Name":"SanaulAnsari"});
+  let data = JSON.stringify({ Name: "SanaulAnsari" });
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -38,7 +38,6 @@ const SeasonMaster = () => {
     postDataToServer();
   }, [updateData]);
 
-
   useEffect(() => {
     const result = getData.filter((item) => {
       return item?.Name?.toLowerCase()?.match(postData?.Search?.toLowerCase());
@@ -48,10 +47,10 @@ const SeasonMaster = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    console.log('row-value', rowValue);
+    console.log("row-value", rowValue);
     setEditData({
       ...rowValue,
-      Status: rowValue.Status==="Active" ? 1 : 0,
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -85,11 +84,7 @@ const SeasonMaster = () => {
     {
       name: "Status",
       selector: (row) => {
-        return (
-          <span>
-            {row.Status}
-          </span>
-        );
+        return <span>{row.Status}</span>;
       },
     },
   ];
@@ -127,60 +122,65 @@ const SeasonMaster = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-3">
-                        <label htmlFor="Season">Season Name</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          id="Season"
-                          name="SeasonName"
-                        >
-                          <option value={1}>Summer</option>
-                          <option value={2}>Winter</option>
-                          <option value={3}>All</option>
-                        </Field>
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="Season" className="m-0 font-size-12">
+                          Season Name
+                        </label>
                         <span className="font-size-10 text-danger">
                           {<ErrorMessage name="Name" />}
                         </span>
                       </div>
-                      <div className="col-sm-3">
-                        <label htmlFor="country">From Date</label>
-                        <Field
-                          type="date"
-                          placeholder="Name"
-                          className="form-control"
-                          name="FromDate"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="FromDate" />
-                        </span>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        id="Season"
+                        name="SeasonName"
+                      >
+                        <option value={1}>Summer</option>
+                        <option value={2}>Winter</option>
+                        <option value={3}>All</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                      <label htmlFor="country" className="m-0 font-size-12">From Date</label>
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="FromDate" />
+                      </span>
                       </div>
-                      <div className="col-sm-3">
-                        <label htmlFor="country">To Date</label>
-                        <Field
-                          type="date"
-                          placeholder="Name"
-                          className="form-control"
-                          name="ToDate"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ToDate" />
-                        </span>
-                      </div>
+                      <Field
+                        type="date"
+                        placeholder="Name"
+                        className="form-input-6"
+                        name="FromDate"
+                      />
+                      
+                    </div>
+                    <div className="col-sm-4">
+                      <label htmlFor="country" className="m-0 font-size-12">To Date</label>
+                      <Field
+                        type="date"
+                        placeholder="Name"
+                        className="form-input-6"
+                        name="ToDate"
+                      />
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="ToDate" />
+                      </span>
+                    </div>
 
-                      <div className="col-sm-3">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                      </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>
@@ -227,7 +227,7 @@ const SeasonMaster = () => {
             <DataTable
               columns={columns}
               data={
-                postData.Search !=="" || postData.Status !==""
+                postData.Search !== "" || postData.Status !== ""
                   ? filterData
                   : getData
               }

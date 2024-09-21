@@ -704,7 +704,7 @@ export const itineraryRequirementInitialValue = {
 // ------------------------VALIDATION SCHEMAS-------------------------- //
 
 export const countryValidationSchema = yup.object().shape({
-  Name: yup.string().min(3).max(20).required("Required"),
+  Name: yup.string().required("Required"),
   ShortName: yup.string().required("Required"),
 });
 export const stateValidationSchema = yup.object().shape({
@@ -958,7 +958,7 @@ export const agentMasterValidationSchema = yup.object().shape({
 export const supplierValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
   Status: yup.string().required("Required"),
-  SupplierServices: yup.array().min(1, "Required").required("Required"),
+  SupplierService: yup.array().min(1, "Required").required("Required"),
 });
 
 export const addAddressValidationSchema = yup.object().shape({

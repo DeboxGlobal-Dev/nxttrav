@@ -4,7 +4,12 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
-import { cityInitialValue, cityValidationSchema, roomTypeInitialValue, roomTypeValidationSchema } from "./MasterValidations";
+import {
+  cityInitialValue,
+  cityValidationSchema,
+  roomTypeInitialValue,
+  roomTypeValidationSchema,
+} from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const RoomType = () => {
@@ -19,12 +24,12 @@ const RoomType = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("roomtypelist", postData);
-        setLoading()
+        setLoading();
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -46,9 +51,9 @@ const RoomType = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      Status:rowValue.Status==="Active"?1:0,
-     });
-     setIsEditing(true);
+      Status: rowValue.Status === "Active" ? 1 : 0,
+    });
+    setIsEditing(true);
   };
 
   const columns = [
@@ -142,69 +147,76 @@ const RoomType = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-2">
-                      <div className="col-sm-4">
-                        <label>Room Name</label>
-                        <Field
-                          type="text"
-                          placeholder="Room Name"
-                          className="form-control"
-                          name="Name"
-                        />
+                  <div className="row row-gap-2">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="font-size-12 m-0">Room Name</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Maximum Occupancy</label>
-                        <Field
-                          as="textarea"
-                          placeholder="Max Occupancy"
-                          className="form-control"
-                          name="MaximumOccupancy"
-                          style={{height:'38px'}}
-                        />
+                      <Field
+                        type="text"
+                        placeholder="Room Name"
+                        className="form-input-6"
+                        name="Name"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          Maximum Occupancy
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="MaximumOccupancy" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Bedding</label>
-                        <Field
-                          type="text"
-                          placeholder="Bedding"
-                          className="form-control"
-                          name="Bedding"
-                        />
+                      <Field
+                        as="textarea"
+                        placeholder="Max Occupancy"
+                        className="form-input-6"
+                        name="MaximumOccupancy"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Bedding</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Bedding" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Size</label>
-                        <Field
-                          type="text"
-                          placeholder="Size"
-                          className="form-control"
-                          name="Size"
-                        />
+                      <Field
+                        type="text"
+                        placeholder="Bedding"
+                        className="form-input-6"
+                        name="Bedding"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Size</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Size" />
                         </span>
                       </div>
+                      <Field
+                        type="text"
+                        placeholder="Size"
+                        className="form-input-6"
+                        name="Size"
+                      />
+                    </div>
 
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                      </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

@@ -49,8 +49,8 @@ const HotelMeal = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      SetDefault: rowValue.SetDefault==="Yes"?1:0,
-      Status: rowValue.Status==="Active"?1:0
+      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -67,7 +67,7 @@ const HotelMeal = () => {
             onClick={() => handleEditClick(row)}
           ></i>
           {row.Name} &nbsp;
-          {row.SetDefault == 'Yes' ? (
+          {row.SetDefault == "Yes" ? (
             <span className="badge bg-success">Default</span>
           ) : (
             ""
@@ -133,44 +133,44 @@ const HotelMeal = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-4">
-                        <label>Meal Name</label>
-                        <Field
-                          type="text"
-                          placeholder="Name"
-                          className="form-control"
-                          name="Name"
-                        />
+                  <div className="row">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Meal Name</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Set Default</label>
-                        <Field
-                          name="SetDefault"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={0} selected>
-                            No
-                          </option>
-                          <option value={1}>Yes</option>
-                        </Field>
-                      </div>
+                      <Field
+                        type="text"
+                        placeholder="Name"
+                        className="form-input-6"
+                        name="Name"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Set Default</label>
+                      <Field
+                        name="SetDefault"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={0} selected>
+                          No
+                        </option>
+                        <option value={1}>Yes</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

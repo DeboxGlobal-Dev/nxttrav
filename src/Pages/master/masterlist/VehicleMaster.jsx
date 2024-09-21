@@ -5,60 +5,58 @@ import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
-import { vehicleMasterInitialValue, vehicleMasterValidationSchema } from "./MasterValidations";
-
+import {
+  vehicleMasterInitialValue,
+  vehicleMasterValidationSchema,
+} from "./MasterValidations";
 
 const VehicleMaster = () => {
-  
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: ""
+    Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
   const [vehicleTypData, setVehicleTypeData] = useState([]);
   const [vehicleBrandData, setVehicleBrandData] = useState([]);
   const [updateData, setUpdateData] = useState(false);
   const [imageValue, setImageValue] = useState({
-    ImageName:"",
-    ImageData:""
+    ImageName: "",
+    ImageData: "",
   });
-  const [showImage, setShowImage] = useState('');
+  const [showImage, setShowImage] = useState("");
 
   //getDataToServer For Dropdown
 
   const getDataToServer = async () => {
-
     try {
-      const {data} = await axiosOther.post("vehicletypemasterlist", {
+      const { data } = await axiosOther.post("vehicletypemasterlist", {
         Search: "",
-        Status: 1
+        Status: 1,
       });
       setVehicleTypeData(data.DataList);
       console.log(data.DataList);
     } catch (err) {
       console.log(err);
-    };
+    }
 
     try {
-      const {data} = await axiosOther.post("vehiclebrandmasterlist", {
+      const { data } = await axiosOther.post("vehiclebrandmasterlist", {
         Search: "",
-        Status: 1
+        Status: 1,
       });
       setVehicleBrandData(data.DataList);
       console.log(data.DataList);
     } catch (err) {
       console.log(err);
     }
-
   };
   useEffect(() => {
     getDataToServer();
   }, []);
-
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -82,33 +80,33 @@ const VehicleMaster = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    console.log('Row Value....', rowValue);
+    console.log("Row Value....", rowValue);
     setImageValue({
-      ImageName:"",
-      ImageData:""
+      ImageName: "",
+      ImageData: "",
     });
     setEditData({
       ...rowValue,
-      Status:rowValue.Status==="Active"?1:0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
     setShowImage(rowValue.ImageName);
   };
 
-  const handleImageChange = (e) =>{
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    reader.onload =()=>{
+    reader.onload = () => {
       const base64 = reader.result;
-      const base64String = base64.split(',')[1];
+      const base64String = base64.split(",")[1];
       setImageValue({
-        ImageName:file.name,
-        ImageData:base64String
+        ImageName: file.name,
+        ImageData: base64String,
       });
-    }
+    };
     reader.readAsDataURL(file);
-  }
+  };
 
   const columns = [
     {
@@ -121,7 +119,11 @@ const VehicleMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          <img src={row.ImageName} alt="image" style={{height:'30px', height:'30px'}}></img>
+          <img
+            src={row.ImageName}
+            alt="image"
+            style={{ height: "30px", height: "30px" }}
+          ></img>
         </span>
       ),
       sortable: true,
@@ -210,80 +212,94 @@ const VehicleMaster = () => {
                   imageValue={imageValue}
                   setImageValue={setImageValue}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-3">
-                      <div className="col-sm-4">
-                        <label>Name</label>
-                        <Field
-                          type="text"
-                          name="Name"
-                          placeholder="Enter Name"
-                          className="form-control"
-                        />
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Name</label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Vehicle Type</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="VehicleType"
-                        >
-                          <option value="">Select Vehicle </option>
-                          {
-                            vehicleTypData.map((vehicle)=>{
-                              return <option value={vehicle.id} key={vehicle.id}>{vehicle.Name}</option>
-                            })
-                          }
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Capacity</label>
-                        <Field
-                          type="text"
-                          name="Capacity"
-                          placeholder="Enter Name"
-                          className="form-control"
+                      <Field
+                        type="text"
+                        name="Name"
+                        placeholder="Enter Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Vehicle Type</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="VehicleType"
+                      >
+                        <option value="">Select Vehicle </option>
+                        {vehicleTypData.map((vehicle) => {
+                          return (
+                            <option value={vehicle.id} key={vehicle.id}>
+                              {vehicle.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Capacity</label>
+                      <Field
+                        type="text"
+                        name="Capacity"
+                        placeholder="Enter Name"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Vehile Brand</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="VehicleBrand"
+                      >
+                        <option value="">Select Brand </option>
+                        {vehicleBrandData.map((brand) => {
+                          return (
+                            <option value={brand.id} key={brand.id}>
+                              {brand.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Image</label>
+                      <input
+                        type="file"
+                        name="ImageData"
+                        className="form-input-6 border-0"
+                        onChange={handleImageChange}
+                      />
+                      {isEditing && (
+                        <img
+                          src={showImage}
+                          alt=""
+                          style={{
+                            height: "50px",
+                            width: "50px",
+                            marginTop: "5px",
+                          }}
                         />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Vehile Brand</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="VehicleBrand"
-                        >
-                          <option value="">Select Brand </option>
-                         {
-                          vehicleBrandData.map((brand)=>{
-                            return <option value={brand.id} key={brand.id}>{brand.Name}</option>
-                          })
-                         }
-                        </Field>
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Image</label>
-                        <input
-                          type="file"
-                          name="ImageData"
-                          className="form-control"
-                          onChange={handleImageChange}
-                        />
-                        {isEditing && <img src={showImage} alt="" style={{height:'50px', width:'50px', marginTop:'5px'}}/>}
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          name="Status"
-                          className="form-control"
-                          component={"select"}
-                        >
-                          <option value={1}>Active</option>
-                          <option value={0}>Inactive</option>
-                        </Field>
-                      </div>
+                      )}
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        name="Status"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                      </Field>
                     </div>
                   </div>
                 </Model>

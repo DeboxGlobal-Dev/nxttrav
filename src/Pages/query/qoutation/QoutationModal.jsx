@@ -30,11 +30,15 @@ const QoutationModal = ({ TabclassName, children, Title }) => {
           <div className="modal-body p-2">{children}</div>
 
           <div className="modal-footer p-2 mt-4">
-            <button type="button" className="btn  border" data-dismiss="modal">
-              Close
+            <button type="button" className="modal-save-button">
+              Save
             </button>
-            <button type="button" className="btn btn-primary">
-              Save 
+            <button
+              type="button"
+              className="modal-close-button"
+              data-dismiss="modal"
+            >
+              Close
             </button>
           </div>
         </div>

@@ -48,11 +48,11 @@ const DivisionMaster = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      Status: rowValue.Status ==="Active"?1:0,
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
-  
+
   const columns = [
     {
       name: "Name",
@@ -121,20 +121,18 @@ const DivisionMaster = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-sm-12">
-                        <label>Name</label>
-                        <Field
-                          type="text"
-                          placeholder="Divison Name"
-                          className="form-control"
-                          name="Name"
-                        />
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
-                      </div>
+                  <div className="row">
+                    <div className="col-4">
+                      <label className="m-0 font-size-12">Name</label>
+                      <Field
+                        type="text"
+                        placeholder="Divison Name"
+                        className="form-input-6"
+                        name="Name"
+                      />
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Name" />
+                      </span>
                     </div>
                   </div>
                 </Model>

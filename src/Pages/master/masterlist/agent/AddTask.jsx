@@ -34,7 +34,6 @@ const AddTask = () => {
     setFormData({ ...formData, Description: content });
   };
 
-  console.log("formData", formData);
   const handleSubmitData = async () => {
     try {
       await taskValidationSchema.validate(
@@ -90,6 +89,8 @@ const AddTask = () => {
   };
 
   const handleEditData = () => {};
+
+  console.log('add-task-component')
 
   return (
     <>

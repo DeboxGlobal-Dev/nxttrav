@@ -24,11 +24,10 @@ const HotelChain = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("hotelchainlist", postData);
-        setLoading(false)
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -143,127 +142,143 @@ const HotelChain = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                 >
-                  <div className="card-body">
-                    <div className="row row-gap-2">
-                      <div className="col-sm-4">
-                        <label>Hotel Chain Name</label>
-                        <Field
-                          type="text"
-                          placeholder="Hotel Chain Name"
-                          className="form-control"
-                          name="Name"
-                        />
-                        <span className="font-size-10 text-danger">
+                  <div className="row row-gap-2">
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          Hotel Chain Name
+                        </label>
+                        <span className="font-size-10 text-danger m-0">
                           <ErrorMessage name="Name" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Location</label>
-                        <Field
-                          type="text"
-                          placeholder="Location"
-                          className="form-control"
-                          name="Location"
-                        />
-                        <span className="font-size-10 text-danger">
+                      <Field
+                        type="text"
+                        placeholder="Hotel Chain Name"
+                        className="form-input-6"
+                        name="Name"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Location</label>
+                        <span className="font-size-10 text-danger m-0">
                           <ErrorMessage name="Location" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Hotel Website</label>
-                        <Field
-                          type="text"
-                          placeholder="Hotel Website"
-                          className="form-control"
-                          name="HotelWebsite"
-                        />
-                        <span className="font-size-10 text-danger">
+                      <Field
+                        type="text"
+                        placeholder="Location"
+                        className="form-input-6"
+                        name="Location"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          Hotel Website
+                        </label>
+                        <span className="font-size-10 text-danger m-0">
                           <ErrorMessage name="HotelWebsite" />
                         </span>
                       </div>
-                      <div className="col-sm-4">
-                        <label>Self Supplier</label>
-                        <Field
-                          type="text"
-                          placeholder="Self Supplier"
-                          className="form-control"
-                          name="SelfSupplier"
-                        />
-                      </div>
-                      <div className="col-sm-4">
-                        <label>Status</label>
-                        <Field
-                          className="form-control"
-                          component={"select"}
-                          name="Status"
-                        >
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </Field>
-                        
-                      </div>
-
-                      <div className="col-sm-4">
-                        <label>Contact Person</label>
-                        <Field
-                          className="form-control px-1"
-                          component={"select"}
-                          name="ContactType"
-                        >
-                          <option value={""}>Select Division</option>
-                          <option value={"1"}>Accounts</option>
-                          <option value={"2"}>FIT Reservation</option>
-                          <option value={"3"}>GIT Reservation</option>
-                          <option value={"4"}>HR</option>
-                          <option value={"5"}>Operation</option>
-                          <option value={"6"}>Other</option>
-                          <option value={"7"}>Sales</option>
-                          <option value={"8"}>Software Developer</option>
-                        </Field>
-                      </div>
-                      <div className="col-sm-3 px-1">
-                        <Field
-                          type="text"
-                          placeholder="Contact Person"
-                          className="form-control"
-                          name="ContactName"
-                        />
-                        
-                      </div>
-                      <div className="col-sm-3 px-1">
-                        <Field
-                          type="text"
-                          placeholder="Designation"
-                          className="form-control"
-                          name="ContactDesignation"
-                        />
-                        
-                      </div>
-                      <div className="col-sm-1 px-1">
-                        <Field
-                          type="text"
-                          placeholder="+91"
-                          className="form-control"
-                          name="ContactCountryCode"
-                        />
-                       
-                      </div>
-                      <div className="col-sm-2 px-1">
-                        <Field
-                          type="text"
-                          placeholder="Phone"
-                          className="form-control"
-                          name="ContactMobile"
-                        />
-                       
-                      </div>
-                      <div className="col-sm-3 px-1">
-                        <Field
-                          type="text"
-                          placeholder="Email"
-                          className="form-control"
-                          name="ContactEmail"
-                        />
+                      <Field
+                        type="text"
+                        placeholder="Hotel Website"
+                        className="form-input-6"
+                        name="HotelWebsite"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Self Supplier</label>
+                      <Field
+                        type="text"
+                        placeholder="Self Supplier"
+                        className="form-input-6"
+                        name="SelfSupplier"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Status</label>
+                      <Field
+                        className="form-input-6"
+                        component={"select"}
+                        name="Status"
+                      >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-12 mt-3 px-2">
+                      <p className="m-0 font-size-12">Contact Details</p>
+                      <div className="col-12 border-top border-dark"></div>
+                      <div className="row row-gap-2 mt-2">
+                        <div className="col-sm-4">
+                          <label className="m-0 font-size-12">
+                            Contact Person
+                          </label>
+                          <Field
+                            className="form-input-6"
+                            component={"select"}
+                            name="ContactType"
+                          >
+                            <option value={""}>Select Division</option>
+                            <option value={"1"}>Accounts</option>
+                            <option value={"2"}>Operatin</option>
+                            <option value={"3"}>Sale</option>
+                          </Field>
+                        </div>
+                        <div className="col-sm-4 ">
+                          <label className="m-0 font-size-12">Name</label>
+                          <Field
+                            type="text"
+                            placeholder="Contact Person"
+                            className="form-input-6"
+                            name="ContactName"
+                          />
+                        </div>
+                        <div className="col-sm-4 ">
+                          <label className="m-0 font-size-12">
+                            Designation
+                          </label>
+                          <Field
+                            type="text"
+                            placeholder="Designation"
+                            className="form-input-6"
+                            name="ContactDesignation"
+                          />
+                        </div>
+                        <div className="col-sm-4">
+                          <div className="row">
+                            <div className="col-3 pr-0">
+                              <label className="m-0 font-size-12">Code</label>
+                              <Field
+                                type="text"
+                                placeholder="+91"
+                                className="form-input-6"
+                                name="ContactCountryCode"
+                              />
+                            </div>
+                            <div className="col-9">
+                              <label className="m-0 font-size-12">Phone</label>
+                              <Field
+                                type="text"
+                                placeholder="Phone"
+                                className="form-input-6"
+                                name="ContactMobile"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-sm-4">
+                          <label className="m-0 font-size-12">Email</label>
+                          <Field
+                            type="text"
+                            placeholder="Email"
+                            className="form-input-6"
+                            name="ContactEmail"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>

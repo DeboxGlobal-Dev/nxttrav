@@ -269,3 +269,24 @@ export const addContactInitialValue = {
   AddedBy: "1",
   UpdatedBy: "1",
 };
+
+export const supplierAddInitialValue = {
+  id:"",
+  Name: "",
+  AliasName: "",
+  Status: "Yes",
+  PanInformation: "",
+  SupplierService: [],
+  Destination: [],
+  PaymentTerm: "Cash",
+  ConfirmationType: "Manual",
+  DefaultDestination: "",
+  LocalAgent: "No",
+  Agreement: "No",
+  AgreementOneImageName: "",
+  AgreementOneImageData: "",
+  AgreementTwoImageName: "",
+  AgreementTwoImageData: "",
+  AddedBy: "1",
+  UpdatedBy: "0",
+};
