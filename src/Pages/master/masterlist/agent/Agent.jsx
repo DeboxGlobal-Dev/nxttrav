@@ -3,9 +3,10 @@ import Layout from "../../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../../http/axios/axios_new";
-
+import TableSkeleton from "../../../../Component/Layout/TableSkeleton";
 
 const Agent = () => {
+
   const [filterData, setFilterData] = useState([]);
   const [getData, setGetData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -193,7 +194,7 @@ const Agent = () => {
             fixedHeaderScrollHeight="280px"
             highlightOnHover
             className="masterListDataTable"
-            progressPending={loading}
+            noDataComponent={<><TableSkeleton/></>}
           />
         </div>
       </div>
