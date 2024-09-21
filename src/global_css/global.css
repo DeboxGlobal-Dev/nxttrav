@@ -179,8 +179,14 @@ a {
 .height-20 {
   height: 20px;
 }
+.height-115{
+  height: 115px;
+}
 .width-120 {
   width: 120px;
+}
+.width-30-percent{
+  width: 32%;
 }
 .image-hw {
   height: 2rem;
@@ -970,6 +976,7 @@ select {
 .custom-table-scroll:hover::-webkit-scrollbar {
   display: block;
   height: 4px;
+  width: 3px;
 }
 .modal-save-button {
   height: 25px;
@@ -1076,7 +1083,31 @@ select {
 .drag-width{
   width: 50px;
 }
-
+.container-shadow{
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+.dashboard-chart-bg-1{
+  background-color: #FFAB2D;
+}
+.dashboard-chart-bg-2{
+  background-color: #FF3CA6;
+}
+.dashboard-chart-bg-3{
+  background-color: #3F50F6;
+}
+.dashboard-chart-bg-4{
+  background-color: #00CCCD;
+}
+.dashboard-chart-bg-5{
+  background-color: #88D66C;
+}
+.dashboard-icon-bg{
+  background-color: rgba(39, 39, 39, 0.505);
+}
+.h-w-40{
+  height: 40px;
+  width: 40px;
+}
 /* Animation for loading effect */
 @keyframes skeleton-loading {
   0% {
