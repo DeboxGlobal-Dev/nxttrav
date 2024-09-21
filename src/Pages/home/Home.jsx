@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../../Component/Layout/Layout";
-import DestinationChart from "../../DestinationChart";
+import DestinationChart from "./DestinationChart";
 
 const Home = () => {
   return (
