@@ -2,36 +2,35 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../Component/Layout/Layout";
 import { NavLink, useNavigate } from "react-router-dom";
 import DataTable from "react-data-table-component";
+import TodoList from "../home/TodoList";
+import QueryDetails from "../home/QueryDetails";
 
 const QueryList = () => {
-
   const navigate = useNavigate();
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [postData, setPostData] = useState({
     Search: "",
-    Status: ""
+    Status: "",
   });
 
   const postDataToServer = async () => {
-
     try {
       // const { data } = await axios.post(
-        // "http://20.197.55.39/api/querymasterlist",
-        // postData
+      // "http://20.197.55.39/api/querymasterlist",
+      // postData
       // );
       const queryList = localStorage?.getItem("queryData");
 
       const finalList = JSON.parse(queryList);
 
       console.log(finalList);
-      if(queryList === null){
-        return
+      if (queryList === null) {
+        return;
       }
 
       setGetData(finalList);
       setFilterData(finalList);
-      
     } catch (error) {
       console.log(error);
     }
@@ -49,58 +48,43 @@ const QueryList = () => {
     postDataToServer();
   }, []);
 
-  const handleQueryEdit = (data) =>{
-    navigate(`/querylist/queryview`, {state:data});
-  }
-
+  const handleQueryEdit = (data) => {
+    navigate(`/querylist/queryview`, { state: data });
+  };
 
   const columns = [
-    {
-      name: "",
-      selector: (row) => {
-        return (
-          <div className="btn-className">
-            {/* <Link
-              to="/querylist/queryview"
-              className="btn btn-warning"
-              state={row}
-              style={{
-                padding: "5px",
-                margin: "0px",
-                backgroundColor: "#324148",
-              }}
-            >
-            </Link> */}
-              <i
-                className="fa fa-pencil "
-                aria-hidden="true"
-                style={{ backgroundColor: "#26A69A", fontSize: "10px", color:'white', padding:'8px', borderRadius:'50%', cursor:"pointer" }}
-                onClick={()=>handleQueryEdit(row)}
-              ></i>
-          </div>
-        );
-      },
-    },
     {
       name: "Query Id",
       selector: (row) => {
         return (
-          // <Link to={"/querylist"} className="linkCls">
-          // </Link>
-          <span className="text-success">{row.QueryId}</span>
+          <div className="d-flex align-items-center">
+            <i
+              className="fa fa-pencil "
+              aria-hidden="true"
+              style={{
+                backgroundColor: "#26A69A",
+                fontSize: "8px",
+                color: "white",
+                padding: "6px",
+                borderRadius: "50%",
+                cursor: "pointer",
+              }}
+              onClick={() => handleQueryEdit(row)}
+            ></i>
+            <span className="text-success ml-2">{row.QueryId}</span>
+          </div>
         );
       },
       sortable: true,
     },
     {
       name: "Type",
-      selector: (row) => row.BusinessType === '1' ? 'Agent' : 'B2B',
+      selector: (row) => (row.BusinessType === "1" ? "Agent" : "B2B"),
       sortable: true,
     },
     {
       name: "Name",
       selector: (row) => row.ClientType,
-      sortable: true,
     },
     {
       name: "Query Date",
@@ -123,9 +107,7 @@ const QueryList = () => {
     {
       name: "Pax Type",
       selector: (row) => {
-        return(
-          <span>{row?.PaxType == '1'? 'FIT' : 'GIT'}</span>
-        );
+        return <span>{row?.PaxType == "1" ? "FIT" : "GIT"}</span>;
       },
     },
     {
@@ -135,19 +117,13 @@ const QueryList = () => {
     {
       name: "Lead Source",
       selector: (row) => {
-        return (
-          <span>
-            {row?.LeadSource}
-          </span>
-        );
+        return <span>{row?.LeadSource}</span>;
       },
     },
     {
       name: "Priority",
       selector: (row) => {
-        return (
-          <span>{row?.Priority}</span>
-        )
+        return <span>{row?.Priority}</span>;
       },
     },
     {
@@ -176,26 +152,31 @@ const QueryList = () => {
             className="card shadow-none border"
             style={{ marginBottom: "0" }}
           >
-            <div
-              className="card-header header-elements-inline bg-info-700 py-2"
-              style={{ padding: "10px" }}
-            >
+            <div className="card-header header-elements-inline bg-info-700 p-0">
               <div className="col-xl-8 d-flex align-items-center">
-                <h5 className="card-title d-none d-sm-block">Query</h5>
+                <h5 className="card-title d-none d-sm-block m-0">Query</h5>
               </div>
               <div className="col-xl-4 d-flex justify-content-end">
                 <NavLink
                   to="/querylist/queryview/"
-                  className="blue-button"
+                  className="green-button color-light"
                   aria-expanded="false"
                 >
                   + Create Query
                 </NavLink>
               </div>
             </div>
-            <div className="card-body">
-              <div className="row align-items-center">
-                <div className="col-lg-2 col-md-3 mt-2 mt-md-0">
+            <div className="card-body p-1 px-3">
+              <div className="row gap-2">
+                <div className="col-6 border">
+                  <TodoList />
+                </div>
+                <div className="col d-flex flex-column justify-content-between pr-0">
+                  <QueryDetails/>
+                </div>
+              </div>
+              <div className="row mt-2">
+                <div className="col-lg-2 col-md-3 p-0">
                   <input
                     type="text"
                     placeholder="Search here.."
@@ -246,6 +227,7 @@ const QueryList = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              className="query-table-scroll"
             />
           </div>
         </div>

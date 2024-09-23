@@ -1,49 +1,38 @@
-// src/BarChart.js
-
 import React, { useRef, useEffect } from "react";
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
 
-const MonthQuery = () => {
+const MonthSale = () => {
   const chartRef = useRef(null);
 
   useEffect(() => {
     const ctx = chartRef.current.getContext("2d");
 
     const myChart = new Chart(ctx, {
-      type: "bar",
+      type: "doughnut",
       data: {
-        labels: [
-          "Confirmed",
-          "Followup",
-          "Option Sent",
-          "Assigned",
-          "Reverted",
-          "Created",
-        ],
+        labels: [ "SALE", "GROSS MARGIN"],
         datasets: [
           {
-            label: "Sales",
-            data: [65, 59, 80, 81, 56, 55],
-            backgroundColor: "rgba(75, 192, 192, 0.2)",
-            borderColor: "rgba(75, 192, 192, 1)",
-            borderWidth: 1,
+            label: "My First Dataset",
+            data: [10000, 2400],
+            backgroundColor: [
+              "rgb(255, 206, 86)",
+              "rgb(75, 192, 192)",
+            ],
+            hoverOffset: 2,
           },
         ],
       },
       options: {
         responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
+        maintainAspectRatio: false,
         plugins: {
           tooltip: {
             callbacks: {
               label: (tooltipItem) => {
-                return `${tooltipItem.dataset.label}: ${tooltipItem.raw}`;
+                return `${tooltipItem.label}: ${tooltipItem.raw}`;
               },
             },
           },
@@ -68,9 +57,12 @@ const MonthQuery = () => {
         height: "240px",
       }}
     >
-      <canvas ref={chartRef} style={{ height: "100%", width: "100%" }} />
+      <canvas
+        ref={chartRef}
+        style={{ height: "100%", width: "100%", display: "block" }}
+      />
     </div>
   );
 };
 
-export default MonthQuery;
+export default MonthSale;
