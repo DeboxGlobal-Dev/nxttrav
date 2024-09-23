@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import data from "../quotationdata";
+import { quotationLabel } from "../quotationdata";
+import Activity from "/global_assets/images/qoutation/activity.png";
 
-const DayWiseItinerary = ({ heading }) => {
+const DayWiseItinerary = ({ dayWiseData }) => {
   const [serviceList, setServiceList] = useState(data);
   const [activeCard, setActiveCard] = useState(null);
 
   const handleDropServiceCard = (position) => {
-    console.log(`${activeCard} is going to place at the ${position}`);
+    // console.log(`${activeCard} is going to place at the ${position}`);
 
     if (activeCard == null || activeCard === undefined) return null;
 
@@ -19,11 +21,10 @@ const DayWiseItinerary = ({ heading }) => {
     setServiceList(updatedService);
   };
 
-  console.log("serviceList", serviceList);
   return (
     <div className="col-12 col-lg-10">
       <div className="light-primary-bg mt-2 d-inline-block p-1 rounded">
-        {heading}
+        {`Day ${dayWiseData?.Day} | ${dayWiseData?.DestiniationName} | ${dayWiseData?.DayTotal}`}
       </div>
       <div className="col-12 border mt-1 p-0">
         <p className="border-bottom m-0 px-1">First Day Delhi</p>
@@ -38,7 +39,7 @@ const DayWiseItinerary = ({ heading }) => {
         </p>
       </div>
       <div className="col-12 p-0 mt-2 gap-1">
-        {serviceList?.map((value, index) => {
+        {dayWiseData?.DayServices?.map((Servicevalue, index) => {
           return (
             <div
               key={index + 1}
@@ -52,30 +53,298 @@ const DayWiseItinerary = ({ heading }) => {
                 <div className="row">
                   <div className="col-12 d-flex flex-column align-items-md-center">
                     <p className="font-weight-bold font-size-11 m-0">
-                      {value?.Name?.Name}
+                      {Servicevalue?.ServiceType}
                     </p>
-                    <img
-                      className="icon-img"
-                      src={value?.Name?.Logo}
-                      alt="arrival"
-                    />
+                    <img className="icon-img" src={Activity} alt="arrival" />
                   </div>
                 </div>
               </div>
-              <div className="col-md-11 col-12">
+              <div className="col-10">
                 <div className="row">
-                  {value?.Columns.map((col, index) => {
+                  {quotationLabel
+                    .filter(
+                      (labelValue) =>
+                        labelValue?.ServiceType?.toLowerCase() ==
+                        Servicevalue?.ServiceType?.toLowerCase()
+                    )[0]
+                    ?.Label?.map((label, index) => {
+                      return (
+                        <div className="col-md col-sm-3 col-6" key={index + 1}>
+                          <p className="font-size-10 text-secondary text-flow">
+                            {label}
+                          </p>
+                        </div>
+                      );
+                    })}
+                </div>
+                <div className="row">
+                  {Servicevalue?.ServiceDetails?.map((item, index) => {
                     return (
-                      <div className="col-md col-sm-3 col-6" key={index + 1}>
-                        <p className="font-size-10 text-secondary text-flow">
-                          {col?.Label}
-                        </p>
-                        <p className="font-size-10 font-weight-bold text-flow">
-                          {col?.Data}
-                        </p>
-                      </div>
+                      <>
+                        {Servicevalue?.ServiceType?.toLowerCase() ==
+                          "hotel" && (
+                          <>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                          </>
+                        )}
+                        {Servicevalue?.ServiceType?.toLowerCase() ==
+                          "arrival" && (
+                          <>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                          </>
+                        )}
+                        {Servicevalue?.ServiceType?.toLowerCase() ==
+                          "departure" && (
+                          <>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                          </>
+                        )}
+                        {Servicevalue?.ServiceType?.toLowerCase() ==
+                          "monument" && (
+                          <>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                          </>
+                        )}
+                        {Servicevalue?.ServiceType?.toLowerCase() ==
+                          "activity" && (
+                          <>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div
+                              className="col-md col-sm-3 col-6"
+                              key={index + 1}
+                            >
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                          </>
+                        )}
+                      </>
                     );
                   })}
+                </div>
+              </div>
+              <div className="col-1">
+                <div className="row">
                   <div className="col pr-0 d-flex justify-content-md-end">
                     <div className="d-flex flex-column">
                       <p className="font-size-10 font-weight-bold">Action</p>
@@ -89,7 +358,10 @@ const DayWiseItinerary = ({ heading }) => {
                       </p>
                     </div>
                   </div>
-                  <div className=" p-0 d-flex justify-content-md-end" style={{width:'30px'}}>
+                  <div
+                    className=" p-0 d-flex justify-content-md-end"
+                    style={{ width: "30px" }}
+                  >
                     <div className="d-flex flex-column bg-primary vertical-text p-0">
                       DRAG
                     </div>
