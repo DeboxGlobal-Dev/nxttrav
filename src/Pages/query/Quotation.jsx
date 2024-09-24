@@ -3,16 +3,18 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { NavLink, useLocation, Outlet } from "react-router-dom";
 import Popup from "./qoutation/Popup";
+import QoutationList from "./itineraries/QoutationList";
 
 const Quotation = () => {
   const quotationBasePath = "/querylist/queryview/quotation";
   const { pathname } = useLocation();
   console.log(pathname);
+
   return (
     <>
-      <div className="container-fluid mt-3 mb-5">
-        <div className="row">
-          <div className="col-12 p-0">
+      {/* <div className="container-fluid mt-3 mb-5">
+        <div className="row"> */}
+      {/* <div className="col-12 p-0">
             <div className="row ">
               <div className="col-12 col-md-3">
                 <p>
@@ -42,11 +44,11 @@ const Quotation = () => {
                 </button>
               </div>
             </div>
-          </div>
-          {/* all popups */}
-          <Popup />
-          {/* all popups */}
-          <div className="col-12 mt-3">
+          </div> */}
+      {/* all popups */}
+      {/* <Popup /> */}
+      {/* all popups */}
+      {/* <div className="col-12 mt-3">
             <ul className="nav nav-pills-toolbar d-flex justify-content-between align-items-center border top-border-radius px-100 py-1">
               <li className="nav-item view-nav-item rounded-pill">
                 <NavLink
@@ -99,9 +101,10 @@ const Quotation = () => {
               </li>
             </ul>
             <Outlet />
-          </div>
-        </div>
-      </div>
+          </div> */}
+      {/* </div>
+      </div> */}
+      <QoutationList />
     </>
   );
 };

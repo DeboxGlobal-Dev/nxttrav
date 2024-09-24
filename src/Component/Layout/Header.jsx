@@ -24,7 +24,7 @@ const Header = () => {
       <div className="navbar navbar-expand-md navbar-dark border-transparent">
         <div className="navbar-brand">
           <NavLink to="/">
-            <img src={logo} alt="limitless" />
+            <img src="https://travcrm.in/travcrm-dev_2.4/images/travCRM%20highres-logo.png" alt="DeboxGlobal" style={{width:'70px', height:'30px'}}/>
           </NavLink>
         </div>
 

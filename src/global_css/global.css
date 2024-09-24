@@ -1116,6 +1116,13 @@ select {
 .query-table-scroll::-webkit-scrollbar {
   height: 3px;
 }
+.padding-around{
+  padding: 3px;
+}
+.padding-y-5{
+  /* padding: 2px 0; */
+}
+
 
 /* Animation for loading effect */
 @keyframes skeleton-loading {
