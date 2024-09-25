@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import logo from "/global_assets/images/logo_light.png";
-import placeholder from "/global_assets/images/placeholders/placeholder.jpg";
 
 const Header = () => {
 
@@ -24,7 +22,7 @@ const Header = () => {
       <div className="navbar navbar-expand-md navbar-dark border-transparent">
         <div className="navbar-brand">
           <NavLink to="/">
-            <img src="https://travcrm.in/travcrm-dev_2.4/images/travCRM%20highres-logo.png" alt="DeboxGlobal" style={{width:'70px', height:'30px'}}/>
+            <img src="https://travcrm.in/travcrm-dev_2.4/images/travCRM%20highres-logo.png" alt="DeboxGlobal" />
           </NavLink>
         </div>
 

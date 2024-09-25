@@ -4,7 +4,7 @@ const QoutationList = () => {
   return (
     <>
       <div className="container-fluid">
-        <div className="row border shadow padding-around">
+        <div className="row border quotatation-shadow padding-around">
           <div className="col-12">
             <div className="row justify-content-between">
               <div className="col-2 p-0">
@@ -47,7 +47,7 @@ const QoutationList = () => {
         </div>
 
         <div className="row">
-          <div className="col-2 border shadow py-2 px-1">
+          <div className="col-2 border quotatation-shadow py-2 px-1">
             <p className="text-center fs-6">Destination</p>
             <div className="d-flex justify-content-between">
               <div>
@@ -204,13 +204,75 @@ const QoutationList = () => {
               <p className="m-0 font-size-10">ROOM PREFERENCE :</p>
             </div>
             <div className="mt-2">
-                <div className="d-flex flex-column">
-                    <span className="font-size-10">OPERATION PERSON</span>
-                    <span className="font-size-11 font-weight-bold">Mohd Rizwan</span>
-                </div>
+              <div className="d-flex flex-column">
+                <span className="font-size-10">OPERATION PERSON</span>
+                <span className="font-size-11 font-weight-bold">
+                  Mohd Rizwan
+                </span>
+              </div>
             </div>
           </div>
-          <div className="col-10 border">Main Content</div>
+          <div className="col-10  mt-3 overflow main-content-table">
+            <table class="table">
+              <thead>
+                <tr className="light-gray-text">
+                  <th className="p-0 py-2 px-1 border-0">QUOTATION ID</th>
+                  <th className="p-0 py-2 px-1 border-0">FROM DATE</th>
+                  <th className="p-0 py-2 px-1 border-0">TO DATE</th>
+                  <th className="p-0 py-2 px-1 border-0">DURATION</th>
+                  <th className="p-0 py-2 px-1 border-0">TOTAL PAX</th>
+                  <th className="p-0 py-2 px-1 border-0">ACTION</th>
+                </tr>
+              </thead>
+              <tbody className="">
+                <tr className="quotatio-table-data table-border table-row-gap">
+                  <td className="text-primary p-0 py-1 px-1 border-0">
+                    DB23-09023-SD32
+                  </td>
+                  <td className="p-0 py-1 px-1 border-0">01-02-2024</td>
+                  <td className="p-0 py-1 px-1 border-0">05-03-2024</td>
+                  <td className="p-0 py-1 px-1 border-0">6N/7D</td>
+                  <td className="p-0 py-1 px-1 border-0">5 Pax</td>
+                  <td className="p-0 py-1 px-1 d-flex justify-content-between border-0">
+                    <button className="border px-1">Costsheet</button>
+                    <button className="border px-1">Proposal</button>
+                    <button className="border px-1">Duplicate</button>
+                    <button className="border px-1">Payment Request</button>
+                  </td>
+                </tr>
+                <tr className="quotatio-table-data table-border">
+                  <td className="text-primary p-0 py-1 px-1 border-0">
+                    DB23-09023-SD32
+                  </td>
+                  <td className="p-0 py-1 px-1 border-0">01-02-2024</td>
+                  <td className="p-0 py-1 px-1 border-0">05-03-2024</td>
+                  <td className="p-0 py-1 px-1 border-0">6N/7D</td>
+                  <td className="p-0 py-1 px-1 border-0">5 Pax</td>
+                  <td className="p-0 py-1 px-1 d-flex justify-content-between border-0">
+                    <button className="border px-1">Costsheet</button>
+                    <button className="border px-1">Proposal</button>
+                    <button className="border px-1">Duplicate</button>
+                    <button className="border px-1">Payment Request</button>
+                  </td>
+                </tr>
+                <tr className="quotatio-table-data table-border">
+                  <td className="text-primary p-0 py-1 px-1 border-0">
+                    DB23-09023-SD32
+                  </td>
+                  <td className="p-0 py-1 px-1 border-0">01-02-2024</td>
+                  <td className="p-0 py-1 px-1 border-0">05-03-2024</td>
+                  <td className="p-0 py-1 px-1 border-0">6N/7D</td>
+                  <td className="p-0 py-1 px-1 border-0">5 Pax</td>
+                  <td className="p-0 py-1 px-1 d-flex justify-content-between border-0">
+                    <button className="border px-1">Costsheet</button>
+                    <button className="border px-1">Proposal</button>
+                    <button className="border px-1">Duplicate</button>
+                    <button className="border px-1">Payment Request</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </>

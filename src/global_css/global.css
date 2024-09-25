@@ -1116,13 +1116,33 @@ select {
 .query-table-scroll::-webkit-scrollbar {
   height: 3px;
 }
-.padding-around{
+.padding-around {
   padding: 3px;
 }
-.padding-y-5{
-  /* padding: 2px 0; */
+.light-gray-text th {
+  color: rgb(127, 127, 127);
+}
+.quotatation-shadow {
+  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
+    rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+.table-border {
+  border: 1px solid rgb(157, 157, 157);
 }
 
+.quotatio-table-data:hover{
+  border: 1.6px solid #2195f39c;
+}
+.quotatio-table-data:hover td{
+  background-color: #2195f31a;
+}
+.main-content-table{
+  height: 500px;
+  overflow-y: scroll;
+}
+.main-content-table::-webkit-scrollbar{
+  width: 4px;
+}
 
 /* Animation for loading effect */
 @keyframes skeleton-loading {
