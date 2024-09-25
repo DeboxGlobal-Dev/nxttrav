@@ -5,5 +5,4 @@ export const queryAddValidationSchema = yup.object().shape({
     ClientType: yup.string().required("Required"),
     FromDate: yup.string().required("Required"),
     TotalNights: yup.string().required("Required"),
-    // Adult: yup.string().required("Required")
 });

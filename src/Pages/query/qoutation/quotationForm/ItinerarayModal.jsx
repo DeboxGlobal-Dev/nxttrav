@@ -1,33 +1,8 @@
 import React, { useState } from "react";
 import Editor from "../../../../helper/Editor";
+import { itenarayInfoPopupList } from "../../quotationdata";
 
-const itenararyJson = [
-  {
-    id: "1",
-    Title: "Rajsthan",
-    Text: "Lorem, ipsum dolor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim deleniti hic voluptate minima doloru qui architecto dolor, porro quas incidunt",
-  },
-  {
-    id: "2",
-    Title: "Jaipur",
-    Text: "Lorem, ipsum dolor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim deleniti hic voluptate minima doloru qui architecto dolor, porro quas incidunt",
-  },
-  {
-    id: "3",
-    Title: "Delhi",
-    Text: "Lorem, ipsum dolor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim deleniti hic voluptate minima doloru qui architecto dolor, porro quas incidunt",
-  },
-  {
-    id: "4",
-    Title: "Gurgaon",
-    Text: "Lorem, ipsum dolor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim deleniti hic voluptate minima doloru qui architecto dolor, porro quas incidunt",
-  },
-  {
-    id: "5",
-    Title: "Agra",
-    Text: "Lorem, ipsum dolor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim deleniti hic voluptate minima doloru qui architecto dolor, porro quas incidunt",
-  },
-];
+
 
 const ItineraryModal = () => {
   const [formData, setFormData] = useState({
@@ -73,7 +48,7 @@ const ItineraryModal = () => {
                 </tr>
               </thead>
               <tbody>
-                {itenararyJson?.map((value) => {
+                {itenarayInfoPopupList?.DataList?.map((value) => {
                   return (
                     <tr key={value?.id}>
                       <td className="p-1 font-size-11 text-center">

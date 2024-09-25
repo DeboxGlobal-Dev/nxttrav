@@ -45,7 +45,6 @@ const QoutationList = () => {
             </div>
           </div>
         </div>
-
         <div className="row">
           <div className="col-2 border quotatation-shadow py-2 px-1">
             <p className="text-center fs-6">Destination</p>
@@ -225,7 +224,7 @@ const QoutationList = () => {
                 </tr>
               </thead>
               <tbody className="">
-                <tr className="quotatio-table-data table-border table-row-gap">
+                <tr className="quotatio-table-data table-border quotation-table-tr">
                   <td className="text-primary p-0 py-1 px-1 border-0">
                     DB23-09023-SD32
                   </td>
@@ -240,7 +239,7 @@ const QoutationList = () => {
                     <button className="border px-1">Payment Request</button>
                   </td>
                 </tr>
-                <tr className="quotatio-table-data table-border">
+                <tr className="quotatio-table-data table-border quotation-table-tr">
                   <td className="text-primary p-0 py-1 px-1 border-0">
                     DB23-09023-SD32
                   </td>
@@ -255,7 +254,7 @@ const QoutationList = () => {
                     <button className="border px-1">Payment Request</button>
                   </td>
                 </tr>
-                <tr className="quotatio-table-data table-border">
+                <tr className="quotatio-table-data table-border quotation-table-tr">
                   <td className="text-primary p-0 py-1 px-1 border-0">
                     DB23-09023-SD32
                   </td>

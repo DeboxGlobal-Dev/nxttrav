@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import data from "../quotationdata";
-import { quotationLabel } from "../quotationdata";
+import data from "../../quotationdata";
+import { quotationLabel } from "../../quotationdata";
 import Activity from "/global_assets/images/qoutation/activity.png";
 
 const DayWiseItinerary = ({ dayWiseData }) => {
@@ -23,12 +23,14 @@ const DayWiseItinerary = ({ dayWiseData }) => {
 
   return (
     <div className="col-12 col-lg-10">
-      <div className="light-primary-bg mt-2 d-inline-block p-1 rounded">
-        {`Day ${dayWiseData?.Day} | ${dayWiseData?.DestiniationName} | ${dayWiseData?.DayTotal}`}
+      <div className="light-primary-bg mt-2 d-inline-block px-1 rounded">
+        <p className="m-0 font-size-12 font-weight-medium">{`Day ${dayWiseData?.Day} | ${dayWiseData?.DestiniationName} | ${dayWiseData?.DayTotal}`}</p>
       </div>
-      <div className="col-12 border mt-1 p-0">
-        <p className="border-bottom m-0 px-1">First Day Delhi</p>
-        <p className="px-1">
+      <div className="col-12 border mt-1 p-0 ">
+        <p className="border-bottom m-0 px-1 font-size-12 font-weight-bold">
+          First Day Delhi
+        </p>
+        <p className="font-size-12 px-1 py-1 m-0 font-weight-400">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
           eaque dolorum ducimus ut quis, repellendus magni maiores officiis esse
           in, quaerat doloremque? Distinctio totam sit corrupti corporis
@@ -43,23 +45,23 @@ const DayWiseItinerary = ({ dayWiseData }) => {
           return (
             <div
               key={index + 1}
-              className="row border-bottom py-1 row-gap-2 service-drag-card grab-cursor"
+              className="row border-bottom row-gap-1 service-drag-card grab-cursor"
               draggable
               onDragStart={() => setActiveCard(index)}
               onDrop={() => handleDropServiceCard(index)}
               onDragOver={(e) => e.preventDefault()}
             >
-              <div className="col-md-1 col-12">
+              <div className="col-md-1 col-12 p-0">
                 <div className="row">
                   <div className="col-12 d-flex flex-column align-items-md-center">
-                    <p className="font-weight-bold font-size-11 m-0">
+                    <p className="font-weight-bold font-size-11 m-0"> 
                       {Servicevalue?.ServiceType}
                     </p>
                     <img className="icon-img" src={Activity} alt="arrival" />
                   </div>
                 </div>
               </div>
-              <div className="col-10">
+              <div className="col-10 d-flex flex-column gap-1 py-0">
                 <div className="row">
                   {quotationLabel
                     .filter(
@@ -69,281 +71,202 @@ const DayWiseItinerary = ({ dayWiseData }) => {
                     )[0]
                     ?.Label?.map((label, index) => {
                       return (
-                        <div className="col-md col-sm-3 col-6" key={index + 1}>
-                          <p className="font-size-10 text-secondary text-flow">
+                        <div className="col-md col-sm-3 col-6" key={label}>
+                          <p className="font-size-10 text-secondary text-flow m-0">
                             {label}
                           </p>
                         </div>
                       );
                     })}
                 </div>
-                <div className="row">
-                  {Servicevalue?.ServiceDetails?.map((item, index) => {
-                    return (
-                      <>
-                        {Servicevalue?.ServiceType?.toLowerCase() ==
-                          "hotel" && (
-                          <>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+
+                {Servicevalue?.ServiceDetails?.map((item, index) => {
+                  return (
+                    <>
+                      {Servicevalue?.ServiceType?.toLowerCase() == "hotel" && (
+                        <>
+                          <div className="row" key={Servicevalue?.ServiceType}>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow m-0">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow m-0">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow m-0">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow m-0">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                      {Servicevalue?.ServiceType?.toLowerCase() ==
+                        "arrival" && (
+                        <>
+                          <div className="row" key={Servicevalue?.ServiceType}>
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                          </>
-                        )}
-                        {Servicevalue?.ServiceType?.toLowerCase() ==
-                          "arrival" && (
-                          <>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                          </div>
+                        </>
+                      )}
+                      {Servicevalue?.ServiceType?.toLowerCase() ==
+                        "departure" && (
+                        <>
+                          <div className="row" key={Servicevalue?.ServiceType}>
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                          </>
-                        )}
-                        {Servicevalue?.ServiceType?.toLowerCase() ==
-                          "departure" && (
-                          <>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                          </div>
+                        </>
+                      )}
+                      {Servicevalue?.ServiceType?.toLowerCase() ==
+                        "monument" && (
+                        <>
+                          <div className="row" key={Servicevalue?.ServiceType}>
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                          </>
-                        )}
-                        {Servicevalue?.ServiceType?.toLowerCase() ==
-                          "monument" && (
-                          <>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                          </div>
+                        </>
+                      )}
+                      {Servicevalue?.ServiceType?.toLowerCase() ==
+                        "activity" && (
+                        <>
+                          <div className="row" key={Servicevalue?.ServiceType}>
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                          </>
-                        )}
-                        {Servicevalue?.ServiceType?.toLowerCase() ==
-                          "activity" && (
-                          <>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
+                            <div className="col-md col-sm-3 col-6">
                               <p className="font-size-10 font-weight-bold text-flow">
                                 {item?.ItemName}
                               </p>
                             </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
-                              <p className="font-size-10 font-weight-bold text-flow">
-                                {item?.ItemName}
-                              </p>
-                            </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
-                              <p className="font-size-10 font-weight-bold text-flow">
-                                {item?.ItemName}
-                              </p>
-                            </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
-                              <p className="font-size-10 font-weight-bold text-flow">
-                                {item?.ItemName}
-                              </p>
-                            </div>
-                            <div
-                              className="col-md col-sm-3 col-6"
-                              key={index + 1}
-                            >
-                              <p className="font-size-10 font-weight-bold text-flow">
-                                {item?.ItemName}
-                              </p>
-                            </div>
-                          </>
-                        )}
-                      </>
-                    );
-                  })}
-                </div>
+                          </div>
+                        </>
+                      )}
+                    </>
+                  );
+                })}
               </div>
-              <div className="col-1">
+              <div className="col-1 py-0">
                 <div className="row">
                   <div className="col pr-0 d-flex justify-content-md-end">
                     <div className="d-flex flex-column">
@@ -359,8 +282,7 @@ const DayWiseItinerary = ({ dayWiseData }) => {
                     </div>
                   </div>
                   <div
-                    className=" p-0 d-flex justify-content-md-end"
-                    style={{ width: "30px" }}
+                    className=" p-0 my-1 d-flex justify-content-md-end width-30px"
                   >
                     <div className="d-flex flex-column bg-primary vertical-text p-0">
                       DRAG

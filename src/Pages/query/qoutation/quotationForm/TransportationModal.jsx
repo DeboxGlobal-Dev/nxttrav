@@ -37,7 +37,7 @@ const TransportationModal = () => {
     setAddFormData({ ...addFormData, [name]: value });
   };
 
-  console.log("addFormData", addFormData);
+  // console.log("addFormData", addFormData);
 
   return (
     <>

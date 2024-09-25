@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-
+import travLogo from "/global_assets/images/placeholders/trav_logo.png";
 const Header = () => {
-
-  const [username, setUsername] = useState('');
-  const [image, setImage] = useState('');
+  const [username, setUsername] = useState("");
+  const [image, setImage] = useState("");
 
   const data = localStorage.getItem("persist:root");
-  useEffect(()=>{
-    if(data){
+  useEffect(() => {
+    if (data) {
       const user = JSON.parse(data);
-      const {username,image} = JSON.parse(user?.auth)?.value?.user;
+      const { username, image } = JSON.parse(user?.auth)?.value?.user;
       setUsername(username);
       setImage(image);
     }
   }, [data]);
 
-  return(
+  return (
     <>
-      {/* // <!-- Main navbar --> */}
       <div className="navbar navbar-expand-md navbar-dark border-transparent">
-        <div className="navbar-brand">
+        <div className="d-flex align-items-center pl-2">
           <NavLink to="/">
-            <img src="https://travcrm.in/travcrm-dev_2.4/images/travCRM%20highres-logo.png" alt="DeboxGlobal" />
+            <img
+              src={travLogo}
+              alt="DeboxGlobal"
+              style={{ height: "35px", width: "80px" }}
+            />
           </NavLink>
         </div>
 
@@ -229,12 +231,16 @@ const Header = () => {
                 data-toggle="dropdown"
                 aria-expanded="false"
               >
-                {image !=''? <img
-                  src={image!='' && image}
-                  className="rounded-circle"
-                  alt="user"
-                /> : <i className="fa-solid fa-circle-user rounded-circle"></i>}
-                <span>{username!='' ? username : 'UserName'}</span>
+                {image != "" ? (
+                  <img
+                    src={image != "" && image}
+                    className="rounded-circle"
+                    alt="user"
+                  />
+                ) : (
+                  <i className="fa-solid fa-circle-user rounded-circle"></i>
+                )}
+                <span>{username != "" ? username : "UserName"}</span>
               </a>
 
               <div className="dropdown-menu dropdown-menu-right">
@@ -256,9 +262,6 @@ const Header = () => {
           </ul>
         </div>
       </div>
-
-      {/* // <!-- main end --> */}
-      {/* <!-- Alternative navbar --> */}
       <div className="navbar navbar-expand-md navbar-light navbar-sticky navbar-static headroom headroom--not-bottom headroom--pinned headroom--top">
         <div className="text-center d-md-none w-100">
           <button
@@ -308,7 +311,6 @@ const Header = () => {
           </ul>
         </div>
       </div>
-      {/* <!-- Alternative navbar  End--> */}
     </>
   );
 };

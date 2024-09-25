@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import DayWiseItinerary from "./DayWiseItinerary";
-import { quotationData } from "../quotationdata";
+import { quotationData } from "../../quotationdata";
+import { quotationContext } from "../Quotation";
 
 const Itineraries = () => {
   const [dayWiseData, setDayWiseData] = useState(null);
   const [isActive, setIsActive] = useState(1);
+  const { quotationGlobalData, setQuotationGlobalData } =
+    useContext(quotationContext);
 
   const handleDayWiseView = (value, num) => {
     setDayWiseData(value);
+    setQuotationGlobalData(value);
     setIsActive(num);
   };
 
   useEffect(() => {
     const data = quotationData?.Days[0];
+    setQuotationGlobalData(data);
     setDayWiseData(data);
   }, []);
-
-  // console.log('quotationData', quotationData);
 
   return (
     <>
@@ -29,7 +32,7 @@ const Itineraries = () => {
                 return (
                   <div
                     key={index + 1}
-                    className={`col-lg-12 col-sm-3  d-flex gap-3 justify-content-center align-items-center 
+                    className={`col-lg-12 col-sm-3  d-flex gap-3  align-items-center 
                             px-1 my-1 cursor-pointer tab-hover ${
                               isActive == index + 1 && "light-primary-bg"
                             }`}
@@ -45,11 +48,28 @@ const Itineraries = () => {
                         </span>
                         | {value?.DestiniationName}
                       </p>
-                      <p className="m-0 d-block font-size-12">{value?.DayTotal}</p>
+                      <p className="m-0 d-block font-size-12">
+                        {value?.DayTotal}
+                      </p>
                     </div>
                   </div>
                 );
               })}
+            </div>
+            <div className="row mt-2">
+              <div className="12 position-relative">
+                <input
+                  type="text"
+                  className="border rounded-pill outline-0 pl-1 pr-3 font-size-11 w-100"
+                  placeholder="Select Itenarary Template"
+                />
+                <i className="fa-solid fa-magnifying-glass position-absolute quotation-search-icon"></i>
+              </div>
+              <div className="col-12 d-flex flex-column justify-content-center mt-1 px-3">
+                <p className="text-primary font-size-12 m-0 cursor-pointer">2N Dubai, 3D Abu Dhabi</p>
+                <p className="text-primary font-size-12 m-0 cursor-pointer">3N Dubai, 4D Abu Dhabi</p>
+                <p className="text-primary font-size-12 m-0 cursor-pointer">4N Dubai, 5D Abu Dhabi</p>
+              </div>
             </div>
           </div>
           <DayWiseItinerary dayWiseData={dayWiseData} />

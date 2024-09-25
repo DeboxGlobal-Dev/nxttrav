@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { queryInitial } from "../QueryInitialValue";
-import { addQueryContext } from "./Addquery";
+import { addQueryContext } from "./AddQuery";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const Contact = () => {
