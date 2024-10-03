@@ -114,9 +114,9 @@ const RestaurantModal = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {restaurantPopupList?.DataList?.map((value) => {
+                    {restaurantPopupList?.DataList?.map((value, index) => {
                       return (
-                        <tr>
+                        <tr key={index+1}>
                           <td className="p-1 font-size-11">{value?.RateJson?.RestaurantName}</td>
                           <td className="p-1 font-size-11 text-center">
                             Srikanth

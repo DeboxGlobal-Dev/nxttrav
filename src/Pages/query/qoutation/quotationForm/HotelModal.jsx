@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { hotelPopupList } from "../../quotationdata";
 
 const contactDetails = {
   ContactPerson: "",
@@ -80,7 +81,7 @@ const HotelModal = () => {
       return newArr;
     });
   };
-  
+
   return (
     <>
       {!addNew && (
@@ -276,30 +277,45 @@ const HotelModal = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td className="p-1 font-size-11">Delhi Red Fort</td>
-                          <td className="p-1 font-size-11 text-center">
-                            Srikanth
-                          </td>
-                          <td className="p-1 font-size-11 text-center">
-                            INR[1]
-                          </td>
-                          <td className="p-1 font-size-11 text-center">13</td>
-                          <td className="p-1 font-size-11 text-center">0</td>
-                          <td className="p-1 font-size-11 text-center">0</td>
-                          <td className="p-1 font-size-11 text-center">0</td>
+                        {hotelPopupList?.Data?.map((item) => {
+                          return (
+                            <tr>
+                              <td className="p-1 font-size-11">
+                                {item?.HotelName}
+                              </td>
+                              <td className="p-1 font-size-11 text-center">
+                                {item?.Supplier}
+                              </td>
+                              <td className="p-1 font-size-11 text-center">
+                                INR[1]
+                              </td>
+                              <td className="p-1 font-size-11 text-center">
+                                {item?.RoomBedType}
+                              </td>
+                              <td className="p-1 font-size-11 text-center">
+                              {item?.RateJson?.TariffTypeName}
+                              TariffTypeName
+                              </td>
+                              <td className="p-1 font-size-11 text-center">
+                                0
+                              </td>
+                              <td className="p-1 font-size-11 text-center">
+                                0
+                              </td>
 
-                          <td className="p-1 font-size-11 text-center width-80">
-                            <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                              Select
-                            </p>
-                          </td>
-                          <td className="p-1 font-size-11 text-center width-100">
-                            <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10 d-flex justify-content-center">
-                              + Add Price
-                            </p>
-                          </td>
-                        </tr>
+                              <td className="p-1 font-size-11 text-center width-80">
+                                <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
+                                  Select
+                                </p>
+                              </td>
+                              <td className="p-1 font-size-11 text-center width-100">
+                                <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10 d-flex justify-content-center">
+                                  + Add Price
+                                </p>
+                              </td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>

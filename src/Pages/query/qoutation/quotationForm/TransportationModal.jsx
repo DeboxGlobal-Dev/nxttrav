@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-
+import React, { useState } from "react";
+import { transportationPopupList } from "../../quotationdata";
 
 const TransportationModal = () => {
   const [isSearching, setIsSearching] = useState(false);
@@ -36,8 +36,6 @@ const TransportationModal = () => {
     const { name, value } = e.target;
     setAddFormData({ ...addFormData, [name]: value });
   };
-
-  // console.log("addFormData", addFormData);
 
   return (
     <>
@@ -239,23 +237,39 @@ const TransportationModal = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td className="p-1 font-size-11">Delhi Red Fort</td>
-                          <td className="p-1 font-size-11 text-center">
-                            Srikanth
-                          </td>
-                          <td className="p-1 font-size-11 text-center">
-                            INR[1]
-                          </td>
-                          <td className="p-1 font-size-11 text-center">13</td>
-                          <td className="p-1 font-size-11 text-center">0</td>
-                          <td className="p-1 font-size-11 text-center">0</td>
-                          <td className="p-1 font-size-11 text-center">0</td>
-                          <td className="p-1 font-size-11 text-center">0</td>
+                        {transportationPopupList?.DataList?.map((item) => {
+                          return (
+                            <tr>
+                              <td className="p-1 font-size-11">
+                                {item?.SupplierUID?.Name}
+                              </td>
+                              <td className="p-1 font-size-11 text-center">
+                                {item?.TransportUID?.Name}
+                              </td>
+                              <td className="p-1 font-size-11 text-center">
+                                {item?.RateJson?.VehicleTypeName}
+                              </td>
+                              <td className="p-1 font-size-11 text-center">
+                                {item?.RateJson?.CurrencyName}
+                              </td>
+                              <td className="p-1 font-size-11 text-center">
+                                0
+                              </td>
+                              <td className="p-1 font-size-11 text-center">
+                                0
+                              </td>
+                              <td className="p-1 font-size-11 text-center">
+                                0
+                              </td>
+                              <td className="p-1 font-size-11 text-center">
+                                0
+                              </td>
 
-                          <td className="p-1 font-size-11 text-center width-80"></td>
-                          <td className="p-1 font-size-11 text-center width-100"></td>
-                        </tr>
+                              <td className="p-1 font-size-11 text-center width-80"></td>
+                              <td className="p-1 font-size-11 text-center width-100"></td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>

@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import { trainPopupList } from "../../quotationdata";
 
 const TrainModal = () => {
   const [addNew, setAddNew] = useState(false);
@@ -134,26 +135,34 @@ const TrainModal = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="p-1 font-size-11">Delhi Red Fort</td>
-                      <td className="p-1 font-size-11 text-center">Srikanth</td>
-                      <td className="p-1 font-size-11 text-center">INR[1]</td>
-                      <td className="p-1 font-size-11 text-center">13</td>
-                      <td className="p-1 font-size-11 text-center">13</td>
-                      <td className="p-1 font-size-11 text-center">13</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
+                    {trainPopupList?.DataList?.map((item) => {
+                      return (
+                        <tr>
+                          <td className="p-1 font-size-11">{item?.RateJson[0]?.TrainName}</td>
+                          <td className="p-1 font-size-11 text-center">
+                            Srikanth
+                          </td>
+                          <td className="p-1 font-size-11 text-center">
+                            INR[1]
+                          </td>
+                          <td className="p-1 font-size-11 text-center">13</td>
+                          <td className="p-1 font-size-11 text-center">13</td>
+                          <td className="p-1 font-size-11 text-center">13</td>
+                          <td className="p-1 font-size-11 text-center">0</td>
 
-                      <td className="p-1 font-size-11 text-center">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Select
-                        </p>
-                      </td>
-                      <td className="p-1 font-size-11 text-center">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10 d-flex justify-content-center">
-                          Edit Price
-                        </p>
-                      </td>
-                    </tr>
+                          <td className="p-1 font-size-11 text-center">
+                            <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
+                              Select
+                            </p>
+                          </td>
+                          <td className="p-1 font-size-11 text-center">
+                            <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10 d-flex justify-content-center">
+                              Edit Price
+                            </p>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

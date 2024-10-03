@@ -106,7 +106,7 @@ const Preview = lazy(()=> import("./Pages/query/Preview.jsx"));
 const SupplierPayment = lazy(()=> import("./Pages/query/SupplierPayment.jsx"));
 const AgentPayment = lazy(()=> import("./Pages/query/AgentPayment.jsx"));
 const ExpenseEntry = lazy(()=> import("./Pages/query/ExpenseEntery.jsx"));
-const TourExtension = lazy(()=> import("./Pages/query/TourExtension.jsx"));
+const TourExtension = lazy(()=> import("./Pages/query/tourExtension/TourExtension.jsx"));
 const AssignUser = lazy(()=> import("./Pages/query/AssignUser.jsx"));
 const Agent = lazy(()=> import("./Pages/master/masterlist/agent/Agent.jsx"));
 const AddAgent = lazy(()=> import("./Pages/master/masterlist/agent/AddAgent.jsx"));

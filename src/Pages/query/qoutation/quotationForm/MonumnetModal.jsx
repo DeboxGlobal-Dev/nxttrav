@@ -166,9 +166,9 @@ const MonumentModal = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {monumentPopupList?.DataList?.map((value) => {
+                    {monumentPopupList?.DataList?.map((value, index) => {
                       return (
-                        <tr>
+                        <tr key={index+1}>
                           <td className="p-1 font-size-11">{value?.MonumentName}</td>
                           <td className="p-1 font-size-11 text-center">
                             {value?.SupplierUID?.Name}

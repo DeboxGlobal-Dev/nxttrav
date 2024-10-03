@@ -1,7 +1,28 @@
 import React, { useState } from "react";
 import data from "../../quotationdata";
 import { quotationLabel } from "../../quotationdata";
-import Activity from "/global_assets/images/qoutation/activity.png";
+import ActivityImg from "/global_assets/images/qoutation/activity.png";
+import ActionDropdown from "./ActionDropdown";
+import ItenarayModal from "./ItenarayModal";
+import Hotel from "./ModalForm/Hotel";
+import Activity from "./ModalForm/Activity";
+import Monument from "./ModalForm/Monument";
+import Guide from "./ModalForm/Guide";
+import Departure from "./ModalForm/Departure";
+import Arrival from "./ModalForm/Arrival";
+import Restaurant from "./ModalForm/Restaurant";
+import Train from "./ModalForm/Train";
+import Transfer from "./ModalForm/Transfer";
+import Transportation from "./ModalForm/Transportation";
+import HotelMeal from "./ModalForm/HotelMeal";
+import DepartureTime from "./ModalForm/DepartureTime";
+import ArrivalTime from "./ModalForm/ArrivalTime";
+import MonumentTime from "./ModalForm/MonumentTime";
+import ActivityTime from "./ModalForm/ActivityTime";
+import RestaurantTime from "./ModalForm/RestaurantTime";
+import TrainTime from "./ModalForm/TrainTime";
+import HotelRoomSupplement from "./ModalForm/HotelRoomSupplement";
+import RestaurantSuppliment from "./ModalForm/RestaurantSuppliment";
 
 const DayWiseItinerary = ({ dayWiseData }) => {
   const [serviceList, setServiceList] = useState(data);
@@ -54,14 +75,14 @@ const DayWiseItinerary = ({ dayWiseData }) => {
               <div className="col-md-1 col-12 p-0">
                 <div className="row">
                   <div className="col-12 d-flex flex-column align-items-md-center">
-                    <p className="font-weight-bold font-size-11 m-0"> 
+                    <p className="font-weight-bold font-size-11 m-0">
                       {Servicevalue?.ServiceType}
                     </p>
-                    <img className="icon-img" src={Activity} alt="arrival" />
+                    <img className="icon-img" src={ActivityImg} alt="arrival" />
                   </div>
                 </div>
               </div>
-              <div className="col-10 d-flex flex-column gap-1 py-0">
+              <div className="col-10 d-flex  flex-column gap-1 py-0">
                 <div className="row">
                   {quotationLabel
                     .filter(
@@ -79,7 +100,6 @@ const DayWiseItinerary = ({ dayWiseData }) => {
                       );
                     })}
                 </div>
-
                 {Servicevalue?.ServiceDetails?.map((item, index) => {
                   return (
                     <>
@@ -262,29 +282,330 @@ const DayWiseItinerary = ({ dayWiseData }) => {
                           </div>
                         </>
                       )}
+                      {Servicevalue?.ServiceType?.toLowerCase() == "guide" && (
+                        <>
+                          <div className="row" key={Servicevalue?.ServiceType}>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                      {Servicevalue?.ServiceType?.toLowerCase() ==
+                        "restaurant" && (
+                        <>
+                          <div className="row" key={Servicevalue?.ServiceType}>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                      {Servicevalue?.ServiceType?.toLowerCase() ==
+                        "transportation" && (
+                        <>
+                          <div className="row" key={Servicevalue?.ServiceType}>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                      {Servicevalue?.ServiceType?.toLowerCase() == "train" && (
+                        <>
+                          <div className="row" key={Servicevalue?.ServiceType}>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                      {Servicevalue?.ServiceType?.toLowerCase() ==
+                        "enroute" && (
+                        <>
+                          <div className="row" key={Servicevalue?.ServiceType}>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                      {Servicevalue?.ServiceType?.toLowerCase() ==
+                        "transfer" && (
+                        <>
+                          <div className="row" key={Servicevalue?.ServiceType}>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                      {Servicevalue?.ServiceType?.toLowerCase() ==
+                        "itenarary" && (
+                        <>
+                          <div className="row" key={Servicevalue?.ServiceType}>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                            <div className="col-md col-sm-3 col-6">
+                              <p className="font-size-10 font-weight-bold text-flow">
+                                {item?.ItemName}
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      )}
                     </>
                   );
                 })}
               </div>
               <div className="col-1 py-0">
-                <div className="row">
+                <div className="row cursor-pointer">
                   <div className="col pr-0 d-flex justify-content-md-end">
                     <div className="d-flex flex-column">
-                      <p className="font-size-10 font-weight-bold">Action</p>
-                      <p className="font-size-10 font-weight-bold">
-                        <span className="p1-2 text-danger cursor-pointer">
-                          <i className="fa-solid fa-trash font-size-11 pr-1"></i>
-                        </span>
-                        <span className=" text-success cursor-pointer">
-                          <i className="fa-solid fa-pen-to-square font-size-11 pr-1"></i>
-                        </span>
+                      <p className="font-size-10 font-weight-bold m-0">
+                        Action
                       </p>
+                      <p
+                        className="m-0 text-center bg-primary rounded"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i className="fa-solid fa-hand-pointer text-light"></i>
+                      </p>
+                      <div
+                        className="dropdown-menu dropdown-menu-left"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <ActionDropdown
+                          action={Servicevalue?.ServiceType?.toLowerCase()}
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div
-                    className=" p-0 my-1 d-flex justify-content-md-end width-30px"
-                  >
-                    <div className="d-flex flex-column bg-primary vertical-text p-0">
+                  <div className=" p-0 my-1 d-flex justify-content-md-end width-30px">
+                    <div className="d-flex flex-column bg-primary vertical-text p-0 py-1">
                       DRAG
                     </div>
                   </div>
@@ -294,6 +615,66 @@ const DayWiseItinerary = ({ dayWiseData }) => {
           );
         })}
       </div>
+      
+      <ItenarayModal tabId={"hotelModal"}>
+        <Hotel />
+      </ItenarayModal>
+      <ItenarayModal tabId={"activityModal"}>
+        <Activity />
+      </ItenarayModal>
+      <ItenarayModal tabId={"monumentModal"}>
+        <Monument />
+      </ItenarayModal>
+      <ItenarayModal tabId={"guideModal"}>
+        <Guide />
+      </ItenarayModal>
+      <ItenarayModal tabId={"departureModal"}>
+        <Departure />
+      </ItenarayModal>
+      <ItenarayModal tabId={"arrivalModal"}>
+        <Arrival />
+      </ItenarayModal>
+      <ItenarayModal tabId={"restaurantModal"}>
+        <Restaurant />
+      </ItenarayModal>
+      <ItenarayModal tabId={"transferModal"}>
+        <Transfer />
+      </ItenarayModal>
+      <ItenarayModal tabId={"transportationModal"}>
+        <Transportation />
+      </ItenarayModal>
+      <ItenarayModal tabId={"trainModal"}>
+        <Train />
+      </ItenarayModal>
+      <ItenarayModal tabId={"enrouteModal"}>
+        <Monument />
+      </ItenarayModal>
+      <ItenarayModal tabId={"additionalModal"}>
+        <Monument />
+      </ItenarayModal>
+      <ItenarayModal tabId={"hotelMealModal"}>
+        <HotelMeal />
+      </ItenarayModal>
+      <ItenarayModal tabId={"departureTimeModal"}>
+        <DepartureTime />
+      </ItenarayModal>
+      <ItenarayModal tabId={"arrivalTimeModal"}>
+        <ArrivalTime />
+      </ItenarayModal>
+      <ItenarayModal tabId={"monumentTimeModal"}>
+        <MonumentTime />
+      </ItenarayModal>
+      <ItenarayModal tabId={"activityTimeModal"}>
+        <ActivityTime />
+      </ItenarayModal>
+      <ItenarayModal tabId={"restaurantTimeModal"}>
+        <RestaurantTime />
+      </ItenarayModal>
+      <ItenarayModal tabId={"trainTimeModal"}>
+        <TrainTime />
+      </ItenarayModal>
+      <HotelRoomSupplement />
+      <RestaurantSuppliment/>
     </div>
   );
 };

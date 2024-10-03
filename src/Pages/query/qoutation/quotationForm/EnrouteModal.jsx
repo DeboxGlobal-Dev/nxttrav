@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { quotationContext } from "../Quotation";
+import { enroutePopupList } from "../../quotationdata";
 
 const EnrouteModal = () => {
-  
   const [addNew, setAddNew] = useState(false);
   const { quotationGlobalData } = useContext(quotationContext);
 
@@ -116,21 +116,28 @@ const EnrouteModal = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="p-1 font-size-11 text-center">13</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-
-                      <td className="p-1 font-size-11 text-center width-80">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Select
-                        </p>
-                      </td>
-                      <td className="p-1 font-size-11 text-center width-100">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10 d-flex justify-content-center">
-                          Edit Price
-                        </p>
-                      </td>
-                    </tr>
+                    {enroutePopupList?.DataList?.map((item, index) => {
+                      return (
+                        <tr key={index + 1}>
+                          <td className="p-1 font-size-11 text-center">
+                            {item?.Name}
+                          </td>
+                          <td className="p-1 font-size-11 text-center">
+                            {item?.PerPaxCost}
+                          </td>
+                          <td className="p-1 font-size-11 text-center width-80">
+                            <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
+                              Select
+                            </p>
+                          </td>
+                          <td className="p-1 font-size-11 text-center width-100">
+                            <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10 d-flex justify-content-center">
+                              Edit Price
+                            </p>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

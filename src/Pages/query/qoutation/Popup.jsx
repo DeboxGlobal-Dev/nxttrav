@@ -201,7 +201,7 @@ const Popup = () => {
 
           <QoutationModal
             TabclassName={"bd-hotel-modal-lg"}
-            Title=" Guest Hotel | Thu 22 Aug 2024  |  Pax Type: FIT  "
+            Title="Guest Hotel | Thu 22 Aug 2024  |  Pax Type: FIT"
           >
             <HotelModal />
           </QoutationModal>

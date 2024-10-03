@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { activityPopupList } from "../../quotationdata";
 
 const ActivityModal = () => {
   const [addNew, setAddNew] = useState(false);
@@ -173,206 +174,37 @@ const ActivityModal = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="p-1 font-size-11">Lorem, ipsum dolor.</td>
-                      <td className="p-1 font-size-11 text-center">NA</td>
-                      <td className="p-1 font-size-11 text-center">All</td>
-                      <td className="p-1 font-size-11 text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="">All Pax</option>
-                          <option value="">1 Pax</option>
-                        </select>
-                      </td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center d-felx">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Select
-                        </p>
-                      </td>
-                      <td className="p-1 font-size-11 text-center d-felx">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Edit Price
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="p-1 font-size-11">Lorem, ipsum dolor.</td>
-                      <td className="p-1 font-size-11 text-center">NA</td>
-                      <td className="p-1 font-size-11 text-center">All</td>
-                      <td className="p-1 font-size-11 text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="">All Pax</option>
-                          <option value="">1 Pax</option>
-                        </select>
-                      </td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center d-felx">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Select
-                        </p>
-                      </td>
-                      <td className="p-1 font-size-11 text-center d-felx">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Edit Price
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="p-1 font-size-11">Lorem, ipsum dolor.</td>
-                      <td className="p-1 font-size-11 text-center">NA</td>
-                      <td className="p-1 font-size-11 text-center">All</td>
-                      <td className="p-1 font-size-11 text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="">All Pax</option>
-                          <option value="">1 Pax</option>
-                        </select>
-                      </td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center d-felx">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Select
-                        </p>
-                      </td>
-                      <td className="p-1 font-size-11 text-center d-felx">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Edit Price
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="p-1 font-size-11">Lorem, ipsum dolor.</td>
-                      <td className="p-1 font-size-11 text-center">NA</td>
-                      <td className="p-1 font-size-11 text-center">All</td>
-                      <td className="p-1 font-size-11 text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="">All Pax</option>
-                          <option value="">1 Pax</option>
-                        </select>
-                      </td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center d-felx">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Select
-                        </p>
-                      </td>
-                      <td className="p-1 font-size-11 text-center d-felx">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Edit Price
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="p-1 font-size-11">Lorem, ipsum dolor.</td>
-                      <td className="p-1 font-size-11 text-center">NA</td>
-                      <td className="p-1 font-size-11 text-center">All</td>
-                      <td className="p-1 font-size-11 text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="">All Pax</option>
-                          <option value="">1 Pax</option>
-                        </select>
-                      </td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center d-felx">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Select
-                        </p>
-                      </td>
-                      <td className="p-1 font-size-11 text-center d-felx">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Edit Price
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="p-1 font-size-11">Lorem, ipsum dolor.</td>
-                      <td className="p-1 font-size-11 text-center">NA</td>
-                      <td className="p-1 font-size-11 text-center">All</td>
-                      <td className="p-1 font-size-11 text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="">All Pax</option>
-                          <option value="">1 Pax</option>
-                        </select>
-                      </td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center d-felx">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Select
-                        </p>
-                      </td>
-                      <td className="p-1 font-size-11 text-center d-felx">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Edit Price
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="p-1 font-size-11">Lorem, ipsum dolor.</td>
-                      <td className="p-1 font-size-11 text-center">NA</td>
-                      <td className="p-1 font-size-11 text-center">All</td>
-                      <td className="p-1 font-size-11 text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="">All Pax</option>
-                          <option value="">1 Pax</option>
-                        </select>
-                      </td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center d-felx">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Select
-                        </p>
-                      </td>
-                      <td className="p-1 font-size-11 text-center d-felx">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Edit Price
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="p-1 font-size-11">Lorem, ipsum dolor.</td>
-                      <td className="p-1 font-size-11 text-center">NA</td>
-                      <td className="p-1 font-size-11 text-center">All</td>
-                      <td className="p-1 font-size-11 text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="">All Pax</option>
-                          <option value="">1 Pax</option>
-                        </select>
-                      </td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center">0</td>
-                      <td className="p-1 font-size-11 text-center d-felx">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Select
-                        </p>
-                      </td>
-                      <td className="p-1 font-size-11 text-center d-felx">
-                        <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
-                          Edit Price
-                        </p>
-                      </td>
-                    </tr>
+                    {activityPopupList?.DataList?.map((item) => {
+                      return (
+                        <tr>
+                          <td className="p-1 font-size-11">
+                            {item?.RateJson?.Service}
+                          </td>
+                          <td className="p-1 font-size-11 text-center">{item?.Type}</td>
+                          <td className="p-1 font-size-11 text-center">{item?.SupplierUID?.Name}</td>
+                          <td className="p-1 font-size-11 text-center">
+                            <select name="" id="" className="form-control">
+                              <option value="">All Pax</option>
+                              <option value="">1 Pax</option>
+                            </select>
+                          </td>
+                          <td className="p-1 font-size-11 text-center">{item?.Currency?.Name}</td>
+                          <td className="p-1 font-size-11 text-center">{item?.RateJson?.PaxRange}</td>
+                          <td className="p-1 font-size-11 text-center">0</td>
+                          <td className="p-1 font-size-11 text-center">0</td>
+                          <td className="p-1 font-size-11 text-center d-felx">
+                            <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
+                              Select
+                            </p>
+                          </td>
+                          <td className="p-1 font-size-11 text-center d-felx">
+                            <p className="border py-1 px-1 bg-success rounded m-0 cursor-pointer font-size-10">
+                              Edit Price
+                            </p>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

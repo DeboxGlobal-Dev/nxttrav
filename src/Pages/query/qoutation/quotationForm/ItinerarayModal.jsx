@@ -5,6 +5,7 @@ import { itenarayInfoPopupList } from "../../quotationdata";
 
 
 const ItineraryModal = () => {
+
   const [formData, setFormData] = useState({
     Language: "",
   });
@@ -21,7 +22,7 @@ const ItineraryModal = () => {
   };
 
   const handleItenararyEditor = (content) => {};
-
+  
   const handleBackTitle = () => {
     setSelectedValue("");
   };
