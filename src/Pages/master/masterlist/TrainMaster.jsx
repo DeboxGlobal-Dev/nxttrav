@@ -3,7 +3,7 @@ import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosOther, axiosTrain } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
   trainMasterInitialValue,
@@ -29,7 +29,7 @@ const TrainMaster = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("trainMasterlist", postData);
+        const { data } = await axiosTrain.post("trainMasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {

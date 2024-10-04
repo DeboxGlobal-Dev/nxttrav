@@ -3,7 +3,7 @@ import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosOther, axiosFerry } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
   ferryMasterInitialValue,
@@ -30,7 +30,7 @@ const FerryMaster = () => {
 
   const getDataToServer = async () => {
     try {
-      const ferryCompany = await axiosOther.post("ferrycompanylist", {
+      const ferryCompany = await axiosFerry.post("ferrycompanylist", {
         Search: "",
         Status: 1,
       });

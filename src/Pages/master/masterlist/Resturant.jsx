@@ -8,7 +8,7 @@ import {
   resturantInitialValue,
   resturantValidationSchema,
 } from "./MasterValidations";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosRestaurant, axiosOther } from "../../../http/axios/axios_new";
 
 const Resturant = () => {
   const [getData, setGetData] = useState([]);
@@ -87,7 +87,7 @@ const Resturant = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post(
+        const { data } = await axiosRestaurant.post(
           "restaurantmasterlist",
           postData
         );

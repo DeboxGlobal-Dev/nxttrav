@@ -2,11 +2,8 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import DataTable from "react-data-table-component";
-import { axiosOther } from "../../../http/axios/axios_new";
-import { hotelMasterValue } from "./MasterValidations";
-// import toast, { Toaster } from "react-hot-toast";
+import { axiosHotel } from "../../../http/axios/axios_new";
 import * as XLSX from "xlsx";
-import LinearWithValueLabel from "../../../hooks/LinearWithValueLabel";
 import { toast } from 'react-toastify';
 
 const HotelMaster = () => {
@@ -25,7 +22,7 @@ const HotelMaster = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("hotellist", postData);
+        const { data } = await axiosHotel.post("hotellist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {

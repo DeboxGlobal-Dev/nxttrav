@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
-import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
-import { Field, ErrorMessage } from "formik";
-import {
-  countryInitialValue,
-  countryValidationSchema,
-} from "./MasterValidations";
 
 const EmergencyDetails = () => {
   const [getData, setGetData] = useState([]);
@@ -20,12 +14,15 @@ const EmergencyDetails = () => {
     Status: "",
   });
   const [changeValue, setChangeValue] = useState("");
-  const [loading, setLoading]= useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("emergencydetailslist", postData);
+        const { data } = await axiosOther.post(
+          "emergencycontactlist",
+          postData
+        );
         setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
@@ -48,7 +45,7 @@ const EmergencyDetails = () => {
     setEditData({
       ...rowValue,
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -113,7 +110,9 @@ const EmergencyDetails = () => {
               style={{ padding: "10px" }}
             >
               <div className="col-xl-10 d-flex align-items-center">
-                <h5 className="card-title d-none d-sm-block">Emergency Details</h5>
+                <h5 className="card-title d-none d-sm-block">
+                  Emergency Details
+                </h5>
               </div>
               <div className="col-xl-2 d-flex justify-content-end">
                 {/*Bootstrap Modal*/}
