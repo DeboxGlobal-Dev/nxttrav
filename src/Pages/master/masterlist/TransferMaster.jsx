@@ -40,6 +40,7 @@ const TransferMaster = () => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("transfermasterlist", postData);
+        console.log("data", data);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -75,7 +76,7 @@ const TransferMaster = () => {
 
   const columns = [
     {
-      name: "Name",
+      name: "Transfer Name",
       selector: (row) => (
         <span>
           <i
@@ -84,19 +85,19 @@ const TransferMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row.TransferName}
         </span>
       ),
       sortable: true,
     },
     {
-      name: "State Name",
-      selector: (row) => row.StateName,
+      name: "Destination",
+      selector: (row) => row.Destinations,
       sortable: true,
     },
     {
-      name: "Country Name",
-      selector: (row) => row.CountryName,
+      name: "Transfer Type",
+      selector: (row) => row.TransferType,
       sortable: true,
     },
     {
@@ -169,7 +170,7 @@ const TransferMaster = () => {
                           Transfer/Transportation Name
                         </label>
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
+                          <ErrorMessage name="TransferName" />
                         </span>
                       </div>
                       <Field

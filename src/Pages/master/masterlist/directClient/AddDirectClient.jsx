@@ -64,13 +64,15 @@ const AddDirectClient = () => {
     setDocumentationListArray([...afterDelete]);
   };
 
+
+
   const handleChangeFormData = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleContactInfoChangeData = (index, e) => {
+    
     const { name, value } = e.target;
-
     setContactFormDataArray((prevArr) => {
       const newArray = [...prevArr];
       newArray[index] = { ...newArray[index], [name]: value };

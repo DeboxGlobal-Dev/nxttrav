@@ -272,7 +272,7 @@ export const sightseeingInitialValue = {
   DefaultProposal: 0,
   InclusionsExclusionsTiming: "",
   ImportantNote: "",
-  Status: 'Active',
+  Status: "Active",
   AddedBy: 1,
   UpdatedBy: 1,
 };
@@ -745,6 +745,53 @@ export const guidePriceMasterInititalValue = {
   CompanyId: "",
 };
 
+export const hotelAddInitialValue = {
+  id: "",
+  HotelName: "",
+  SelfSupplier: "1",
+  HotelCountry: "",
+  HotelCity: "",
+  Destination: "",
+  AddedBy: "1",
+  HotelPinCode: "",
+  HotelAddress: "",
+  HotelGSTN: "",
+  HotelType: "",
+  HotelCategory: "",
+  HotelLink: "",
+  HotelInfo: "",
+  HotelPolicy: "",
+  HotelTC: "",
+  HotelRoomType: "",
+  HotelState: "",
+  HotelWeekend: "",
+  HotelChain: "",
+  HotelAmenities: ["1", "2"],
+  Days: "",
+  CheckInTime: "",
+  CheckOutTime: "",
+  Status: "Active",
+  Verified: "",
+  InternalNote: "",
+  contacts: [],
+  ImageName: "",
+  ImageData: "",
+};
+
+export const hotelAddContactInitialValue = {
+  Division: "",
+  Title: "Mr",
+  FirstName: "",
+  LastName: "",
+  Designation: "",
+  CountryCode: "",
+  Phone1: "",
+  Phone2: "",
+  Phone3: "",
+  Email: "",
+  SecondaryEmail: "",
+};
+
 // ------------------------VALIDATION SCHEMAS-------------------------- //
 
 export const guideMasterValidationSchema = yup.object().shape({
@@ -756,10 +803,10 @@ export const guideMasterValidationSchema = yup.object().shape({
   Default: yup.string().required("Required"),
 });
 export const guidePriceValidationSchema = yup.object().shape({
-  ServiceType : yup.string().required("Required"),
-  Destination : yup.string().required("Required"),
-  Guide_Porter_Service : yup.string().required("Required"),
-})
+  ServiceType: yup.string().required("Required"),
+  Destination: yup.string().required("Required"),
+  Guide_Porter_Service: yup.string().required("Required"),
+});
 
 export const countryValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
@@ -1090,6 +1137,19 @@ export const taskValidationSchema = yup.object().shape({
   Startdate: yup.string().required("Required"),
   NextFollowUpdate: yup.string().required("Required"),
   TaskSubject: yup.string().required("Required"),
+});
+const hotelContact = yup.object().shape({
+  FirstName: yup.string().required("Required"),
+  Email: yup.string().required("Required"),
+});
+export const hotelAddContactArraySchema = yup.array().of(hotelContact);
+export const hotelAddValidationSchema = yup.object().shape({
+  HotelName: yup.string().required("Required"),
+  Destination: yup.string().required("Required"),
+  HotelRoomType: yup.string().required("Required"),
+  HotelCountry: yup.string().required("Required"),
+  Status: yup.string().required("Required"),
+  Days: yup.string().required("Required"),
 });
 
 // Hotel Master Table Value in JSON-----------------------------------

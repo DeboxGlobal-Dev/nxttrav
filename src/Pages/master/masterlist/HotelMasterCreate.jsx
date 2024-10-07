@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosHotel, axiosOther } from "../../../http/axios/axios_new";
+import Editor from "../../../helper/Editor";
+import { hotelAddInitialValue } from "./MasterValidations";
+import { hotelAddContactInitialValue } from "./MasterValidations";
+import {
+  hotelAddValidationSchema,
+  hotelAddContactArraySchema,
+} from "./MasterValidations";
 import {
   amentiesInitialValue,
   cityInitialValue,
@@ -17,543 +24,759 @@ import {
   roomTypeInitialValue,
   stateInitialValue,
 } from "./MasterValidations";
+import toast, { Toaster } from "react-hot-toast";
 
 const HotelMasterCreate = () => {
+  const [formValue, setFormValue] = useState(hotelAddInitialValue);
+  const [contactFormValue, setContactFormValue] = useState([
+    hotelAddContactInitialValue,
+  ]);
+  const [editorValue, setEditorValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState([]);
 
-  
-
-  const [moreAddress, setMoreAddress] = useState(false);
-  const [moreInfo, setMoreInfo] = useState(false);
-  const [hotelChain, setHotelChain] = useState([]);
-  const [hotelName, setHotelName] = useState([]);
   const [hotelCategory, setHotelCategory] = useState([]);
-  const [hotelType, setHotelType] = useState([]);
   const [destination, setDestination] = useState([]);
   const [roomType, setRoomType] = useState([]);
+  const [hotelType, setHotelType] = useState([]);
   const [country, setCountry] = useState([]);
   const [state, setState] = useState([]);
   const [city, setCity] = useState([]);
-  const [amenties, setAmenties] = useState([]);
-
 
   const hanldeSubmit = (value) => {
     console.log(value);
   };
 
-  const getDataToServer = async () => {
-    // const chainData = await axiosOther.post(
-    //   "hotelchainlist",
-    //   hotelChainInitialValue
-    // );
-    // const nameData = await axiosOther.post(
-    //   "hotellist",
-    //   hotelMasterInitialValue
-    // );
-    const categoryData = await axiosOther.post(
-      "hotelcategorylist",
-      hotelCategoryInitialValue
-    );
-
-    const typeData = await axiosOther.post(
-      "hoteltypelist",
-      hotelTypeInitialValue
-    );
-    // const destinationData = await axiosOther.post(
-    //   "destinationlist",
-    //   destinationInitialValue
-    // );
-    // const roomData = await axiosOther.post(
-    //   "roomtypelist",
-    //   roomTypeInitialValue
-    // );
-    const countryData = await axiosOther.post(
-      "countrylist",
-      countryInitialValue
-    );
-    const stateData = await axiosOther.post("statelist", stateInitialValue);
-    const cityData = await axiosOther.post("citylist", cityInitialValue);
-    // const amentyData = await axiosOther.post(
-    //   "amenitieslist",
-    //   amentiesInitialValue
-    // );
-
-
-    // setHotelChain(chainData.data.DataList);
-    // setHotelName(nameData.data.DataList);
-    setHotelCategory(categoryData.data.DataList);
-    setHotelType(typeData.data.DataList);
-    // setDestination(destinationData.data.DataList);
-    // setRoomType(roomData.data.DataList);
-    setCountry(countryData.data.DataList);
-    setState(stateData.data.DataList);
-    setCity(cityData.data.DataList);
-    // setAmenties(amentyData.data.DataList);
+  const getDataForDropdown = async () => {
+    try {
+      const { data } = await axiosOther.post("countrylist", {
+        Search: "",
+        Status: "",
+      });
+      console.log("country-data", data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    getDataToServer();
+    getDataForDropdown();
   }, []);
 
+  const handleInputChange = (e) => {
+    const { name, value, files } = e.target;
+    if (files) {
+      const file = files[0];
 
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64String = reader.result;
+        setFormValue({
+          ...formValue,
+          ImageData: base64String,
+          ImageName: file.name,
+        });
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setFormValue({ ...formValue, [name]: value });
+    }
+  };
+
+  const handleContactChange = (index, e) => {
+    const { name, value } = e.target;
+    setContactFormValue((prevArr) => {
+      const newArray = [...prevArr];
+      newArray[index] = { ...newArray[index], [name]: value };
+      return newArray;
+    });
+  };
+
+  const handleContactIncrement = () => {
+    setContactFormValue([...contactFormValue, hotelAddContactInitialValue]);
+    // contactFormValue.push(hotelAddContactInitialValue);
+  };
+
+  // console.log("contactFormValue", contactFormValue);
+
+  const handleSubmit = async () => {
+    console.log("Form Submitted");
+
+    try {
+      await hotelAddValidationSchema.validate(
+        {
+          ...formValue,
+        },
+        { abortEarly: false }
+      );
+
+      await hotelAddContactArraySchema.validate(contactFormValue, {
+        abortEarly: false,
+      });
+
+      setErrorMessage("");
+      const { data } = await axiosHotel.post("addupdatehotel", {
+        ...formValue,
+        HotelInfo: editorValue,
+        contacts: contactFormValue,
+      });
+
+      if (data?.Status == "1") {
+        toast.success("Data Addedd Successfully !");
+        setFormValue(hotelAddInitialValue);
+        setContactFormValue([hotelAddContactInitialValue]);
+      }
+    } catch (err) {
+      const errorMessage = err?.inner.reduce((acc, crr) => {
+        acc[crr?.path] = crr?.message;
+        return acc;
+      }, {});
+      setErrorMessage(errorMessage);
+    }
+  };
+
+  const handleEditorValue = (content) => {
+    setEditorValue(content);
+  };
+
+  console.log("messageError", errorMessage["[0].Email"]);
+
+  const handleContactDelete = (index) => {
+    const filteredContact = contactFormValue.filter((i, ind) => ind !== index);
+    setContactFormValue(filteredContact);
+  };
+
+  // console.log("contact", contactFormValue);
 
   return (
     <>
       <Layout>
         <div className="container-fluid mt-3 mb-5">
           <div className="card shadow-none border">
-            <Formik
-              initialValues={hotelMasterCreateInitialValue}
-              validationSchema={hotelMasterCreateValidationSchema}
-              onSubmit={hanldeSubmit}
+            <div
+              className="card-header header-elements-inline bg-info-700 py-2"
+              style={{ padding: "10px" }}
             >
-              <Form>
-                <div
-                  className="card-header header-elements-inline bg-info-700 py-2"
-                  style={{ padding: "10px" }}
+              <div className="col-xl-10 d-flex align-items-center">
+                <h5 className="card-title d-none d-sm-block">Create New</h5>
+              </div>
+              <div className="">
+                <NavLink
+                  to="/master/hotelmaster"
+                  className="gray-button py-2"
+                  aria-expanded="false"
                 >
-                  <div className="col-xl-10 d-flex align-items-center">
-                    <h5 className="card-title d-none d-sm-block">Create New</h5>
+                  Back
+                </NavLink>
+                <button className="green-button" onClick={handleSubmit}>
+                  Save
+                </button>
+                <Toaster />
+              </div>
+            </div>
+
+            <div className="card-body">
+              <div className="row row-gap-2">
+                <div className="col-sm-2">
+                  <label className="m-0">Hotel Chain</label>
+                  <select
+                    className="form-input-6"
+                    component={"select"}
+                    name="HotelChain"
+                    value={formValue?.HotelChain}
+                    onChange={handleInputChange}
+                  >
+                    <option value={""}>Select</option>
+                    <option value={"1"}>ITC</option>
+                    <option value={"2"}>Oberoi Group</option>
+                    <option value={"3"}>Taj Group</option>
+                  </select>
+                </div>
+                <div className="col-sm-2">
+                  <div className="d-flex justify-content-between">
+                    <label className="m-0">
+                      Hotel Name <span className="text-danger">*</span>
+                    </label>
+                    {errorMessage?.HotelName && (
+                      <span className="text-danger font-size-11">
+                        {errorMessage?.HotelName}
+                      </span>
+                    )}
                   </div>
-                  <div className="">
-                    <NavLink
-                      to="/master/hotelmaster"
-                      className="gray-button py-2"
-                      aria-expanded="false"
-                    >
-                      Back
-                    </NavLink>
-                    <button className="green-button" type="submit">
-                      Save
-                    </button>
+                  <input
+                    type="text"
+                    placeholder="Hotel Name"
+                    className="form-input-6"
+                    name="HotelName"
+                    value={formValue?.HotelName}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="col-sm-2">
+                  <div className="d-flex justify-content-between">
+                    <label className="m-0">
+                      Destination <span className="text-danger">*</span>
+                    </label>
+                    {errorMessage?.Destination && (
+                      <span className="text-danger font-size-11">
+                        {errorMessage?.Destination}
+                      </span>
+                    )}
                   </div>
+                  <select
+                    className="form-input-6"
+                    component="select"
+                    name="Destination"
+                    value={formValue?.Destination}
+                    onChange={handleInputChange}
+                  >
+                    <option value="">Select</option>
+                    <option value="1">Kashmir</option>
+                    <option value="2">Laddakh</option>
+                    {destination.map((value, ind) => {
+                      return (
+                        <option value={ind + 1} key={ind + 1}>
+                          {value.Name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className="col-sm-2">
+                  <label className="m-0">Hotel Category</label>
+                  <select
+                    className="form-input-6"
+                    component={"select"}
+                    name="HotelCategory"
+                    value={formValue?.HotelCategory}
+                    onChange={handleInputChange}
+                  >
+                    <option value={""}>Select</option>
+                    {hotelCategory.map((value, ind) => {
+                      return (
+                        <option value={ind + 1} key={ind + 1}>
+                          {value.Name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className="col-sm-2">
+                  <label className="m-0">Hotel Type</label>
+                  <select
+                    className="form-input-6"
+                    component={"select"}
+                    name="HotelType"
+                    value={formValue?.HotelType}
+                    onChange={handleInputChange}
+                  >
+                    <option value={""}>Select</option>
+                    {hotelType.map((value, ind) => {
+                      return (
+                        <option value={ind + 1} key={ind + 1}>
+                          {value.Name}
+                        </option>
+                      );
+                    })}
+                  </select>
                 </div>
 
-                <div className="card-body">
-                  <div className="row row-gap-3">
-                    <div className="col-sm-2">
-                      <label>Hotel Chain</label>
-                      <Field
-                        className="form-input-1"
-                        component={"select"}
-                        name="HotelChain"
-                      >
-                        <option value={""}>Select</option>
-                        <option value={"1"}>ITC</option>
-                        <option value={"2"}>Oberoi Group</option>
-                        <option value={"3"}>Taj Group</option>
-                      </Field>
-                    </div>
-                    <div className="col-sm-2">
-                      <label>Hotel Name</label>
-                      <Field
-                        type="text"
-                        placeholder="Hotel Name"
-                        className="form-input-1"
-                        name="HotelName"
-                      />
-                      <span className="font-size-10 text-danger">
-                        <ErrorMessage name="HotelName" />
+                <div className="col-sm-2">
+                  <div className="d-flex justify-content-between">
+                    <label className="m-0">Hotel Link</label>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Link"
+                    className="form-input-6"
+                    name="HotelLink"
+                    value={formValue?.HotelLink}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="col-sm-2">
+                  <div className="d-flex justify-content-between">
+                    <label className="m-0">Hotel Amenities</label>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Amenities"
+                    className="form-input-6"
+                    name="HotelAmenities"
+                    value={formValue?.HotelAmenities}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="col-sm-2">
+                  <div className="d-flex justify-content-between">
+                    <label className="m-0">
+                      Room Type <span className="text-danger">*</span>
+                    </label>
+                    {errorMessage?.HotelRoomType && (
+                      <span className="text-danger font-size-11">
+                        {errorMessage?.HotelRoomType}
                       </span>
-                    </div>
-                    <div className="col-sm-2">
-                      <label>Hotel Category</label>
-                      <Field
-                        className="form-input-1"
-                        component={"select"}
-                        name="HotelCategory"
-                      >
-                        <option value={""}>Select</option>
-                        {hotelCategory.map((value, ind) => {
-                          return (
-                            <option value={ind + 1} key={ind + 1}>
-                              {value.Name}
-                            </option>
-                          );
-                        })}
-                      </Field>
-                    </div>
-                    <div className="col-sm-2">
-                      <label>Hotel Type</label>
-                      <Field
-                        className="form-input-1"
-                        component={"select"}
-                        name="HotelType"
-                      >
-                        <option value={""}>Select</option>
-                        {hotelType.map((value, ind) => {
-                          return (
-                            <option value={ind + 1} key={ind + 1}>
-                              {value.Name}
-                            </option>
-                          );
-                        })}
-                      </Field>
-                    </div>
-                    <div className="col-sm-2">
-                      <label>Destination</label>
-                      <Field
-                        className="form-input-1"
-                        component="select"
-                        name="HotelDestination"
-                      >
-                        <option value="">Select</option>
-                        {destination.map((value, ind) => {
-                          return (
-                            <option value={ind + 1} key={ind + 1}>
-                              {value.Name}
-                            </option>
-                          );
-                        })}
-                      </Field>
-                      <span className="font-size-10 text-danger">
-                        <ErrorMessage name="HotelDestination" />
+                    )}
+                  </div>
+                  <select
+                    className="form-input-6"
+                    component={"select"}
+                    name="HotelRoomType"
+                    value={formValue?.HotelRoomType}
+                    onChange={handleInputChange}
+                  >
+                    <option value={""}>Select</option>
+                    <option value={"3"}>3 Star</option>
+                    <option value={"4"}>4 Star</option>
+                    {roomType.map((value, ind) => {
+                      return (
+                        <option value={ind + 1} key={ind + 1}>
+                          {value.Name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className="col-sm-2">
+                  <label className="m-0">Self Supplier</label>
+                  <select
+                    className="form-input-6"
+                    component={"select"}
+                    name="SelfSupplier"
+                    value={formValue?.SelfSupplier}
+                    onChange={handleInputChange}
+                  >
+                    <option value={"1"}>Yes</option>
+                    <option value={"2"}>No</option>
+                  </select>
+                </div>
+                <div className="col-sm-2">
+                  <div className="d-flex justify-content-between">
+                    <label className="m-0">
+                      Country <span className="text-danger">*</span>
+                    </label>
+                    {errorMessage?.HotelCountry && (
+                      <span className="text-danger font-size-11">
+                        {errorMessage?.HotelCountry}
                       </span>
-                    </div>
-                    <div className="col-sm-2">
-                      <label>Locality</label>
-                      <Field
-                        type="text"
-                        placeholder="Locality"
-                        className="form-input-1"
-                        name="HotelLocality"
-                      />
-                      <span className="font-size-10 text-danger">
-                        <ErrorMessage name="HotelLocality" />
+                    )}
+                  </div>
+                  <select
+                    className="form-input-6"
+                    component={"select"}
+                    name="HotelCountry"
+                    value={formValue?.HotelCountry}
+                    onChange={handleInputChange}
+                  >
+                    <option value={""}>Select</option>
+                    <option value={"1"}>India</option>
+                    <option value={"2"}>Afghanistan</option>
+                  </select>
+                </div>
+                <div className="col-sm-2">
+                  <label className="m-0">State</label>
+                  <select
+                    className="form-input-6"
+                    component={"select"}
+                    name="HotelState"
+                    value={formValue?.HotelState}
+                    onChange={handleInputChange}
+                  >
+                    <option value={"1"}>Delhi</option>
+                  </select>
+                </div>
+                <div className="col-sm-2">
+                  <label className="m-0">City</label>
+                  <select
+                    className="form-input-6"
+                    component={"select"}
+                    name="HotelCity"
+                    value={formValue?.HotelCity}
+                    onChange={handleInputChange}
+                  >
+                    <option value={"1"}>New Delhi</option>
+                  </select>
+                </div>
+                <div className="col-sm-2">
+                  <label className="m-0">Pin Code</label>
+                  <input
+                    type="text"
+                    className="form-input-6"
+                    placeholder="201301"
+                    name="HotelPinCode"
+                    value={formValue?.HotelPinCode}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="col-sm-2">
+                  <label className="m-0">Address</label>
+                  <input
+                    type="text"
+                    className="form-input-6"
+                    placeholder="Address"
+                    name="HotelAddress"
+                    value={formValue?.HotelAddress}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="col-sm-2">
+                  <label className="m-0">GSTN</label>
+                  <input
+                    type="text"
+                    className="form-input-6"
+                    placeholder="GSTN"
+                    name="HotelGSTN"
+                    value={formValue?.HotelGSTN}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="col-sm-2">
+                  <div className="d-flex justify-content-between">
+                    <label className="m-0">
+                      Hotel Status <span className="text-danger">*</span>
+                    </label>
+                    {errorMessage?.Status && (
+                      <span className="text-danger font-size-11">
+                        {errorMessage?.Status}
                       </span>
-                    </div>
-                    <div className="col-sm-2">
-                      <label>Room Type</label>
-                      <Field
-                        className="form-input-1"
-                        component={"select"}
-                        name="HotelRoomType"
-                      >
-                        <option value={""}>Select</option>
-                        {roomType.map((value, ind) => {
-                          return (
-                            <option value={ind + 1} key={ind + 1}>
-                              {value.Name}
-                            </option>
-
-                          );
-                        })}
-                      </Field>
-                      <span className="font-size-10 text-danger">
-                        <ErrorMessage name="HotelRoomType" />
+                    )}
+                  </div>
+                  <select
+                    className="form-input-6"
+                    component={"select"}
+                    name="Status"
+                    value={formValue?.Status}
+                    onChange={handleInputChange}
+                  >
+                    <option value={"Active"}>Active</option>
+                    <option value={"Inactive"}>Inactive</option>
+                  </select>
+                </div>
+                <div className="col-sm-2">
+                  <label className="m-0">Weekend Days</label>
+                  <select
+                    className="form-input-6"
+                    component={"select"}
+                    name="HotelWeekend"
+                    value={formValue?.HotelWeekend}
+                    onChange={handleInputChange}
+                  >
+                    <option value={"none"}>None</option>
+                    <option value={"sunday"}>Sunday</option>
+                  </select>
+                </div>
+                <div className="col-sm-2">
+                  <div className="d-flex justify-content-between">
+                    <label className="m-0">
+                      Days <span className="text-danger">*</span>
+                    </label>
+                    {errorMessage?.Days && (
+                      <span className="text-danger font-size-11">
+                        {errorMessage?.Days}
                       </span>
-                    </div>
-                    <div className="col-sm-2">
-                      <label>Self Supplier</label>
-                      <Field
-                        className="form-input-1"
-                        component={"select"}
-                        name="SelfSupplier"
-                      >
-                        <option value={"1"}>Yes</option>
-                        <option value={"2"}>No</option>
-                      </Field>
-                    </div>
-                    <div className="col-sm-2">
-                      <label>Status</label>
-                      <Field
-                        className="form-input-1"
-                        component={"select"}
-                        name="HotelStatus"
-                      >
-                        <option value={"1"}>Active</option>
-                        <option value={"2"}>Inactive</option>
-                      </Field>
-                    </div>
-                    <p className="font-weight-bold mt-1">Contact Person</p>
-                    <div className="col-sm-2">
-                      <label>Accounts</label>
-                      <Field
-                        className="form-input-1"
-                        component={"select"}
-                        name="Accounts"
-                      >
-                        <option value={"1"}>Select</option>
-                        <option value={"2"}>FIT Reservation</option>
-                        <option value={"2"}>GIT Reservation</option>
-                        <option value={"2"}>Operation</option>
-                      </Field>
-                    </div>
-                    <div className="col-sm-2">
-                      <label>Contact Person</label>
-                      <Field
-                        type="text"
-                        placeholder="Contact Person"
-                        className="form-input-1"
-                        name="ContactPerson"
-                      />
-                    </div>
-                    <div className="col-sm-2">
-                      <label>Designation</label>
-                      <Field
-                        type="text"
-                        placeholder="Designation"
-                        className="form-input-1"
-                        name="Designation"
-                      />
-                    </div>
-                    <div className="col-sm-2">
-                      <label>Phone 1</label>
-                      <Field
-                        type="text"
-                        placeholder="Phone 1"
-                        className="form-input-1"
-                        name="Phone1"
-                      />
-                    </div>
-                    <div className="col-sm-2">
-                      <label>Phone 2</label>
-                      <Field
-                        type="text"
-                        placeholder="Phone 2"
-                        className="form-input-1"
-                        name="Phone2"
-                      />
-                    </div>
-                    <div className="col-sm-2">
-                      <label>Email</label>
-                      <Field
-                        type="text"
-                        placeholder="Email"
-                        className="form-input-1"
-                        name="Email"
-                      />
-                    </div>
+                    )}
+                  </div>
+                  <select
+                    className="form-input-6"
+                    component={"select"}
+                    name="Days"
+                    value={formValue?.Days}
+                    onChange={handleInputChange}
+                  >
+                    <option value={""}>Select</option>
+                    <option value={"1"}>Sun</option>
+                    <option value={"2"}>Sat</option>
+                  </select>
+                </div>
+                <div className="col-sm-2">
+                  <label className="m-0">Check In Time</label>
+                  <input
+                    type="time"
+                    className="form-input-6"
+                    placeholder="GSTN"
+                    name="CheckInTime"
+                    value={formValue?.CheckInTime}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="col-sm-2">
+                  <label className="m-0">Check Out Time</label>
+                  <input
+                    type="time"
+                    className="form-input-6"
+                    placeholder="GSTN"
+                    name="CheckOutTime"
+                    value={formValue?.CheckOutTime}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="col-12 mt-2">
+                  <div className="border-bottom"></div>
+                  <div className="d-flex gap-3 mt-1">
+                    <p className="font-weight-bold m-0 p-1 ">Contact Person</p>
                     <span
-                      className="cursor-pointer font-weight-bold text-success"
-                      onClick={() => setMoreAddress(!moreAddress)}
+                      className="p-1 bg-primary m-0 rounded cursor-pointer"
+                      onClick={handleContactIncrement}
                     >
-                      <i className="fa-solid fa-plus font-size-15 pr-2"></i>
-                      Add Address
+                      + Add More
                     </span>
-                    {moreAddress && (
-                      <>
-                        <div className="col-sm-2">
-                          <label>Country</label>
-                          <Field
-                            className="form-input-1"
-                            component={"select"}
-                            name="HotelCountry"
-                          >
-                            <option value={""}>Select</option>
-                            {country.map((value, ind) => {
-                              return (
-                                <option value={ind + 1} key={ind + 1}>
-                                  {value.Name}
-                                </option>
-                              );
-                            })}
-                          </Field>
-                        </div>
-                        <div className="col-sm-2">
-                          <label>State</label>
-                          <Field
-                            className="form-input-1"
-                            component={"select"}
-                            name="HotelState"
-                          >
-                            <option value={""}>Select</option>
-                            {state.map((value, ind) => {
-                              return (
-                                <option value={ind + 1} key={ind + 1}>
-                                  {value.Name}
-                                </option>
-                              );
-                            })}
-                          </Field>
-                        </div>
-                        <div className="col-sm-2">
-                          <label>City</label>
-                          <Field
-                            className="form-input-1"
-                            component={"select"}
-                            name="HotelCity"
-                          >
-                            <option value={""}>Select</option>
-                            {city.map((value, ind) => {
-                              return (
-                                <option value={ind + 1} key={ind + 1}>
-                                  {value.Name}
-                                </option>
-                              );
-                            })}
-                          </Field>
-                        </div>
-                        <div className="col-sm-2">
-                          <label>PinCode</label>
-                          <Field
-                            type="text"
-                            placeholder="Pin Code"
-                            className="form-input-1"
-                            name="HotelPinCode"
-                          />
-                          <span className="font-size-10 text-danger">
-                            <ErrorMessage name="PinCode" />
-                          </span>
-                        </div>
-                        <div className="col-sm-2">
-                          <label>Address</label>
-                          <Field
-                            type="text"
-                            placeholder="Address"
-                            className="form-input-1"
-                            name="HotelAddress"
-                          />
-                          <span className="font-size-10 text-danger">
-                            <ErrorMessage name="HotelAddress" />
-                          </span>
-                        </div>
-                        <div className="col-sm-2">
-                          <label>GSTN</label>
-                          <Field
-                            type="text"
-                            placeholder="GSTN"
-                            className="form-input-1"
-                            name="HotelGSTN"
-                          />
-                        </div>
-                      </>
-                    )}
-
-                    <p
-                      className="cursor-pointer font-weight-bold"
-                      onClick={() => setMoreInfo(!moreInfo)}
-                    >
-                      More Information
-                      <span className="pl-2 font-size-15">
-                        {moreInfo ? (
-                          <i className="fa-solid fa-caret-up"></i>
-                        ) : (
-                          <i className="fa-solid fa-caret-down"></i>
-                        )}
-                      </span>
-                    </p>
-                    {moreInfo && (
-                      <>
-                        <div className="col-sm-2">
-                          <label>Weekend Days</label>
-                          <Field
-                            className="form-input-1"
-                            component={"select"}
-                            name="HotelWeekend"
-                          >
-                            <option value={"1"}>SAT-SUN</option>
-                            <option value={"2"}>Special Weekend</option>
-                          </Field>
-                        </div>
-                        <div className="col-sm-2">
-                          <label>Check In Time</label>
-                          <Field
-                            className="form-input-1"
-                            component={"select"}
-                            name="CheckIn"
-                          >
-                            <option value={"1"}>01:00</option>
-                            <option value={"2"}>02:00</option>
-                            <option value={"3"}>05:00</option>
-                            <option value={"4"}>06:00</option>
-                            <option value={"5"}>07:00</option>
-                            <option value={"6"}>08:00</option>
-                            <option value={"7"}>09:00</option>
-                            <option value={"8"}>10:00</option>
-                            <option value={"9"}>11:00</option>
-                            <option value={"10"}>12:00</option>
-                          </Field>
-                        </div>
-                        <div className="col-sm-2">
-                          <label>Check Out Time</label>
-                          <Field
-                            className="form-input-1"
-                            component={"select"}
-                            name="CheckOut"
-                          >
-                            <option value={"1"}>01:00</option>
-                            <option value={"2"}>02:00</option>
-                            <option value={"3"}>05:00</option>
-                            <option value={"4"}>06:00</option>
-                            <option value={"5"}>07:00</option>
-                            <option value={"6"}>08:00</option>
-                            <option value={"7"}>09:00</option>
-                            <option value={"8"}>10:00</option>
-                            <option value={"9"}>11:00</option>
-                            <option value={"10"}>12:00</option>
-                          </Field>
-                        </div>
-                        <div className="col-sm-2">
-                          <label>Hotel Link</label>
-                          <Field
-                            type="text"
-                            placeholder="Locality"
-                            className="form-input-1"
-                            name="HotelLink"
-                          />
-                          <span className="font-size-10 text-danger">
-                            <ErrorMessage name="HotelLink" />
-                          </span>
-                        </div>
-                        <div className="col-sm-2">
-                          <label>Hotel Amenties</label>
-                          <Field
-                            className="form-input-1"
-                            component={"select"}
-                            name="HotelAmenties"
-                          >
-                            <option value={""}>Select</option>
-                            {amenties.map((value, ind) => {
-                              return (
-                                <option value={ind + 1} key={ind + 1}>
-                                  {value.Name}
-                                </option>
-                              );
-                            })}
-                          </Field>
-                        </div>
-                        <div className="col-sm-2">
-                          <label>Hotel Information</label>
-                          <Field
-                            type="text"
-                            placeholder="Locality"
-                            className="form-input-1"
-                            name="HotelInfo"
-                          />
-                          <span className="font-size-10 text-danger">
-                            <ErrorMessage name="HotelInfo" />
-                          </span>
-                        </div>
-                        <div className="col-sm-2">
-                          <label>Policy</label>
-                          <Field
-                            type="text"
-                            placeholder="Locality"
-                            className="form-input-1"
-                            name="HotelPolicy"
-                          />
-                          <span className="font-size-10 text-danger">
-                            <ErrorMessage name="HotelPolicy" />
-                          </span>
-                        </div>
-                        <div className="col-sm-2">
-                          <label>T&C</label>
-                          <Field
-                            type="text"
-                            placeholder="Locality"
-                            className="form-input-1"
-                            name="HotelTC"
-                          />
-                          <span className="font-size-10 text-danger">
-                            <ErrorMessage name="T&C" />
-                          </span>
-                        </div>
-                      </>
-                    )}
                   </div>
                 </div>
-              </Form>
-            </Formik>
+                <div className="col-12">
+                  {contactFormValue?.map((form, index) => {
+                    return (
+                      <div
+                        className={`row row-gap-1 ${index > 0 && "mt-3"}`}
+                        key={index}
+                      >
+                        <div className="col-sm-2">
+                          <label className="m-0">Divisioin</label>
+                          <select
+                            className="form-input-6"
+                            component={"select"}
+                            name="Division"
+                            value={contactFormValue[index]?.Division}
+                            onChange={(e) => handleContactChange(index, e)}
+                          >
+                            <option value={"1"}>Select</option>
+                            <option value={"FIT"}>FIT Reservation</option>
+                            <option value={"GIT"}>GIT Reservation</option>
+                            <option value={"OPERATION"}>Operation</option>
+                          </select>
+                        </div>
+                        <div className="col-sm-2">
+                          <label className="m-0">Title</label>
+                          <select
+                            className="form-input-6"
+                            component={"select"}
+                            name="Title"
+                            value={contactFormValue[index]?.Title}
+                            onChange={(e) => handleContactChange(index, e)}
+                          >
+                            <option value={"Mr"}>Mr</option>
+                            <option value={"Mrs"}>Mrs</option>
+                            <option value={"Ms"}>Ms</option>
+                          </select>
+                        </div>
+                        <div className="col-sm-2">
+                          <div className="d-flex justify-content-between">
+                            <label className="m-0">
+                              First Name <span className="text-danger">*</span>
+                            </label>
+                            {errorMessage[`[${index}].FirstName`] && (
+                              <span className="text-danger font-size-11">
+                                {errorMessage[`[${index}].FirstName`]}
+                              </span>
+                            )}
+                          </div>
+                          <input
+                            type="text"
+                            placeholder="First Name"
+                            className="form-input-6"
+                            name="FirstName"
+                            value={contactFormValue[index]?.FirstName}
+                            onChange={(e) => handleContactChange(index, e)}
+                          />
+                        </div>
+                        <div className="col-sm-2">
+                          <label className="m-0">Last Name</label>
+                          <input
+                            type="text"
+                            placeholder="Last Name"
+                            className="form-input-6"
+                            name="LastName"
+                            value={contactFormValue[index]?.LastName}
+                            onChange={(e) => handleContactChange(index, e)}
+                          />
+                        </div>
+                        <div className="col-sm-2">
+                          <label className="m-0">Designation</label>
+                          <input
+                            type="text"
+                            placeholder="Designation"
+                            className="form-input-6"
+                            name="Designation"
+                            value={contactFormValue[index]?.Designation}
+                            onChange={(e) => handleContactChange(index, e)}
+                          />
+                        </div>
+                        <div className="col-sm-2">
+                          <label className="m-0">Country Code </label>
+                          <input
+                            type="text"
+                            placeholder="+91"
+                            className="form-input-6"
+                            name="CountryCode"
+                            value={contactFormValue[index]?.CountryCode}
+                            onChange={(e) => handleContactChange(index, e)}
+                          />
+                        </div>
+                        <div className="col-sm-2">
+                          <label className="m-0">Phone 1</label>
+                          <input
+                            type="text"
+                            placeholder="Phone 1"
+                            className="form-input-6"
+                            name="Phone1"
+                            value={contactFormValue[index]?.Phone1}
+                            onChange={(e) => handleContactChange(index, e)}
+                          />
+                        </div>
+                        <div className="col-sm-2">
+                          <label className="m-0">Phone 2</label>
+                          <input
+                            type="text"
+                            placeholder="Phone 2"
+                            className="form-input-6"
+                            name="Phone2"
+                            value={contactFormValue[index]?.Phone2}
+                            onChange={(e) => handleContactChange(index, e)}
+                          />
+                        </div>
+                        <div className="col-sm-2">
+                          <label className="m-0">Phone 3</label>
+                          <input
+                            type="text"
+                            placeholder="Phone 3"
+                            className="form-input-6"
+                            name="Phone3"
+                            value={contactFormValue[index]?.Phone3}
+                            onChange={(e) => handleContactChange(index, e)}
+                          />
+                        </div>
+                        <div className="col-sm-2">
+                          <div className="d-flex justify-content-between">
+                            <label className="m-0">
+                              Email <span className="text-danger">*</span>
+                            </label>
+                            {errorMessage[`[${index}].Email`] && (
+                              <span className="text-danger font-size-11">
+                                {errorMessage[`[${index}].Email`]}
+                              </span>
+                            )}
+                          </div>
+                          <input
+                            type="text"
+                            placeholder="Email"
+                            className="form-input-6"
+                            name="Email"
+                            value={contactFormValue[index]?.Email}
+                            onChange={(e) => handleContactChange(index, e)}
+                          />
+                        </div>
+                        <div className="col-sm-2">
+                          <label className="m-0">Secondary Email</label>
+                          <input
+                            type="text"
+                            placeholder="Secondary Email"
+                            className="form-input-6"
+                            name="SecondaryEmail"
+                            value={contactFormValue[index]?.SecondaryEmail}
+                            onChange={(e) => handleContactChange(index, e)}
+                          />
+                        </div>
+                        <div className="col-2">
+                          {index > 0 && (
+                            <i
+                              className="fa-solid fa-trash mt-4 text-danger cursor-pointer"
+                              onClick={() => handleContactDelete(index)}
+                            ></i>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="col-6 mt-3">
+                  <div className="row">
+                    <div className="col-12">
+                      <label htmlFor="" className="m-0">
+                        Hotel Information
+                      </label>
+                      <Editor
+                        heightValue={"93%"}
+                        handleChangeEditor={handleEditorValue}
+                        initialValue={editorValue}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-6 mt-3">
+                  <div className="row row-gap-2">
+                    <div className="col-12">
+                      <label htmlFor="" className="m-0">
+                        Policy
+                      </label>
+                      <input
+                        type="textarea"
+                        placeholder="Policy"
+                        className="form-input-6"
+                        name="HotelPolicy"
+                        value={formValue?.HotelPolicy}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div className="col-12">
+                      <label htmlFor="" className="m-0">
+                        T&C Image
+                      </label>
+                      <input
+                        type="file"
+                        className="form-input-6 border-0"
+                        name="ImageName"
+                        value=""
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div className="col-12">
+                      <label htmlFor="" className="m-0">
+                        T&C
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Terms & Condition"
+                        className="form-input-6"
+                        name="HotelTC"
+                        value={formValue?.HotelTC}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div className="col-12">
+                      <div className="row">
+                        <div className="col-2 pr-0">
+                          <label htmlFor="" className="m-0">
+                            Verified
+                          </label>
+                          <select
+                            name="Verified"
+                            id=""
+                            className="form-input-6"
+                            value={formValue?.Verified}
+                            onChange={handleInputChange}
+                          >
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                        <div className="col-10">
+                          <label htmlFor="" className="m-0">
+                            Internal Note
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Internal Note"
+                            className="form-input-6"
+                            name="InternalNote"
+                            value={formValue?.InternalNote}
+                            onChange={handleInputChange}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </Layout>
