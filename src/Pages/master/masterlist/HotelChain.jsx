@@ -8,7 +8,7 @@ import {
   hotelChainInitialValue,
   hotelChainValidationSchema,
 } from "./MasterValidations";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosOther, axiosHotel } from "../../../http/axios/axios_new";
 
 const HotelChain = () => {
   const [getData, setGetData] = useState([]);
@@ -26,7 +26,7 @@ const HotelChain = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("hotelchainlist", postData);
+        const { data } = await axiosHotel.post("hotelchainlist", postData);
         setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
@@ -49,7 +49,6 @@ const HotelChain = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -141,12 +140,13 @@ const HotelChain = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosHotel}
                 >
                   <div className="row row-gap-2">
                     <div className="col-sm-4">
                       <div className="d-flex justify-content-between">
                         <label className="m-0 font-size-12">
-                          Hotel Chain Name
+                          Hotel Chain Name <span className="text-danger">*</span>
                         </label>
                         <span className="font-size-10 text-danger m-0">
                           <ErrorMessage name="Name" />
@@ -161,22 +161,22 @@ const HotelChain = () => {
                     </div>
                     <div className="col-sm-4">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0 font-size-12">Location</label>
+                        <label className="m-0 font-size-12">Destination <span className="text-danger">*</span></label>
                         <span className="font-size-10 text-danger m-0">
-                          <ErrorMessage name="Location" />
+                          <ErrorMessage name="Destination" />
                         </span>
                       </div>
                       <Field
                         type="text"
-                        placeholder="Location"
+                        placeholder="Destination"
                         className="form-input-6"
-                        name="Location"
+                        name="Destination"
                       />
                     </div>
                     <div className="col-sm-4">
                       <div className="d-flex justify-content-between">
                         <label className="m-0 font-size-12">
-                          Hotel Website
+                          Hotel Website <span className="text-danger">*</span>
                         </label>
                         <span className="font-size-10 text-danger m-0">
                           <ErrorMessage name="HotelWebsite" />
@@ -205,8 +205,8 @@ const HotelChain = () => {
                         component={"select"}
                         name="Status"
                       >
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
                       </Field>
                     </div>
                     <div className="col-12 mt-3 px-2">

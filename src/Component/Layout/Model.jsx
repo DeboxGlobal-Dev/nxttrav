@@ -17,6 +17,7 @@ const Model = ({
   updateData,
   imageValue,
   setImageValue,
+  axiosRoute
 }) => {
   const closeModel = () => {
     document.getElementById("cancel").click();
@@ -26,10 +27,11 @@ const Model = ({
     console.log("Submit Modal Value", { ...values, ...imageValue });
 
     try {
-      const response = await axiosOther.post(apiurl, {
+      const response = await axiosRoute.post(apiurl, {
         ...values,
         ...imageValue,
       });
+      console.log('response', response);
       if (response.data.Status) {
         toast.success(response.data.Message);
         setUpdateData(!updateData);

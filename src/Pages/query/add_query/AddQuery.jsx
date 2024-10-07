@@ -18,7 +18,6 @@ const addQueryContext = createContext();
 
 const AddQuery = () => {
   ///* All State Start Here*/
-
   const [TravelDate, setTravelDate] = useState({ ...travelInitial });
   const [PaxInfo, setPaxInfo] = useState({ ...paxInitial });
   const [RoomInfo, setRoomInfo] = useState({ ...roomInitial });
@@ -48,7 +47,6 @@ const AddQuery = () => {
     roomList: [],
     queryType: [],
   };
-
   ///* All State End Here*/
 
   const dropdownReducer = (state, action) => {
@@ -211,8 +209,7 @@ const AddQuery = () => {
     gettingDataForDropdown();
   }, []);
 
-  ///* All Functions Start Here */
-
+  /* All Functions Start Here */
   const handleUnSubmittedQuery = () => {};
 
   const handleQuerySubmit = (e) => {
@@ -226,6 +223,8 @@ const AddQuery = () => {
   };
 
   const storedData = "abc";
+
+  console.log("query-all-data", {...queryFields, PaxInfo, RoomInfo, TravelDate});
 
   return (
     <addQueryContext.Provider

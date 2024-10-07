@@ -194,6 +194,7 @@ const FerryMaster = () => {
                   updateData={updateData}
                   imageValue={imageValue}
                   setImageValue={setImageValue}
+                  axiosRoute={axiosFerry}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">

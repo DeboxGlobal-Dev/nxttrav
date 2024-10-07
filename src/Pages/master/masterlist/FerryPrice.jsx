@@ -5,7 +5,7 @@ import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
 import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosFerry, axiosOther } from "../../../http/axios/axios_new";
 import Editor from "../../../helper/Editor";
 
 const FerryPrice = () => {
@@ -140,6 +140,7 @@ const FerryPrice = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosFerry}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">

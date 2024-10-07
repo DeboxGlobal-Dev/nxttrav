@@ -3,7 +3,7 @@ import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosOther, axiosAir } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
   airlineMasterInitialValue,
@@ -30,7 +30,7 @@ const AirlineMaster = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("airlinemasterlist", postData);
+        const { data } = await axiosAir.post("airlinemasterlist", postData);
         setLoading(false)
         setGetData(data.DataList);
         setFilterData(data.DataList);
@@ -157,6 +157,7 @@ const AirlineMaster = () => {
                   setUpdateData={setUpdateData}
                   imageValue={imageValue}
                   setImageValue={setImageValue}
+                  axiosRoute={axiosAir}
                 >
                   <div className="card-body">
                     <div className="row">

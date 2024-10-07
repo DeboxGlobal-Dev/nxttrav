@@ -8,7 +8,7 @@ import {
   hotelCategoryInitialValue,
   hotelCategoryValidationSchema,
 } from "./MasterValidations";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosHotel, axiosOther } from "../../../http/axios/axios_new";
 
 const HotelCategory = () => {
   const [getData, setGetData] = useState([]);
@@ -49,7 +49,6 @@ const HotelCategory = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -124,6 +123,7 @@ const HotelCategory = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosHotel}
                 >
                   <div className="row">
                     <div className="col-sm-4">
@@ -158,8 +158,8 @@ const HotelCategory = () => {
                         component={"select"}
                         name="Status"
                       >
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
                       </Field>
                       
                     </div>

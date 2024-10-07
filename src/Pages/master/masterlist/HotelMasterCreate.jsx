@@ -19,6 +19,9 @@ import {
 } from "./MasterValidations";
 
 const HotelMasterCreate = () => {
+
+  
+
   const [moreAddress, setMoreAddress] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
   const [hotelChain, setHotelChain] = useState([]);
@@ -32,11 +35,6 @@ const HotelMasterCreate = () => {
   const [city, setCity] = useState([]);
   const [amenties, setAmenties] = useState([]);
 
-  console.log('HotelCategory', hotelCategory);
-  console.log('HotelType', hotelType);
-  console.log('Country', country);
-  console.log('State', state);
-  console.log('City', city);
 
   const hanldeSubmit = (value) => {
     console.log(value);
@@ -55,6 +53,7 @@ const HotelMasterCreate = () => {
       "hotelcategorylist",
       hotelCategoryInitialValue
     );
+
     const typeData = await axiosOther.post(
       "hoteltypelist",
       hotelTypeInitialValue
@@ -93,8 +92,9 @@ const HotelMasterCreate = () => {
 
   useEffect(() => {
     getDataToServer();
-    console.log("UseEffect Rendered.....");
   }, []);
+
+
 
   return (
     <>
@@ -193,10 +193,10 @@ const HotelMasterCreate = () => {
                       <label>Destination</label>
                       <Field
                         className="form-input-1"
-                        component={"select"}
+                        component="select"
                         name="HotelDestination"
                       >
-                        <option value={""}>Select</option>
+                        <option value="">Select</option>
                         {destination.map((value, ind) => {
                           return (
                             <option value={ind + 1} key={ind + 1}>

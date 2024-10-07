@@ -8,7 +8,7 @@ import {
   restaurantMealInitialValue,
   restaurantMealValidationSchema,
 } from "./MasterValidations";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosHotel, axiosOther } from "../../../http/axios/axios_new";
 
 const ResturantMealPlan = () => {
   const [getData, setGetData] = useState([]);
@@ -120,6 +120,7 @@ const ResturantMealPlan = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosHotel}
                 >
                   <div className="row">
                     <div className="col-sm-6">

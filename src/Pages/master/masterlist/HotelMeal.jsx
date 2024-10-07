@@ -8,7 +8,7 @@ import {
   hotelMealInitialValue,
   hotelMealValidationSchema,
 } from "./MasterValidations";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosHotel, axiosOther } from "../../../http/axios/axios_new";
 
 const HotelMeal = () => {
   const [getData, setGetData] = useState([]);
@@ -47,11 +47,8 @@ const HotelMeal = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    setEditData({
-      ...rowValue,
-      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
-      Status: rowValue.Status === "Active" ? 1 : 0,
-    });
+    setEditData(rowValue);
+    console.log('rowValue', rowValue);
     setIsEditing(true);
   };
 
@@ -132,11 +129,12 @@ const HotelMeal = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosHotel}
                 >
-                  <div className="row">
+                  <div className="row row-gap-2">
                     <div className="col-sm-4">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0 font-size-12">Meal Name</label>
+                        <label className="m-0 font-size-12">Meal Name <span className="text-danger">*</span></label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
@@ -149,14 +147,28 @@ const HotelMeal = () => {
                       />
                     </div>
                     <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">DisplayNameInVoucher <span className="text-danger">*</span></label>
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="ShortName" />
+                        </span>
+                      </div>
+                      <Field
+                        type="text"
+                        placeholder="Voucher"
+                        className="form-input-6"
+                        name="ShortName"
+                      />
+                    </div>
+                    <div className="col-sm-4">
                       <label className="m-0 font-size-12">Status</label>
                       <Field
                         className="form-input-6"
                         component={"select"}
                         name="Status"
                       >
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
+                        <option value="Active">Active</option>
+                        <option value="Status">Inactive</option>
                       </Field>
                     </div>
                     <div className="col-sm-4">
@@ -166,10 +178,10 @@ const HotelMeal = () => {
                         className="form-input-6"
                         component={"select"}
                       >
-                        <option value={0} selected>
+                        <option value="No">
                           No
                         </option>
-                        <option value={1}>Yes</option>
+                        <option value="Yes">Yes</option>
                       </Field>
                     </div>
                   </div>

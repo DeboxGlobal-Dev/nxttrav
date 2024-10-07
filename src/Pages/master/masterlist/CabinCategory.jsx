@@ -128,6 +128,7 @@ const CabinCategory = () => {
                   setChangeValue={setChangeValue}
                   updateData={updateData}
                   setUpdateData={setUpdateData}
+                  axiosRoute={axiosOther}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">

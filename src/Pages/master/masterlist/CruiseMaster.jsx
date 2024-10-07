@@ -8,7 +8,7 @@ import {
   cruiseMasterInitialValue,
   cruiseMasterValidationSchema,
 } from "./MasterValidations";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosOther, axiosCruise } from "../../../http/axios/axios_new";
 import Editor from "../../../helper/Editor";
 
 const CruiseMaster = () => {
@@ -168,6 +168,7 @@ const CruiseMaster = () => {
                   setChangeValue={setChangeValue}
                   updateData={updateData}
                   setUpdateData={setUpdateData}
+                  axiosRoute={axiosCruise}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">

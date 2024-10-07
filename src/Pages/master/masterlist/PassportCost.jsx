@@ -136,6 +136,7 @@ const PassportCost = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosOther}
                 >
                   <div className="card-body">
                     <div className="row">

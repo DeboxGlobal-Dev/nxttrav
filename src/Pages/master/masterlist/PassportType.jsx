@@ -137,6 +137,7 @@ const PassportType = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosOther}
                 >
                   <div className="row row-gap-2">
                     <div className="col-sm-4">

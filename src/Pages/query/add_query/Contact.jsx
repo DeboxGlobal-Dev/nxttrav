@@ -31,7 +31,7 @@ const Contact = () => {
       try {
         const { data } = await axiosOther.post("agentlist", {
           id: "",
-          BussinessType: queryFields.BusinessType,
+          BussinessType: queryFields.ClientType,
         });
 
         setAgentList(data?.DataList);
@@ -40,7 +40,7 @@ const Contact = () => {
       }
     };
     gettingDataForDropdown();
-  }, [queryFields.BusinessType]);
+  }, [queryFields.ClientType]);
 
   const handleSetDataToAgent = (agent, contact) => {
     setAgentData({
@@ -141,8 +141,8 @@ const Contact = () => {
           </div>
           <select
             className="form-input-2"
-            name="BusinessType"
-            value={queryFields.BusinessType}
+            name="ClientType"
+            value={queryFields.ClientType}
             onChange={handleChange}
           >
             <option value="">Select</option>
@@ -172,8 +172,8 @@ const Contact = () => {
               type="text"
               className="form-input-2"
               placeholder="Enter Agent/Client Name"
-              name="ClientType"
-              value={queryFields?.ClientType}
+              name="AgentId"
+              value={queryFields?.AgentId}
               onChange={handleChange}
               onClick={() => setShowAgentPopup(true)}
             />
@@ -256,7 +256,7 @@ const Contact = () => {
           </div>
         )}
       </div>
-      {showAgentPopup && queryFields.BusinessType !== "" && (
+      {showAgentPopup && queryFields.ClientType !== "" && (
         <div className="custom-search-dropdown">
           <div
             className="col-12 d-flex justify-content-end cursor-pointer p-0"

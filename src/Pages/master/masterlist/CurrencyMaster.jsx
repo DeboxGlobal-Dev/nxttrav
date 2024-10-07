@@ -3,7 +3,7 @@ import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosOther, axiosCruise } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
   currencyMasterInitialValue,
@@ -150,6 +150,7 @@ const CurrencyMaster = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosOther}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">

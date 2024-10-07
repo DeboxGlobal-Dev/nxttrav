@@ -123,6 +123,7 @@ const Language = () => {
                   setChangeValue={setChangeValue}
                   updateData={updateData}
                   setUpdateData={setUpdateData}
+                  axiosRoute={axiosOther}
                 >
                   <div className="row">
                     <div className="col-sm-4">

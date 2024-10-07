@@ -17,6 +17,7 @@ const HotelAdditional = () => {
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+  const [editroValue, setEditorValue] = useState("");
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
@@ -30,7 +31,7 @@ const HotelAdditional = () => {
   const [loading, setLoading] = useState(true);
 
   const handleDetailEditor = (content) => {
-    console.log(content);
+    // setEditorValue(content);
   };
 
   useEffect(() => {
@@ -158,7 +159,9 @@ const HotelAdditional = () => {
                 <Model
                   heading={"Add Additional"}
                   apiurl={"addupdatehoteladdition"}
-                  initialValues={hotelAdditonalInitialValue}
+                  initialValues={{
+                    ...hotelAdditonalInitialValue
+                  }}
                   validationSchema={hotelAdditionalValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
@@ -168,11 +171,14 @@ const HotelAdditional = () => {
                   updateData={updateData}
                   imageValue={imageValue}
                   setImageValue={setImageValue}
+                  axiosRoute={axiosOther}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0 font-size-12">Additonal Name</label>
+                        <label className="m-0 font-size-12">
+                          Additonal Name
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
@@ -206,7 +212,12 @@ const HotelAdditional = () => {
                       </Field>
                     </div>
                     <div className="col-sm-12">
-                      <label className="m-0 font-size-12">Details</label>
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Details</label>
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="Details" />
+                        </span>
+                      </div>
                       <Editor
                         handleChangeEditor={handleDetailEditor}
                         heightValue="60%"

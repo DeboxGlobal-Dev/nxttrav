@@ -120,6 +120,7 @@ const DivisionMaster = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosOther}
                 >
                   <div className="row">
                     <div className="col-4">

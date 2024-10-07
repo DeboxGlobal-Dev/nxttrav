@@ -51,8 +51,8 @@ const InsuranceType = () => {
 
   const handleEditClick = (rowValue) => {
     setEditData({
-      id: rowValue.Id,
-      InsuranceType: rowValue.InsuranceType,
+      ...rowValue,
+      id: rowValue.id,
       Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
@@ -115,6 +115,7 @@ const InsuranceType = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosOther}
                 >
                   <div className="row">
                     <div className="col-sm-6">

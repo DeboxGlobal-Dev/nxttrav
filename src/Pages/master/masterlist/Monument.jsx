@@ -176,6 +176,7 @@ const Monument = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosOther}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">

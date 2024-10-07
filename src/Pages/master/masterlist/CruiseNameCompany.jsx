@@ -8,7 +8,7 @@ import {
   cruiseNameCompanyInitialValue,
   cruiseNameCompanyValidationSchema,
 } from "./MasterValidations";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosOther, axiosCruise } from "../../../http/axios/axios_new";
 
 const CruiseNameCompany = () => {
   const [getData, setGetData] = useState([]);
@@ -176,6 +176,7 @@ const CruiseNameCompany = () => {
                   updateData={updateData}
                   imageValue={imageValue}
                   setImageValue={setImageValue}
+                  axiosRoute={axiosCruise}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">

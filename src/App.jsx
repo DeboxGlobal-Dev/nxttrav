@@ -122,6 +122,8 @@ const AddSupplier = lazy(()=> import("./Pages/master/masterlist/supplier/AddSupp
 const ViewSupplier = lazy(()=> import("./Pages/master/masterlist/supplier/ViewSupplier.jsx"));
 const SetPreferrence = lazy(()=> import("./Pages/query/SetPreferrence.jsx"));
 const CostPreview = lazy(()=> import("./Pages/query/CostPreview.jsx"));
+const Guide = lazy(()=> import("./Pages/master/masterlist/Guide.jsx"));
+const GuidePrice = lazy(()=>import("./Pages/master/masterlist/GuidePrice.jsx"));
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -249,6 +251,8 @@ const App = () => {
           <Route path="/master/saccode" element={<Protected><SACCode/></Protected>}></Route>
           <Route path="/master/paymenttype" element={<Protected><PaymentType/></Protected>}></Route>
           <Route path="/master/bankmaster" element={<Protected><BankMaster/></Protected>}></Route>
+          <Route path="/master/guide" element={<Protected><Guide/></Protected>}></Route>
+          <Route path="/master/guideprice" element={<Protected><GuidePrice/></Protected>}></Route>
           <Route path="/setting/" element={<Protected><Setting/></Protected>}>
             <Route index element={<Protected><Users/></Protected>}></Route>
             <Route path="profile" element={<Protected><SettingProfile/></Protected>}></Route>

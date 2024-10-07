@@ -8,7 +8,6 @@ import { Field, ErrorMessage } from "formik";
 import { stateInitialValue, stateValidationSchema } from "./MasterValidations";
 
 const StateMaster = () => {
-  console.log("StateMaster Loaded");
 
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
@@ -147,6 +146,7 @@ const StateMaster = () => {
                   setChangeValue={setChangeValue}
                   updateData={updateData}
                   setUpdateData={setUpdateData}
+                  axiosRoute={axiosOther}
                 >
                   <div className="row">
                     <div className="col-sm-4">

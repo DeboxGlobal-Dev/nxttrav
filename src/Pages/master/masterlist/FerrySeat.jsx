@@ -3,7 +3,7 @@ import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosFerry, axiosOther } from "../../../http/axios/axios_new";
 import { Field } from "formik";
 import {
   ferrySeatMasterInitialValue,
@@ -130,6 +130,7 @@ const FerrySeat = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosFerry}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-6">

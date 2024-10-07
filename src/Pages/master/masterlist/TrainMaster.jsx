@@ -163,6 +163,7 @@ const TrainMaster = () => {
                   updateData={updateData}
                   imageValue={imageValue}
                   setImageValue={setImageValue}
+                  axiosRoute={axiosTrain}
                 >
                   <div className="row">
                     <div className="col-sm-4">

@@ -140,7 +140,7 @@ export const hotelCategoryInitialValue = {
   id: "",
   Name: "",
   UploadKeyword: "",
-  Status: 1,
+  Status: "Active",
   AddedBy: 1,
 };
 
@@ -164,16 +164,16 @@ export const roomMasterInitialValue = {
 export const hotelChainInitialValue = {
   id: "",
   Name: "",
-  Location: "",
+  Destination: "",
   HotelWebsite: "",
-  SelfSupplier: "",
+  SelfSupplier: "Yes",
   ContactType: "",
   ContactName: "",
   ContactDesignation: "",
   ContactCountryCode: "",
   ContactMobile: "",
   ContactEmail: "",
-  Status: 1,
+  Status: "Active",
   AddedBy: 1,
 };
 
@@ -222,8 +222,8 @@ export const hotelTypeInitialValue = {
   id: "",
   Name: "",
   UploadKeyword: "",
-  ProposalPriority: "",
-  Status: 1,
+  IsHouseBoat: "Yes",
+  Status: "Active",
   AddedBy: 1,
   UpdatedBy: 0,
 };
@@ -241,8 +241,8 @@ export const hotelMealInitialValue = {
   id: "",
   Name: "",
   ShortName: "",
-  SetDefault: 0,
-  Status: 1,
+  SetDefault: "Yes",
+  Status: "Active",
   AddedBy: 1,
   UpdatedBy: 0,
 };
@@ -272,7 +272,7 @@ export const sightseeingInitialValue = {
   DefaultProposal: 0,
   InclusionsExclusionsTiming: "",
   ImportantNote: "",
-  Status: 1,
+  Status: 'Active',
   AddedBy: 1,
   UpdatedBy: 1,
 };
@@ -470,7 +470,7 @@ export const roomTypeInitialValue = {
   MaximumOccupancy: "",
   Bedding: "",
   Size: "",
-  Status: "1",
+  Status: "Active",
   AddedBy: "1",
   UpdatedBy: "0",
 };
@@ -701,7 +701,65 @@ export const itineraryRequirementInitialValue = {
   UpdatedBy: 0,
 };
 
+export const guideMasterInitialValue = {
+  Name: "",
+  ServiceType: "1",
+  Rating: "",
+  Email: "",
+  Address: "",
+  Languages: "",
+  Destination: "",
+  Phone: "",
+  MobileNumber: "",
+  WhatsappNumber: "",
+  AlternateNumber: "",
+  GuideLicense: "",
+  LicenseExpiry: "",
+  PAN: "",
+  GST: "",
+  guide_image: "",
+  ImageData: "",
+  Supplier: "1",
+  ContactPerson: "",
+  Designation: "",
+  Country: "",
+  State: "",
+  City: "",
+  Pincode: "",
+  Remark: "",
+  Feedback: "",
+  Default: "0",
+  VaccinationStatus: "1",
+  Details: "",
+  Status: "1",
+  AddedBy: "1",
+  UpdatedBy: "",
+};
+export const guidePriceMasterInititalValue = {
+  ServiceType: "",
+  Destination: "",
+  Guide_Porter_Service: "",
+  Default: "No",
+  Status: "1",
+  AddedBy: "1",
+  CompanyId: "",
+};
+
 // ------------------------VALIDATION SCHEMAS-------------------------- //
+
+export const guideMasterValidationSchema = yup.object().shape({
+  Name: yup.string().required("Required"),
+  MobileNumber: yup.string().required("Required"),
+  Destination: yup.string().required("Required"),
+  Country: yup.string().required("Required"),
+  Status: yup.string().required("Required"),
+  Default: yup.string().required("Required"),
+});
+export const guidePriceValidationSchema = yup.object().shape({
+  ServiceType : yup.string().required("Required"),
+  Destination : yup.string().required("Required"),
+  Guide_Porter_Service : yup.string().required("Required"),
+})
 
 export const countryValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
@@ -729,8 +787,8 @@ export const languageValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
 });
 export const destinationValidationSchema = yup.object().shape({
+  Country: yup.string().required("Required"),
   Name: yup.string().required("Required"),
-  Description: yup.string().required("Required"),
 });
 export const tourtypeValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
@@ -760,13 +818,13 @@ export const roomMasterValidationSchema = yup.object().shape({
 });
 export const roomTypeValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
-  MaximumOccupancy: yup.number("Numeric Value").required("Required"),
+  MaximumOccupancy: yup.string().required("Required"),
   Bedding: yup.number("Numeric Value").required("Required"),
   Size: yup.string().required("Required"),
 });
 export const hotelChainValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
-  Location: yup.string().required("Required"),
+  Destination: yup.string().required("Required"),
   HotelWebsite: yup.string().required("Required"),
 });
 export const resturantValidationSchema = yup.object().shape({
@@ -789,7 +847,6 @@ export const amentiesValidationSchema = yup.object().shape({
 export const hotelTypeValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
   UploadKeyword: yup.string().required("Required"),
-  ProposalPriority: yup.string().required("Required"),
 });
 export const weekendValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
@@ -797,6 +854,7 @@ export const weekendValidationSchema = yup.object().shape({
 });
 export const hotelMealValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
+  ShortName: yup.string().required("Required"),
 });
 export const monumentValidatinSchema = yup.object().shape({
   MonumentName: yup.string().required("Required"),
@@ -998,7 +1056,7 @@ export const callsValidationSchema = yup.object().shape({
   AgentContactPerson: yup.string().required("Required"),
   EmailId: yup.string().required("Required"),
   CountryId: yup.string().required("Required"),
-  Destination: yup.array().min(1, 'Required').required("Required"),
+  Destination: yup.array().min(1, "Required").required("Required"),
   SalesPerson: yup.string().required("Required"),
   MobileNumber: yup.string().required("Required"),
   Startdate: yup.string().required("Required"),
@@ -1012,7 +1070,7 @@ export const meetingsValidationSchema = yup.object().shape({
   AgentContactPerson: yup.string().required("Required"),
   EmailId: yup.string().required("Required"),
   CountryId: yup.string().required("Required"),
-  Destination: yup.array().min(1, 'Required').required("Required"),
+  Destination: yup.array().min(1, "Required").required("Required"),
   SalesPerson: yup.string().required("Required"),
   MobileNumber: yup.string().required("Required"),
   Startdate: yup.string().required("Required"),
@@ -1026,7 +1084,7 @@ export const taskValidationSchema = yup.object().shape({
   AgentContactPerson: yup.string().required("Required"),
   EmailId: yup.string().required("Required"),
   CountryId: yup.string().required("Required"),
-  Destination: yup.array().min(1, 'Required').required("Required"),
+  Destination: yup.array().min(1, "Required").required("Required"),
   SalesPerson: yup.string().required("Required"),
   MobileNumber: yup.string().required("Required"),
   Startdate: yup.string().required("Required"),

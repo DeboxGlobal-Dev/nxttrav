@@ -211,6 +211,7 @@ const VehicleMaster = () => {
                   setUpdateData={setUpdateData}
                   imageValue={imageValue}
                   setImageValue={setImageValue}
+                  axiosRoute={axiosOther}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">

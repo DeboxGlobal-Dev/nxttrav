@@ -10,7 +10,7 @@ import {
   roomTypeInitialValue,
   roomTypeValidationSchema,
 } from "./MasterValidations";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosHotel, axiosOther } from "../../../http/axios/axios_new";
 
 const RoomType = () => {
   const [getData, setGetData] = useState([]);
@@ -146,6 +146,7 @@ const RoomType = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosHotel}
                 >
                   <div className="row row-gap-2">
                     <div className="col-sm-4">
@@ -214,8 +215,8 @@ const RoomType = () => {
                         component={"select"}
                         name="Status"
                       >
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
                       </Field>
                     </div>
                   </div>

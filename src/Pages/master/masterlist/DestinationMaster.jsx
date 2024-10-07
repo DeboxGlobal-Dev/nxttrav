@@ -202,12 +202,18 @@ const DestinationMaster = () => {
                   setChangeValue={setChangeValue}
                   updateData={updateData}
                   setUpdateData={setUpdateData}
+                  axiosRoute={axiosOther}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
-                      <label htmlFor="country" className="m-0 font-size-12">
-                        Country
-                      </label>
+                      <div className="d-flex justify-content-between">
+                        <label htmlFor="country" className="m-0 font-size-12">
+                          Country <span className="text-danger">*</span>
+                        </label>
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="Country" />
+                        </span>
+                      </div>
                       <Field
                         className="form-input-6"
                         component={"select"}
@@ -243,8 +249,8 @@ const DestinationMaster = () => {
                     <div className="col-sm-4 h-100">
                       <div className="d-flex justify-content-between">
                         <label className="m-0 font-size-12">
-                          Destination Name{" "}
-                          <span className="text-danger">*</span>
+                          Destination Name
+                          <span className="text-danger"> *</span>
                         </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />

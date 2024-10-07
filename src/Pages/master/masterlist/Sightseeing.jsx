@@ -14,6 +14,7 @@ import "select2";
 import Editor from "../../../helper/Editor";
 
 const Sightseeing = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -68,7 +69,6 @@ const Sightseeing = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -177,6 +177,7 @@ const Sightseeing = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosOther}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
@@ -243,8 +244,8 @@ const Sightseeing = () => {
                         className="form-input-6"
                         component={"select"}
                       >
-                        <option value={1}>Active</option>
-                        <option value={0}>Inactive</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
                       </Field>
                     </div>
                     <div className="col-sm-4">

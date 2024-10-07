@@ -4,15 +4,16 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosGuide } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
-  tourEscortInitialValue,
-  tourEscortValidationSchema,
+  guideMasterInitialValue,
+  guideMasterValidationSchema,
 } from "./MasterValidations";
 import "jquery";
 import "select2";
 
-const TourEscort = () => {
+const Guide = () => {
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -91,10 +92,7 @@ const TourEscort = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post(
-          "tourescortmasterlist",
-          postData
-        );
+        const { data } = await axiosGuide.post("guidelist", postData);
         console.log("TourEscortAPI-Data", data.DataList);
         setGetData(data.DataList);
         setFilterData(data.DataList);
@@ -186,6 +184,11 @@ const TourEscort = () => {
       sortable: true,
     },
     {
+      name: "Rating",
+      selector: (row) => row.Rating,
+      sortable: true,
+    },
+    {
       name: "Email/Phone",
       selector: (row) => (
         <>
@@ -216,7 +219,7 @@ const TourEscort = () => {
       sortable: true,
     },
     {
-      name: "Status Name",
+      name: "Status",
       selector: (row) => row.Status,
       sortable: true,
     },
@@ -235,7 +238,7 @@ const TourEscort = () => {
               style={{ padding: "10px" }}
             >
               <div className="col-xl-10 d-flex align-items-center">
-                <h5 className="card-title d-none d-sm-block">Tour Escort</h5>
+                <h5 className="card-title d-none d-sm-block">Guide</h5>
               </div>
               <div className="col-xl-2 d-flex justify-content-end">
                 {/*Bootstrap Modal*/}
@@ -247,10 +250,10 @@ const TourEscort = () => {
                   Back
                 </NavLink>
                 <Model
-                  heading={"Add Tour Escort / Tour Manager"}
-                  apiurl={"addupdatetourescortmaster"}
-                  initialValues={tourEscortInitialValue}
-                  validationSchema={tourEscortValidationSchema}
+                  heading={"Add GUIDE/TOUR MANAGER"}
+                  apiurl={"addupdateguide"}
+                  initialValues={guideMasterInitialValue}
+                  validationSchema={guideMasterValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -259,7 +262,7 @@ const TourEscort = () => {
                   updateData={updateData}
                   imageValue={imageValue}
                   setImageValue={setImageValue}
-                  axiosRoute={axiosOther}
+                  axiosRoute = {axiosGuide}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
@@ -275,7 +278,9 @@ const TourEscort = () => {
                     </div>
                     <div className="col-sm-4">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0 font-size-12">Name</label>
+                        <label className="m-0 font-size-12">
+                          Name <span className="text-danger">*</span>
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
@@ -291,6 +296,7 @@ const TourEscort = () => {
                       <div className="d-flex justify-content-between">
                         <label className="m-0 font-size-12">
                           Mobile Number
+                          <span className="text-danger"> *</span>
                         </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="MobileNumber" />
@@ -340,11 +346,11 @@ const TourEscort = () => {
                       />
                     </div>
                     <div className="col-sm-4">
-                      <label className="m-0 font-size-12">Tour Escort License</label>
+                      <label className="m-0 font-size-12">Guide License</label>
                       <Field
                         type="text"
-                        name="TourEscortLicenseOne"
-                        placeholder="Licence"
+                        name="GuideLicense"
+                        placeholder="Guide Licence"
                         className="form-input-6"
                       />
                     </div>
@@ -357,7 +363,9 @@ const TourEscort = () => {
                       />
                     </div>
                     <div className="col-sm-4">
-                      <label className="m-0 font-size-12">Destination</label>
+                      <label className="m-0 font-size-12">
+                        Destination <span className="text-danger">*</span>
+                      </label>
                       <Field
                         name="Destination"
                         className="form-input-6"
@@ -391,12 +399,30 @@ const TourEscort = () => {
                       </Field>
                     </div>
                     <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Pan No</label>
+                      <Field
+                        type="text"
+                        name="PAN"
+                        placeholder="Pan No"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">GST No</label>
+                      <Field
+                        type="text"
+                        name="GST"
+                        placeholder="GST No"
+                        className="form-input-6"
+                      />
+                    </div>
+                    <div className="col-sm-4">
                       <label className="m-0 font-size-10">
-                        Tour Escort / Tour Manager Image
+                        Guide/Tour Manager Image
                       </label>
                       <input
                         type="file"
-                        name="TourEscortImageData"
+                        name="ImageData"
                         className="form-input-6 border-0"
                         onChange={handleEscortImage}
                         accept="image/*"
@@ -413,15 +439,7 @@ const TourEscort = () => {
                         <option value="0">No</option>
                       </Field>
                     </div>
-                    <div className="col-sm-4">
-                      <label className="m-0 font-size-12">Tour Escort License</label>
-                      <Field
-                        type="text"
-                        name="TourEscortLicenseTwo"
-                        placeholder="Licence"
-                        className="form-input-6"
-                      />
-                    </div>
+
                     <div className="col-sm-4">
                       <label className="m-0 font-size-12">Contact Person</label>
                       <Field
@@ -441,7 +459,9 @@ const TourEscort = () => {
                       />
                     </div>
                     <div className="col-sm-4">
-                      <label className="m-0 font-size-12">Country</label>
+                      <label className="m-0 font-size-12">
+                        Country <span className="text-danger">*</span>
+                      </label>
                       <Field
                         name="Country"
                         className="form-input-6"
@@ -495,7 +515,7 @@ const TourEscort = () => {
                       <label className="m-0 font-size-12">Pin Code</label>
                       <Field
                         type="text"
-                        name="PinCode"
+                        name="Pincode"
                         placeholder="Pin Code"
                         className="form-input-6"
                       />
@@ -504,7 +524,7 @@ const TourEscort = () => {
                       <label className="m-0 font-size-12">Details</label>
                       <Field
                         as="textarea"
-                        name="Detail"
+                        name="Details"
                         placeholder="Details"
                         className="form-input-6"
                       />
@@ -522,7 +542,33 @@ const TourEscort = () => {
                       </span>
                     </div>
                     <div className="col-sm-4">
-                      <label className="m-0 font-size-12">Status</label>
+                      <label className="m-0 font-size-12">Remark</label>
+                      <Field
+                        as="textarea"
+                        name="Address"
+                        placeholder="Remark"
+                        className="form-input-6"
+                      />
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Address" />
+                      </span>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">FeedBack</label>
+                      <Field
+                        as="textarea"
+                        name="Feedback"
+                        placeholder="Feedback"
+                        className="form-input-6"
+                      />
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Address" />
+                      </span>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">
+                        Status <span className="text-danger">*</span>
+                      </label>
                       <Field
                         name="Status"
                         className="form-input-6"
@@ -530,6 +576,45 @@ const TourEscort = () => {
                       >
                         <option value="1">Active</option>
                         <option value="0">InActive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Guide Rating</label>
+                      <Field
+                        name="Rating"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="1">1 Star</option>
+                        <option value="1.5">1.5 Star</option>
+                        <option value="2">2 Star</option>
+                        <option value="2.5">2.5 Star</option>
+                        <option value="3">3 Star</option>
+                        <option value="3.5">3.5 Star</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">
+                        Default <span className="text-danger">*</span>
+                      </label>
+                      <Field
+                        name="Default"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="0">NO</option>
+                        <option value="1">YES</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Vaccination</label>
+                      <Field
+                        name="VaccinationStatus"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
                       </Field>
                     </div>
                   </div>
@@ -590,4 +675,4 @@ const TourEscort = () => {
   );
 };
 
-export default TourEscort;
+export default Guide;

@@ -8,7 +8,7 @@ import {
   roomMasterInitialValue,
   roomMasterValidationSchema,
 } from "./MasterValidations";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosHotel, axiosOther } from "../../../http/axios/axios_new";
 
 const RoomMaster = () => {
   const [getData, setGetData] = useState([]);
@@ -107,6 +107,7 @@ const RoomMaster = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosOther}
                 >
                   <div className="row">
                     <div className="col-sm-5">

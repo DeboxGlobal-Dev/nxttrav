@@ -3,31 +3,51 @@ import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosGuide, axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
-  visaTypeInitialValue,
-  visaTypeValidationSchema,
+  guidePriceMasterInititalValue,
+  guidePriceValidationSchema,
 } from "./MasterValidations";
+import "jquery";
+import "select2";
 
-const VisaType = () => {
+const GuidePrice = () => {
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+  const [destinationList, setDestinationList] = useState([]);
   const [postData, setPostData] = useState({
-    Search: "",
-    Status: "",
+    id: "",
+    ServiceName: "",
+    ServiceType: "",
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+
+  const getDataToServer = async () => {
+    try {
+      const destination = await axiosOther.post("destinationlist", {
+        Search: "",
+        Status: 1,
+      });
+      setDestinationList(destination.data.DataList);
+    } catch (err) {
+      console.log("Erro Occured", err);
+    }
+  };
+  useEffect(() => {
+    getDataToServer();
+  }, []);
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("visatypemasterlist", postData);
-        console.log(data.DataList);
+        const { data } = await axiosGuide.post("guideratelist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
+        console.log("DATA", data.DataList);
       } catch (error) {
         console.log(error);
       }
@@ -37,23 +57,32 @@ const VisaType = () => {
 
   useEffect(() => {
     const result = getData.filter((item) => {
-      return item?.Name?.toLowerCase()?.match(postData?.Search?.toLowerCase());
+      return item?.Status?.toLowerCase()?.match(
+        postData?.Search?.toLowerCase()
+      );
     });
 
     setFilterData(result);
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+    console.log("Row Value", rowValue);
     setEditData({
-      ...rowValue,
+      id: rowValue.Id,
+      ServiceType: rowValue.ServiceType,
+      Destination: rowValue.Destination,
+      TourEscortService: rowValue.TourEscortService,
       Status: rowValue.Status === "Active" ? 1 : 0,
+      Default: rowValue.Default === "Yes" ? 1 : 0,
+      AddedBy: rowValue.AddedBy,
+      UpdatedBy: rowValue.UpdatedBy,
     });
     setIsEditing(true);
   };
 
   const columns = [
     {
-      name: "Visa Type",
+      name: "Guide/Porter Service",
       selector: (row) => (
         <span>
           <i
@@ -62,14 +91,29 @@ const VisaType = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row?.ServiceName}
         </span>
       ),
       sortable: true,
     },
     {
+      name: "Destination",
+      selector: (row) => row?.Destination?.Name,
+      sortable: true,
+    },
+    {
+      name: "Service Type",
+      selector: (row) => row?.ServiceType,
+      sortable: true,
+    },
+    {
+      name: "Rate Sheet",
+      selector: (row) => <button className="btn btn-primary">+Add/View</button>,
+      sortable: true,
+    },
+    {
       name: "Status",
-      selector: (row) => row.Status,
+      selector: (row) => row?.Status,
       sortable: true,
     },
   ];
@@ -87,7 +131,9 @@ const VisaType = () => {
               style={{ padding: "10px" }}
             >
               <div className="col-xl-10 d-flex align-items-center">
-                <h5 className="card-title d-none d-sm-block">Visa Type</h5>
+                <h5 className="card-title d-none d-sm-block">
+                  Guide / Porter Price
+                </h5>
               </div>
               <div className="col-xl-2 d-flex justify-content-end">
                 {/*Bootstrap Modal*/}
@@ -99,42 +145,86 @@ const VisaType = () => {
                   Back
                 </NavLink>
                 <Model
-                  heading={"Add Visa Type"}
-                  apiurl={"addupdatevisatypemaster"}
-                  initialValues={visaTypeInitialValue}
-                  validationSchema={visaTypeValidationSchema}
+                  heading={"Add GUIDE/PORTER SERVICE"}
+                  apiurl={"addupdateguideservice"}
+                  initialValues={guidePriceMasterInititalValue}
+                  validationSchema={guidePriceValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
-                  axiosRoute={axiosOther}
+                  axiosRoute={axiosGuide}
                 >
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <div className="d-flex justify-content-between">
-                        <label className="m-0 font-size-12">Visa Type</label>
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
-                        </span>
-                      </div>
+                  <div className="row row-gap-3">
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">
+                        Service Type <span className="text-danger">*</span>
+                      </label>
+                      <Field
+                        name="ServiceType"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="10">Guide</option>
+                        <option value="20">Porter</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-6">
+                        Destination <span className="text-danger">*</span>
+                      </label>
+                      <Field
+                        name="Destination"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="0">ALL</option>
+                        {destinationList.map((value, index) => {
+                          return (
+                            <option value={value.id} key={index + 1}>
+                              {value.Name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">
+                        Guide/Porter Service
+                        <span className="text-danger">*</span>
+                      </label>
                       <Field
                         type="text"
-                        name="Name"
-                        placeholder="Visa Type"
+                        name="Guide_Porter_Service"
+                        placeholder="Tour Escort Service"
                         className="form-input-6"
                       />
+                      <span className="font-size-10 text-danger">
+                        <ErrorMessage name="Name" />
+                      </span>
                     </div>
-                    <div className="col-sm-6">
+                    <div className="col-sm-4">
                       <label className="m-0 font-size-12">Status</label>
                       <Field
                         name="Status"
                         className="form-input-6"
                         component={"select"}
                       >
-                        <option value={1}>Active</option>
-                        <option value={0}>Inactive</option>
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Default</label>
+                      <Field
+                        name="Default"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
                       </Field>
                     </div>
                   </div>
@@ -165,8 +255,8 @@ const VisaType = () => {
                     }
                   >
                     <option>Select Status</option>
-                    <option value={0}>Inactive</option>
-                    <option value={1}>Active</option>
+                    <option value="0">Inactive</option>
+                    <option value="1">Active</option>
                   </select>
                 </div>
                 <div className="col-lg-2 col-md-3 mt-2 mt-md-0">
@@ -195,4 +285,4 @@ const VisaType = () => {
   );
 };
 
-export default VisaType;
+export default GuidePrice;

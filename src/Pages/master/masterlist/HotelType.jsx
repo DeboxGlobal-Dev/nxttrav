@@ -8,7 +8,7 @@ import {
   hotelTypeInitialValue,
   hotelTypeValidationSchema,
 } from "./MasterValidations";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosHotel, axiosOther } from "../../../http/axios/axios_new";
 
 const HotelType = () => {
   const [getData, setGetData] = useState([]);
@@ -23,10 +23,11 @@ const HotelType = () => {
   const [updateData, setUpdateData] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  console.log("getdata", getData);
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("hoteltypelist", postData);
+        const { data } = await axiosHotel.post("hoteltypelist", postData);
         setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
@@ -47,11 +48,7 @@ const HotelType = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    console.log("Row Value", rowValue);
-    setEditData({
-      ...rowValue,
-      Status: rowValue.Status === "Active" ? 1 : 0,
-    });
+    setEditData(rowValue);
     setIsEditing(true);
   };
 
@@ -125,6 +122,7 @@ const HotelType = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosHotel}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
@@ -158,18 +156,15 @@ const HotelType = () => {
                       />
                     </div>
                     <div className="col-sm-4">
-                      <div className="d-flex justify-content-between">
-                        <label className="m-0 font-size-12">Proposal Priority</label>
-                        <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ProposalPriority" />
-                        </span>
-                      </div>
+                      <label className="m-0 font-size-12">IsHouseBoat</label>
                       <Field
-                        type="text"
-                        placeholder="Priority"
                         className="form-input-6"
-                        name="ProposalPriority"
-                      />
+                        component={"select"}
+                        name="IsHouseBoat"
+                      >
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                      </Field>
                     </div>
                     <div className="col-sm-4">
                       <label className="m-0 font-size-12">Status</label>
@@ -178,12 +173,9 @@ const HotelType = () => {
                         component={"select"}
                         name="Status"
                       >
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
                       </Field>
-                      <span className="font-size-10 text-danger">
-                        <ErrorMessage name="Status" />
-                      </span>
                     </div>
                   </div>
                 </Model>

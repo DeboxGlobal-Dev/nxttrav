@@ -165,6 +165,7 @@ const Amenties = () => {
                   setUpdateData={setUpdateData}
                   imageValue={imageValue}
                   setImageValue={setImageValue}
+                  axiosRoute={axiosOther}
                 >
                   <div className="row row-gap-2">
                     <div className="col-sm-4">

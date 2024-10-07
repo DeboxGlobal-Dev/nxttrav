@@ -8,7 +8,7 @@ import {
   transportMasterInitialValue,
   transportMasterValidationSchema,
 } from "./MasterValidations";
-import { axiosOther } from "../../../http/axios/axios_new";
+import { axiosOther, axiosTransport } from "../../../http/axios/axios_new";
 import Editor from "../../../helper/Editor";
 
 const TransportMaster = () => {
@@ -158,6 +158,7 @@ const TransportMaster = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosTransport}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">

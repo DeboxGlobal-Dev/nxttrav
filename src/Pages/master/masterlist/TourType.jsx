@@ -118,6 +118,7 @@ const TourType = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
+                  axiosRoute={axiosOther}
                 >
                   <div className="row">
                     <div className="col-sm-4">
