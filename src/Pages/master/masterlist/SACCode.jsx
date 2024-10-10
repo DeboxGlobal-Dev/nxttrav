@@ -47,7 +47,7 @@ const SACCode = () => {
 
   const handleEditClick = (rowValue) => {
     setEditData({
-      id: rowValue.Id,
+      id: rowValue.id,
       ServiceType: rowValue.ServiceType,
       SacCode: rowValue.SacCode,
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,

@@ -150,6 +150,10 @@ const CabinType = () => {
                         <option value={""}>Cruise Name</option>
                         <option value={1}>DEF</option>
                         <option value={2}>GHJ</option>
+                        <option value={3}>ND</option>
+                        <option value={4}>SFSGHJ</option>
+                        <option value={5}>SFDE</option>
+                        <option value={6}>SFSDF</option>
                       </Field>
                       <span className="font-size-10 text-danger">
                         <ErrorMessage name="CruiseName" />

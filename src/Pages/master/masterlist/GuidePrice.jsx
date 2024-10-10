@@ -108,7 +108,13 @@ const GuidePrice = () => {
     },
     {
       name: "Rate Sheet",
-      selector: (row) => <button className="btn btn-primary">+Add/View</button>,
+      selector: (row) =>(
+        <NavLink to={`/master/guideprice/rate/${row?.id}`} state={{Name:row?.TourEscortService}}>
+          <button className="border font-size-10 p-1 px-2 rounded-pill bg-success">
+            + View/Add
+          </button>
+        </NavLink>
+      ),
       sortable: true,
     },
     {

@@ -4,7 +4,12 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
-import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
+import {
+  cityInitialValue,
+  cityValidationSchema,
+  transferMasterInitialValue,
+  transferMasterValidationSchema,
+} from "./MasterValidations";
 import { axiosOther, axiosTransport } from "../../../http/axios/axios_new";
 import Editor from "../../../helper/Editor";
 
@@ -101,24 +106,26 @@ const TransferMaster = () => {
       sortable: true,
     },
     {
-      name: "Added By",
-      selector: (row) => {
-        return (
-          <span>
-            Admin <br /> {row.Created_at}
-          </span>
-        );
-      },
+      name: "Details",
+      selector: (row) => row?.Details,
+      sortable: true,
     },
     {
-      name: "Updated By",
-      selector: (row) => {
-        return (
-          <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
-          </span>
-        );
-      },
+      name: "Rate Sheet",
+      selector: (row) => (
+        <NavLink
+          to={`/master/transfermaster/rate/${row?.id}`}
+          state={{ Name: row?.MonumentName }}
+        >
+          <button
+            className="border font-size-10 p-1 px-2 rounded-pill bg-success"
+            state={{ Name: row?.TransferType }}
+          >
+            + View/Add
+          </button>
+        </NavLink>
+      ),
+      sortable: true,
     },
     {
       name: "Status",
@@ -153,15 +160,14 @@ const TransferMaster = () => {
                 <Model
                   heading={"Add Transfer"}
                   apiurl={"addupdatetransfermaster"}
-                  initialValues={cityInitialValue}
-                  validationSchema={cityValidationSchema}
+                  initialValues={transferMasterInitialValue}
+                  validationSchema={transferMasterValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
-                  axiosRoute={axiosTransport}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
@@ -175,7 +181,7 @@ const TransferMaster = () => {
                       </div>
                       <Field
                         type="text"
-                        name="Name"
+                        name="TransferName"
                         placeholder="Transportation"
                         className="form-input-6"
                       />
@@ -183,7 +189,7 @@ const TransferMaster = () => {
                     <div className="col-sm-4">
                       <label className="m-0 font-size-12">Destination</label>
                       <Field
-                        name="Destination"
+                        name="Destinations"
                         className="form-input-6"
                         component={"select"}
                       >
@@ -211,11 +217,11 @@ const TransferMaster = () => {
                     <div className="col-sm-4">
                       <label className="m-0 font-size-12">Transfer Type</label>
                       <Field
-                        name="Status"
+                        name="TransferType"
                         className="form-input-4"
                         component={"select"}
                       >
-                        <option value={1}>All</option>
+                        <option value={""}>Select</option>
                         <option value={2}>Arrivale</option>
                         <option value={3}>Departure</option>
                         <option value={4}>SightSeeing</option>
@@ -223,7 +229,9 @@ const TransferMaster = () => {
                       </Field>
                     </div>
                     <div className="col-sm-4">
-                      <label className="m-0 font-size-12">Default For Proposal</label>
+                      <label className="m-0 font-size-12">
+                        Default For Proposal
+                      </label>
                       <Field
                         name="SetDefault"
                         className="form-input-6"

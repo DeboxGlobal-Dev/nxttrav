@@ -101,23 +101,17 @@ const TrainMaster = () => {
       sortable: true,
     },
     {
-      name: "AddedBy",
+      name: "Rate",
       selector: (row) => (
-        <span>
-          Admin <br /> {row.AddedBy}
-        </span>
+        <NavLink
+          to={`/master/train/rate/${row?.id}`}
+          state={{ Name: row?.MonumentName }}
+        >
+          <button className="border font-size-10 p-1 px-2 rounded-pill bg-success">
+            + View/Add
+          </button>
+        </NavLink>
       ),
-      sortable: true,
-    },
-    {
-      name: "Updated By",
-      selector: (row) => {
-        return (
-          <span>
-            Admin <br /> {row.UpdatedBy}
-          </span>
-        );
-      },
     },
     {
       name: "Status",

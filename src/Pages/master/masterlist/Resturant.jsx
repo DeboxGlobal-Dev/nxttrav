@@ -8,7 +8,11 @@ import {
   resturantInitialValue,
   resturantValidationSchema,
 } from "./MasterValidations";
-import { axiosRestaurant, axiosOther, axiosHotel } from "../../../http/axios/axios_new";
+import {
+  axiosRestaurant,
+  axiosOther,
+  axiosHotel,
+} from "../../../http/axios/axios_new";
 
 const Resturant = () => {
   const [getData, setGetData] = useState([]);
@@ -93,6 +97,7 @@ const Resturant = () => {
         );
         setGetData(data.DataList);
         setFilterData(data.DataList);
+        console.log("data-list", data?.DataList);
       } catch (error) {
         console.log(error);
       }
@@ -113,9 +118,8 @@ const Resturant = () => {
       ImageData: "",
       ImageName: "",
     });
-    setValueForEdit({
+    setEditData({
       ...rowValue,
-      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -157,7 +161,16 @@ const Resturant = () => {
     },
     {
       name: "Rate Sheet",
-      selector: (row) => row.Sheet,
+      selector: (row) => (
+        <NavLink
+          to={`/master/resturant/rate/${row?.id}`}
+          state={{ Name: row?.Name }}
+        >
+          <button className="border font-size-10 p-1 px-2 rounded-pill bg-success">
+            + View/Add
+          </button>
+        </NavLink>
+      ),
       sortable: true,
     },
     {
@@ -231,7 +244,6 @@ const Resturant = () => {
                   updateData={updateData}
                   imageValue={imageValue}
                   setImageValue={setImageValue}
-                  axiosRoute={axiosHotel}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
@@ -257,7 +269,7 @@ const Resturant = () => {
                       <Field
                         className="form-input-6"
                         component={"select"}
-                        name="DestinationId"
+                        name="Destination"
                       >
                         <option value={"0"}>Select Destination</option>
                         {destinationList.map((value, index) => {
@@ -287,11 +299,11 @@ const Resturant = () => {
                       <div className="d-flex justify-content-between">
                         <label className="m-0 font-size-12">Country</label>
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="CountryId" />
+                          <ErrorMessage name="Country" />
                         </span>
                       </div>
                       <Field
-                        name="CountryId"
+                        name="Country"
                         className="form-input-6"
                         component={"select"}
                       >
@@ -309,11 +321,11 @@ const Resturant = () => {
                       <div className="d-flex justify-content-between">
                         <label className="m-0 font-size-12">State</label>
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="StateId" />
+                          <ErrorMessage name="State" />
                         </span>
                       </div>
                       <Field
-                        name="StateId"
+                        name="State"
                         className="form-input-6"
                         component={"select"}
                       >
@@ -332,11 +344,11 @@ const Resturant = () => {
                       <div className="d-flex justify-content-between">
                         <label className="m-0 font-size-12">City</label>
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="CityId" />
+                          <ErrorMessage name="City" />
                         </span>
                       </div>
                       <Field
-                        name="CityId"
+                        name="City"
                         className="form-input-6"
                         component={"select"}
                       >
@@ -412,8 +424,8 @@ const Resturant = () => {
                         component={"select"}
                         name="Status"
                       >
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
                       </Field>
                     </div>
                   </div>

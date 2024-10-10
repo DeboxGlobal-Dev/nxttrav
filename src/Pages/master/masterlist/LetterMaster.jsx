@@ -30,8 +30,9 @@ const LetterMaster = () => {
       try {
         const { data } = await axiosOther.post("lettermasterlist", postData);
         setLoading(false);
-        setGetData(data.DataList);
-        setFilterData(data.DataList);
+        setGetData(data?.DataList);
+        setFilterData(data?.DataList);
+        console.log("list", data);
       } catch (error) {
         console.log(error);
       }
@@ -40,7 +41,7 @@ const LetterMaster = () => {
   }, [updateData]);
 
   useEffect(() => {
-    const result = getData.filter((item) => {
+    const result = getData?.filter((item) => {
       return item?.Name?.toLowerCase()?.match(postData?.Search?.toLowerCase());
     });
 
@@ -49,7 +50,7 @@ const LetterMaster = () => {
 
   const handleEditClick = (rowValue) => {
     setEditData({
-      id: rowValue.Id,
+      id: rowValue.id,
       Name: rowValue.Name,
       ShortName: rowValue.ShortName,
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
@@ -82,12 +83,12 @@ const LetterMaster = () => {
     },
     {
       name: "Greeitng Note",
-      selector: (row) => row.GreetingNote,
+      selector: (row) => row?.GreetingNote,
       sortable: true,
     },
     {
       name: "Welcome Note",
-      selector: (row) => row.WelcomeNote,
+      selector: (row) => row?.WelcomeNote,
       sortable: true,
     },
     {
@@ -95,7 +96,7 @@ const LetterMaster = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.Created_at}
+            Admin <br /> {row?.Created_at}
           </span>
         );
       },
@@ -105,7 +106,7 @@ const LetterMaster = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.Updated_at}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row?.Updated_at}
           </span>
         );
       },
@@ -146,7 +147,6 @@ const LetterMaster = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
-                  axiosRoute={axiosOther}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
@@ -197,7 +197,7 @@ const LetterMaster = () => {
                     name="Search"
                     placeholder="Search here.."
                     className="search-input focus-ring form-input"
-                    value={postData.Search}
+                    value={postData?.Search}
                     onChange={(e) =>
                       setPostData({ ...postData, Search: e.target.value })
                     }
@@ -207,7 +207,7 @@ const LetterMaster = () => {
                   <select
                     className="select-input focus-ring form-input"
                     name="Status"
-                    value={postData.Status}
+                    value={postData?.Status}
                     onChange={(e) =>
                       setPostData({ ...postData, Status: e.target.value })
                     }

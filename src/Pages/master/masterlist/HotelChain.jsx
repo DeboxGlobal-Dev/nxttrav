@@ -146,7 +146,8 @@ const HotelChain = () => {
                     <div className="col-sm-4">
                       <div className="d-flex justify-content-between">
                         <label className="m-0 font-size-12">
-                          Hotel Chain Name <span className="text-danger">*</span>
+                          Hotel Chain Name{" "}
+                          <span className="text-danger">*</span>
                         </label>
                         <span className="font-size-10 text-danger m-0">
                           <ErrorMessage name="Name" />
@@ -161,17 +162,18 @@ const HotelChain = () => {
                     </div>
                     <div className="col-sm-4">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0 font-size-12">Destination <span className="text-danger">*</span></label>
+                        <label className="m-0 font-size-12">
+                          Destination <span className="text-danger">*</span>
+                        </label>
                         <span className="font-size-10 text-danger m-0">
                           <ErrorMessage name="Destination" />
                         </span>
                       </div>
-                      <Field
-                        type="text"
-                        placeholder="Destination"
-                        className="form-input-6"
-                        name="Destination"
-                      />
+                      <Field name="Destination" component={"select"} className="form-input-6">
+                        <option value="">Select</option>
+                        <option value="1">Delhi</option>
+                        <option value="2">Noida</option>
+                      </Field>
                     </div>
                     <div className="col-sm-4">
                       <div className="d-flex justify-content-between">

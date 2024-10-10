@@ -47,7 +47,6 @@ const ResturantMealPlan = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -147,8 +146,8 @@ const ResturantMealPlan = () => {
                         component={"select"}
                         name="Status"
                       >
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
                       </Field>
                     </div>
                   </div>

@@ -51,7 +51,6 @@ const RoomType = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };

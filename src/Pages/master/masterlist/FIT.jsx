@@ -13,6 +13,16 @@ const FIT = () => {
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+  const [editorValue, setEditorValue] = useState({
+    Inclusion: "",
+    Exclusion: "",
+    TermsCondition: "",
+    Cancelation: "",
+    ServiceUpgradation: "",
+    OptionalTour: "",
+    PaymentPolicy: "",
+    Remarks: "",
+  });
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
@@ -62,6 +72,7 @@ const FIT = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
+      DestinationId: [1, 2],
       SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
       Status: rowValue.Status === "Active" ? 1 : 0,
     });
@@ -69,35 +80,49 @@ const FIT = () => {
   };
 
   const handleRemarkEditor = (content) => {
-    console.log(content);
+    setEditorValue({
+      ...editorValue,
+      Remarks: content,
+    });
   };
 
   const handlePaymentPolicyEditor = (content) => {
-    console.log(content);
+    setEditorValue({
+      ...editorValue,
+      PaymentPolicy: content,
+    });
   };
 
   const handleOptionTourEditor = (content) => {
-    console.log(content);
+    setEditorValue({
+      ...editorValue,
+      OptionalTour: content,
+    });
   };
 
   const handleServiceUpgradationEditor = (content) => {
-    console.log(content);
+    setEditorValue({
+      ...editorValue,
+      ServiceUpgradation: content,
+    });
   };
 
   const handleCancelationEditor = (content) => {
-    console.log(content);
+    setEditorValue({
+      ...editorValue,
+      Cancelation: content,
+    });
   };
-
   const handleTermsConditionEditor = (content) => {
-    console.log(content);
+    setEditorValue({ ...editorValue, TermsCondition: content });
   };
 
   const handleExlusionEditor = (content) => {
-    console.log(content);
+    setEditorValue({ ...editorValue, Exclusion: content });
   };
 
   const handleInclusionEditor = (content) => {
-    console.log(content);
+    setEditorValue({ ...editorValue, Inclusion: content });
   };
 
   const columns = [
@@ -118,7 +143,7 @@ const FIT = () => {
     },
     {
       name: "Destination",
-      selector: (row) => row.Destination,
+      selector: (row) => row.DestinationName,
       sortable: true,
     },
     {
@@ -194,12 +219,14 @@ const FIT = () => {
                   setChangeValue={setChangeValue}
                   updateData={updateData}
                   setUpdateData={setUpdateData}
-                  axiosRoute={axiosFerry}
+                  description={{ ...editorValue }}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-6">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0 font-size-12">Name</label>
+                        <label className="m-0 font-size-12">
+                          Name <span className="text-danger">*</span>
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
                         </span>
@@ -213,7 +240,9 @@ const FIT = () => {
                     </div>
                     <div className="col-sm-6">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0 font-size-12">Destination</label>
+                        <label className="m-0 font-size-12">
+                          Destination <span className="text-danger">*</span>
+                        </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Destination" />
                         </span>
@@ -226,7 +255,7 @@ const FIT = () => {
                         <option value="">ALL</option>
                         {destinationList.map((value, index) => {
                           return (
-                            <option value={value.Id} key={index + 1}>
+                            <option value={value.id} key={index + 1}>
                               {value.Name}
                             </option>
                           );
@@ -234,10 +263,13 @@ const FIT = () => {
                       </Field>
                     </div>
                     <div className="col-sm-12">
-                      <label className="m-0">Inclusion</label>
+                      <label className="m-0">
+                        Inclusion <span className="text-danger">*</span>
+                      </label>
                       <Editor
                         handleChangeEditor={handleInclusionEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.Inclusion}
                       />
                     </div>
                     <div className="col-sm-12 mt-4">
@@ -245,6 +277,7 @@ const FIT = () => {
                       <Editor
                         handleChangeEditor={handleExlusionEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.Exclusion}
                       />
                     </div>
                     <div className="col-sm-12 mt-4">
@@ -252,6 +285,7 @@ const FIT = () => {
                       <Editor
                         handleChangeEditor={handleTermsConditionEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.TermsCondition}
                       />
                     </div>
                     <div className="col-sm-12 mt-4">
@@ -259,6 +293,7 @@ const FIT = () => {
                       <Editor
                         handleChangeEditor={handleCancelationEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.Cancelation}
                       />
                     </div>
                     <div className="col-sm-12 mt-4">
@@ -266,6 +301,7 @@ const FIT = () => {
                       <Editor
                         handleChangeEditor={handleServiceUpgradationEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.ServiceUpgradation}
                       />
                     </div>
                     <div className="col-sm-12 mt-4">
@@ -273,6 +309,7 @@ const FIT = () => {
                       <Editor
                         handleChangeEditor={handleOptionTourEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.OptionalTour}
                       />
                     </div>
                     <div className="col-sm-12 mt-4">
@@ -280,6 +317,7 @@ const FIT = () => {
                       <Editor
                         handleChangeEditor={handlePaymentPolicyEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.PaymentPolicy}
                       />
                     </div>
                     <div className="col-sm-12 mt-4">
@@ -287,6 +325,7 @@ const FIT = () => {
                       <Editor
                         handleChangeEditor={handleRemarkEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.Remarks}
                       />
                     </div>
                     <div className="col-sm-6 mt-4">

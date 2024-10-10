@@ -214,7 +214,7 @@ const ItenaryRequirement = () => {
                     <div className="col-sm-4">
                       <label className="m-0 font-size-12">Driving Distance</label>
                       <Field
-                        type="text"
+                        type="number"
                         name="DrivingDistance"
                         placeholder="Driving Distance"
                         className="form-input-6"

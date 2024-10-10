@@ -124,11 +124,20 @@ const SetPreferrence = lazy(()=> import("./Pages/query/SetPreferrence.jsx"));
 const CostPreview = lazy(()=> import("./Pages/query/CostPreview.jsx"));
 const Guide = lazy(()=> import("./Pages/master/masterlist/Guide.jsx"));
 const GuidePrice = lazy(()=>import("./Pages/master/masterlist/GuidePrice.jsx"));
+const MonumentRate = lazy(()=>import("./Pages/master/masterlist/MonumentRate.jsx"));
+const GuideRate = lazy(()=> import("./Pages/master/masterlist/GuideRate.jsx"));
+const HotelRate = lazy(()=> import("./Pages/master/masterlist/HotelRate.jsx"));
+const ActivityRate = lazy(()=>import("./Pages/master/masterlist/ActivityRate.jsx"));
+const TransportRate = lazy(()=>import("./Pages/master/masterlist/TransportRate.jsx"));
+const TransferRate = lazy(()=> import("./Pages/master/masterlist/TransferRate.jsx"));
+const TrainRate = lazy(()=>import("./Pages/master/masterlist/TrainRate.jsx"));
+const RestaurantRate = lazy(()=>import("./Pages/master/masterlist/RestaurantRate.jsx"));
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ComponentSkeleton from "./Component/Layout/ComponentSkeleton.jsx";
 import JsonToExcel from "./helper/JsonToExcel.jsx";
+import AirlineRate from "./Pages/master/masterlist/AirlineRate.jsx";
 
 
 const App = () => {
@@ -194,6 +203,7 @@ const App = () => {
           <Route path="/master/season" element={ <Protected><SeasonMaster /> </Protected>}/>
           <Route path="/master/room_master" element={<Protected><RoomMaster/></Protected>}></Route>
           <Route path="/master/hotelmaster" element={<Protected><HotelMaster/></Protected>}/>
+          <Route path="/master/hotelmaster/rate/:id" element={<Protected><HotelRate/></Protected>}/>
           <Route path="/master/hotelmaster/create" element={<Protected><HotelMasterCreate/></Protected>}/>
           <Route path="/master/roomtype" element={<Protected><RoomType/></Protected>}></Route>
           <Route path="/master/amenties" element={<Protected><Amenties/></Protected>}></Route>
@@ -204,8 +214,10 @@ const App = () => {
           <Route path="/master/hotel_additional" element={<Protected><HotelAdditional/></Protected>}></Route>
           <Route path="/master/hotelchain" element={<Protected><HotelChain/></Protected>}></Route>
           <Route path="/master/resturant" element={<Protected><Resturant/></Protected>}></Route>
+          <Route path="/master/resturant/rate/:id" element={<Protected><RestaurantRate/></Protected>}></Route>
           <Route path="/master/resturant_mealplan" element={<Protected><ResturantMealPlan/></Protected>}></Route>
           <Route path="/master/monument" element={<Protected><Monument/></Protected>}></Route>
+          <Route path="/master/monument/rate/:id" element={<Protected><MonumentRate/></Protected>}></Route>
           <Route path="/master/sightseeing" element={<Protected><Sightseeing/></Protected>}></Route>
           <Route path="/master/tourescort" element={<Protected><TourEscort/></Protected>}></Route>
           <Route path="/master/tourescortprice" element={<Protected><TourEscortPrice/></Protected>}></Route>
@@ -216,14 +228,18 @@ const App = () => {
           <Route path="/master/passporttype" element={<Protected><PassportType/></Protected>}></Route>
           <Route path="/master/passportcost" element={<Protected><PassportCost/></Protected>}></Route>
           <Route path="/master/train" element={<Protected><TrainMaster/></Protected>}></Route>
+          <Route path="/master/train/rate/:id" element={<Protected><TrainRate/></Protected>}></Route>
           <Route path="/master/airline" element={<Protected><AirlineMaster/></Protected>}></Route>
+          <Route path="/master/airline/rate/:id" element={<Protected><AirlineRate/></Protected>}></Route>
           <Route path="/master/additionalrequirement" element={<Protected><AdditionalRequirement/></Protected>}></Route>
           <Route path="/master/operationrestriction" element={<Protected><OperationRestriction/></Protected>}></Route>
           <Route path="/master/transfermaster" element={<Protected><TransferMaster/></Protected>}></Route>
+          <Route path="/master/transfermaster/rate/:id" element={<Protected><TransferRate/></Protected>}></Route>
           <Route path="/master/vehicletype" element={<Protected><VehicleType/></Protected>}></Route>
           <Route path="/master/transfertype" element={<Protected><TransferType/></Protected>}></Route>
           <Route path="/master/vehiclebrand" element={<Protected><VehicleBrand/></Protected>}></Route>
           <Route path="/master/transport" element={<Protected><TransportMaster/></Protected>}></Route>
+          <Route path="/master/transport/rate/:id" element={<Protected><TransportRate/></Protected>}></Route>
           <Route path="/master/driver" element={<Protected><DriverMaster/></Protected>}></Route>
           <Route path="/master/vehiclemaster" element={<Protected><VehicleMaster/></Protected>}></Route>
           <Route path="/master/fleet" element={<Protected><FleetMaster/></Protected>}></Route>
@@ -253,6 +269,7 @@ const App = () => {
           <Route path="/master/bankmaster" element={<Protected><BankMaster/></Protected>}></Route>
           <Route path="/master/guide" element={<Protected><Guide/></Protected>}></Route>
           <Route path="/master/guideprice" element={<Protected><GuidePrice/></Protected>}></Route>
+          <Route path="/master/guideprice/rate/:id" element={<Protected><GuideRate/></Protected>}></Route>
           <Route path="/setting/" element={<Protected><Setting/></Protected>}>
             <Route index element={<Protected><Users/></Protected>}></Route>
             <Route path="profile" element={<Protected><SettingProfile/></Protected>}></Route>

@@ -156,7 +156,7 @@ const VisaCost = () => {
                         <option value="">Select Country</option>
                         {countryList.map((value, index) => {
                           return (
-                            <option value={value.Id} key={index + 1}>
+                            <option value={value.id} key={index + 1}>
                               {value.Name}
                             </option>
                           );
@@ -173,7 +173,7 @@ const VisaCost = () => {
                         <option value="">Select Visa</option>
                         {visaList.map((value, index) => {
                           return (
-                            <option value={value.Id} key={index + 1}>
+                            <option value={value.id} key={index + 1}>
                               {value.Name}
                             </option>
                           );
@@ -187,8 +187,8 @@ const VisaCost = () => {
                         className="form-input-6"
                         component={"select"}
                       >
-                        <option value={1}>Active</option>
-                        <option value={0}>Inactive</option>
+                        <option value={"1"}>Active</option>
+                        <option value={"0"}>Inactive</option>
                       </Field>
                     </div>
                   </div>

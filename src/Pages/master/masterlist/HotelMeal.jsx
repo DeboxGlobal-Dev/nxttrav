@@ -168,7 +168,7 @@ const HotelMeal = () => {
                         name="Status"
                       >
                         <option value="Active">Active</option>
-                        <option value="Status">Inactive</option>
+                        <option value="Inactive">Inactive</option>
                       </Field>
                     </div>
                     <div className="col-sm-4">

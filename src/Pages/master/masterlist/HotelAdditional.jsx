@@ -31,8 +31,9 @@ const HotelAdditional = () => {
   const [loading, setLoading] = useState(true);
 
   const handleDetailEditor = (content) => {
-    // setEditorValue(content);
+    setEditorValue(content);
   };
+  console.log('content', editroValue);
 
   useEffect(() => {
     const postDataToServer = async () => {
@@ -160,7 +161,7 @@ const HotelAdditional = () => {
                   heading={"Add Additional"}
                   apiurl={"addupdatehoteladdition"}
                   initialValues={{
-                    ...hotelAdditonalInitialValue
+                    ...hotelAdditonalInitialValue,
                   }}
                   validationSchema={hotelAdditionalValidationSchema}
                   forEdit={editData}
@@ -172,12 +173,13 @@ const HotelAdditional = () => {
                   imageValue={imageValue}
                   setImageValue={setImageValue}
                   axiosRoute={axiosOther}
+                  description={{ Details: editroValue }}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
                       <div className="d-flex justify-content-between">
                         <label className="m-0 font-size-12">
-                          Additonal Name
+                          Additonal Name <span className="text-danger">*</span>
                         </label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Name" />
@@ -213,7 +215,7 @@ const HotelAdditional = () => {
                     </div>
                     <div className="col-sm-12">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0 font-size-12">Details</label>
+                        <label className="m-0 font-size-12">Details <span className="text-danger">*</span></label>
                         <span className="font-size-10 text-danger">
                           <ErrorMessage name="Details" />
                         </span>
@@ -221,6 +223,7 @@ const HotelAdditional = () => {
                       <Editor
                         handleChangeEditor={handleDetailEditor}
                         heightValue="60%"
+                        initialValue={editroValue}
                       />
                     </div>
                   </div>

@@ -18,6 +18,7 @@ const CruiseMaster = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  const [editorValue, setEditorValue] = useState("");
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
@@ -70,7 +71,7 @@ const CruiseMaster = () => {
   };
 
   const handleDetailEditor = (content) => {
-    console.log(content);
+    setEditorValue(content);
   };
 
   const columns = [
@@ -168,8 +169,8 @@ const CruiseMaster = () => {
                   setChangeValue={setChangeValue}
                   updateData={updateData}
                   setUpdateData={setUpdateData}
-                  axiosRoute={axiosCruise}
-                >
+                  description={{Details:editorValue}}
+                  >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
                       <div className="m-0 font-size-12">
@@ -197,7 +198,7 @@ const CruiseMaster = () => {
                         <option value="0">ALL</option>
                         {destinationList.map((value, index) => {
                           return (
-                            <option value={value.Id} key={index + 1}>
+                            <option value={value.id} key={index + 1}>
                               {value.Name}
                             </option>
                           );
@@ -244,8 +245,8 @@ const CruiseMaster = () => {
                         component={"select"}
                         name="Status"
                       >
-                        <option value={1}>Active</option>
-                        <option value={0}>Inactive</option>
+                        <option value={'1'}>Active</option>
+                        <option value={'0'}>Inactive</option>
                       </Field>
                     </div>
                     <div className="col-sm-12">
@@ -253,6 +254,7 @@ const CruiseMaster = () => {
                       <Editor
                         handleChangeEditor={handleDetailEditor}
                         heightValue="60%"
+                        initialValue={editorValue}
                       />
                     </div>
                   </div>

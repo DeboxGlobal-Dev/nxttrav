@@ -169,7 +169,16 @@ const HotelMaster = () => {
     },
     {
       name: "Rate Sheet",
-      selector: (row) => row.RateSheet,
+      selector: (row) =>(
+        <NavLink
+          to={`/master/hotelmaster/rate/${row?.id}`}
+          state={{ Name: row?.MonumentName }}
+        >
+          <button className="border font-size-10 p-1 px-2 rounded-pill bg-success">
+            + View/Add
+          </button>
+        </NavLink>
+      ),
       sortable: true,
     },
   ];

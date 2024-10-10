@@ -26,6 +26,7 @@ const DestinationMaster = () => {
   const [countryList, setCountryList] = useState([]);
   const [updateData, setUpdateData] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [editorDescription, setEditorDescription] = useState("");
 
   const getDataToServer = async () => {
     try {
@@ -92,7 +93,7 @@ const DestinationMaster = () => {
   }, [changeValue.CountryId, changeValue.StateId]);
 
   const handleDescription = (content) => {
-    console.log(content);
+    setEditorDescription(content);
   };
 
   const columns = [
@@ -168,6 +169,8 @@ const DestinationMaster = () => {
     },
   ];
 
+  // console.log('destination-list', getData);
+
   return (
     <>
       <Layout>
@@ -202,7 +205,7 @@ const DestinationMaster = () => {
                   setChangeValue={setChangeValue}
                   updateData={updateData}
                   setUpdateData={setUpdateData}
-                  axiosRoute={axiosOther}
+                  description={{Description:editorDescription}}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
@@ -211,7 +214,7 @@ const DestinationMaster = () => {
                           Country <span className="text-danger">*</span>
                         </label>
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Country" />
+                          <ErrorMessage name="CountryId" />
                         </span>
                       </div>
                       <Field
@@ -290,6 +293,7 @@ const DestinationMaster = () => {
                       <Editor
                         handleChangeEditor={handleDescription}
                         heightValue="60%"
+                        initialValue={editorDescription}
                       />
                       <span className="font-size-10 text-danger">
                         <ErrorMessage name="Description" />

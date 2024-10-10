@@ -59,6 +59,7 @@ const Monument = () => {
         const { data } = await axiosOther.post("monumentmasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
+        console.log("data", data?.DataList);
       } catch (error) {
         console.log(error);
       }
@@ -86,6 +87,7 @@ const Monument = () => {
     console.log(content);
   };
 
+  // console.log("monument-list", getData);
   const columns = [
     {
       name: "Photo",
@@ -124,17 +126,34 @@ const Monument = () => {
     },
     {
       name: "Langauge",
-      selector: (row) => row.Language,
+      selector: (row) => (
+        <button className="border font-size-10 p-1 px-2 rounded-pill bg-success">
+          View Language
+        </button>
+      ),
       sortable: true,
     },
     {
       name: "Gallery",
-      selector: (row) => row.Gallery,
+      selector: (row) => (
+        <button className="border font-size-10 p-1 px-2 rounded-pill bg-success">
+          + Gallery
+        </button>
+      ),
       sortable: true,
     },
     {
       name: "Rate Sheet",
-      selector: (row) => row.Ratesheet,
+      selector: (row) => (
+        <NavLink
+          to={`/master/monument/rate/${row?.id}`}
+          state={{ Name: row?.MonumentName }}
+        >
+          <button className="border font-size-10 p-1 px-2 rounded-pill bg-success">
+            + View/Add
+          </button>
+        </NavLink>
+      ),
       sortable: true,
     },
   ];
@@ -176,7 +195,6 @@ const Monument = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
-                  axiosRoute={axiosOther}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
@@ -205,7 +223,7 @@ const Monument = () => {
                         <option value="">Select Destination</option>
                         {destinationList.map((value, index) => {
                           return (
-                            <option value={value.Id} key={index + 1}>
+                            <option value={value.id} key={index + 1}>
                               {value.Name}
                             </option>
                           );
@@ -287,9 +305,8 @@ const Monument = () => {
                       >
                         <option value="">Select Weekend</option>
                         {weekendList.map((value, index) => {
-                          console.log("Weeks", value);
                           return (
-                            <option value={value.Id} key={index + 1}>
+                            <option value={value.id} key={index + 1}>
                               {value.WeekendDays}
                             </option>
                           );

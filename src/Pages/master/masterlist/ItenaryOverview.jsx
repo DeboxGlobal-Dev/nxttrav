@@ -20,6 +20,12 @@ const ItenaryOverview = () => {
     Search: "",
     Status: "",
   });
+  const [editorValue, setEditorValue] = useState({
+    OverviewInformation: "",
+    HighlightInformation: "",
+    ItineraryIntroduction: "",
+    ItinerarySummary: "",
+  });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -27,10 +33,14 @@ const ItenaryOverview = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("itineraryoverviewlist", postData);
+        const { data } = await axiosOther.post(
+          "itineraryoverviewlist",
+          postData
+        );
         setLoading(false);
-        setGetData(data.ItineraryInfoMaster);
-        setFilterData(data.ItineraryInfoMaster);
+        setGetData(data?.DataList);
+        setFilterData(data?.DataList);
+        console.log("overview-data", data);
       } catch (error) {
         console.log(error);
       }
@@ -49,27 +59,39 @@ const ItenaryOverview = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
-      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
-      Status: rowValue.Status === "Active" ? 1 : 0
+      Status: rowValue.Status === "Active" ? 1 : 0,
+    });
+    setEditorValue({
+      ...editorValue,
+      OverviewInformation: rowValue?.OverviewInformation,
+    });
+    setEditorValue({
+      ...editorValue,
+      HighlightInformation: rowValue?.HighlightInformation,
+    });
+    setEditorValue({
+      ...editorValue,
+      ItineraryIntroduction: rowValue?.ItineraryIntroduction,
+    });
+    setEditorValue({
+      ...editorValue,
+      ItinerarySummary: rowValue?.ItinerarySummary,
     });
     setIsEditing(true);
   };
 
-  const handleOverviewNameEditor = (content) =>{
-    console.log(content)
-  };
-  const handleOverviewInformationEditor = (content) =>{
-    console.log(content);
+  const handleOverviewInformationEditor = (content) => {
+    setEditorValue({ ...editorValue, OverviewInformation: content });
   };
 
-  const handleHighlightInformationEditor = (content) =>{
-    console.log(content);
+  const handleHighlightInformationEditor = (content) => {
+    setEditorValue({ ...editorValue, HighlightInformation: content });
   };
-  const hanldeItenararyIntroductionEditor = (content)=>{
-    console.log(content);
+  const hanldeItenararyIntroductionEditor = (content) => {
+    setEditorValue({ ...editorValue, ItineraryIntroduction: content });
   };
-  const handleItenararySummaryEditor = (content) =>{
-    console.log(content);
+  const handleItenararySummaryEditor = (content) => {
+    setEditorValue({ ...editorValue, ItinerarySummary: content });
   };
 
   const columns = [
@@ -144,10 +166,12 @@ const ItenaryOverview = () => {
           >
             <div
               className="card-header header-elements-inline bg-info-700 py-2"
-              style={{padding:"10px"}}
+              style={{ padding: "10px" }}
             >
               <div className="col-xl-10 d-flex align-items-center">
-                <h5 className="card-title d-none d-sm-block">Itenarary Overview</h5>
+                <h5 className="card-title d-none d-sm-block">
+                  Itenarary Overview
+                </h5>
               </div>
               <div className="col-xl-2 d-flex justify-content-end">
                 {/*Bootstrap Modal*/}
@@ -169,50 +193,60 @@ const ItenaryOverview = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
-                  axiosRoute={axiosOther}
+                  description={{ ...editorValue }}
                 >
                   <div className="card-body">
                     <div className="row row-gap-3">
                       <div className="col-sm-12">
-                        <label className="m-0">Overview Name</label>
-                        <Editor 
-                            handleChangeEditor={handleOverviewNameEditor}
-                             heightValue="60%"
+                        <div>
+                          <label className="m-0">
+                            Overview Name <span className="text-danger">*</span>
+                          </label>
+                        </div>
+                        <Field
+                          type="text"
+                          name="OverviewName"
+                          className="form-input-6"
+                          placeholder="Overview Name"
                         />
                       </div>
-                      <div className="col-sm-12 mt-4">
+                      <div className="col-sm-12">
                         <label className="m-0">Overview Information</label>
                         <Editor
                           handleChangeEditor={handleOverviewInformationEditor}
-                           heightValue="60%"
+                          heightValue="60%"
+                          initialValue={editorValue?.OverviewInformation}
                         />
                       </div>
                       <div className="col-sm-12 mt-4">
                         <label className="m-0">Highlight Information</label>
                         <Editor
                           handleChangeEditor={handleHighlightInformationEditor}
-                           heightValue="60%"
+                          heightValue="60%"
+                          initialValue={editorValue?.HighlightInformation}
                         />
                       </div>
                       <div className="col-sm-12 mt-4">
                         <label className="m-0">Itinerary Introduction</label>
                         <Editor
                           handleChangeEditor={hanldeItenararyIntroductionEditor}
-                           heightValue="60%"
+                          heightValue="60%"
+                          initialValue={editorValue?.ItineraryIntroduction}
                         />
                       </div>
                       <div className="col-sm-12 mt-4">
                         <label className="m-0">Itenarary Summary</label>
                         <Editor
                           handleChangeEditor={handleItenararySummaryEditor}
-                           heightValue="60%"
+                          heightValue="60%"
+                          initialValue={editorValue?.ItinerarySummary}
                         />
                       </div>
                       <div className="col-sm-6 mt-4">
                         <label>Status</label>
                         <Field
                           name="Status"
-                          className="form-control"
+                          className="form-input-6"
                           component={"select"}
                         >
                           <option value={1}>Active</option>

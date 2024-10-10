@@ -19,19 +19,19 @@ const AirlineMaster = () => {
     Search: "",
     Status: "",
   });
-  const [loading, setLoading] =useState(true);
+  const [loading, setLoading] = useState(true);
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [imageValue, setImageValue] = useState({
-    ImageData:'',
-    ImageName:''
+    ImageData: "",
+    ImageName: "",
   });
 
   useEffect(() => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosAir.post("airlinemasterlist", postData);
-        setLoading(false)
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -51,12 +51,12 @@ const AirlineMaster = () => {
 
   const handleEditClick = (rowValue) => {
     setImageValue({
-      ImageData:"",
-      ImageName:""
+      ImageData: "",
+      ImageName: "",
     });
     setEditData({
       ...rowValue,
-      Status:rowValue.Status==="Active"?1:0
+      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
@@ -72,7 +72,11 @@ const AirlineMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          <img src={row.ImageName} alt="image" style={{height:'30px', height:'30px'}}></img>
+          <img
+            src={row.ImageName}
+            alt="image"
+            style={{ height: "30px", height: "30px" }}
+          ></img>
         </span>
       ),
       sortable: true,
@@ -83,20 +87,20 @@ const AirlineMaster = () => {
       sortable: true,
     },
     {
-      name: "AddedBy",
-      selector: (row) => <span>Admin <br /> {row.AddedBy}</span>,
+      name: "Rate",
+      selector: (row) => (
+        <NavLink
+          to={`/master/airline/rate/${row?.id}`}
+          state={{ Name: row?.Name }}
+        >
+          <button className="border font-size-10 p-1 px-2 rounded-pill bg-success">
+            + View/Add
+          </button>
+        </NavLink>
+      ),
       sortable: true,
     },
-    {
-      name: "Updated By",
-      selector: (row) => {
-        return (
-          <span>
-            Admin <br /> {row.UpdatedBy}
-          </span>
-        );
-      },
-    },
+
     {
       name: "Status",
       selector: (row) => row.Status,
@@ -104,20 +108,19 @@ const AirlineMaster = () => {
     },
   ];
 
-  const hanldeAirlineChange = (e) =>{
+  const hanldeAirlineChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    reader.onload =()=>{
+    reader.onload = () => {
       const base64 = reader.result;
-      const base64String = base64.split(',')[1];
+      const base64String = base64.split(",")[1];
       setImageValue({
-        ImageData:base64String,
-        ImageName:file.name
+        ImageData: base64String,
+        ImageName: file.name,
       });
-    }
+    };
     reader.readAsDataURL(file);
-
   };
 
   return (

@@ -17,21 +17,26 @@ const Model = ({
   updateData,
   imageValue,
   setImageValue,
-  axiosRoute
+  description,
 }) => {
   const closeModel = () => {
     document.getElementById("cancel").click();
   };
 
   const handleSubmit = async (values, { resetForm }) => {
-    console.log("Submit Modal Value", { ...values, ...imageValue });
+    console.log("Submit Modal Value", {
+      ...values,
+      ...imageValue,
+      ...description,
+    });
 
     try {
-      const response = await axiosRoute.post(apiurl, {
+      const response = await axiosOther.post(apiurl, {
         ...values,
         ...imageValue,
+        ...description,
       });
-      console.log('response', response);
+      console.log("response", response);
       if (response.data.Status) {
         toast.success(response.data.Message);
         setUpdateData(!updateData);
@@ -74,7 +79,11 @@ const Model = ({
               <h5 className="modal-title m-0" id="exampleModalLabel">
                 {heading}
               </h5>
-              <p className="m-0 cursor-pointer font-weight-normal" data-dismiss="modal" aria-label="Close">
+              <p
+                className="m-0 cursor-pointer font-weight-normal"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
                 <span aria-hidden="true" className="m-0 fs-3">
                   &times;
                 </span>

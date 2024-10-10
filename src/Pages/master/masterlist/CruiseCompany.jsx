@@ -370,8 +370,8 @@ const CruiseCompany = () => {
                         className="form-input-6"
                         component={"select"}
                       >
-                        <option value={1}>Yes</option>
-                        <option value={1}>No</option>
+                        <option value={"Yes"}>Yes</option>
+                        <option value={"No"}>No</option>
                       </Field>
                     </div>
                     <div className="col-sm-4">
@@ -399,7 +399,7 @@ const CruiseCompany = () => {
                           Contact Person
                         </label>
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="ShortName" />
+                          <ErrorMessage name="ContactPerson" />
                         </span>
                       </div>
                       <Field
@@ -474,8 +474,8 @@ const CruiseCompany = () => {
                         className="form-input-6"
                         component={"select"}
                       >
-                        <option value={1}>Active</option>
-                        <option value={0}>Inactive</option>
+                        <option value={"1"}>Active</option>
+                        <option value={"0"}>Inactive</option>
                       </Field>
                     </div>
                   </div>

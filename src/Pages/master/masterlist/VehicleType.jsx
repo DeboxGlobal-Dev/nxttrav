@@ -19,6 +19,10 @@ const VehicleType = () => {
     Search: "",
     Status: "",
   });
+  const [vehicleImage, setVehicleImage] = useState({
+    ImageName: "",
+    ImageData: "",
+  });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   useEffect(() => {
@@ -30,6 +34,7 @@ const VehicleType = () => {
         );
         setGetData(data.DataList);
         setFilterData(data.DataList);
+        console.log("vehicle-type", data?.DataList);
       } catch (error) {
         console.log(error);
       }
@@ -48,9 +53,27 @@ const VehicleType = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
+      ImageName: rowValue?.ImageName != "" && "",
       Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const base64String = reader.result;
+        setVehicleImage({
+          ImageData: base64String,
+          ImageName: file.name,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const columns = [
@@ -71,12 +94,17 @@ const VehicleType = () => {
     },
     {
       name: "Pax Capacity",
-      selector: (row) => row.PaxCapacity,
+      selector: (row) => row?.PaxCapacity,
+      sortable: true,
+    },
+    {
+      name: "Image",
+      selector: (row) => row?.ImageData,
       sortable: true,
     },
     {
       name: "Status Name",
-      selector: (row) => row.Status,
+      selector: (row) => row?.Status,
       sortable: true,
     },
     {
@@ -125,14 +153,15 @@ const VehicleType = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
-                  axiosRoute={axiosOther}
+                  imageValue={vehicleImage}
+                  setImageValue={setVehicleImage}
                 >
-                  <div className="row">
+                  <div className="row row-gap-2">
                     <div className="col-sm-4">
                       <div className="d-flex justify-content-between">
                         <label className="m-0 font-size-12">Vehicle Type</label>
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name"/>
+                          <ErrorMessage name="Name" />
                         </span>
                       </div>
                       <Field
@@ -152,6 +181,15 @@ const VehicleType = () => {
                       />
                     </div>
                     <div className="col-sm-4">
+                      <label className="m-0 font-size-12">Vehicle Image</label>
+                      <input
+                        name="ImageName"
+                        className="form-input-6 border-0"
+                        type="file"
+                        onChange={handleImageChange}
+                      />
+                    </div>
+                    <div className="col-sm-4">
                       <label className="m-0 font-size-12">Status</label>
                       <Field
                         name="Status"
@@ -159,7 +197,7 @@ const VehicleType = () => {
                         component={"select"}
                       >
                         <option value={1}>Active</option>
-                        <option value={0}>Inactive</option>
+                        <option value={2}>Inactive</option>
                       </Field>
                     </div>
                   </div>

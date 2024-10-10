@@ -151,7 +151,7 @@ const BusinessType = () => {
                         className="form-input-6"
                         component={"select"}
                       >
-                        <option value={0} selected>
+                        <option value={0}>
                           No
                         </option>
                         <option value={1}>Yes</option>

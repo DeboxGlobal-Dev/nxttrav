@@ -13,6 +13,16 @@ const GIT = () => {
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+  const [editorValue, setEditorValue] = useState({
+    Inclusion: "",
+    Exclusion: "",
+    TermsCondition: "",
+    Cancelation: "",
+    ServiceUpgradation: "",
+    OptionalTour: "",
+    PaymentPolicy: "",
+    Remarks: "",
+  });
   const [postData, setPostData] = useState({
     Search: "",
     Status: "",
@@ -44,6 +54,7 @@ const GIT = () => {
         setLoading(false);
         setGetData(data.ItineraryInfoMaster);
         setFilterData(data.ItineraryInfoMaster);
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -69,36 +80,52 @@ const GIT = () => {
   };
 
   const handleRemarkEditor = (content) => {
-    console.log(content);
+    setEditorValue({
+      ...editorValue,
+      Remarks: content,
+    });
   };
 
   const handlePaymentPolicyEditor = (content) => {
-    console.log(content);
+    setEditorValue({
+      ...editorValue,
+      PaymentPolicy: content,
+    });
   };
 
   const handleOptionTourEditor = (content) => {
-    console.log(content);
+    setEditorValue({
+      ...editorValue,
+      OptionalTour: content,
+    });
   };
 
   const handleServiceUpgradationEditor = (content) => {
-    console.log(content);
+    setEditorValue({
+      ...editorValue,
+      ServiceUpgradation: content,
+    });
   };
 
   const handleCancelationEditor = (content) => {
-    console.log(content);
+    setEditorValue({
+      ...editorValue,
+      Cancelation: content,
+    });
   };
-
   const handleTermsConditionEditor = (content) => {
-    console.log(content);
+    setEditorValue({ ...editorValue, TermsCondition: content });
   };
 
   const handleExlusionEditor = (content) => {
-    console.log(content);
+    setEditorValue({ ...editorValue, Exclusion: content });
   };
 
   const handleInclusionEditor = (content) => {
-    console.log(content);
+    setEditorValue({ ...editorValue, Inclusion: content });
   };
+
+  
 
   const columns = [
     {
@@ -118,7 +145,7 @@ const GIT = () => {
     },
     {
       name: "Destination",
-      selector: (row) => row.Destination,
+      selector: (row) => row.DestinationName,
       sortable: true,
     },
     {
@@ -179,7 +206,7 @@ const GIT = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
-                  axiosRoute={axiosFerry}
+                  description={{ ...editorValue }}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-6">
@@ -209,10 +236,13 @@ const GIT = () => {
                       </Field>
                     </div>
                     <div className="col-sm-12">
-                      <label className="m-0">Inclusion</label>
+                      <label className="m-0">
+                        Inclusion <span className="text-danger">*</span>
+                      </label>
                       <Editor
                         handleChangeEditor={handleInclusionEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.Inclusion}
                       />
                     </div>
                     <div className="col-sm-12 mt-4">
@@ -220,6 +250,7 @@ const GIT = () => {
                       <Editor
                         handleChangeEditor={handleExlusionEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.Exclusion}
                       />
                     </div>
                     <div className="col-sm-12 mt-4">
@@ -227,6 +258,7 @@ const GIT = () => {
                       <Editor
                         handleChangeEditor={handleTermsConditionEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.TermsCondition}
                       />
                     </div>
                     <div className="col-sm-12 mt-4">
@@ -234,6 +266,7 @@ const GIT = () => {
                       <Editor
                         handleChangeEditor={handleCancelationEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.Cancelation}
                       />
                     </div>
                     <div className="col-sm-12 mt-4">
@@ -241,6 +274,7 @@ const GIT = () => {
                       <Editor
                         handleChangeEditor={handleServiceUpgradationEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.ServiceUpgradation}
                       />
                     </div>
                     <div className="col-sm-12 mt-4">
@@ -248,6 +282,7 @@ const GIT = () => {
                       <Editor
                         handleChangeEditor={handleOptionTourEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.OptionalTour}
                       />
                     </div>
                     <div className="col-sm-12 mt-4">
@@ -255,6 +290,7 @@ const GIT = () => {
                       <Editor
                         handleChangeEditor={handlePaymentPolicyEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.PaymentPolicy}
                       />
                     </div>
                     <div className="col-sm-12 mt-4">
@@ -262,6 +298,7 @@ const GIT = () => {
                       <Editor
                         handleChangeEditor={handleRemarkEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.Remarks}
                       />
                     </div>
                     <div className="col-sm-6 mt-4">

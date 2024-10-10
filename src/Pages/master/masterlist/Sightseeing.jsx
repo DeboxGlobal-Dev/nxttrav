@@ -14,7 +14,6 @@ import "select2";
 import Editor from "../../../helper/Editor";
 
 const Sightseeing = () => {
-
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -26,6 +25,11 @@ const Sightseeing = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [destinationList, setDestinationList] = useState([]);
+  const [editorValue, setEditorValue] = useState({
+    Description: "",
+    InclusionsExclusionsTiming: "",
+    ImportantNote: "",
+  });
 
   const getDataToServer = async () => {
     try {
@@ -69,20 +73,21 @@ const Sightseeing = () => {
   const handleEditClick = (rowValue) => {
     setEditData({
       ...rowValue,
+      Status: rowValue.Status == "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
 
   const handleImportantNoteEditor = (content) => {
-    console.log(content);
+    setEditorValue({ ...editorValue, ImportantNote: content });
   };
 
   const handleDescriptionEditor = (content) => {
-    console.log(content);
+    setEditorValue({ ...editorValue, Description: content });
   };
 
   const handleInclusionEditor = (content) => {
-    console.log(content);
+    setEditorValue({ ...editorValue, InclusionsExclusionsTiming: content });
   };
 
   const columns = [
@@ -178,6 +183,7 @@ const Sightseeing = () => {
                   setUpdateData={setUpdateData}
                   updateData={updateData}
                   axiosRoute={axiosOther}
+                  description={{...editorValue}}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
@@ -227,7 +233,9 @@ const Sightseeing = () => {
                       </Field>
                     </div>
                     <div className="col-sm-4">
-                      <label className="m-0 font-size-12">SetDefault for Qoutation</label>
+                      <label className="m-0 font-size-12">
+                        SetDefault for Qoutation
+                      </label>
                       <Field
                         name="DefaultQuotation"
                         className="form-input-6"
@@ -244,12 +252,14 @@ const Sightseeing = () => {
                         className="form-input-6"
                         component={"select"}
                       >
-                        <option value="Active">Active</option>
-                        <option value="Inactive">Inactive</option>
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
                       </Field>
                     </div>
                     <div className="col-sm-4">
-                      <label className="m-0 font-size-12">SetDefault for Proposal</label>
+                      <label className="m-0 font-size-12">
+                        SetDefault for Proposal
+                      </label>
                       <Field
                         name="DefaultProposal"
                         className="form-input-6"
@@ -264,6 +274,7 @@ const Sightseeing = () => {
                       <Editor
                         handleChangeEditor={handleDescriptionEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.Description}
                       />
                     </div>
                     <div className="col-sm-12 mt-4">
@@ -273,6 +284,7 @@ const Sightseeing = () => {
                       <Editor
                         handleChangeEditor={handleInclusionEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.InclusionsExclusionsTiming}
                       />
                     </div>
                     <div className="col-sm-12 mt-4">
@@ -280,6 +292,7 @@ const Sightseeing = () => {
                       <Editor
                         handleChangeEditor={handleImportantNoteEditor}
                         heightValue="60%"
+                        initialValue={editorValue?.ImportantNote}
                       />
                     </div>
                   </div>

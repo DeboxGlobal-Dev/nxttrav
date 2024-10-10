@@ -46,6 +46,7 @@ const CurrencyMaster = () => {
         setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -94,7 +95,7 @@ const CurrencyMaster = () => {
     },
     {
       name: "Currency Name",
-      selector: (row) => row.Currencyname,
+      selector: (row) => row.CurrencyName,
       sortable: true,
     },
     {
@@ -150,7 +151,6 @@ const CurrencyMaster = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
-                  axiosRoute={axiosOther}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
@@ -163,7 +163,7 @@ const CurrencyMaster = () => {
                         <option value="">Select Country</option>
                         {countryList.map((value, index) => {
                           return (
-                            <option value={value.Id} key={index + 1}>
+                            <option value={value.id} key={index + 1}>
                               {value.Name}
                             </option>
                           );
@@ -172,7 +172,7 @@ const CurrencyMaster = () => {
                     </div>
                     <div className="col-sm-4">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0 font-size-12">Country Code</label>
+                        <label className="m-0 font-size-12">Country Code <span className="text-danger">*</span></label>
                         <span className="font-size-10 text-danger pt-1">
                           <ErrorMessage name="CountryCode" />
                         </span>
@@ -186,14 +186,14 @@ const CurrencyMaster = () => {
                     </div>
                     <div className="col-sm-4">
                       <div className="d-flex justify-content-between">
-                        <label className="m-0 font-size-12">Currency Name</label>
+                        <label className="m-0 font-size-12">Currency Name <span className="text-danger">*</span></label>
                         <span className="font-size-10 text-danger pt-1">
-                          <ErrorMessage name="Currencyname" />
+                          <ErrorMessage name="CurrencyName" />
                         </span>
                       </div>
                       <Field
                         type="text"
-                        name="Currencyname"
+                        name="Name"
                         placeholder="Currency Name"
                         className="form-input-6"
                       />
@@ -205,8 +205,8 @@ const CurrencyMaster = () => {
                         className="form-input-6"
                         component={"select"}
                       >
-                        <option value={1}>Active</option>
-                        <option value={0}>Inactive</option>
+                        <option value={"1"}>Active</option>
+                        <option value={"0"}>Inactive</option>
                       </Field>
                     </div>
                     <div className="col-sm-4">
@@ -216,8 +216,8 @@ const CurrencyMaster = () => {
                         className="form-input-6"
                         component={"select"}
                       >
-                        <option value={1}>Yes</option>
-                        <option value={0}>No</option>
+                        <option value={"1"}>Yes</option>
+                        <option value={"0"}>No</option>
                       </Field>
                     </div>
                   </div>

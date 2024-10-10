@@ -29,6 +29,7 @@ const TransportMaster = () => {
         const { data } = await axiosOther.post("transportmasterlist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
+        console.log("list-data", data?.DataList);
       } catch (error) {
         console.log(error);
       }
@@ -57,9 +58,9 @@ const TransportMaster = () => {
     setIsEditing(true);
   };
 
-  const handleDetailEditor = (content) =>{
+  const handleDetailEditor = (content) => {
     console.log(content);
-  }
+  };
 
   const columns = [
     {
@@ -72,29 +73,39 @@ const TransportMaster = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Name}
+          {row?.Name}
         </span>
       ),
       sortable: true,
     },
     {
       name: "Destinations",
-      selector: (row) => row.Destinations,
+      selector: (row) =>
+        row?.Destinations?.map((value) => value.Name).join(","),
       sortable: true,
     },
     {
       name: "Transfer Type",
-      selector: (row) => row.TransferType,
+      selector: (row) => row?.TransferType?.Name,
       sortable: true,
     },
     {
       name: "Detail",
-      selector: (row) => row.Detail,
+      selector: (row) => row?.Detail,
       sortable: true,
     },
     {
-      name: "Default",
-      selector: (row) => row.Default,
+      name: "Rate Sheet",
+      selector: (row) => (
+        <NavLink
+          to={`/master/transport/rate/${row?.id}`}
+          state={{ Name: row?.MonumentName }}
+        >
+          <button className="border font-size-10 p-1 px-2 rounded-pill bg-success" state={{Name:row?.TransferType?.Name}}>
+            + View/Add
+          </button>
+        </NavLink>
+      ),
       sortable: true,
     },
     {
@@ -102,7 +113,7 @@ const TransportMaster = () => {
       selector: (row) => {
         return (
           <span>
-            Admin <br /> {row.AddedBy}
+            Admin <br /> {row?.AddedBy}
           </span>
         );
       },
@@ -112,14 +123,14 @@ const TransportMaster = () => {
       selector: (row) => {
         return (
           <span>
-            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row.UpdatedBy}
+            {row.UpdatedBy == true ? "Admin" : "-"} <br /> {row?.UpdatedBy}
           </span>
         );
       },
     },
     {
       name: "Status",
-      selector: (row) => row.Status,
+      selector: (row) => row?.Status,
       sortable: true,
     },
   ];
@@ -226,7 +237,7 @@ const TransportMaster = () => {
                         <label>Detail</label>
                         <Editor
                           handleChangeEditor={handleDetailEditor}
-                           heightValue="60%"
+                          heightValue="60%"
                         />
                       </div>
                     </div>
@@ -274,11 +285,7 @@ const TransportMaster = () => {
           <div className="card shadow-none border">
             <DataTable
               columns={columns}
-              data={
-                postData.Search !== "" || postData.Status !== ""
-                  ? filterData
-                  : getData
-              }
+              data={filterData}
               pagination
               fixedHeader
               fixedHeaderScrollHeight="280px"

@@ -45,7 +45,7 @@ const TaxMaster = () => {
 
   const handleEditClick = (rowValue) => {
     setEditData({
-      id: rowValue.Id,
+      id: rowValue.id,
       ServiceType: rowValue.ServiceType,
       TaxSlabName: rowValue.TaxSlabName,
       TaxValue: rowValue.TaxValue,
@@ -57,6 +57,7 @@ const TaxMaster = () => {
     setIsEditing(true);
   };
 
+  console.log("tax-list", getData);
   const columns = [
     {
       name: "Service Type",
@@ -135,7 +136,6 @@ const TaxMaster = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
-                  axiosRoute={axiosOther}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">

@@ -84,6 +84,14 @@ export const destinationInitialValue = {
   AddedBy: 1,
   UpdatedBy: 0,
 };
+export const transferMasterInitialValue = {
+  TransferName: "",
+  Destinations: [1, 2, 3],
+  TransferType: "",
+  Status: 1,
+  AddedBy: 1,
+  UpdatedBy: 0,
+};
 
 export const tourtypeInitialValue = {
   id: "",
@@ -141,7 +149,8 @@ export const hotelCategoryInitialValue = {
   Name: "",
   UploadKeyword: "",
   Status: "Active",
-  AddedBy: 1,
+  AddedBy: "1",
+  UpdatedBy: "0",
 };
 
 export const hotelAdditonalInitialValue = {
@@ -174,17 +183,18 @@ export const hotelChainInitialValue = {
   ContactMobile: "",
   ContactEmail: "",
   Status: "Active",
-  AddedBy: 1,
+  AddedBy: "1",
+  UpdatedBy: "0",
 };
 
 export const resturantInitialValue = {
   id: "",
   Name: "",
-  DestinationId: "",
+  Destination: "",
   Address: "",
-  CountryId: "",
-  StateId: "",
-  CityId: "",
+  Country: "",
+  State: "",
+  City: "",
   SelfSupplier: "1",
   PinCode: "",
   GSTN: "",
@@ -196,15 +206,15 @@ export const resturantInitialValue = {
   Phone2: "",
   Phone3: "",
   ContactEmail: "",
-  Status: 1,
+  Status: "Active",
   AddedBy: 1,
-  updatedBy: 1,
+  UpdatedBy: 0,
 };
 
 export const restaurantMealInitialValue = {
   id: "",
   Name: "",
-  Status: 1,
+  Status: "Active",
   AddedBy: 1,
   UpdatedBy: 0,
 };
@@ -213,7 +223,7 @@ export const amentiesInitialValue = {
   id: "",
   Name: "",
   SetDefault: 0,
-  Status: 1,
+  Status: "Active",
   AddedBy: 1,
   UpdatedBy: 0,
 };
@@ -232,7 +242,7 @@ export const weekendInitialValue = {
   id: "",
   Name: "",
   WeekendDays: "",
-  Status: 1,
+  Status: "Active",
   AddedBy: 1,
   UpdatedBy: 0,
 };
@@ -257,31 +267,31 @@ export const monumentInitialValue = {
   DefaultProposal: "",
   WeekendDays: "",
   Description: "",
-  Status: "0",
+  Status: "1",
   AddedBy: 1,
-  UpdatedBy: "1",
+  UpdatedBy: "0",
 };
 
 export const sightseeingInitialValue = {
   id: "",
   SightseeingName: "",
   Destination: "",
-  Description: "",
+  Description: "AHJADKH",
   TransferType: "",
   DefaultQuotation: 0,
   DefaultProposal: 0,
-  InclusionsExclusionsTiming: "",
-  ImportantNote: "",
-  Status: "Active",
+  InclusionsExclusionsTiming: "JKDHAKDH",
+  ImportantNote: "JKDAKDA",
+  Status: "1",
   AddedBy: 1,
-  UpdatedBy: 1,
+  UpdatedBy: 0,
 };
 
 export const visaCostInitialValue = {
   id: "",
   Country: "",
   VisaType: "",
-  Status: 1,
+  Status: "1",
   AddedBy: 1,
   UpdatedBy: 0,
 };
@@ -355,6 +365,7 @@ export const vehicleTypeInitialValue = {
   PaxCapacity: "",
   Status: 1,
   AddedBy: 1,
+  UpdatedBy: 0,
 };
 export const vehicleBrandInitialValue = {
   id: "",
@@ -380,7 +391,7 @@ export const vehicleMasterInitialValue = {
 export const additionalRequiremntInitialValue = {
   id: "",
   Name: "",
-  DestinationId: "",
+  DestinationId: [1, 2, 3],
   TaxSlab: "",
   MarkupApply: 1,
   CurrencyId: "",
@@ -455,11 +466,11 @@ export const ferrySeatMasterInitialValue = {
 
 export const currencyMasterInitialValue = {
   id: "",
-  CountryId: 1,
+  CountryId: "",
   CountryCode: "",
-  CurrencyName: "",
-  Status: 1,
-  SetDefault: "",
+  Name: "",
+  Status: "1",
+  SetDefault: "1",
   AddedBy: 1,
   UpdatedBy: "0",
 };
@@ -486,18 +497,19 @@ export const cruiseCompanyInitialValue = {
   Address: "",
   Website: "",
   GST: "",
-  SelfSupplier: "",
-  Type: "",
+  SelfSupplier: "Yes",
+  Type: "afdafd",
   Phone: "",
   Email: "",
-  Status: "1",
-  UpdatedBy: 1,
+  Status: 1,
+  UpdatedBy: 0,
+  AddedBy: 1,
 };
 export const cruiseNameCompanyInitialValue = {
   id: "",
   CruiseCompany: "",
   CruiseName: "",
-  Status: "",
+  Status: "1",
   ImageName: "",
   ImageData: "",
   AddedBy: "1",
@@ -511,7 +523,7 @@ export const cruiseMasterInitialValue = {
   ArrivalTime: "",
   DepartureTime: "",
   Details: "",
-  Status: 1,
+  Status: "1",
   AddedBy: 1,
   UpdatedBy: 1,
 };
@@ -534,13 +546,10 @@ export const ferryCompanyInitialValue = {
 
 export const letterMasterInitialValue = {
   id: "",
-  FromDestination: "",
-  ToDestination: "",
-  TransferMode: "",
   Name: "",
   GreetingNote: "",
   WelcomeNote: "",
-  Status: "",
+  Status: "1",
   AddedBy: "1",
 };
 
@@ -593,7 +602,7 @@ export const paymentTypeInitialValue = {
 export const fitInitialValue = {
   id: "",
   Name: "",
-  Destination: "",
+  Destination: [1, 2, 3],
   Inclusion: "",
   Exclusion: "",
   TermsCondition: "",
@@ -611,7 +620,7 @@ export const fitInitialValue = {
 export const gitInitialValue = {
   id: "",
   Name: "",
-  Destination: "",
+  Destination: [1, 2, 3],
   Inclusion: "",
   Exclusion: "",
   TermsCondition: "",
@@ -792,7 +801,104 @@ export const hotelAddContactInitialValue = {
   SecondaryEmail: "",
 };
 
+export const monumentRateInitialValue = {
+  MonumentId: "",
+  DestinationID: "33",
+  CompanyId: "De-b000000002",
+  SupplierId: "",
+  NationalityId: "",
+  ValidFrom: "",
+  ValidTo: "",
+  CurrencyId: "",
+  AdultEntFee: "",
+  ChildEntFee: "",
+  TaxSlabId: "",
+  Policy: "",
+  TAC: "",
+  Remarks: "",
+  Status: "1",
+  AddedBy: "1",
+  UpdatedBy: "0",
+  AddedDate: "2024-09-11",
+  UpdatedDate: "2024-09-11",
+};
+
+export const guideRateInitialValue = {
+  id: "",
+  DestinationID: "33",
+  CompanyId: "De-b000000002",
+  SupplierId: "",
+  ValidFrom: "",
+  ValidTo: "",
+  PaxRange: "",
+  DayType: "Half Day",
+  UniversalCost: "Yes",
+  GuideId: "",
+  Currency: "",
+  ServiceCost: "",
+  LangAllowance: "",
+  OtherCost: "",
+  GstSlabid: "",
+  Status: "1",
+  AddedBy: "1",
+  UpdatedBy: "0",
+  AddedDate: "2024-09-23",
+  UpdatedDate: "2024-09-23",
+};
+export const hotelRateAddInitialValue = {
+  CompanyId: "",
+  HotelId: "",
+  HotelUUID: "",
+  DestinationID: "",
+  SupplierId: "",
+  ValidFrom: "",
+  ValidTo: "",
+  MarketTypeId: "",
+  PaxTypeId: "",
+  TarrifeTypeId: "",
+  SeasonTypeID: "",
+  SeasonYear: "",
+  RoomCost: "",
+  MealCost: "",
+  CurrencyId: "",
+  RoomTypeID: "",
+  MealPlanId: "",
+  RoomBedType: "",
+  RoomTaxSlabId: "",
+  MealSlabId: "",
+  MarkupType: "",
+  MarkupCost: "",
+  Remarks: "",
+  Status: "Active",
+  AddedBy: 1,
+  UpdatedBy: 1,
+  AddedDate: "2024-08-30",
+  UpdatedDate: "2024-08-30",
+};
+
 // ------------------------VALIDATION SCHEMAS-------------------------- //
+
+export const transferMasterValidationSchema = yup.object().shape({
+  TransferName: yup.string().required("Required"),
+});
+
+export const guideRateValidationSchema = yup.object().shape({
+  SupplierId: yup.string().required("Required"),
+  ValidFrom: yup.string().required("Required"),
+  ValidTo: yup.string().required("Required"),
+  PaxRange: yup.string().required("Required"),
+  DayType: yup.string().required("Required"),
+  UniversalCost: yup.string().required("Required"),
+  Currency: yup.string().required("Required"),
+});
+export const monumnetRateValidationSchema = yup.object().shape({
+  SupplierId: yup.string().required("Required"),
+  NationalityId: yup.string().required("Required"),
+  ValidFrom: yup.string().required("Required"),
+  ValidTo: yup.string().required("Required"),
+  CurrencyId: yup.string().required("Required"),
+  TaxSlabId: yup.string().required("Required"),
+});
 
 export const guideMasterValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
@@ -834,7 +940,7 @@ export const languageValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
 });
 export const destinationValidationSchema = yup.object().shape({
-  Country: yup.string().required("Required"),
+  CountryId: yup.string().required("Required"),
   Name: yup.string().required("Required"),
 });
 export const tourtypeValidationSchema = yup.object().shape({
@@ -876,9 +982,9 @@ export const hotelChainValidationSchema = yup.object().shape({
 });
 export const resturantValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
-  CountryId: yup.string().required("Required"),
-  StateId: yup.string().required("Required"),
-  CityId: yup.string().required("Required"),
+  Country: yup.string().required("Required"),
+  // State: yup.string().required("Required"),
+  // City: yup.string().required("Required"),
   Address: yup.string().required("Required"),
   PinCode: yup.string().required("Required"),
   GSTN: yup.string().required("Required"),
@@ -956,7 +1062,7 @@ export const ferryMasterValidationSchema = yup.object().shape({
 });
 export const currencyMasterValidationSchema = yup.object().shape({
   CountryCode: yup.string().required("Required"),
-  CurrencyName: yup.string().required("Required"),
+  Name: yup.string().required("Required"),
 });
 export const ferryCompanyValidationSchema = yup.object().shape({
   FerryCompanyName: yup.string().required("Required"),
@@ -986,17 +1092,16 @@ export const paymentTypeValidationSchema = yup.object().shape({
 });
 export const fitValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
-  Destination: yup.string().required("Required"),
-  Inclusion: yup.string().required("Required"),
+  // Destination: yup.array().required("Required"),
 });
 export const gitValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
-  Destination: yup.string().required("Required"),
-  Inclusion: yup.string().required("Required"),
+  // Destination: yup.string().required("Required"),
+  // Inclusion: yup.string().required("Required"),
 });
 export const letterMasterValidationSchema = yup.object().shape({
   Name: yup.string().required("Required"),
-  WelcomeNote: yup.string().required("Required"),
+  // WelcomeNote: yup.string().required("Required"),
   GreetingNote: yup.string().required("Required"),
 });
 export const bankMasterValidationSchema = yup.object().shape({

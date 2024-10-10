@@ -196,7 +196,10 @@ const CruiseNameCompany = () => {
                         <option value={""}>Select</option>
                         <option value={"1"}>ABC</option>
                         <option value={"2"}>DEF</option>
-                        <option value={"3"}>GHJ</option>
+                        <option value={"3"}>SEF</option>
+                        <option value={"4"}>DJH</option>
+                        <option value={"5"}>KHDA</option>
+                        <option value={"6"}>DJHA</option>
                       </Field>
                     </div>
                     <div className="col-sm-4">

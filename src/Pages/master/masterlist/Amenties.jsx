@@ -60,8 +60,6 @@ const Amenties = () => {
     });
     setEditData({
       ...rowValue,
-      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
-      Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
     setShowImage(rowValue.ImageName);
@@ -165,7 +163,6 @@ const Amenties = () => {
                   setUpdateData={setUpdateData}
                   imageValue={imageValue}
                   setImageValue={setImageValue}
-                  axiosRoute={axiosOther}
                 >
                   <div className="row row-gap-2">
                     <div className="col-sm-4">
@@ -189,8 +186,8 @@ const Amenties = () => {
                         component={"select"}
                         name="Status"
                       >
-                        <option value={1}>Active</option>
-                        <option value={0}>Inactive</option>
+                        <option value={"Active"}>Active</option>
+                        <option value={"Inactive"}>Inactive</option>
                       </Field>
                     </div>
                     <div className="col-sm-4">
@@ -220,9 +217,7 @@ const Amenties = () => {
                         className="form-input-6"
                         component={"select"}
                       >
-                        <option value={0} selected>
-                          No
-                        </option>
+                        <option value={0}>No</option>
                         <option value={1}>Yes</option>
                       </Field>
                     </div>

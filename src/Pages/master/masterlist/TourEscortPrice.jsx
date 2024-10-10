@@ -43,7 +43,7 @@ const TourEscortPrice = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("tourescortpricelist", postData);
+        const { data } = await axiosOther.post("guideratelist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
         console.log("DATA", data.DataList);
@@ -67,7 +67,7 @@ const TourEscortPrice = () => {
   const handleEditClick = (rowValue) => {
     console.log("Row Value", rowValue);
     setEditData({
-      id: rowValue.Id,
+      id: rowValue.id,
       ServiceType: rowValue.ServiceType,
       Destination: rowValue.Destination,
       TourEscortService: rowValue.TourEscortService,
@@ -90,24 +90,24 @@ const TourEscortPrice = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.TourEscortService}
+          {row?.ServiceName}
         </span>
       ),
       sortable: true,
     },
     {
       name: "Destination",
-      selector: (row) => row.Destination,
+      selector: (row) => row?.Destination?.Name,
       sortable: true,
     },
     {
       name: "Service Type",
-      selector: (row) => row.ServiceType,
+      selector: (row) => row?.ServiceType,
       sortable: true,
     },
     {
       name: "Rate Sheet",
-      selector: (row) => <button className="btn btn-primary">+Add/View</button>,
+      selector: (row) => 'Dont Use',
       sortable: true,
     },
     {
@@ -145,7 +145,7 @@ const TourEscortPrice = () => {
                 </NavLink>
                 <Model
                   heading={"Add Tour Escort Service"}
-                  apiurl={"addupdatetourescortprice"}
+                  apiurl={"addupdateguideservice"}
                   initialValues={tourEscortPriceInitialValue}
                   validationSchema={tourEscortPriceValidationSchema}
                   forEdit={editData}
@@ -154,7 +154,6 @@ const TourEscortPrice = () => {
                   setChangeValue={setChangeValue}
                   setUpdateData={setUpdateData}
                   updateData={updateData}
-                  axiosRoute={axiosOther}
                 >
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
@@ -165,7 +164,7 @@ const TourEscortPrice = () => {
                         component={"select"}
                       >
                         <option value="10">Guide</option>
-                        <option value="20">Porter</option>
+                        <option value="21">Porter</option>
                       </Field>
                     </div>
                     <div className="col-sm-4">
