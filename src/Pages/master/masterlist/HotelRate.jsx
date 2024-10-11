@@ -3,9 +3,10 @@ import Layout from "../../../Component/Layout/Layout";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import {
   hotelRateAddInitialValue,
-  monumnetRateValidationSchema,
+  hotelRateAddValidationSchema,
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
+import toast, { Toaster } from "react-hot-toast";
 
 const HotelRate = () => {
   const [formValue, setFormValue] = useState(hotelRateAddInitialValue);
@@ -30,23 +31,27 @@ const HotelRate = () => {
 
   const handleSubmit = async () => {
     try {
-      await monumnetRateValidationSchema?.validate(formValue, {
+      await hotelRateAddValidationSchema?.validate(formValue, {
         abortEarly: false,
       });
       setErrorMessage("");
       console.log("value", {
         ...formValue,
-        MonumentId: id,
+        HotelId: id,
       });
 
-      const data = await axiosOther.post("addmonumentrate", {
+      const { data } = await axiosOther.post("addhotelrates", {
         ...formValue,
-        MonumentId: id,
+        HotelId: id,
       });
-
       console.log("response", data);
+      if (data?.Status == 1) {
+        toast.success("Rate Added Successfully !");
+        setFormValue(hotelRateAddInitialValue);
+      }
+
+
     } catch (err) {
-      console.log("error", err);
       if (err.inner) {
         const errMessage = err.inner.reduce((acc, curr) => {
           acc[curr.path] = curr.message;
@@ -190,6 +195,7 @@ const HotelRate = () => {
               >
                 Back
               </NavLink>
+              <Toaster />
             </div>
           </div>
           <div className="card-body">
@@ -199,9 +205,9 @@ const HotelRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     MARKET TYPE <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.SupplierId && (
+                  {errorMessgae?.MarketTypeId && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.SupplierId}
+                      {errorMessgae?.MarketTypeId}
                     </span>
                   )}
                 </div>
@@ -276,9 +282,9 @@ const HotelRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     TARIF TYPE <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.NationalityId && (
+                  {errorMessgae?.TarrifeTypeId && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.NationalityId}
+                      {errorMessgae?.TarrifeTypeId}
                     </span>
                   )}
                 </div>
@@ -332,22 +338,26 @@ const HotelRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     SEASON YEAR <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.NationalityId && (
+                  {errorMessgae?.SeasonYear && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.NationalityId}
+                      {errorMessgae?.SeasonYear}
                     </span>
                   )}
                 </div>
                 <select
-                  name="SeasonTypeID"
+                  name="SeasonYear"
                   id=""
-                  value={formValue?.SeasonTypeID}
+                  value={formValue?.SeasonYear}
                   onChange={handleInputChange}
                   className="form-input-6"
                 >
                   <option value="">Select</option>
-                  {YearList?.map((year) => {
-                    return <option value={year}>{year}</option>;
+                  {YearList?.map((year, ind) => {
+                    return (
+                      <option value={year} key={ind}>
+                        {year}
+                      </option>
+                    );
                   })}
                 </select>
               </div>
@@ -389,31 +399,15 @@ const HotelRate = () => {
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="col-2">
-                <div className="d-flex justify-content-between">
-                  <label htmlFor="" className="m-0 font-size-12">
-                    STATUS
-                  </label>
-                </div>
-                <select
-                  name="Status"
-                  id=""
-                  className="form-input-6"
-                  value={formValue?.Status}
-                  onChange={handleInputChange}
-                >
-                  <option value="1">Active</option>
-                  <option value="2">Inactive</option>
-                </select>
-              </div>
+
               <div className="col-2">
                 <div className="d-flex justify-content-between">
                   <label htmlFor="" className="m-0 font-size-12">
                     ROOM TYPE <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.CurrencyId && (
+                  {errorMessgae?.RoomTypeID && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.CurrencyId}
+                      {errorMessgae?.RoomTypeID}
                     </span>
                   )}
                 </div>
@@ -424,7 +418,7 @@ const HotelRate = () => {
                   value={formValue?.RoomTypeID}
                   onChange={handleInputChange}
                 >
-                  <option value="1">Delux</option>
+                  <option value="">Select</option>
                   {roomTypeList?.map((item) => {
                     return (
                       <option value={item?.id} key={item?.id}>
@@ -533,7 +527,7 @@ const HotelRate = () => {
                     </div>
                     <div className="col-4">
                       <label htmlFor="" className="m-0 font-size-12">
-                        ROOM TAX SLAB
+                        ROOM TAX SLAB <span className="text-danger">*</span>
                       </label>
                       <div>
                         <select
@@ -543,12 +537,20 @@ const HotelRate = () => {
                           className="form-input-6"
                         >
                           <option value="">Select</option>
-                          {taxSlabList?.map((item) => {
+                          {taxSlabList?.DataList?.map((item) => {
                             return (
-                              <option value={item?.Name}>{item?.Name}</option>
+                              <option value={item?.id} key={item?.id}>
+                                {" "}
+                                {item?.TaxSlabName} ({item?.TaxValue})
+                              </option>
                             );
                           })}
                         </select>
+                        {errorMessgae?.RoomTaxSlabId && (
+                          <span className="text-danger font-size-12">
+                            {errorMessgae?.RoomTaxSlabId}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -563,8 +565,8 @@ const HotelRate = () => {
                       </label>
                       <div>
                         <select
-                          name="MealPlanId"
-                          value={formValue?.MealPlanId}
+                          name="MealTypeId"
+                          value={formValue?.MealTypeId}
                           onChange={handleInputChange}
                           className="form-input-6"
                         >
@@ -590,9 +592,11 @@ const HotelRate = () => {
                       </div>
                     </div>
                     <div className="col-4">
-                      <label htmlFor="" className="m-0 font-size-12">
-                        MEAL TAX SLAB
-                      </label>
+                      <div className="">
+                        <label htmlFor="" className="m-0 font-size-12">
+                          MEAL TAX SLAB <span className="text-danger">*</span>
+                        </label>
+                      </div>
                       <div>
                         <select
                           name="MealSlabId"
@@ -601,14 +605,19 @@ const HotelRate = () => {
                           className="form-input-6"
                         >
                           <option value="">Slab 1</option>
-                          {taxSlabList?.map((item) => {
+                          {taxSlabList?.DataList?.map((item) => {
                             return (
                               <option value={item?.id} key={item?.id}>
-                                {item?.Name}
+                                {item?.TaxSlabName} ({item?.TaxValue})
                               </option>
                             );
                           })}
                         </select>
+                        {errorMessgae?.MealSlabId && (
+                          <span className="text-danger font-size-12">
+                            {errorMessgae?.MealSlabId}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -623,8 +632,8 @@ const HotelRate = () => {
                       </label>
                       <div>
                         <select
-                          name="MarketTypeId"
-                          value={formValue?.MarketTypeId}
+                          name="MarkupType"
+                          value={formValue?.MarkupType}
                           onChange={handleInputChange}
                           className="form-input-6"
                         >
@@ -650,6 +659,23 @@ const HotelRate = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+              <div className="col-2">
+                <div className="d-flex justify-content-between">
+                  <label htmlFor="" className="m-0 font-size-12">
+                    STATUS
+                  </label>
+                </div>
+                <select
+                  name="Status"
+                  id=""
+                  className="form-input-6"
+                  value={formValue?.Status}
+                  onChange={handleInputChange}
+                >
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
               </div>
               <div className="col-12">
                 <div>

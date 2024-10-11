@@ -163,7 +163,7 @@ const Resturant = () => {
       name: "Rate Sheet",
       selector: (row) => (
         <NavLink
-          to={`/master/resturant/rate/${row?.id}`}
+          to={`/master/resturant/rate/${row?.Id}`}
           state={{ Name: row?.Name }}
         >
           <button className="border font-size-10 p-1 px-2 rounded-pill bg-success">

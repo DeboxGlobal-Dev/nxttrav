@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../../Component/Layout/Layout";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import {
+  airlineRateAddInitialValue,
+  airlineRateValidationSchema,
   monumentRateInitialValue,
   monumnetRateValidationSchema,
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const AirlineRate = () => {
-  const [formValue, setFormValue] = useState(monumentRateInitialValue);
+  const [formValue, setFormValue] = useState(airlineRateAddInitialValue);
   const [supplierList, setSupplierList] = useState([]);
   const [nationalityList, setNationalityList] = useState([]);
   const [taxSlabList, setTaxSlabList] = useState([]);
@@ -24,7 +26,7 @@ const AirlineRate = () => {
 
   const handleSubmit = async () => {
     try {
-      await monumnetRateValidationSchema?.validate(formValue, {
+      await airlineRateValidationSchema?.validate(formValue, {
         abortEarly: false,
       });
       setErrorMessage("");
@@ -127,16 +129,19 @@ const AirlineRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     FLIGHT NUMBER <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.NationalityId && (
+                  {errorMessgae?.FlightNumber && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.NationalityId}
+                      {errorMessgae?.FlightNumber}
                     </span>
                   )}
                 </div>
                 <input
                   type="text"
-                  placeholder="Tain Number"
+                  placeholder="FLIGHT NUMBER"
                   className="form-input-6"
+                  name="FlightNumber"
+                  value={formValue?.FlightNumber}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="col-2">
@@ -144,15 +149,15 @@ const AirlineRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     FLIGHT CLASS<span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.SupplierId && (
+                  {errorMessgae?.FlightClass && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.SupplierId}
+                      {errorMessgae?.FlightClass}
                     </span>
                   )}
                 </div>
                 <select
-                  name="SupplierId"
-                  value={formValue?.SupplierId}
+                  name="FlightClass"
+                  value={formValue?.FlightClass}
                   onChange={handleInputChange}
                   id=""
                   className="form-input-6"
@@ -168,17 +173,16 @@ const AirlineRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     CURRENCY <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.SupplierId && (
+                  {errorMessgae?.Currency && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.SupplierId}
+                      {errorMessgae?.Currency}
                     </span>
                   )}
                 </div>
                 <select
-                  name="SupplierId"
-                  value={formValue?.SupplierId}
+                  name="Currency"
+                  value={formValue?.Currency}
                   onChange={handleInputChange}
-                  id=""
                   className="form-input-6"
                 >
                   <option value="">Select</option>
@@ -187,49 +191,106 @@ const AirlineRate = () => {
                   <option value="3">Sparsh</option>
                 </select>
               </div>
-                <div className="col-3">
-                    <label htmlFor="" className="m-0 text-center">ADULT COST</label>
-                    <div className="row">
-                        <div className="col-4">
-                            <input type="text" className="form-input-6" placeholder="Base Fare"/>
-                        </div>
-                        <div className="col-4 p-0">
-                            <input type="text" className="form-input-6" placeholder="Airline Tax"/>
-                        </div>
-                        <div className="col-4">
-                            <input type="text" className="form-input-6" placeholder="Total Cost"/>
-                        </div>
+              <div className="col-3">
+                <div className="border p-1 d-flex flex-column">
+                  <label htmlFor="" className="m-0 text-center">
+                    ADULT COST
+                  </label>
+                  <div className="row">
+                    <div className="col-4">
+                      <span className="m-0 position-absolute text-danger">
+                        *
+                      </span>
+                      <input
+                        type="text"
+                        className="form-input-6"
+                        placeholder="Base Fare"
+                        name="AdultCost"
+                        value={formValue?.AdultCost?.base_fare}
+                        onChange={handleInputChange}
+                      />
                     </div>
-                </div>
-                <div className="col-3">
-                    <label htmlFor="" className="m-0 text-center">CHILD COST</label>
-                    <div className="row">
-                        <div className="col-4">
-                            <input type="text" className="form-input-6" placeholder="Base Fare"/>
-                        </div>
-                        <div className="col-4 p-0">
-                            <input type="text" className="form-input-6" placeholder="Airline Tax"/>
-                        </div>
-                        <div className="col-4">
-                            <input type="text" className="form-input-6" placeholder="Total Cost"/>
-                        </div>
+                    <div className="col-4 p-0">
+                      <input
+                        type="text"
+                        className="form-input-6"
+                        placeholder="Airline Tax"
+                        name="AdultCost"
+                        value={formValue?.AdultCost?.airline_tax}
+                      />
                     </div>
-                </div>
-                <div className="col-3">
-                    <label htmlFor="" className="m-0 text-center">INFANT COST</label>
-                    <div className="row">
-                        <div className="col-4">
-                            <input type="text" className="form-input-6" placeholder="Base Fare"/>
-                        </div>
-                        <div className="col-4 p-0">
-                            <input type="text" className="form-input-6" placeholder="Airline Tax"/>
-                        </div>
-                        <div className="col-4">
-                            <input type="text" className="form-input-6" placeholder="Total Cost"/>
-                        </div>
+                    <div className="col-4">
+                      <input
+                        type="text"
+                        className="form-input-6"
+                        placeholder="Total Cost"
+                        value={""}
+                        readOnly
+                      />
                     </div>
+                  </div>
                 </div>
-             
+              </div>
+              <div className="col-3">
+                <div className="p-1 border d-flex flex-column">
+                  <label htmlFor="" className="m-0 text-center">
+                    CHILD COST
+                  </label>
+                  <div className="row">
+                    <div className="col-4">
+                      <input
+                        type="text"
+                        className="form-input-6"
+                        placeholder="Base Fare"
+                      />
+                    </div>
+                    <div className="col-4 p-0">
+                      <input
+                        type="text"
+                        className="form-input-6"
+                        placeholder="Airline Tax"
+                      />
+                    </div>
+                    <div className="col-4">
+                      <input
+                        type="text"
+                        className="form-input-6"
+                        placeholder="Total Cost"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-3">
+                <div className="border p-1 d-flex flex-column">
+                  <label htmlFor="" className="m-0 text-center">
+                    INFANT COST
+                  </label>
+                  <div className="row">
+                    <div className="col-4">
+                      <input
+                        type="text"
+                        className="form-input-6"
+                        placeholder="Base Fare"
+                      />
+                    </div>
+                    <div className="col-4 p-0">
+                      <input
+                        type="text"
+                        className="form-input-6"
+                        placeholder="Airline Tax"
+                      />
+                    </div>
+                    <div className="col-4">
+                      <input
+                        type="text"
+                        className="form-input-6"
+                        placeholder="Total Cost"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="col-5 mt-1">
                 <div>
                   <label htmlFor="" className="m-0 font-size-12">

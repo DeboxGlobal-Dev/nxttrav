@@ -115,7 +115,7 @@ const TransferMaster = () => {
       selector: (row) => (
         <NavLink
           to={`/master/transfermaster/rate/${row?.id}`}
-          state={{ Name: row?.MonumentName }}
+          state={{ Name: row?.TransferName }}
         >
           <button
             className="border font-size-10 p-1 px-2 rounded-pill bg-success"
@@ -151,7 +151,7 @@ const TransferMaster = () => {
               <div className="col-xl-2 d-flex justify-content-end">
                 {/* Bootstrap Modal */}
                 <NavLink
-                  to="/master"
+                  to="/master/transfermaster"
                   className="gray-button"
                   aria-expanded="false"
                 >

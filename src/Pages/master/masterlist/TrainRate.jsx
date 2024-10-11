@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../../Component/Layout/Layout";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import {
-  monumentRateInitialValue,
-  monumnetRateValidationSchema,
+  trainRateAddInitialValue,
+  trainRateValidationShema,
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
+import toast, { Toaster } from "react-hot-toast";
 
 const TrainRate = () => {
-  const [formValue, setFormValue] = useState(monumentRateInitialValue);
+  const [formValue, setFormValue] = useState(trainRateAddInitialValue);
   const [supplierList, setSupplierList] = useState([]);
-  const [nationalityList, setNationalityList] = useState([]);
-  const [taxSlabList, setTaxSlabList] = useState([]);
+  const [trainList, setTrainList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
   const [errorMessgae, setErrorMessage] = useState("");
   const { id } = useParams();
@@ -24,21 +24,24 @@ const TrainRate = () => {
 
   const handleSubmit = async () => {
     try {
-      await monumnetRateValidationSchema?.validate(formValue, {
+      await trainRateValidationShema?.validate(formValue, {
         abortEarly: false,
       });
       setErrorMessage("");
       console.log("value", {
         ...formValue,
-        MonumentId: id,
+        TrainId: id,
       });
 
-      const data = await axiosOther.post("addmonumentrate", {
+      const { data } = await axiosOther.post("addtrainrate", {
         ...formValue,
-        MonumentId: id,
+        TrainId: id,
       });
 
       console.log("response", data);
+      if (data?.Status == 1) {
+        toast.success("Rate Added Successfully !");
+      }
     } catch (err) {
       console.log("error", err);
       if (err.inner) {
@@ -65,12 +68,11 @@ const TrainRate = () => {
     }
 
     try {
-      const { data } = await axiosOther.post("nationalitylist", {
-        id: "",
-        Name: "",
+      const { data } = await axiosOther.post("trainclasslist", {
+        Search: "",
         Status: "",
       });
-      setNationalityList(data?.DataList);
+      setTrainList(data?.DataList);
     } catch (error) {
       console.log(error);
     }
@@ -81,16 +83,6 @@ const TrainRate = () => {
         Status: "",
       });
       setCurrencyList(data?.DataList);
-    } catch (error) {
-      console.log(error);
-    }
-    try {
-      const { data } = await axiosOther.post("taxmasterlist", {
-        Id: "",
-        Search: "",
-        Status: "",
-      });
-      setTaxSlabList(data);
     } catch (error) {
       console.log(error);
     }
@@ -112,12 +104,13 @@ const TrainRate = () => {
             <div className="col-xl-2 d-flex justify-content-end">
               {/*Bootstrap Modal*/}
               <NavLink
-                to="/master/monument"
+                to="/master/train"
                 className="gray-button"
                 aria-expanded="false"
               >
                 Back
               </NavLink>
+              <Toaster />
             </div>
           </div>
           <div className="card-body">
@@ -137,13 +130,16 @@ const TrainRate = () => {
                   name="SupplierId"
                   value={formValue?.SupplierId}
                   onChange={handleInputChange}
-                  id=""
                   className="form-input-6"
                 >
                   <option value="">Select</option>
-                  <option value="1">Corintech</option>
-                  <option value="2">Debox</option>
-                  <option value="3">Sparsh</option>
+                  {supplierList?.map((item) => {
+                    return (
+                      <option value={item?.id} key={item?.id}>
+                        {item?.Name}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-2">
@@ -151,16 +147,19 @@ const TrainRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     Train Number <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.NationalityId && (
+                  {errorMessgae?.TrainNumber && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.NationalityId}
+                      {errorMessgae?.TrainNumber}
                     </span>
                   )}
                 </div>
                 <input
                   type="text"
-                  placeholder="Tain Number"
+                  placeholder="TRAIN NUMBER"
                   className="form-input-6"
+                  name="TrainNumber"
+                  value={formValue?.TrainNumber}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="col-2">
@@ -168,47 +167,69 @@ const TrainRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     JOURNEY TYPE <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.SupplierId && (
+                  {errorMessgae?.JourneyType && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.SupplierId}
+                      {errorMessgae?.JourneyType}
                     </span>
                   )}
                 </div>
                 <select
-                  name="SupplierId"
-                  value={formValue?.SupplierId}
+                  name="JourneyType"
+                  value={formValue?.JourneyType}
                   onChange={handleInputChange}
-                  id=""
                   className="form-input-6"
                 >
-                  <option value="">Select</option>
-                  <option value="1">Corintech</option>
-                  <option value="2">Debox</option>
-                  <option value="3">Sparsh</option>
+                  <option value="day_journey">Day Journey</option>
+                  <option value="overnight_journey">Overnight Journey</option>
                 </select>
               </div>
               <div className="col-2">
                 <div className="d-flex justify-content-between">
                   <label htmlFor="" className="m-0 font-size-12">
-                    TRAIN CLASSES <span className="text-danger">*</span>
+                    TRAIN CLASSES
                   </label>
-                  {errorMessgae?.SupplierId && (
+                </div>
+                <select
+                  name="TrainClassId"
+                  value={formValue?.TrainClassId}
+                  onChange={handleInputChange}
+                  className="form-input-6"
+                >
+                  <option value="">Select</option>
+                  {trainList?.map((item) => {
+                    return (
+                      <option value={item?.id} key={item?.id}>
+                        {item?.Name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="col-2">
+                <div className="d-flex justify-content-between">
+                  <label htmlFor="" className="m-0 font-size-12">
+                    CURRENCY <span className="text-danger">*</span>
+                  </label>
+                  {errorMessgae?.Currency && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.SupplierId}
+                      {errorMessgae?.Currency}
                     </span>
                   )}
                 </div>
                 <select
-                  name="SupplierId"
-                  value={formValue?.SupplierId}
+                  name="Currency"
+                  value={formValue?.Currency}
                   onChange={handleInputChange}
-                  id=""
                   className="form-input-6"
                 >
                   <option value="">Select</option>
-                  <option value="1">Corintech</option>
-                  <option value="2">Debox</option>
-                  <option value="3">Sparsh</option>
+                  {currencyList?.map((item) => {
+                    return (
+                      <option value={item?.id} key={item?.id}>
+                        {item?.CurrencyName}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-2">
@@ -220,9 +241,9 @@ const TrainRate = () => {
                 <input
                   type="number"
                   className="form-input-6"
-                  name="AdultEntFee"
-                  placeholder="Entrance Fee"
-                  value={formValue?.AdultEntFee}
+                  name="AdultCost"
+                  placeholder="ADULT COST"
+                  value={formValue?.AdultCost}
                   onChange={handleInputChange}
                 />
               </div>
@@ -235,9 +256,9 @@ const TrainRate = () => {
                 <input
                   type="number"
                   className="form-input-6"
-                  name="ChildEntFee"
-                  placeholder="Entrance Fee"
-                  value={formValue?.ChildEntFee}
+                  name="ChildCost"
+                  placeholder="CHILD COST"
+                  value={formValue?.ChildCost}
                   onChange={handleInputChange}
                 />
               </div>
@@ -250,9 +271,9 @@ const TrainRate = () => {
                 <input
                   type="number"
                   className="form-input-6"
-                  name="ChildEntFee"
-                  placeholder="Entrance Fee"
-                  value={formValue?.ChildEntFee}
+                  name="InfantCost"
+                  placeholder="INFANT COST"
+                  value={formValue?.InfantCost}
                   onChange={handleInputChange}
                 />
               </div>
@@ -265,13 +286,12 @@ const TrainRate = () => {
                 <textarea
                   type="text"
                   className="form-input-6 height-60"
-                  placeholder="Remarks"
+                  placeholder="REMARKS"
                   name="Remarks"
                   value={formValue?.Remarks}
                   onChange={handleInputChange}
                 />
               </div>
-
               <div className="col-2">
                 <button
                   className="modal-save-button w-auto px-3 mt-3"

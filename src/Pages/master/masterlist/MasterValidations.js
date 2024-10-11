@@ -846,10 +846,10 @@ export const guideRateInitialValue = {
   UpdatedDate: "2024-09-23",
 };
 export const hotelRateAddInitialValue = {
-  CompanyId: "",
+  CompanyId: "1",
   HotelId: "",
-  HotelUUID: "",
-  DestinationID: "",
+  HotelUUID: "HL00001",
+  DestinationID: "33",
   SupplierId: "",
   ValidFrom: "",
   ValidTo: "",
@@ -864,9 +864,10 @@ export const hotelRateAddInitialValue = {
   RoomTypeID: "",
   MealPlanId: "",
   RoomBedType: "",
+  MealTypeId: "",
   RoomTaxSlabId: "",
   MealSlabId: "",
-  MarkupType: "",
+  MarkupType: "percentage",
   MarkupCost: "",
   Remarks: "",
   Status: "Active",
@@ -876,10 +877,165 @@ export const hotelRateAddInitialValue = {
   UpdatedDate: "2024-08-30",
 };
 
+export const transportRateAddInitialValue = {
+  TransportId: "",
+  DestinationID: "",
+  SupplierId: "",
+  ValidFrom: "",
+  ValidTo: "",
+  Type: "",
+  VehicleTypeId: "",
+  CompanyId: "COMP0001",
+  TaxSlabId: "",
+  CurrencyId: "",
+  VehicleCost: "",
+  ParkingFee: "",
+  RapEntryFee: "",
+  Assistance: "",
+  AdtnlAllowance: "",
+  InterStateToll: "",
+  MiscCost: "",
+  Remarks: "",
+  Status: "1",
+  AddedBy: 1,
+  UpdatedBy: 1,
+};
+
+export const transferRateAddInitialValue = {
+  TransferId: "",
+  CompanyId: "COMP0001",
+  DestinationID: "",
+  SupplierId: "",
+  ValidFrom: "",
+  ValidTo: "",
+  CurrencyId: "",
+  VehicleTypeId: "",
+  VehicleCost: "",
+  ParkingFee: "",
+  RapEntryFee: "",
+  Assistance: "",
+  AdtnlAllowance: "",
+  InterStateToll: "",
+  MiscCost: "",
+  TaxSlabId: "",
+  Remarks: "",
+  Status: "1",
+  AddedBy: 1,
+  UpdatedBy: 1,
+  AddedDate: "2024-09-11",
+  UpdatedDate: "2024-09-11",
+};
+
+export const trainRateAddInitialValue = {
+  TrainId: "",
+  CompanyId: "COMP0001",
+  SupplierId: 34,
+  TrainNumber: "",
+  JourneyType: "day_journey",
+  TrainClassId: "",
+  Currency: "",
+  AdultCost: "",
+  ChildCost: "",
+  InfantCost: "",
+  Remarks: "",
+  Status: "1",
+  AddedBy: "1",
+  UpdatedBy: "0",
+};
+
+export const restaurantRateAddInitialValue = {
+  RestaurantId: "",
+  DestinationID: "33",
+  SupplierId: "",
+  MealTypeId: "",
+  Currency: "",
+  AdultCost: "",
+  ChildCost: "",
+  GstSlabId: "",
+  Status: "1",
+  AddedBy: "",
+  UpdatedBy: "",
+  AddedDate: "2024-09-12",
+  UpdatedDate: "2024-09-12",
+};
+
+export const airlineRateAddInitialValue = {
+  id: "",
+  FlightNumber: "",
+  FlightClass: "",
+  Currency: "",
+  AdultCost: { base_fare: "", airline_tax: "" },
+  ChildCost: { base_fare: "", airline_tax: "" },
+  InfantCost: { base_fare: "", airline_tax: "" },
+  BaggageAllowance: "",
+  CancallationPolicy: "",
+  Remarks: "",
+  Status: "1",
+  AddedBy: "1",
+  UpdatedBy: "0",
+  AddedDate: "2024-10-11",
+  UpdatedDate: "2024-10-12",
+};
+
 // ------------------------VALIDATION SCHEMAS-------------------------- //
 
 export const transferMasterValidationSchema = yup.object().shape({
   TransferName: yup.string().required("Required"),
+});
+
+export const airlineRateValidationSchema = yup.object().shape({
+  FlightNumber: yup.string().required("Required"),
+  FlightClass: yup.string().required("Required"),
+  Currency: yup.string().required("Required"),
+});
+
+export const restaurantRateValidationSchema = yup.object().shape({
+  SupplierId: yup.string().required("Required"),
+  MealTypeId: yup.string().required("Required"),
+  Currency: yup.string().required("Required"),
+  AdultCost: yup.string().required("Required"),
+  GstSlabId: yup.string().required("Required"),
+});
+
+export const trainRateValidationShema = yup.object().shape({
+  TrainNumber: yup.string().required("Required"),
+  JourneyType: yup.string().required("Required"),
+  Currency: yup.string().required("Required"),
+  SupplierId: yup.string().required("Required"),
+  AdultCost: yup.string().required("Required"),
+});
+
+export const transferRateValidationSchema = yup.object().shape({
+  SupplierId: yup.string().required("Required"),
+  DestinationID: yup.string().required("Required"),
+  ValidFrom: yup.string().required("Required"),
+  ValidTo: yup.string().required("Required"),
+  CurrencyId: yup.string().required("Required"),
+  TaxSlabId: yup.string().required("Required"),
+});
+export const transportRateValidationSchema = yup.object().shape({
+  SupplierId: yup.string().required("Required"),
+  DestinationID: yup.string().required("Required"),
+  ValidFrom: yup.string().required("Required"),
+  ValidTo: yup.string().required("Required"),
+  Type: yup.string().required("Required"),
+  TaxSlabId: yup.string().required("Required"),
+  CurrencyId: yup.string().required("Required"),
+});
+
+export const hotelRateAddValidationSchema = yup.object().shape({
+  MarketTypeId: yup.string().required("Required"),
+  SupplierId: yup.string().required("Required"),
+  TarrifeTypeId: yup.string().required("Required"),
+  SeasonTypeID: yup.string().required("Required"),
+  SeasonYear: yup.string().required("Required"),
+  ValidFrom: yup.string().required("Required"),
+  ValidTo: yup.string().required("Required"),
+  RoomTypeID: yup.string().required("Required"),
+  MealPlanId: yup.string().required("Required"),
+  CurrencyId: yup.string().required("Required"),
+  RoomTaxSlabId: yup.string().required("Required"),
+  MealSlabId: yup.string().required("Required"),
 });
 
 export const guideRateValidationSchema = yup.object().shape({

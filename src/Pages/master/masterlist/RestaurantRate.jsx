@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../../Component/Layout/Layout";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import {
-  monumentRateInitialValue,
-  monumnetRateValidationSchema,
+  restaurantRateAddInitialValue,
+  restaurantRateValidationSchema,
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const RestaurantRate = () => {
-  const [formValue, setFormValue] = useState(monumentRateInitialValue);
+  const [formValue, setFormValue] = useState(restaurantRateAddInitialValue);
   const [supplierList, setSupplierList] = useState([]);
-  const [nationalityList, setNationalityList] = useState([]);
+  const [mealPlanList, setMealPlanList] = useState([]);
   const [taxSlabList, setTaxSlabList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
   const [errorMessgae, setErrorMessage] = useState("");
@@ -24,18 +24,18 @@ const RestaurantRate = () => {
 
   const handleSubmit = async () => {
     try {
-      await monumnetRateValidationSchema?.validate(formValue, {
+      await restaurantRateValidationSchema?.validate(formValue, {
         abortEarly: false,
       });
       setErrorMessage("");
       console.log("value", {
         ...formValue,
-        MonumentId: id,
+        RestaurantId: id,
       });
 
-      const data = await axiosOther.post("addmonumentrate", {
+      const data = await axiosOther.post("addrestaurantrate", {
         ...formValue,
-        MonumentId: id,
+        RestaurantId: id,
       });
 
       console.log("response", data);
@@ -65,12 +65,11 @@ const RestaurantRate = () => {
     }
 
     try {
-      const { data } = await axiosOther.post("nationalitylist", {
-        id: "",
-        Name: "",
+      const { data } = await axiosOther.post("hotelmealplanlist", {
+        Search: "",
         Status: "",
       });
-      setNationalityList(data?.DataList);
+      setMealPlanList(data?.DataList);
     } catch (error) {
       console.log(error);
     }
@@ -112,7 +111,7 @@ const RestaurantRate = () => {
             <div className="col-xl-2 d-flex justify-content-end">
               {/*Bootstrap Modal*/}
               <NavLink
-                to="/master/monument"
+                to="/master/resturant"
                 className="gray-button"
                 aria-expanded="false"
               >
@@ -137,13 +136,16 @@ const RestaurantRate = () => {
                   name="SupplierId"
                   value={formValue?.SupplierId}
                   onChange={handleInputChange}
-                  id=""
                   className="form-input-6"
                 >
                   <option value="">Select</option>
-                  <option value="1">Corintech</option>
-                  <option value="2">Debox</option>
-                  <option value="3">Sparsh</option>
+                  {supplierList?.map((item) => {
+                    return (
+                      <option value={item?.id} key={item?.id}>
+                        {item?.Name}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-2">
@@ -151,23 +153,26 @@ const RestaurantRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     MEAL TYPE <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.SupplierId && (
+                  {errorMessgae?.MealTypeId && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.SupplierId}
+                      {errorMessgae?.MealTypeId}
                     </span>
                   )}
                 </div>
                 <select
-                  name="SupplierId"
-                  value={formValue?.SupplierId}
+                  name="MealTypeId"
+                  value={formValue?.MealTypeId}
                   onChange={handleInputChange}
-                  id=""
                   className="form-input-6"
                 >
                   <option value="">Select</option>
-                  <option value="1">Corintech</option>
-                  <option value="2">Debox</option>
-                  <option value="3">Sparsh</option>
+                  {mealPlanList?.map((item) => {
+                    return (
+                      <option value={item?.id} key={item?.id}>
+                        {item?.Name}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-2">
@@ -175,23 +180,27 @@ const RestaurantRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     CURRENCY <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.SupplierId && (
+                  {errorMessgae?.Currency && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.SupplierId}
+                      {errorMessgae?.Currency}
                     </span>
                   )}
                 </div>
                 <select
-                  name="SupplierId"
-                  value={formValue?.SupplierId}
+                  name="Currency"
+                  value={formValue?.Currency}
                   onChange={handleInputChange}
                   id=""
                   className="form-input-6"
                 >
                   <option value="">Select</option>
-                  <option value="1">Corintech</option>
-                  <option value="2">Debox</option>
-                  <option value="3">Sparsh</option>
+                  {currencyList?.map((item) => {
+                    return (
+                      <option value={item?.id} key={item?.id}>
+                        {item?.CurrencyName}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-2">
@@ -199,9 +208,9 @@ const RestaurantRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     ADULT <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.NationalityId && (
+                  {errorMessgae?.AdultCost && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.NationalityId}
+                      {errorMessgae?.AdultCost}
                     </span>
                   )}
                 </div>
@@ -209,23 +218,24 @@ const RestaurantRate = () => {
                   type="text"
                   placeholder="Tain Number"
                   className="form-input-6"
+                  name="AdultCost"
+                  value={formValue?.AdultCost}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="col-2">
                 <div className="d-flex justify-content-between">
                   <label htmlFor="" className="m-0 font-size-12">
-                    CHILD <span className="text-danger">*</span>
+                    CHILD
                   </label>
-                  {errorMessgae?.NationalityId && (
-                    <span className="text-danger font-size-12">
-                      {errorMessgae?.NationalityId}
-                    </span>
-                  )}
                 </div>
                 <input
                   type="text"
                   placeholder="Tain Number"
                   className="form-input-6"
+                  name="ChildCost"
+                  value={formValue?.ChildCost}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="col-2">
@@ -233,23 +243,42 @@ const RestaurantRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     GST SLAB(%) <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.SupplierId && (
+                  {errorMessgae?.GstSlabId && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.SupplierId}
+                      {errorMessgae?.GstSlabId}
                     </span>
                   )}
                 </div>
                 <select
-                  name="SupplierId"
-                  value={formValue?.SupplierId}
+                  name="GstSlabId"
+                  value={formValue?.GstSlabId}
                   onChange={handleInputChange}
-                  id=""
                   className="form-input-6"
                 >
                   <option value="">Select</option>
-                  <option value="1">Corintech</option>
-                  <option value="2">Debox</option>
-                  <option value="3">Sparsh</option>
+                  {taxSlabList?.DataList?.map((item) => {
+                    return (
+                      <option value={item?.id} key={item?.id}>
+                        {item?.TaxSlabName} ({item?.TaxValue})
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="col-2">
+                <div className="d-flex justify-content-between">
+                  <label htmlFor="" className="m-0 font-size-12">
+                    STATUS
+                  </label>
+                </div>
+                <select
+                  name="Status"
+                  value={formValue?.Status}
+                  onChange={handleInputChange}
+                  className="form-input-6"
+                >
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
                 </select>
               </div>
               <div className="col-2">

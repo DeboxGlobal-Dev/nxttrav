@@ -23,6 +23,8 @@ const TransportMaster = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
 
+  console.log('tranport-list', getData);
+
   useEffect(() => {
     const postDataToServer = async () => {
       try {

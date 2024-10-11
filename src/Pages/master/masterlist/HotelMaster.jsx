@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { axiosHotel } from "../../../http/axios/axios_new";
 import * as XLSX from "xlsx";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const HotelMaster = () => {
   const [getData, setGetData] = useState([]);
@@ -25,6 +25,7 @@ const HotelMaster = () => {
         const { data } = await axiosHotel.post("hotellist", postData);
         setGetData(data.DataList);
         setFilterData(data.DataList);
+        console.log('hotel-list', data?.DataList);
       } catch (error) {
         console.log(error);
       }
@@ -46,8 +47,52 @@ const HotelMaster = () => {
   };
 
   const handleFileChange = (e) => {
-
-    const templateHeader = ['HOTEL_NAME', 'DESTINATION', 'SELF_SUPPLIER', 'SUPPLIER_NAME', 'PAYMENT_TERM', 'HOTEL_COUNTRY', 'STATE', 'CITY', 'HOTEL_ADDRESS', 'PIN_CODE', 'GSTN', 'DIVISION', 'CONTACT_PERSON', 'DESIGNATION', 'MOBILE_NO', 'CONTACT_PERSON_EMAIL', 'MARKET_TYPE', 'SEASON_TYPE', 'ROOM_TYPE', 'MEAL_PLAN', 'FROM_VALIDITY', 'TO_VALIDITY', 'CURRENCY', 'SINGLE', 'DOUBLE', 'CHILD_WITH_BED', 'EXTRA_BED_ADULT', 'EXTRA_BED', 'BREAKFAST', 'LUNCH', 'DINNER', 'TARRIF_TYPE', 'ROOM_GST_SLAB', 'MEAL_GST_SLAB', 'TAC_PERSANT', 'REMARKS', 'STAR', 'HOTEL_WEB_LINK', 'HOTEL_CHAIN', 'WEEKEND_NAME', 'HOTEL_INFO', 'POLICY', 'TERMS_CONDITION', 'HOTEL_TYPE'];
+    const templateHeader = [
+      "HOTEL_NAME",
+      "DESTINATION",
+      "SELF_SUPPLIER",
+      "SUPPLIER_NAME",
+      "PAYMENT_TERM",
+      "HOTEL_COUNTRY",
+      "STATE",
+      "CITY",
+      "HOTEL_ADDRESS",
+      "PIN_CODE",
+      "GSTN",
+      "DIVISION",
+      "CONTACT_PERSON",
+      "DESIGNATION",
+      "MOBILE_NO",
+      "CONTACT_PERSON_EMAIL",
+      "MARKET_TYPE",
+      "SEASON_TYPE",
+      "ROOM_TYPE",
+      "MEAL_PLAN",
+      "FROM_VALIDITY",
+      "TO_VALIDITY",
+      "CURRENCY",
+      "SINGLE",
+      "DOUBLE",
+      "CHILD_WITH_BED",
+      "EXTRA_BED_ADULT",
+      "EXTRA_BED",
+      "BREAKFAST",
+      "LUNCH",
+      "DINNER",
+      "TARRIF_TYPE",
+      "ROOM_GST_SLAB",
+      "MEAL_GST_SLAB",
+      "TAC_PERSANT",
+      "REMARKS",
+      "STAR",
+      "HOTEL_WEB_LINK",
+      "HOTEL_CHAIN",
+      "WEEKEND_NAME",
+      "HOTEL_INFO",
+      "POLICY",
+      "TERMS_CONDITION",
+      "HOTEL_TYPE",
+    ];
 
     console.log(templateHeader.length);
 
@@ -65,19 +110,24 @@ const HotelMaster = () => {
         const json = XLSX.utils.sheet_to_json(worksheet);
 
         /////////////FOR GETTING HEADER START///////////////
-        const rowObject = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName],
-          {header: 1,
-         defval: ""})
+        const rowObject = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {
+          header: 1,
+          defval: "",
+        });
         const headers = rowObject[0];
         //console.log(headers)
         /////////////FOR GETTING HEADER END///////////////
 
-        let difference = headers.filter(x => !templateHeader.includes(x));
-        console.log("Diffrenece in array: ",difference);
-        console.log("Diffrenece array length: ",difference.length);
-        if(difference.length>0){
-          setErrorMessage("Header Name: [ "+difference+" ] is not matched with template. Please upload correct one.");
-        }else{
+        let difference = headers.filter((x) => !templateHeader.includes(x));
+        console.log("Diffrenece in array: ", difference);
+        console.log("Diffrenece array length: ", difference.length);
+        if (difference.length > 0) {
+          setErrorMessage(
+            "Header Name: [ " +
+              difference +
+              " ] is not matched with template. Please upload correct one."
+          );
+        } else {
           toast.success("Template Matched");
           setExcelToJson(JSON.stringify(json, null, 2));
         }
@@ -96,25 +146,21 @@ const HotelMaster = () => {
       document.getElementById("cancel").click();
       toast.success("Data Validating..");
 
-
       setLinearStatus(true);
 
-      try{
-        const response = await axiosOther.post('uploaddata', excelToJson);
+      try {
+        const response = await axiosOther.post("uploaddata", excelToJson);
         if (response) {
           setTimeout(() => {
             setLinearStatus(false);
             console.log(response);
             toast.success("Data uploaded sucessfully");
-          },5000)
+          }, 5000);
         } else {
-
         }
-      }catch(error){
+      } catch (error) {
         console.log(error);
       }
-
-
     } else {
       setErrorMessage("Upload an excel file.");
     }
@@ -169,7 +215,7 @@ const HotelMaster = () => {
     },
     {
       name: "Rate Sheet",
-      selector: (row) =>(
+      selector: (row) => (
         <NavLink
           to={`/master/hotelmaster/rate/${row?.id}`}
           state={{ Name: row?.MonumentName }}
@@ -194,7 +240,6 @@ const HotelMaster = () => {
             >
               <div className="col-xl-10 d-flex align-items-center">
                 <h5 className="card-title d-none d-sm-block">Hotel Master</h5>
-
               </div>
               <div className="col-xl-2 d-flex justify-content-end">
                 {/* Bootstrap Modal */}
@@ -269,15 +314,15 @@ const HotelMaster = () => {
                         >
                           Close
                         </button>
-                        {!errorMessage  &&
-                        <button
-                          type="submit"
-                          className="green-button"
-                          onClick={handleSubmitFile}
-                        >
-                          Upload
-                        </button>
-                        }
+                        {!errorMessage && (
+                          <button
+                            type="submit"
+                            className="green-button"
+                            onClick={handleSubmitFile}
+                          >
+                            Upload
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>

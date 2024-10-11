@@ -2,17 +2,19 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../../Component/Layout/Layout";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import {
-  guideRateInitialValue,
-  guideRateValidationSchema,
+  transportRateAddInitialValue,
+  transportRateValidationSchema,
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
+import toast from "react-hot-toast";
 
 const TransportRate = () => {
-  const [formValue, setFormValue] = useState(guideRateInitialValue);
+  const [formValue, setFormValue] = useState(transportRateAddInitialValue);
   const [supplierList, setSupplierList] = useState([]);
-  const [paxRangeList, setPaxRangeList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
-  const [guideMasterList, setGuideMasterList] = useState([]);
+  const [destinationList, setDestinationList] = useState([]);
+  const [vehicleList, setVehicleList] = useState([]);
+
   const [slabList, setSlabList] = useState([]);
   const [errorMessgae, setErrorMessage] = useState("");
   const { id } = useParams();
@@ -25,21 +27,27 @@ const TransportRate = () => {
 
   const handleSubmit = async () => {
     try {
-      await guideRateValidationSchema?.validate(formValue, {
+      await transportRateValidationSchema?.validate(formValue, {
         abortEarly: false,
       });
       setErrorMessage("");
       console.log("value", {
         ...formValue,
-        MonumentId: id,
+        TransportId: id,
       });
 
-      const data = await axiosOther.post("addupdateguiderate", {
+      const { data } = await axiosOther.post("addtransportrate", {
         ...formValue,
-        MonumentId: id,
+        TransportId: id,
       });
 
       console.log("response", data);
+
+      if (data?.Status == 1) {
+        toast.success("Rate Added Succesfully !");
+        setFormValue(transportRateAddInitialValue);
+      }
+      
     } catch (err) {
       if (err.inner) {
         const errMessage = err.inner.reduce((acc, curr) => {
@@ -83,11 +91,23 @@ const TransportRate = () => {
       console.log(error);
     }
     try {
-      const { data } = await axiosOther.post("tourescortmasterlist", {
+      const { data } = await axiosOther.post("destinationlist", {
+        CountryId: "",
+        StateId: "",
+        Name: "",
+        Default: "",
+        Status: "",
+      });
+      setDestinationList(data?.DataList);
+    } catch (error) {
+      console.log(error);
+    }
+    try {
+      const { data } = await axiosOther.post("vehicletypemasterlist", {
         Search: "",
         Status: "",
       });
-      setGuideMasterList(data?.DataList);
+      setVehicleList(data?.DataList);
     } catch (error) {
       console.log(error);
     }
@@ -112,7 +132,7 @@ const TransportRate = () => {
             <div className="col-xl-2 d-flex justify-content-end">
               {/*Bootstrap Modal*/}
               <NavLink
-                to="/master/tourescortprice"
+                to="/master/transport"
                 className="gray-button"
                 aria-expanded="false"
               >
@@ -137,7 +157,6 @@ const TransportRate = () => {
                   name="SupplierId"
                   value={formValue?.SupplierId}
                   onChange={handleInputChange}
-                  id=""
                   className="form-input-6"
                 >
                   <option value="">Select</option>
@@ -155,21 +174,21 @@ const TransportRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     DESTINATION <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.SupplierId && (
+                  {errorMessgae?.DestinationID && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.SupplierId}
+                      {errorMessgae?.DestinationID}
                     </span>
                   )}
                 </div>
                 <select
-                  name="SupplierId"
-                  value={formValue?.SupplierId}
+                  name="DestinationID"
+                  value={formValue?.DestinationID}
                   onChange={handleInputChange}
                   id=""
                   className="form-input-6"
                 >
-                  <option value="">Select</option>
-                  {supplierList?.map((item) => {
+                  <option value="">All</option>
+                  {destinationList?.map((item) => {
                     return (
                       <option value={item?.id} key={item?.id}>
                         {item?.Name}
@@ -222,64 +241,44 @@ const TransportRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     TYPE <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.PaxRange && (
+                  {errorMessgae?.Type && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.PaxRange}
+                      {errorMessgae?.Type}
                     </span>
                   )}
                 </div>
                 <select
-                  name="PaxRange"
+                  name="Type"
                   id=""
                   className="form-input-6"
-                  value={formValue?.PaxRange}
+                  value={formValue?.Type}
                   onChange={handleInputChange}
                 >
-                  <option value="">All</option>
+                  <option value="Package Cost">Package Cost</option>
+                  <option value="Per Day Cost">Per Day Cost</option>
                 </select>
               </div>
+
               <div className="col-2">
                 <div className="d-flex justify-content-between">
                   <label htmlFor="" className="m-0 font-size-12">
-                    STATUS <span className="text-danger">*</span>
+                    VEHICLE TYPE
                   </label>
-                  {errorMessgae?.DayType && (
-                    <span className="text-danger font-size-12">
-                      {errorMessgae?.DayType}
-                    </span>
-                  )}
                 </div>
                 <select
-                  name="DayType"
-                  id=""
+                  name="VehicleTypeId"
                   className="form-input-6"
-                  value={formValue?.DayType}
+                  value={formValue?.VehicleTypeId}
                   onChange={handleInputChange}
                 >
-                  <option value="Active">Active</option>
-                  <option value="Inactive">Inactive</option>
-                </select>
-              </div>
-              <div className="col-2">
-                <div className="d-flex justify-content-between">
-                  <label htmlFor="" className="m-0 font-size-12">
-                    VEHICLE TYPE <span className="text-danger">*</span>
-                  </label>
-                  {errorMessgae?.UniversalCost && (
-                    <span className="text-danger font-size-12">
-                      {errorMessgae?.UniversalCost}
-                    </span>
-                  )}
-                </div>
-                <select
-                  name="UniversalCost"
-                  id=""
-                  className="form-input-6"
-                  value={formValue?.UniversalCost}
-                  onChange={handleInputChange}
-                >
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
+                  <option value="">Select</option>
+                  {vehicleList?.map((item) => {
+                    return (
+                      <option value={item?.id} key={item?.id}>
+                        {item?.Name}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
 
@@ -288,17 +287,16 @@ const TransportRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     TAX SLAB <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.Currency && (
+                  {errorMessgae?.TaxSlabId && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.Currency}
+                      {errorMessgae?.TaxSlabId}
                     </span>
                   )}
                 </div>
                 <select
-                  name="Currency"
-                  id=""
+                  name="TaxSlabId"
                   className="form-input-6"
-                  value={formValue?.Currency}
+                  value={formValue?.TaxSlabId}
                   onChange={handleInputChange}
                 >
                   <option value="0">Select</option>
@@ -316,17 +314,16 @@ const TransportRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     CURRENCY <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.Currency && (
+                  {errorMessgae?.CurrencyId && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.Currency}
+                      {errorMessgae?.CurrencyId}
                     </span>
                   )}
                 </div>
                 <select
-                  name="Currency"
-                  id=""
+                  name="CurrencyId"
                   className="form-input-6"
-                  value={formValue?.Currency}
+                  value={formValue?.CurrencyId}
                   onChange={handleInputChange}
                 >
                   <option value="0">Select</option>
@@ -348,9 +345,9 @@ const TransportRate = () => {
                 <input
                   type="number"
                   className="form-input-6"
-                  name="ServiceCost"
-                  placeholder="Service Cost"
-                  value={formValue?.ServiceCost}
+                  name="VehicleCost"
+                  placeholder="VEHICLE COST"
+                  value={formValue?.VehicleCost}
                   onChange={handleInputChange}
                 />
               </div>
@@ -363,9 +360,9 @@ const TransportRate = () => {
                 <input
                   type="text"
                   className="form-input-6"
-                  name="LangAllowance"
-                  placeholder="Language Allowance"
-                  value={formValue?.LangAllowance}
+                  name="ParkingFee"
+                  placeholder="PARKING FEE"
+                  value={formValue?.ParkingFee}
                   onChange={handleInputChange}
                 />
               </div>
@@ -378,9 +375,9 @@ const TransportRate = () => {
                 <input
                   type="number"
                   className="form-input-6"
-                  name="OtherCost"
-                  placeholder="Other Cost"
-                  value={formValue?.OtherCost}
+                  name="RapEntryFee"
+                  placeholder="ENTRY FEE"
+                  value={formValue?.RapEntryFee}
                   onChange={handleInputChange}
                 />
               </div>
@@ -393,24 +390,24 @@ const TransportRate = () => {
                 <input
                   type="number"
                   className="form-input-6"
-                  name="OtherCost"
-                  placeholder="Other Cost"
-                  value={formValue?.OtherCost}
+                  name="Assistance"
+                  placeholder="ASSISTANCE"
+                  value={formValue?.Assistance}
                   onChange={handleInputChange}
                 />
               </div>
               <div className="col-2">
                 <div>
                   <label htmlFor="" className="m-0 font-size-12">
-                    ADNL ALLOWENCE
+                    ADTNL ALLOWENCE
                   </label>
                 </div>
                 <input
                   type="number"
                   className="form-input-6"
-                  name="OtherCost"
-                  placeholder="Other Cost"
-                  value={formValue?.OtherCost}
+                  name="AdtnlAllowance"
+                  placeholder="ALLOWENCE"
+                  value={formValue?.AdtnlAllowance}
                   onChange={handleInputChange}
                 />
               </div>
@@ -423,9 +420,9 @@ const TransportRate = () => {
                 <input
                   type="number"
                   className="form-input-6"
-                  name="OtherCost"
-                  placeholder="Other Cost"
-                  value={formValue?.OtherCost}
+                  name="InterStateToll"
+                  placeholder="STATE TOLL"
+                  value={formValue?.InterStateToll}
                   onChange={handleInputChange}
                 />
               </div>
@@ -438,11 +435,28 @@ const TransportRate = () => {
                 <input
                   type="number"
                   className="form-input-6"
-                  name="OtherCost"
-                  placeholder="Other Cost"
-                  value={formValue?.OtherCost}
+                  name="MiscCost"
+                  placeholder="MISC COST"
+                  value={formValue?.MiscCost}
                   onChange={handleInputChange}
                 />
+              </div>
+              <div className="col-2">
+                <div className="d-flex justify-content-between">
+                  <label htmlFor="" className="m-0 font-size-12">
+                    STATUS
+                  </label>
+                </div>
+                <select
+                  name="Status"
+                  id=""
+                  className="form-input-6"
+                  value={formValue?.Status}
+                  onChange={handleInputChange}
+                >
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
+                </select>
               </div>
               <div className="col-12">
                 <div>
@@ -453,9 +467,9 @@ const TransportRate = () => {
                 <textarea
                   type="text"
                   className="form-input-6"
-                  name="OtherCost"
-                  placeholder="Other Cost"
-                  value={formValue?.OtherCost}
+                  name="Remarks"
+                  placeholder="REMARKS"
+                  value={formValue?.Remarks}
                   onChange={handleInputChange}
                 />
               </div>
