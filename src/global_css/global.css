@@ -1183,6 +1183,9 @@ select {
 .padding-right-3{
   padding-right: 3px;
 }
+.rate-list-table::-webkit-scrollbar{
+  height: 3px;
+}
 
 
 @keyframes skeleton-loading {

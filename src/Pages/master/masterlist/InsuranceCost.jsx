@@ -9,9 +9,9 @@ import {
   insuranceCostInitialValue,
   insuranceCostValidationSchema,
 } from "./MasterValidations";
-import { Value } from "sass";
 
 const InsuranceCost = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});

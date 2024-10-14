@@ -9,6 +9,7 @@ import { axiosOther } from "../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 
 const HotelRate = () => {
+
   const [formValue, setFormValue] = useState(hotelRateAddInitialValue);
   const [marketTypeList, setMarketTypeList] = useState([]);
   const [supplierList, setSupplierList] = useState([]);
@@ -25,23 +26,20 @@ const HotelRate = () => {
   const { id } = useParams();
   const { state } = useLocation();
 
-  const getGuideRateList = async () => {
+  const getHotelRateList = async () => {
     try {
       const { data } = await axiosOther.post("listHotelRatesJson", {
         id: id,
       });
       setHotelRateList(data?.data);
-      console.log('hotel-data', data?.data);
+      console.log("hotel-data", data?.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log('hotel-data-state', hotelRateList);
-
-
   useEffect(() => {
-    getGuideRateList();
+    getHotelRateList();
   }, []);
 
   const handleInputChange = (e) => {
@@ -64,11 +62,13 @@ const HotelRate = () => {
         ...formValue,
         HotelId: id,
       });
-      console.log("response", data);
+      console.log('response', data);
       if (data?.Status == 1) {
+        getHotelRateList();
         toast.success("Rate Added Successfully !");
         setFormValue(hotelRateAddInitialValue);
       }
+      
     } catch (err) {
       if (err.inner) {
         const errMessage = err.inner.reduce((acc, curr) => {
@@ -723,56 +723,122 @@ const HotelRate = () => {
       </div>
 
       <div className="container-fluid px-3 pb-4 mb-5">
-        <div className="row">
-          <div className="col-12">
+        <div className="row ">
+          <div className="col-12 ">
             <table className="table table-bordered  table-striped table-responsive">
               <thead>
                 <tr>
-                  <th className="p-0 text-center py-1">SEASON</th>
-                  <th className="p-0 text-center py-1">VALIDITY</th>
-                  <th className="p-0 text-center py-1">PAX TYPE</th>
-                  <th className="p-0 text-center py-1">MARKET TYPE</th>
-                  <th className="p-0 text-center py-1">SUPPLIER</th>
-                  <th className="p-0 text-center py-1">TARIF TYPE</th>
-                  <th className="p-0 text-center py-1">ROOM TYPE</th>
-                  <th className="p-0 text-center py-1">MEAL PLAN</th>
-                  <th className="p-0 text-center py-1">ROOM BED TYPE</th>
-                  <th className="p-0 text-center py-1">ROOM COST</th>
-                  <th className="p-0 text-center py-1">MEAL TYPE</th>
-                  <th className="p-0 text-center py-1">MEAL COST</th>
-                  <th className="p-0 text-center py-1">TAC(%)</th>
-                  <th className="p-0 text-center py-1">ROOM TAX SLAB</th>
-                  <th className="p-0 text-center py-1">MEAL TAX SLAB</th>
-                  <th className="p-0 text-center py-1">MARKUP</th>
-                  <th className="p-0 text-center py-1">STATUS</th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    SEASON
+                  </th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    VALIDITY
+                  </th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    PAX TYPE
+                  </th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    MARKET TYPE
+                  </th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    SUPPLIER
+                  </th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    TARIF TYPE
+                  </th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    ROOM TYPE
+                  </th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    MEAL PLAN
+                  </th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    ROOM BED TYPE
+                  </th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    ROOM COST
+                  </th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    MEAL TYPE
+                  </th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    MEAL COST
+                  </th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    TAC(%)
+                  </th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    ROOM TAX SLAB
+                  </th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    MEAL TAX SLAB
+                  </th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    MARKUP
+                  </th>
+                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                    STATUS
+                  </th>
                 </tr>
               </thead>
               <tbody>
-              {hotelRateList?.map((item) => {
+                {hotelRateList?.map((item) => {
                   return item?.Data?.map((item) => {
                     return item?.RateDetails?.map((item) => {
                       return (
                         <tr key={item?.UniqueID}>
-                          <td className="text-center text-nowrap">{item?.SeasonTypeName}</td>
-                          <td className="text-center text-nowrap">{item?.ValidTo}</td>
+                          <td className="text-center text-nowrap">
+                            {item?.SeasonTypeName}
+                          </td>
+                          <td className="text-center text-nowrap">
+                            {item?.ValidTo}
+                          </td>
                           <td className="text-center text-nowrap">
                             {item?.PaxTypeName}
                           </td>
-                          <td className="text-center text-nowrap">{item?.MarketTypeName}</td>
-                          <td className="text-center text-nowrap">{item?.SupplierName}</td>
-                          <td className="text-center text-nowrap">{item?.TarrifeTypeName}</td>
-                          <td className="text-center text-nowrap">{item?.RoomTypeName}</td>
-                          <td className="text-center text-nowrap">{item?.MealPlanName}</td>
-                          <td className="text-center text-nowrap">{item?.RoomBedType}</td>
-                          <td className="text-center text-nowrap">{item?.RoomCost}</td>
-                          <td className="text-center text-nowrap">{item?.Status}</td>
-                          <td className="text-center text-nowrap">{item?.Status}</td>
-                          <td className="text-center text-nowrap">{item?.TAC?.toFixed(2)}</td>
-                          <td className="text-center text-nowrap">{item?.RoomTaxSlabValue}</td>
-                          <td className="text-center text-nowrap">{item?.MealSlabValue}</td>
-                          <td className="text-center">{item?.Status}</td>
-                          <td className="text-center">{item?.Status}</td>
-                          
+                          <td className="text-center text-nowrap">
+                            {item?.MarketTypeName}
+                          </td>
+                          <td className="text-center text-nowrap">
+                            {item?.SupplierName}
+                          </td>
+                          <td className="text-center text-nowrap">
+                            {item?.TarrifeTypeName}
+                          </td>
+                          <td className="text-center text-nowrap">
+                            {item?.RoomTypeName}
+                          </td>
+                          <td className="text-center text-nowrap">
+                            {item?.MealPlanName}
+                          </td>
+                          <td className="text-center text-nowrap">
+                            {item?.RoomBedType}
+                          </td>
+                          <td className="text-center text-nowrap">
+                            {item?.RoomCost}
+                          </td>
+                          <td className="text-center text-nowrap">
+                            {item?.Status}
+                          </td>
+                          <td className="text-center text-nowrap">
+                            {item?.Status}
+                          </td>
+                          <td className="text-center text-nowrap">
+                            {item?.TAC?.toFixed(2)}
+                          </td>
+                          <td className="text-center text-nowrap">
+                            {item?.RoomTaxSlabValue}
+                          </td>
+                          <td className="text-center text-nowrap">
+                            {item?.MealSlabValue}
+                          </td>
+                          <td className="text-center text-nowrap">
+                            {item?.MarkupType}
+                          </td>
+                          <td className="text-center text-nowrap">
+                            {item?.Status}
+                          </td>
+
                           <td>
                             <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
                           </td>

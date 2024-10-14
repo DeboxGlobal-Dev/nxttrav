@@ -11,6 +11,7 @@ import {
 import { axiosHotel, axiosOther } from "../../../http/axios/axios_new";
 
 const HotelType = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -23,7 +24,6 @@ const HotelType = () => {
   const [updateData, setUpdateData] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  console.log("getdata", getData);
   useEffect(() => {
     const postDataToServer = async () => {
       try {

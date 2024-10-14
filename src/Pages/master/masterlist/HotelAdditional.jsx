@@ -9,10 +9,10 @@ import {
   hotelAdditionalValidationSchema,
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
-import { InputAdornment } from "@mui/material";
 import Editor from "../../../helper/Editor";
 
 const HotelAdditional = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});

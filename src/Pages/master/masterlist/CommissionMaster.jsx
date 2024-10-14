@@ -11,6 +11,7 @@ import {
 } from "./MasterValidations";
 
 const CommissionMaster = () => {
+  
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});

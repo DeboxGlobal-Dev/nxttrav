@@ -11,6 +11,7 @@ import {
 } from "./MasterValidations";
 
 const CurrencyMaster = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -114,6 +115,7 @@ const CurrencyMaster = () => {
       sortable: true,
     },
   ];
+  
   return (
     <>
       <Layout>

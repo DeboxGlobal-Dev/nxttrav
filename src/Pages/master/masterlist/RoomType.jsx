@@ -5,14 +5,13 @@ import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
 import {
-  cityInitialValue,
-  cityValidationSchema,
   roomTypeInitialValue,
   roomTypeValidationSchema,
 } from "./MasterValidations";
 import { axiosHotel, axiosOther } from "../../../http/axios/axios_new";
 
 const RoomType = () => {
+  
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [postData, setPostData] = useState({

@@ -11,6 +11,7 @@ import {
 } from "./MasterValidations";
 
 const FerrySeat = () => {
+  
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});

@@ -9,6 +9,7 @@ import { axiosOther } from "../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 
 const ActivityRate = () => {
+  
   const [formValue, setFormValue] = useState(activityRateAddInitialValue);
   const [supplierList, setSupplierList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
@@ -18,7 +19,7 @@ const ActivityRate = () => {
   const { id } = useParams();
   const { state } = useLocation();
 
-  const getGuideRateList = async () => {
+  const getActivityRateList = async () => {
     try {
       const { data } = await axiosOther.post("activityratelist", {
         id: id,
@@ -30,7 +31,7 @@ const ActivityRate = () => {
   };
 
   useEffect(() => {
-    getGuideRateList();
+    getActivityRateList();
   }, []);
 
   console.log("activityRateList", activityRateList);
@@ -56,7 +57,10 @@ const ActivityRate = () => {
         ActivityId: id,
       });
 
+      console.log('response', data);
+
       if (data?.Status == 1) {
+        getActivityRateList();
         toast.success("Rate Added Successfully !");
         setFormValue(activityRateAddInitialValue);
       }

@@ -87,7 +87,6 @@ const Monument = () => {
     console.log(content);
   };
 
-  // console.log("monument-list", getData);
   const columns = [
     {
       name: "Photo",

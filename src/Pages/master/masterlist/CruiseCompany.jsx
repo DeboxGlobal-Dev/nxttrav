@@ -11,6 +11,7 @@ import {
 } from "./MasterValidations";
 
 const CruiseCompany = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -130,8 +131,6 @@ const CruiseCompany = () => {
     );
     return filteredCity;
   }, [changeValue.city, changeValue.State, changeValue.Country]);
-
-  // console.log('changeValue..', changeValue);
 
   const columns = [
     {

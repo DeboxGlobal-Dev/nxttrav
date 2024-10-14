@@ -3,12 +3,13 @@ import Layout from "../../../Component/Layout/Layout";
 import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
-import { axiosFerry, axiosOther } from "../../../http/axios/axios_new";
+import { axiosOther } from "../../../http/axios/axios_new";
 import { Field } from "formik";
 import { gitInitialValue, gitValidationSchema } from "./MasterValidations";
 import Editor from "../../../helper/Editor";
 
 const GIT = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -124,9 +125,7 @@ const GIT = () => {
   const handleInclusionEditor = (content) => {
     setEditorValue({ ...editorValue, Inclusion: content });
   };
-
   
-
   const columns = [
     {
       name: "Name",

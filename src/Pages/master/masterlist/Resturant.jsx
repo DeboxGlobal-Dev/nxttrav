@@ -11,10 +11,10 @@ import {
 import {
   axiosRestaurant,
   axiosOther,
-  axiosHotel,
 } from "../../../http/axios/axios_new";
 
 const Resturant = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [postData, setPostData] = useState({
@@ -36,6 +36,7 @@ const Resturant = () => {
   });
 
   const getDataToServer = async () => {
+
     try {
       const countryData = await axiosOther.post("countrylist", {
         Search: "",
@@ -89,6 +90,7 @@ const Resturant = () => {
     getDataToServer();
   }, []);
   useEffect(() => {
+
     const postDataToServer = async () => {
       try {
         const { data } = await axiosRestaurant.post(
@@ -103,14 +105,17 @@ const Resturant = () => {
       }
     };
     postDataToServer();
+
   }, [updateData]);
 
   useEffect(() => {
+
     const result = getData.filter((item) => {
       return item?.Name?.toLowerCase()?.match(postData?.Search?.toLowerCase());
     });
 
     setFilterData(result);
+
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
@@ -207,8 +212,6 @@ const Resturant = () => {
     };
     reader.readAsDataURL(file);
   };
-
-  // console.log('ImageValue', imageValue);
 
   return (
     <>

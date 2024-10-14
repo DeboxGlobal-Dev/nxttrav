@@ -9,6 +9,7 @@ import { axiosFerry, axiosOther } from "../../../http/axios/axios_new";
 import Editor from "../../../helper/Editor";
 
 const FerryPrice = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -20,7 +21,9 @@ const FerryPrice = () => {
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
+
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("ferryprice", postData);
@@ -32,6 +35,7 @@ const FerryPrice = () => {
       }
     };
     postDataToServer();
+    
   }, [updateData]);
 
   useEffect(() => {

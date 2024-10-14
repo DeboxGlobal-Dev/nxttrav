@@ -9,6 +9,7 @@ import { axiosOther } from "../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 
 const AirlineRate = () => {
+  
   const [formValue, setFormValue] = useState(airlineRateAddInitialValue);
   const [currencyList, setCurrencyList] = useState([]);
   const [flightClass, setFlightClass] = useState([]);

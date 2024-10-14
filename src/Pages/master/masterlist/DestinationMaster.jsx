@@ -13,6 +13,7 @@ import { isDeepEqual } from "@mui/x-data-grid/internals";
 import Editor from "../../../helper/Editor";
 
 const DestinationMaster = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -168,8 +169,6 @@ const DestinationMaster = () => {
       sortable: true,
     },
   ];
-
-  // console.log('destination-list', getData);
 
   return (
     <>

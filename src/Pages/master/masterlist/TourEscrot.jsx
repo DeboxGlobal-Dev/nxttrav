@@ -13,6 +13,7 @@ import "jquery";
 import "select2";
 
 const TourEscort = () => {
+  
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});

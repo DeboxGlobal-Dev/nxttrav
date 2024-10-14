@@ -11,6 +11,7 @@ import {
 import { axiosOther, axiosCruise } from "../../../http/axios/axios_new";
 
 const CruiseNameCompany = () => {
+  
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});

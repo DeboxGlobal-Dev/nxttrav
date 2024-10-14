@@ -9,6 +9,7 @@ import { countryInitialValue, countryValidationSchema } from "./MasterValidation
 
 
 const PassportCost = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -19,6 +20,7 @@ const PassportCost = () => {
   });
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);
+  
   useEffect(() => {
     const postDataToServer = async () => {
       try {

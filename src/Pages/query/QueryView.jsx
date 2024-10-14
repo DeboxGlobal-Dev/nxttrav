@@ -1,7 +1,6 @@
 import React from "react";
 import Layout from "../../Component/Layout/Layout";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import CustomizedSteppers from "./CustomizedSteppers";
 import Stepper from "../../helper/Stepper";
 
 const QueryView = () => {

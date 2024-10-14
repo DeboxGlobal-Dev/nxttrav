@@ -19,19 +19,20 @@ const MonumentRate = () => {
   const { id } = useParams();
   const { state } = useLocation();
 
-  const getRateList = async () => {
+  const getMonumentRateList = async () => {
     try {
       const { data } = await axiosOther.post("monumentlist", {
         id: id,
       });
       setRateList(data?.DataList);
+      console.log("data", data);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getRateList();
+    getMonumentRateList();
   }, []);
 
   const handleInputChange = (e) => {
@@ -55,9 +56,15 @@ const MonumentRate = () => {
         MonumentId: id,
       });
 
+      console.log("response", data);
+
       if (data?.Status == 1) {
-        toast.success("Rate Added Successfully !");
+        getMonumentRateList();
+        toast.success(data?.Message);
         setFormValue(monumentRateInitialValue);
+      }
+      if (data?.Status != 1) {
+        toast.success(data?.Message);
       }
     } catch (err) {
       console.log("error", err);
@@ -422,7 +429,11 @@ const MonumentRate = () => {
                     return item?.RateDetails?.map((item) => {
                       return (
                         <tr key={item?.UniqueID}>
-                          <td className="text-center"></td>
+                          <td className="text-center px-0">
+                            {item?.ValidFrom?.split("-")?.reverse()?.join("-")}
+                            &nbsp; To &nbsp;
+                            {item?.ValidTo?.split("-").reverse()?.join("-")}
+                          </td>
                           <td className="text-center">Mark</td>
                           <td className="text-center">
                             {item?.NationalityName}

@@ -24,6 +24,7 @@ const HotelMaster = () => {
       const { data } = await axiosHotel.post("hotellist", postData);
       setGetData(data.DataList);
       setFilterData(data.DataList);
+      console.log('data-list-hotel', data);
     } catch (error) {
       console.log(error);
     }
@@ -174,7 +175,7 @@ const HotelMaster = () => {
             className="fa-solid fa-pen-to-square pr-2 cursor-pointer"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.HotelChain}
+          {row.HotelBasicDetails?.HotelChain?.ChainName}
         </span>
       ),
       sortable: true,
@@ -194,7 +195,7 @@ const HotelMaster = () => {
     },
     {
       name: "Category",
-      selector: (row) => row.Category,
+      selector: (row) => row.HotelBasicDetails?.HotelCategory?.CategoryName,
       sortable: true,
     },
     {
@@ -204,7 +205,7 @@ const HotelMaster = () => {
     },
     {
       name: "Room Type",
-      selector: (row) => row.RoomType,
+      selector: (row) => row?.HotelBasicDetails.HotelRoomType?.RoomTypeName,
       sortable: true,
     },
     {

@@ -10,23 +10,10 @@ import {
   hotelAddValidationSchema,
   hotelAddContactArraySchema,
 } from "./MasterValidations";
-import {
-  amentiesInitialValue,
-  cityInitialValue,
-  countryInitialValue,
-  destinationInitialValue,
-  hotelCategoryInitialValue,
-  hotelChainInitialValue,
-  hotelMasterCreateInitialValue,
-  hotelMasterCreateValidationSchema,
-  hotelMasterInitialValue,
-  hotelTypeInitialValue,
-  roomTypeInitialValue,
-  stateInitialValue,
-} from "./MasterValidations";
 import toast, { Toaster } from "react-hot-toast";
 
 const HotelMasterCreate = () => {
+
   const [formValue, setFormValue] = useState(hotelAddInitialValue);
   const [contactFormValue, setContactFormValue] = useState([
     hotelAddContactInitialValue,
@@ -144,8 +131,6 @@ const HotelMasterCreate = () => {
     const filteredContact = contactFormValue.filter((i, ind) => ind !== index);
     setContactFormValue(filteredContact);
   };
-
-  // console.log("contact", contactFormValue);
 
   return (
     <>

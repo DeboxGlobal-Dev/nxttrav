@@ -8,7 +8,6 @@ import { cityInitialValue, cityValidationSchema } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const CityMaster = () => {
-  console.log("CityMaster Loaded");
 
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
@@ -25,7 +24,7 @@ const CityMaster = () => {
   const [loading, setLoading] = useState(true);
 
   const getDataToServer = async () => {
-    console.log("First Action");
+
     try {
       const countryData = await axiosOther.post("countrylist", {
         Search: "",

@@ -59,6 +59,7 @@ const GuideRate = () => {
       console.log("response", data);
 
       if (data?.Status == 1) {
+        getGuideRateList();
         toast.success("Rate Added Successfully !");
         setFormValue(guideRateInitialValue);
       }
@@ -119,7 +120,6 @@ const GuideRate = () => {
     postDataToServer();
   }, []);
 
-  // console.log("guide-list", guideMasterList);
   return (
     <Layout>
       <div className="container-fluid p-3 pb-0">
@@ -458,10 +458,11 @@ const GuideRate = () => {
                       return (
                         <tr key={item?.UniqueID}>
                           <td className="text-center">{item?.SupplierName}</td>
-                          <td className="text-center">Mark</td>
                           <td className="text-center">
-                            {item?.DayType}
+                            {item?.ValidFrom?.split("-")?.reverse().join("-")}{" "}
+                            To {item?.ValidTo?.split("-").reverse().join("-")}
                           </td>
+                          <td className="text-center">{item?.DayType}</td>
                           <td className="text-center">{item?.PaxRangeName}</td>
                           <td className="text-center">{item?.ServiceCost}</td>
                           <td className="text-center">{item?.LangAllowance}</td>

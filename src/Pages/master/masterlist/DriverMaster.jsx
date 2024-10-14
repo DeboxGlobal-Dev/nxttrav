@@ -11,6 +11,7 @@ import {
 } from "./MasterValidations";
 
 const DriverMaster = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -19,6 +20,7 @@ const DriverMaster = () => {
     Search: "",
     Status: "",
   });
+  
   const [loading, setLoading] = useState(true);
   const [changeValue, setChangeValue] = useState("");
   const [updateData, setUpdateData] = useState(false);

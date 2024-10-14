@@ -6,10 +6,8 @@ import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
 import { Field, ErrorMessage } from "formik";
 import {
-  countryInitialValue,
-  countryValidationSchema,
   expenseHeadInitialValue,
-  expenseHeadValidationSchema,
+  expenseHeadValidationSchema
 } from "./MasterValidations";
 
 const ExpenseHead = () => {

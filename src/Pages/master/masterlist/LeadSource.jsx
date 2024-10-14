@@ -11,6 +11,7 @@ import {
 import { axiosOther } from "../../../http/axios/axios_new";
 
 const LeadSource = () => {
+
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
@@ -56,7 +57,6 @@ const LeadSource = () => {
     });
     setIsEditing(true);
   };
-  console.log("Edit Data", editData);
 
   const columns = [
     {
