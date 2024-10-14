@@ -13,9 +13,28 @@ const RestaurantRate = () => {
   const [mealPlanList, setMealPlanList] = useState([]);
   const [taxSlabList, setTaxSlabList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
+  const [restaurantRateList, setRestaurantRateList] = useState([]);
   const [errorMessgae, setErrorMessage] = useState("");
   const { id } = useParams();
   const { state } = useLocation();
+
+  const getRestaurantRateList = async () => {
+    try {
+      const { data } = await axiosOther.post("restaurantmasterRatelist", {
+        id: id,
+      });
+      setRestaurantRateList(data?.DataList)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log('restaurant-list', restaurantRateList);
+
+
+  useEffect(() => {
+    getRestaurantRateList();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -300,30 +319,37 @@ const RestaurantRate = () => {
             <table className="table table-bordered  table-striped">
               <thead>
                 <tr>
-                  <th className="p-0 text-center py-1">Validity</th>
-                  <th className="p-0 text-center py-1">Entrance Name</th>
-                  <th className="p-0 text-center py-1">Nationality</th>
-                  <th className="p-0 text-center py-1">Supplier</th>
+                  <th className="p-0 text-center py-1">Supplier Name</th>
+                  <th className="p-0 text-center py-1">Meal Plan</th>
+                  <th className="p-0 text-center py-1">Currency</th>
                   <th className="p-0 text-center py-1">Adult Cost</th>
                   <th className="p-0 text-center py-1">Child Cost</th>
-                  <th className="p-0 text-center py-1">GST Slab</th>
+                  <th className="p-0 text-center py-1">Restaurant Tax Slab</th>
                   <th className="p-0 text-center py-1">Status</th>
+                  <th className="p-0 text-center py-1">Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="text-center">1</td>
-                  <td className="text-center">Mark</td>
-                  <td className="text-center">Otto</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td>
-                    <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
-                  </td>
-                </tr>
+              {restaurantRateList?.map((item) => {
+                  return item?.Data?.map((item) => {
+                    return item?.RateDetails?.map((item) => {
+                      return (
+                        <tr key={item?.UniqueID}>
+                          <td className="text-center">{item?.SupplierName}</td>
+                          <td className="text-center">{item?.MealType}</td>
+                          <td className="text-center">{item?.Currency}</td>
+                          <td className="text-center">{item?.AdultCost}</td>
+                          <td className="text-center">{item?.ChildCost}</td>
+                          <td className="text-center">{item?.GstSlabName}</td>
+                          <td className="text-center">{item?.Status}</td>
+                          <td>
+                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                          </td>
+                        </tr>
+                      );
+                    });
+                  });
+                })}
               </tbody>
             </table>
           </div>

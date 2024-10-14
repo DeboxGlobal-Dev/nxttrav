@@ -14,11 +14,27 @@ const TransportRate = () => {
   const [currencyList, setCurrencyList] = useState([]);
   const [destinationList, setDestinationList] = useState([]);
   const [vehicleList, setVehicleList] = useState([]);
+  const [transportRateList, setTransportRateList] = useState([]);
 
   const [slabList, setSlabList] = useState([]);
   const [errorMessgae, setErrorMessage] = useState("");
   const { id } = useParams();
   const { state } = useLocation();
+
+  const getTransportRateList = async () => {
+    try {
+      const { data } = await axiosOther.post("transportratelist", {
+        id: id,
+      });
+      setTransportRateList(data?.DataList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getTransportRateList();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -117,7 +133,7 @@ const TransportRate = () => {
     postDataToServer();
   }, []);
 
-  // console.log("guide-list", guideMasterList);
+  console.log("transportRateList", transportRateList);
   return (
     <Layout>
       <div className="container-fluid p-3 pb-0">
@@ -512,20 +528,32 @@ const TransportRate = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="text-center">1</td>
-                  <td className="text-center">Mark</td>
-                  <td className="text-center">Otto</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">
-                    <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
-                  </td>
-                </tr>
+              {transportRateList?.map((item) => {
+                  return item?.Data?.map((item) => {
+                    return item?.RateDetails?.map((item) => {
+                      return (
+                        <tr key={item?.UniqueID}>
+                          <td className="text-center">{item?.VehicleTypeName}</td>
+                          <td className="text-center">{item?.Type}</td>
+                          <td className="text-center">{item?.DestinationName}</td>
+                          <td className="text-center">{item?.VehicleTypeName}</td>
+                          <td className="text-center">{item?.TaxSlabVal}</td>
+                          <td className="text-center">{item?.VehicleCost}</td>
+                          <td className="text-center">{item?.ParkingFee}</td>
+                          <td className="text-center">{item?.RapEntryFee}</td>
+                          <td className="text-center">{item?.Assistance}</td>
+                          <td className="text-center">{item?.AdtnlAllowance}</td>
+                          <td className="text-center">{item?.InterStateToll}</td>
+                          <td className="text-center">{item?.MiscCost}</td>
+                          <td className="text-center">{item?.Status}</td>
+                          <td>
+                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                          </td>
+                        </tr>
+                      );
+                    });
+                  });
+                })}
               </tbody>
             </table>
           </div>

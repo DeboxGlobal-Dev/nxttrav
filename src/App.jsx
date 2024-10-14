@@ -113,6 +113,7 @@ const AddAgent = lazy(()=> import("./Pages/master/masterlist/agent/AddAgent.jsx"
 const DirectClient = lazy(()=> import("./Pages/master/masterlist/directClient/DirectClient.jsx"));
 const AddDirectClient = lazy(()=> import("./Pages/master/masterlist/directClient/AddDirectClient.jsx"));
 const ViewDirectClient = lazy(()=> import("./Pages/master/masterlist/directClient/ViewDirectClient.jsx"));
+const Activity = lazy(()=>import("./Pages/master/masterlist/Activity.jsx"));
 const ViewAgent = lazy(()=> import("./Pages/master/masterlist/agent/ViewAgent.jsx"));
 const AddTask = lazy(()=> import("./Pages/master/masterlist/agent/AddTask.jsx"));
 const AddMeeting = lazy(()=> import("./Pages/master/masterlist/agent/AddMeeting.jsx"));
@@ -132,6 +133,7 @@ const TransportRate = lazy(()=>import("./Pages/master/masterlist/TransportRate.j
 const TransferRate = lazy(()=> import("./Pages/master/masterlist/TransferRate.jsx"));
 const TrainRate = lazy(()=>import("./Pages/master/masterlist/TrainRate.jsx"));
 const RestaurantRate = lazy(()=>import("./Pages/master/masterlist/RestaurantRate.jsx"));
+
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -219,6 +221,8 @@ const App = () => {
           <Route path="/master/monument" element={<Protected><Monument/></Protected>}></Route>
           <Route path="/master/monument/rate/:id" element={<Protected><MonumentRate/></Protected>}></Route>
           <Route path="/master/sightseeing" element={<Protected><Sightseeing/></Protected>}></Route>
+          <Route path="/master/activity" element={<Protected><Activity/></Protected>}></Route>
+          <Route path="/master/activity/rate/:id" element={<Protected><ActivityRate/></Protected>}></Route>
           <Route path="/master/tourescort" element={<Protected><TourEscort/></Protected>}></Route>
           <Route path="/master/tourescortprice" element={<Protected><TourEscortPrice/></Protected>}></Route>
           <Route path="/master/visatype" element={<Protected><VisaType/></Protected>}></Route>

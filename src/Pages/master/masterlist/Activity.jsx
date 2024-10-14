@@ -4,62 +4,37 @@ import { NavLink } from "react-router-dom";
 import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { axiosOther } from "../../../http/axios/axios_new";
-import { Field, ErrorMessage, Formik } from "formik";
+import { Field, ErrorMessage } from "formik";
 import {
-  monumentInitialValue,
-  monumentValidatinSchema,
+  activityMasterInitialValue,
+  activityMasterValidationSchema,
 } from "./MasterValidations";
-import "jquery";
-import "select2";
 import Editor from "../../../helper/Editor";
 
-const Monument = () => {
+const Activity = () => {
   const [getData, setGetData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [editData, setEditData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
-  const [postData, setPostData] = useState({
-    Search: "",
-    Status: "",
-  });
-  const [changeValue, setChangeValue] = useState("");
-  const [updateData, setUpdateData] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [destinationList, setDestinationList] = useState([]);
-  const [weekendList, setWeekendList] = useState([]);
+  const [supplierList, setSupplierList] = useState([]);
+  const [postData, setPostData] = useState({
+    ServiceName: "",
+    id: "",
+  });
 
-  const getDataToServer = async () => {
-    try {
-      const destination = await axiosOther.post("destinationlist", {
-        Search: "",
-        Status: 1,
-      });
-      setDestinationList(destination.data.DataList);
-    } catch (err) {
-      console.log("Erro Occured", err);
-    }
-
-    try {
-      const weekend = await axiosOther.post("weekendlist", {
-        Search: "",
-        Status: 1,
-      });
-      setWeekendList(weekend.data.DataList);
-    } catch (err) {
-      console.log("Erro Occured", err);
-    }
-  };
-
-  useEffect(() => {
-    getDataToServer();
-  }, []);
+  const [updateData, setUpdateData] = useState(false);
+  const [changeValue, setChangeValue] = useState("");
 
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const { data } = await axiosOther.post("monumentmasterlist", postData);
+        const {data} = await axiosOther.post("activitymasterlist", postData);
+        console.log('acitity-list', data?.DataList)
+        setLoading(false);
         setGetData(data.DataList);
         setFilterData(data.DataList);
-        console.log("data", data?.DataList);
       } catch (error) {
         console.log(error);
       }
@@ -76,21 +51,36 @@ const Monument = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
+    console.log("Row-Value---", rowValue);
     setEditData({
       ...rowValue,
+      SetDefault: rowValue.SetDefault === "Yes" ? 1 : 0,
       Status: rowValue.Status === "Active" ? 1 : 0,
     });
     setIsEditing(true);
   };
 
-  const handleDescriptionEditor = (content) => {
-    console.log(content);
+  const getDataForDropdown = async () => {
+    try {
+      const { data } = await axiosOther.post("destinationlist");
+      setDestinationList(data?.DataList);
+    } catch (error) {
+      console.log(error);
+    }
+    try {
+      const { data } = await axiosOther.post("supplierlist");
+      setSupplierList(data?.DataList);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  // console.log("monument-list", getData);
+  useEffect(() => {
+    getDataForDropdown();
+  }, []);
   const columns = [
     {
-      name: "Photo",
+      name: "Service Code",
       selector: (row) => (
         <span>
           <i
@@ -99,39 +89,48 @@ const Monument = () => {
             data-target="#modal_form_vertical"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.Photo}
+          {row.Name} &nbsp;
+          {row.SetDefault == "Yes" ? (
+            <span className="badge bg-success">Default</span>
+          ) : (
+            ""
+          )}
         </span>
       ),
       sortable: true,
     },
     {
-      name: "Monument Name",
-      selector: (row) => row.MonumentName,
+      name: "Name",
+      selector: (row) => row?.ServiceName,
       sortable: true,
+    },
+    {
+      name: "Type",
+      selector: (row) => row?.Type,
     },
     {
       name: "Destination",
-      selector: (row) => row.Destination,
-      sortable: true,
+      selector: (row) => row?.Destination,
+    },
+    {
+      name: "Supplier",
+      selector: (row) => row?.Supplier,
     },
     {
       name: "Description",
-      selector: (row) => row.Description,
-      sortable: true,
+      selector: (row) => row?.Description,
     },
     {
       name: "Status",
       selector: (row) => row.Status,
-      sortable: true,
     },
     {
-      name: "Langauge",
+      name: "Language",
       selector: (row) => (
         <button className="border font-size-10 p-1 px-2 rounded-pill bg-success">
           View Language
         </button>
       ),
-      sortable: true,
     },
     {
       name: "Gallery",
@@ -145,7 +144,7 @@ const Monument = () => {
       name: "Rate Sheet",
       selector: (row) => (
         <NavLink
-          to={`/master/monument/rate/${row?.id}`}
+          to={`/master/activity/rate/${row?.id}`}
           state={{ Name: row?.MonumentName }}
         >
           <button className="border font-size-10 p-1 px-2 rounded-pill bg-success">
@@ -165,13 +164,11 @@ const Monument = () => {
             style={{ marginBottom: "0" }}
           >
             <div
-              className="card-header header-elements-inline bg-info-700 py-2"
+              className="card-header header-elements-inline bg-primary-700 py-2"
               style={{ padding: "10px" }}
             >
               <div className="col-xl-10 d-flex align-items-center">
-                <h5 className="card-title d-none d-sm-block">
-                  Monument Master
-                </h5>
+                <h5 className="card-title d-none d-sm-block">Activity</h5>
               </div>
               <div className="col-xl-2 d-flex justify-content-end">
                 {/*Bootstrap Modal*/}
@@ -183,10 +180,10 @@ const Monument = () => {
                   Back
                 </NavLink>
                 <Model
-                  heading={"Add Monument"}
-                  apiurl={"addupdatemonumentmaster"}
-                  initialValues={monumentInitialValue}
-                  validationSchema={monumentValidatinSchema}
+                  heading={"Add Activity"}
+                  apiurl={"addupdateactivitymaster"}
+                  initialValues={activityMasterInitialValue}
+                  validationSchema={activityMasterValidationSchema}
                   forEdit={editData}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
@@ -197,48 +194,86 @@ const Monument = () => {
                   <div className="row row-gap-3">
                     <div className="col-sm-4">
                       <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">Type</label>
+                      </div>
+                      <Field
+                        name="Type"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="">Select</option>
+                        <option value="activity">Activity</option>
+                        <option value="experience">Experience</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="d-flex justify-content-between">
                         <label className="m-0 font-size-12">
-                          Monument Name
+                          Service Name <span className="text-danger">*</span>
                         </label>
                         <span className="font-size-10 text-danger">
-                          <ErrorMessage name="Name" />
+                          <ErrorMessage name="ServiceName" />
                         </span>
                       </div>
                       <Field
                         type="text"
-                        name="MonumentName"
-                        placeholder="Monument Name"
+                        name="ServiceName"
+                        placeholder="Service Name"
                         className="form-input-6"
                       />
                     </div>
                     <div className="col-sm-4">
-                      <label className="m-0 font-size-12">Destination</label>
+                      <div className="d-flex justify-content-between">
+                        <label className="m-0 font-size-12">
+                          Destination <span className="text-danger">*</span>
+                        </label>
+                        <span className="font-size-10 text-danger">
+                          <ErrorMessage name="ServiceName" />
+                        </span>
+                      </div>
                       <Field
                         name="Destination"
                         className="form-input-6"
                         component={"select"}
                       >
-                        <option value="">Select Destination</option>
-                        {destinationList.map((value, index) => {
+                        <option value="">Select</option>
+                        {destinationList?.map((item) => {
                           return (
-                            <option value={value.id} key={index + 1}>
-                              {value.Name}
+                            <option value={item?.id} key={item?.id}>
+                              {item?.Name}
                             </option>
                           );
                         })}
                       </Field>
                     </div>
                     <div className="col-sm-4">
-                      <label className="m-0 font-size-12">Transfer Type</label>
+                      <label className="m-0 font-size-12">Default</label>
                       <Field
-                        name="TransferType"
+                        name="Default"
                         className="form-input-6"
                         component={"select"}
                       >
-                        <option value="1">Ticket Only</option>
-                        <option value="2">ALL</option>
-                        <option value="3">SIC</option>
-                        <option value="4">PVT</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </Field>
+                    </div>
+                    <div className="col-sm-4">
+                      <label className="m-0 font-size-12">
+                        Select Supplier
+                      </label>
+                      <Field
+                        name="Supplier"
+                        className="form-input-6"
+                        component={"select"}
+                      >
+                        <option value="">Select</option>
+                        {supplierList?.map((item) => {
+                          return (
+                            <option value={item?.id} key={item?.id}>
+                              {item?.Name}
+                            </option>
+                          );
+                        })}
                       </Field>
                     </div>
                     <div className="col-sm-4">
@@ -252,71 +287,8 @@ const Monument = () => {
                         <option value="0">Inactive</option>
                       </Field>
                     </div>
-                    <div className="col-sm-4">
-                      <label className="m-0 font-size-12">Closed On Days</label>
-                      <Field
-                        name="ClosedOnDays"
-                        className="form-input-6"
-                        component={"select"}
-                      >
-                        <option value="1">Sunday</option>
-                        <option value="2">Monday</option>
-                        <option value="3">Tuesday</option>
-                        <option value="4">Wednesday</option>
-                        <option value="5">Thirsday</option>
-                        <option value="6">Friday</option>
-                        <option value="7">Saturday</option>
-                      </Field>
-                    </div>
-                    <div className="col-sm-4">
-                      <label className="m-0 font-size-0">
-                        SetDefault for Qoutation
-                      </label>
-                      <Field
-                        name="DefaultQuotation"
-                        className="form-input-6"
-                        component={"select"}
-                      >
-                        <option value="1">Yes</option>
-                        <option value="0">No</option>
-                      </Field>
-                    </div>
-                    <div className="col-sm-4">
-                      <label className="m-0 font-size-12">
-                        SetDefault for Proposal
-                      </label>
-                      <Field
-                        name="DefaultProposal"
-                        className="form-input-6"
-                        component={"select"}
-                      >
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
-                      </Field>
-                    </div>
-                    <div className="col-sm-4">
-                      <label className="m-0 font-size-12">Weekend Days</label>
-                      <Field
-                        name="WeekendDays"
-                        className="form-input-6"
-                        component={"select"}
-                      >
-                        <option value="">Select Weekend</option>
-                        {weekendList.map((value, index) => {
-                          return (
-                            <option value={value.id} key={index + 1}>
-                              {value.WeekendDays}
-                            </option>
-                          );
-                        })}
-                      </Field>
-                    </div>
-                    <div className="col-sm-12">
-                      <label className="m-0 font-size-12">Description</label>
-                      <Editor
-                        handleChangeEditor={handleDescriptionEditor}
-                        heightValue="60%"
-                      />
+                    <div className="col-12">
+                      <Editor heightValue={"70%"} />
                     </div>
                   </div>
                 </Model>
@@ -368,6 +340,7 @@ const Monument = () => {
               fixedHeader
               fixedHeaderScrollHeight="280px"
               highlightOnHover
+              progressPending={loading}
             />
           </div>
         </div>
@@ -376,4 +349,4 @@ const Monument = () => {
   );
 };
 
-export default Monument;
+export default Activity;

@@ -873,7 +873,7 @@ const Master = () => {
                       </div>
                     </NavLink>
                   </div>
-                  <div className="col-md-2 col-sm-6 d-flex flex-column justify-content-center">
+                  <div className="col-md-2 col-sm-6 d-flex flex-column justify-content-end">
                     <NavLink to="/master/supplier">
                       <div className="mb-lg-2 mb-xl-2 mb-md-1 mb-1 master-list-icon">
                         <img src="/assets/icons/destination.png" alt="image" />
@@ -887,6 +887,22 @@ const Master = () => {
                           }`}
                         >
                           Supplier Master
+                        </span>
+                      </div>
+                    </NavLink>
+                    <NavLink to="/master/activity">
+                      <div className="master-list-icon">
+                        <img src="/assets/icons/season.png" alt="image" />
+                        <span
+                          className={`pl-1 ${
+                            "seasonmaster".includes(
+                              search?.toLowerCase()?.replace(/\s/g, "")
+                            ) && search !== ""
+                              ? "bg-primary pr-1"
+                              : ""
+                          }`}
+                        >
+                          Activiy
                         </span>
                       </div>
                     </NavLink>

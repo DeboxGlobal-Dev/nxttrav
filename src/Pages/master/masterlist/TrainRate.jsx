@@ -13,9 +13,28 @@ const TrainRate = () => {
   const [supplierList, setSupplierList] = useState([]);
   const [trainList, setTrainList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
+  const [trainRateList, setTrainRateList] = useState([]);
   const [errorMessgae, setErrorMessage] = useState("");
   const { id } = useParams();
   const { state } = useLocation();
+
+
+  const getTrainRateList = async () => {
+    try {
+      const { data } = await axiosOther.post("trainratelist", {
+        id: id,
+      });
+      setTrainRateList(data?.DataList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getTrainRateList();
+  }, []);
+
+  console.log('train-rate-list', trainRateList);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -311,30 +330,43 @@ const TrainRate = () => {
             <table className="table table-bordered  table-striped">
               <thead>
                 <tr>
-                  <th className="p-0 text-center py-1">Validity</th>
-                  <th className="p-0 text-center py-1">Entrance Name</th>
-                  <th className="p-0 text-center py-1">Nationality</th>
                   <th className="p-0 text-center py-1">Supplier</th>
+                  <th className="p-0 text-center py-1">Train Name</th>
+                  <th className="p-0 text-center py-1">Train Class</th>
+                  <th className="p-0 text-center py-1">Journey Type</th>
+                  <th className="p-0 text-center py-1">Currency</th>
                   <th className="p-0 text-center py-1">Adult Cost</th>
                   <th className="p-0 text-center py-1">Child Cost</th>
-                  <th className="p-0 text-center py-1">GST Slab</th>
+                  <th className="p-0 text-center py-1">Infant Cost</th>
+                  <th className="p-0 text-center py-1">Remarks</th>
                   <th className="p-0 text-center py-1">Status</th>
+                  <th className="p-0 text-center py-1">Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="text-center">1</td>
-                  <td className="text-center">Mark</td>
-                  <td className="text-center">Otto</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td>
-                    <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
-                  </td>
-                </tr>
+              {trainRateList?.map((item) => {
+                  return item?.Data?.map((item) => {
+                    return item?.RateDetails?.map((item) => {
+                      return (
+                        <tr key={item?.UniqueID}>
+                          <td className="text-center">{item?.SupplierName}</td>
+                          <td className="text-center">{item?.TrainNumber}</td>
+                          <td className="text-center">{item?.TrainClassName}</td>
+                          <td className="text-center">{item?.JourneyType}</td>
+                          <td className="text-center">--</td>
+                          <td className="text-center">{item?.AdultCost}</td>
+                          <td className="text-center">{item?.ChildCost}</td>
+                          <td className="text-center">{item?.InfantCost}</td>
+                          <td className="text-center">{item?.Remarks}</td>
+                          <td className="text-center">{item?.Status}</td>
+                          <td>
+                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                          </td>
+                        </tr>
+                      );
+                    });
+                  });
+                })}
               </tbody>
             </table>
           </div>

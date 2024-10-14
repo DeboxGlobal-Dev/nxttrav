@@ -1,17 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../../Component/Layout/Layout";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import {
-  monumentRateInitialValue,
-  monumnetRateValidationSchema,
+  activityRateAddInitialValue,
+  activityRateValidationSchema,
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
+import toast, { Toaster } from "react-hot-toast";
 
 const ActivityRate = () => {
-  const [formValue, setFormValue] = useState(monumentRateInitialValue);
+  const [formValue, setFormValue] = useState(activityRateAddInitialValue);
+  const [supplierList, setSupplierList] = useState([]);
+  const [currencyList, setCurrencyList] = useState([]);
+  const [taxSlabList, setTaxSlabList] = useState([]);
+  const [activityRateList, setActivityRateList] = useState([]);
   const [errorMessgae, setErrorMessage] = useState("");
   const { id } = useParams();
   const { state } = useLocation();
+
+  const getGuideRateList = async () => {
+    try {
+      const { data } = await axiosOther.post("activityratelist", {
+        id: id,
+      });
+      setActivityRateList(data?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getGuideRateList();
+  }, []);
+
+  console.log("activityRateList", activityRateList);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,21 +42,24 @@ const ActivityRate = () => {
 
   const handleSubmit = async () => {
     try {
-      await monumnetRateValidationSchema?.validate(formValue, {
+      await activityRateValidationSchema?.validate(formValue, {
         abortEarly: false,
       });
       setErrorMessage("");
       console.log("value", {
         ...formValue,
-        MonumentId: id,
+        ActivityId: id,
       });
 
-      const data = await axiosOther.post("addmonumentrate", {
+      const { data } = await axiosOther.post("addactivityrate", {
         ...formValue,
-        MonumentId: id,
+        ActivityId: id,
       });
 
-      console.log("response", data);
+      if (data?.Status == 1) {
+        toast.success("Rate Added Successfully !");
+        setFormValue(activityRateAddInitialValue);
+      }
     } catch (err) {
       console.log("error", err);
       if (err.inner) {
@@ -46,6 +71,45 @@ const ActivityRate = () => {
       }
     }
   };
+
+  const postDataToServer = async () => {
+    try {
+      const { data } = await axiosOther.post("fetch-supplier-name-list", {
+        id: "",
+        Name: "",
+      });
+      setSupplierList(data?.DataList);
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      const { data } = await axiosOther.post("currencymasterlist", {
+        id: "",
+        Name: "",
+        Status: "",
+      });
+      setCurrencyList(data?.DataList);
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      const { data } = await axiosOther.post("taxmasterlist", {
+        Id: "",
+        Search: "",
+        Status: "",
+      });
+
+      setTaxSlabList(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    postDataToServer();
+  }, []);
 
   return (
     <Layout>
@@ -61,12 +125,13 @@ const ActivityRate = () => {
             <div className="col-xl-2 d-flex justify-content-end">
               {/*Bootstrap Modal*/}
               <NavLink
-                to="/master/monument"
+                to="/master/activity"
                 className="gray-button"
                 aria-expanded="false"
               >
                 Back
               </NavLink>
+              <Toaster />
             </div>
           </div>
           <div className="card-body">
@@ -90,9 +155,13 @@ const ActivityRate = () => {
                   className="form-input-6"
                 >
                   <option value="">Select</option>
-                  <option value="1">Corintech</option>
-                  <option value="2">Debox</option>
-                  <option value="3">Sparsh</option>
+                  {supplierList?.map((item) => {
+                    return (
+                      <option value={item?.id} key={item?.id}>
+                        {item?.Name}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
 
@@ -153,9 +222,13 @@ const ActivityRate = () => {
                   onChange={handleInputChange}
                 >
                   <option value="">Select</option>
-                  <option value="1">INR</option>
-                  <option value="2">DINAR</option>
-                  <option value="3">URO</option>
+                  {currencyList?.map((item) => {
+                    return (
+                      <option value={item?.id} key={item?.id}>
+                        {item?.CurrencyName}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-2">
@@ -163,23 +236,23 @@ const ActivityRate = () => {
                   <label htmlFor="" className="m-0 font-size-12">
                     SERVICE <span className="text-danger">*</span>
                   </label>
-                  {errorMessgae?.NationalityId && (
+                  {errorMessgae?.Service && (
                     <span className="text-danger font-size-12">
-                      {errorMessgae?.NationalityId}
+                      {errorMessgae?.Service}
                     </span>
                   )}
                 </div>
                 <select
-                  name="NationalityId"
+                  name="Service"
                   id=""
-                  value={formValue?.NationalityId}
+                  value={formValue?.Service}
                   onChange={handleInputChange}
                   className="form-input-6"
                 >
                   <option value="">Select</option>
-                  <option value="1">India</option>
-                  <option value="2">Bangladesh</option>
-                  <option value="3">Palistine</option>
+                  <option value="1">HP</option>
+                  <option value="2">DP</option>
+                  <option value="3">AP</option>
                 </select>
               </div>
               <div className="col-2">
@@ -191,9 +264,9 @@ const ActivityRate = () => {
                 <input
                   type="number"
                   className="form-input-6"
-                  name="AdultEntFee"
+                  name="PaxRange"
                   placeholder="Entrance Fee"
-                  value={formValue?.AdultEntFee}
+                  value={formValue?.PaxRange}
                   onChange={handleInputChange}
                 />
               </div>
@@ -206,9 +279,9 @@ const ActivityRate = () => {
                 <input
                   type="number"
                   className="form-input-6"
-                  name="ChildEntFee"
+                  name="TotalCost"
                   placeholder="Entrance Fee"
-                  value={formValue?.ChildEntFee}
+                  value={formValue?.TotalCost}
                   onChange={handleInputChange}
                 />
               </div>
@@ -221,29 +294,13 @@ const ActivityRate = () => {
                 <input
                   type="number"
                   className="form-input-6"
-                  name="ChildEntFee"
+                  name="PaxCost"
                   placeholder="Entrance Fee"
-                  value={formValue?.ChildEntFee}
+                  value={formValue?.PaxCost}
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="col-2">
-                <div>
-                  <label htmlFor="" className="m-0 font-size-12">
-                    STATUS
-                  </label>
-                </div>
-                <select
-                  name="Status"
-                  value={formValue?.Status}
-                  onChange={handleInputChange}
-                  id=""
-                  className="form-input-6"
-                >
-                  <option value="Active">Active</option>
-                  <option value="Inactive">Inactive</option>
-                </select>
-              </div>
+
               <div className="col-2">
                 <div className="d-flex justify-content-between">
                   <label htmlFor="" className="m-0 font-size-12">
@@ -263,13 +320,34 @@ const ActivityRate = () => {
                   className="form-input-6"
                 >
                   <option value="">Select</option>
-                  <option value="1">10%</option>
-                  <option value="2">20%</option>
-                  <option value="3">30%</option>
+                  {taxSlabList?.DataList?.map((item) => {
+                    return (
+                      <option value={item?.id} key={item?.id}>
+                        {item?.TaxSlabName} ({item?.TaxValue})
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="col-2">
+                <div>
+                  <label htmlFor="" className="m-0 font-size-12">
+                    STATUS
+                  </label>
+                </div>
+                <select
+                  name="Status"
+                  value={formValue?.Status}
+                  onChange={handleInputChange}
+                  id=""
+                  className="form-input-6"
+                >
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
                 </select>
               </div>
 
-              <div className="col-2">
+              <div className="col-12">
                 <div>
                   <label htmlFor="" className="m-0 font-size-12">
                     REMARKS
@@ -277,7 +355,7 @@ const ActivityRate = () => {
                 </div>
                 <textarea
                   className="form-input-6"
-                  placeholder="Remarks"
+                  placeholder="REMARKS"
                   name="Remarks"
                   value={formValue?.Remarks}
                   onChange={handleInputChange}
@@ -315,19 +393,27 @@ const ActivityRate = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="text-center">1</td>
-                  <td className="text-center">Mark</td>
-                  <td className="text-center">Otto</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td>
-                    <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
-                  </td>
-                </tr>
+                {activityRateList?.map((item) => {
+                  return item?.Data?.map((item) => {
+                    return item?.RateDetails?.map((item) => {
+                      return (
+                        <tr key={item?.UniqueID}>
+                          <td className="text-center">{item?.SupplierName}</td>
+                          <td className="text-center">{item?.Service}</td>
+                          <td className="text-center">{item?.PaxRange}</td>
+                          <td className="text-center">{item?.TotalCost}</td>
+                          <td className="text-center">{item?.PaxCost}</td>
+                          <td className="text-center">{item?.LangAllowance}</td>
+                          <td className="text-center">{item?.OtherCost}</td>
+                          <td className="text-center">{item?.GstSlabValue}</td>
+                          <td>
+                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                          </td>
+                        </tr>
+                      );
+                    });
+                  });
+                })}
               </tbody>
             </table>
           </div>

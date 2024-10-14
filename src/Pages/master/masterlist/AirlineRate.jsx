@@ -4,24 +4,49 @@ import { NavLink, useLocation, useParams } from "react-router-dom";
 import {
   airlineRateAddInitialValue,
   airlineRateValidationSchema,
-  monumentRateInitialValue,
-  monumnetRateValidationSchema,
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
+import toast, { Toaster } from "react-hot-toast";
 
 const AirlineRate = () => {
   const [formValue, setFormValue] = useState(airlineRateAddInitialValue);
-  const [supplierList, setSupplierList] = useState([]);
-  const [nationalityList, setNationalityList] = useState([]);
-  const [taxSlabList, setTaxSlabList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
+  const [flightClass, setFlightClass] = useState([]);
+  const [airRateList, setAirRateList] = useState([]);
   const [errorMessgae, setErrorMessage] = useState("");
   const { id } = useParams();
   const { state } = useLocation();
 
+  const getAirlineRateList = async () => {
+    try {
+      const { data } = await axiosOther.post("airratelist", {
+        id: id,
+      });
+      setAirRateList(data?.DataList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAirlineRateList();
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormValue({ ...formValue, [name]: value });
+    if (
+      name.startsWith("AdultCost") ||
+      name.startsWith("ChildCost") ||
+      name.startsWith("InfantCost")
+    ) {
+      const [costType, key] = name.split(".");
+      setFormValue({
+        ...formValue,
+        [costType]: { ...formValue[costType], [key]: parseFloat(value) || 0 },
+      });
+    } else {
+      setFormValue({ ...formValue, [name]: value });
+    }
   };
 
   const handleSubmit = async () => {
@@ -35,12 +60,15 @@ const AirlineRate = () => {
         MonumentId: id,
       });
 
-      const data = await axiosOther.post("addmonumentrate", {
+      const { data } = await axiosOther.post("addupdateairlinerate", {
         ...formValue,
-        MonumentId: id,
+        id: id,
       });
 
-      console.log("response", data);
+      if (data?.Status == 1) {
+        toast.success("Rate Added Successfully !");
+        setFormValue(airlineRateAddInitialValue);
+      }
     } catch (err) {
       console.log("error", err);
       if (err.inner) {
@@ -54,28 +82,7 @@ const AirlineRate = () => {
   };
 
   // getting data for dropdown
-
   const postDataToServer = async () => {
-    try {
-      const { data } = await axiosOther.post("supplierlist", {
-        id: "",
-        Name: "",
-      });
-      setSupplierList(data?.DataList);
-    } catch (error) {
-      console.log(error);
-    }
-
-    try {
-      const { data } = await axiosOther.post("nationalitylist", {
-        id: "",
-        Name: "",
-        Status: "",
-      });
-      setNationalityList(data?.DataList);
-    } catch (error) {
-      console.log(error);
-    }
     try {
       const { data } = await axiosOther.post("currencymasterlist", {
         id: "",
@@ -87,12 +94,11 @@ const AirlineRate = () => {
       console.log(error);
     }
     try {
-      const { data } = await axiosOther.post("taxmasterlist", {
-        Id: "",
-        Search: "",
-        Status: "",
+      const { data } = await axiosOther.post("flightclasslist", {
+        id: "",
       });
-      setTaxSlabList(data);
+
+      setFlightClass(data?.DataList);
     } catch (error) {
       console.log(error);
     }
@@ -100,6 +106,7 @@ const AirlineRate = () => {
   useEffect(() => {
     postDataToServer();
   }, []);
+
   return (
     <Layout>
       <div className="container-fluid p-3 pb-0">
@@ -114,12 +121,13 @@ const AirlineRate = () => {
             <div className="col-xl-2 d-flex justify-content-end">
               {/*Bootstrap Modal*/}
               <NavLink
-                to="/master/monument"
+                to="/master/restaurant"
                 className="gray-button"
                 aria-expanded="false"
               >
                 Back
               </NavLink>
+              <Toaster />
             </div>
           </div>
           <div className="card-body">
@@ -130,7 +138,7 @@ const AirlineRate = () => {
                     FLIGHT NUMBER <span className="text-danger">*</span>
                   </label>
                   {errorMessgae?.FlightNumber && (
-                    <span className="text-danger font-size-12">
+                    <span className="text-danger font-size-11">
                       {errorMessgae?.FlightNumber}
                     </span>
                   )}
@@ -150,7 +158,7 @@ const AirlineRate = () => {
                     FLIGHT CLASS<span className="text-danger">*</span>
                   </label>
                   {errorMessgae?.FlightClass && (
-                    <span className="text-danger font-size-12">
+                    <span className="text-danger font-size-11">
                       {errorMessgae?.FlightClass}
                     </span>
                   )}
@@ -162,10 +170,14 @@ const AirlineRate = () => {
                   id=""
                   className="form-input-6"
                 >
-                  <option value="">Select</option>
-                  <option value="1">Corintech</option>
-                  <option value="2">Debox</option>
-                  <option value="3">Sparsh</option>
+                  <option value={""}>Select</option>
+                  {flightClass?.map((item) => {
+                    return (
+                      <option value={item?.id} key={item?.id}>
+                        {item?.Name}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-2">
@@ -174,7 +186,7 @@ const AirlineRate = () => {
                     CURRENCY <span className="text-danger">*</span>
                   </label>
                   {errorMessgae?.Currency && (
-                    <span className="text-danger font-size-12">
+                    <span className="text-danger font-size-11">
                       {errorMessgae?.Currency}
                     </span>
                   )}
@@ -186,16 +198,27 @@ const AirlineRate = () => {
                   className="form-input-6"
                 >
                   <option value="">Select</option>
-                  <option value="1">Corintech</option>
-                  <option value="2">Debox</option>
-                  <option value="3">Sparsh</option>
+                  {currencyList?.map((item) => {
+                    return (
+                      <option value={item?.id} key={item?.id}>
+                        {item?.CurrencyName}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-3">
                 <div className="border p-1 d-flex flex-column">
-                  <label htmlFor="" className="m-0 text-center">
-                    ADULT COST
-                  </label>
+                  <div className="d-flex justify-content-center gap-5">
+                    {errorMessgae["AdultCost.base_fare"] && (
+                      <span className="text-danger font-size-11">
+                        {errorMessgae["AdultCost.base_fare"]}
+                      </span>
+                    )}
+                    <label htmlFor="" className="m-0 text-center">
+                      ADULT COST
+                    </label>
+                  </div>
                   <div className="row">
                     <div className="col-4">
                       <span className="m-0 position-absolute text-danger">
@@ -205,7 +228,7 @@ const AirlineRate = () => {
                         type="text"
                         className="form-input-6"
                         placeholder="Base Fare"
-                        name="AdultCost"
+                        name="AdultCost.base_fare"
                         value={formValue?.AdultCost?.base_fare}
                         onChange={handleInputChange}
                       />
@@ -215,8 +238,9 @@ const AirlineRate = () => {
                         type="text"
                         className="form-input-6"
                         placeholder="Airline Tax"
-                        name="AdultCost"
+                        name="AdultCost.airline_tax"
                         value={formValue?.AdultCost?.airline_tax}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="col-4">
@@ -224,7 +248,10 @@ const AirlineRate = () => {
                         type="text"
                         className="form-input-6"
                         placeholder="Total Cost"
-                        value={""}
+                        value={
+                          formValue?.AdultCost?.base_fare +
+                          formValue?.AdultCost?.airline_tax
+                        }
                         readOnly
                       />
                     </div>
@@ -242,6 +269,9 @@ const AirlineRate = () => {
                         type="text"
                         className="form-input-6"
                         placeholder="Base Fare"
+                        name="ChildCost.base_fare"
+                        value={formValue?.ChildCost?.base_fare}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="col-4 p-0">
@@ -249,6 +279,9 @@ const AirlineRate = () => {
                         type="text"
                         className="form-input-6"
                         placeholder="Airline Tax"
+                        name="ChildCost.airline_tax"
+                        value={formValue?.ChildCost?.airline_tax}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="col-4">
@@ -256,6 +289,11 @@ const AirlineRate = () => {
                         type="text"
                         className="form-input-6"
                         placeholder="Total Cost"
+                        value={
+                          formValue?.ChildCost?.base_fare +
+                          formValue?.ChildCost?.airline_tax
+                        }
+                        readOnly
                       />
                     </div>
                   </div>
@@ -272,6 +310,9 @@ const AirlineRate = () => {
                         type="text"
                         className="form-input-6"
                         placeholder="Base Fare"
+                        name="InfantCost.base_fare"
+                        value={formValue?.InfantCost?.base_fare}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="col-4 p-0">
@@ -279,6 +320,9 @@ const AirlineRate = () => {
                         type="text"
                         className="form-input-6"
                         placeholder="Airline Tax"
+                        name="InfantCost.airline_tax"
+                        value={formValue?.InfantCost?.airline_tax}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="col-4">
@@ -286,6 +330,11 @@ const AirlineRate = () => {
                         type="text"
                         className="form-input-6"
                         placeholder="Total Cost"
+                        value={
+                          formValue?.InfantCost?.base_fare +
+                          formValue?.InfantCost?.airline_tax
+                        }
+                        readOnly
                       />
                     </div>
                   </div>
@@ -294,30 +343,30 @@ const AirlineRate = () => {
               <div className="col-5 mt-1">
                 <div>
                   <label htmlFor="" className="m-0 font-size-12">
-                    BAGGAGE
+                    BAGGAGE ALLOWENCE
                   </label>
                 </div>
                 <textarea
                   type="text"
                   className="form-input-6 "
-                  placeholder="Remarks"
-                  name="Remarks"
-                  value={formValue?.Remarks}
+                  placeholder="BAGGAGE ALLOWENCE"
+                  name="BaggageAllowance"
+                  value={formValue?.BaggageAllowance}
                   onChange={handleInputChange}
                 />
               </div>
               <div className="col-4 mt-1">
                 <div>
                   <label htmlFor="" className="m-0 font-size-12">
-                    ALLOWENCE
+                    CANCELLATION POLICY
                   </label>
                 </div>
                 <textarea
                   type="text"
-                  className="form-input-6"
-                  placeholder="Remarks"
-                  name="Remarks"
-                  value={formValue?.Remarks}
+                  className="form-input-6 pb-0"
+                  placeholder="CANCELLATION POLICY"
+                  name="CancallationPolicy"
+                  value={formValue?.CancallationPolicy}
                   onChange={handleInputChange}
                 />
               </div>
@@ -330,7 +379,7 @@ const AirlineRate = () => {
                 <textarea
                   type="text"
                   className="form-input-6 height-60"
-                  placeholder="Remarks"
+                  placeholder="REMARKS"
                   name="Remarks"
                   value={formValue?.Remarks}
                   onChange={handleInputChange}
@@ -356,30 +405,77 @@ const AirlineRate = () => {
             <table className="table table-bordered  table-striped">
               <thead>
                 <tr>
-                  <th className="p-0 text-center py-1">Validity</th>
-                  <th className="p-0 text-center py-1">Entrance Name</th>
-                  <th className="p-0 text-center py-1">Nationality</th>
-                  <th className="p-0 text-center py-1">Supplier</th>
+                  <th className="p-0 text-center py-1">Flight Number</th>
+                  <th className="p-0 text-center py-1">Flight Class</th>
                   <th className="p-0 text-center py-1">Adult Cost</th>
                   <th className="p-0 text-center py-1">Child Cost</th>
-                  <th className="p-0 text-center py-1">GST Slab</th>
+                  <th className="p-0 text-center py-1">Infant Cost</th>
+                  <th className="p-0 text-center py-1">Baggage Allowence</th>
+                  <th className="p-0 text-center py-1">Cancellation Policy</th>
                   <th className="p-0 text-center py-1">Status</th>
+                  <th className="p-0 text-center py-1">Remarks</th>
+                  <th className="p-0 text-center py-1">Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="text-center">1</td>
-                  <td className="text-center">Mark</td>
-                  <td className="text-center">Otto</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td>
-                    <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
-                  </td>
-                </tr>
+                {airRateList?.map((item) => {
+                  console.log('airline-items', item);
+                  return (
+                    <tr>
+                      <td className="text-center">{item?.FlightNumber}</td>
+                      <td className="text-center">{item?.FlightClass?.Name}</td>
+                      <td className="text-center">
+                        <div className="d-flex gap-3">
+                          <span className="font-weight-bold text-nowrap">Base Fare :</span>
+                          <span>{item?.adult_cost?.base_fare}</span>
+                        </div>
+                        <div className="d-flex gap-3">
+                          <span className="font-weight-bold text-nowrap">Airline Tax :</span>
+                          <span>{item?.adult_cost?.airline_tax}</span>
+                        </div>
+                        <div className="d-flex gap-3">
+                          <span className="font-weight-bold text-nowrap">Total Cost :</span>
+                          <span>{item?.adult_cost?.total}</span>
+                        </div>
+                      </td>
+                      <td className="text-center">
+                      <div className="d-flex gap-3">
+                          <span className="font-weight-bold text-nowrap">Base Fare :</span>
+                          <span>{item?.child_cost?.base_fare}</span>
+                        </div>
+                        <div className="d-flex gap-3">
+                          <span className="font-weight-bold text-nowrap">Airline Tax :</span>
+                          <span>{item?.child_cost?.airline_tax}</span>
+                        </div>
+                        <div className="d-flex gap-3">
+                          <span className="font-weight-bold text-nowrap">Total Cost :</span>
+                          <span>{item?.child_cost?.total}</span>
+                        </div>
+                      </td>
+                      <td className="text-center">
+                      <div className="d-flex gap-3">
+                          <span className="font-weight-bold text-nowrap">Base Fare :</span>
+                          <span>{item?.infant_cost?.base_fare}</span>
+                        </div>
+                        <div className="d-flex gap-3">
+                          <span className="font-weight-bold text-nowrap" >Airline Tax :</span>
+                          <span>{item?.infant_cost?.airline_tax}</span>
+                        </div>
+                        <div className="d-flex gap-3">
+                          <span className="font-weight-bold text-nowrap">Total Cost :</span>
+                          <span>{item?.infant_cost?.total}</span>
+                        </div>
+                      </td>
+                      <td className="text-center">{item?.BaggageAllowance}</td>
+                      <td className="text-center">{item?.CancellationPolicy}</td>
+                      <td className="text-center">{item?.Status}</td>
+                      <td className="text-center">{item?.Remarks}</td>
+                      <td>
+                        <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

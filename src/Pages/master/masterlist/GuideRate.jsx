@@ -11,13 +11,32 @@ import toast, { Toaster } from "react-hot-toast";
 const GuideRate = () => {
   const [formValue, setFormValue] = useState(guideRateInitialValue);
   const [supplierList, setSupplierList] = useState([]);
-  const [paxRangeList, setPaxRangeList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
   const [guideMasterList, setGuideMasterList] = useState([]);
   const [slabList, setSlabList] = useState([]);
+  const [guideRateList, setGuideRateList] = useState([]);
   const [errorMessgae, setErrorMessage] = useState("");
   const { id } = useParams();
   const { state } = useLocation();
+
+  const getGuideRateList = async () => {
+    try {
+      const { data } = await axiosOther.post("guideratelist", {
+        id: id,
+        ServiceName: "",
+        ServiceType: "",
+      });
+      setGuideRateList(data?.DataList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getGuideRateList();
+  }, []);
+
+  console.log("guide-rate-lsit", guideRateList);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +50,6 @@ const GuideRate = () => {
       });
 
       setErrorMessage("");
-
       console.log("value", { ...formValue, id: id });
 
       const { data } = await axiosOther.post("addupdateguiderate", {
@@ -434,20 +452,29 @@ const GuideRate = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="text-center">1</td>
-                  <td className="text-center">Mark</td>
-                  <td className="text-center">Otto</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">
-                    <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
-                  </td>
-                </tr>
+                {guideRateList?.map((item) => {
+                  return item?.Ratejson?.Data?.map((item) => {
+                    return item?.RateDetails?.map((item) => {
+                      return (
+                        <tr key={item?.UniqueID}>
+                          <td className="text-center">{item?.SupplierName}</td>
+                          <td className="text-center">Mark</td>
+                          <td className="text-center">
+                            {item?.DayType}
+                          </td>
+                          <td className="text-center">{item?.PaxRangeName}</td>
+                          <td className="text-center">{item?.ServiceCost}</td>
+                          <td className="text-center">{item?.LangAllowance}</td>
+                          <td className="text-center">{item?.OtherCost}</td>
+                          <td className="text-center">{item?.GstSlabValue}</td>
+                          <td>
+                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                          </td>
+                        </tr>
+                      );
+                    });
+                  });
+                })}
               </tbody>
             </table>
           </div>

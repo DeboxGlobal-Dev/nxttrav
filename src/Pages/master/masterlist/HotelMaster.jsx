@@ -19,20 +19,19 @@ const HotelMaster = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [linearStatus, setLinearStatus] = useState(false);
 
+  const postDataToServer = async () => {
+    try {
+      const { data } = await axiosHotel.post("hotellist", postData);
+      setGetData(data.DataList);
+      setFilterData(data.DataList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
   useEffect(() => {
-    const postDataToServer = async () => {
-      try {
-        const { data } = await axiosHotel.post("hotellist", postData);
-        setGetData(data.DataList);
-        setFilterData(data.DataList);
-        console.log('hotel-list', data?.DataList);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     postDataToServer();
-  }, [getData]);
+  }, []);
 
   useEffect(() => {
     const result = getData.filter((item) => {

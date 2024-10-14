@@ -14,9 +14,25 @@ const MonumentRate = () => {
   const [nationalityList, setNationalityList] = useState([]);
   const [taxSlabList, setTaxSlabList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
+  const [rateList, setRateList] = useState([]);
   const [errorMessgae, setErrorMessage] = useState("");
   const { id } = useParams();
   const { state } = useLocation();
+
+  const getRateList = async () => {
+    try {
+      const { data } = await axiosOther.post("monumentlist", {
+        id: id,
+      });
+      setRateList(data?.DataList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getRateList();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -34,12 +50,12 @@ const MonumentRate = () => {
         MonumentId: id,
       });
 
-      const {data} = await axiosOther.post("addmonumentrate", {
+      const { data } = await axiosOther.post("addmonumentrate", {
         ...formValue,
         MonumentId: id,
       });
 
-      if(data?.Status==1){
+      if (data?.Status == 1) {
         toast.success("Rate Added Successfully !");
         setFormValue(monumentRateInitialValue);
       }
@@ -103,7 +119,6 @@ const MonumentRate = () => {
     postDataToServer();
   }, []);
 
-  // console.log("suplier-list", supplierList);
   return (
     <Layout>
       <div className="container-fluid p-3 pb-0">
@@ -124,7 +139,7 @@ const MonumentRate = () => {
               >
                 Back
               </NavLink>
-              <Toaster/>
+              <Toaster />
             </div>
           </div>
           <div className="card-body">
@@ -148,13 +163,13 @@ const MonumentRate = () => {
                   className="form-input-6"
                 >
                   <option value="">Select</option>
-                  {
-                    supplierList?.map((item)=>{
-                      return(
-                        <option value={item?.id}>{item?.Name}</option>
-                      )
-                    })
-                  }
+                  {supplierList?.map((item) => {
+                    return (
+                      <option value={item?.id} key={item?.id}>
+                        {item?.Name}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-2">
@@ -317,14 +332,13 @@ const MonumentRate = () => {
                   className="form-input-6"
                 >
                   <option value="">Select</option>
-                  {
-                    taxSlabList?.DataList?.map((item)=>{
-                      return(
-                        <option value={item?.id} key={item?.id}>{item?.TaxSlabName} ({item?.TaxValue})</option>                        
-                      )
-                    })
-                  }
-                  
+                  {taxSlabList?.DataList?.map((item) => {
+                    return (
+                      <option value={item?.id} key={item?.id}>
+                        {item?.TaxSlabName} ({item?.TaxValue})
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="col-12">
@@ -403,19 +417,29 @@ const MonumentRate = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="text-center">1</td>
-                  <td className="text-center">Mark</td>
-                  <td className="text-center">Otto</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td>
-                    <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
-                  </td>
-                </tr>
+                {rateList?.map((item) => {
+                  return item?.RateJson?.Data?.map((item) => {
+                    return item?.RateDetails?.map((item) => {
+                      return (
+                        <tr key={item?.UniqueID}>
+                          <td className="text-center"></td>
+                          <td className="text-center">Mark</td>
+                          <td className="text-center">
+                            {item?.NationalityName}
+                          </td>
+                          <td className="text-center">{item?.SupplierName}</td>
+                          <td className="text-center">{item?.AdultEntFee}</td>
+                          <td className="text-center">{item?.ChildEntFee}</td>
+                          <td className="text-center">{item?.TaxSlabVal}</td>
+                          <td className="text-center">{item?.Status}</td>
+                          <td>
+                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                          </td>
+                        </tr>
+                      );
+                    });
+                  });
+                })}
               </tbody>
             </table>
           </div>

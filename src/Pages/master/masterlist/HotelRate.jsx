@@ -20,9 +20,29 @@ const HotelRate = () => {
   const [mealPlanList, setMealPlanList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
   const [taxSlabList, setTaxSlabList] = useState([]);
+  const [hotelRateList, setHotelRateList] = useState([]);
   const [errorMessgae, setErrorMessage] = useState("");
   const { id } = useParams();
   const { state } = useLocation();
+
+  const getGuideRateList = async () => {
+    try {
+      const { data } = await axiosOther.post("listHotelRatesJson", {
+        id: id,
+      });
+      setHotelRateList(data?.data);
+      console.log('hotel-data', data?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log('hotel-data-state', hotelRateList);
+
+
+  useEffect(() => {
+    getGuideRateList();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -49,8 +69,6 @@ const HotelRate = () => {
         toast.success("Rate Added Successfully !");
         setFormValue(hotelRateAddInitialValue);
       }
-
-
     } catch (err) {
       if (err.inner) {
         const errMessage = err.inner.reduce((acc, curr) => {
@@ -189,7 +207,7 @@ const HotelRate = () => {
             <div className="col-xl-2 d-flex justify-content-end">
               {/*Bootstrap Modal*/}
               <NavLink
-                to="/master/monument"
+                to="/master/hotelmaster"
                 className="gray-button"
                 aria-expanded="false"
               >
@@ -718,14 +736,10 @@ const HotelRate = () => {
                   <th className="p-0 text-center py-1">TARIF TYPE</th>
                   <th className="p-0 text-center py-1">ROOM TYPE</th>
                   <th className="p-0 text-center py-1">MEAL PLAN</th>
-                  <th className="p-0 text-center py-1">SINGLE</th>
-                  <th className="p-0 text-center py-1">DOUBLE</th>
-                  <th className="p-0 text-center py-1">EXTRA BED(ADULT)</th>
-                  <th className="p-0 text-center py-1">EXTRA BED(CHILD)</th>
-                  <th className="p-0 text-center py-1">CHILD WITHOUT BED</th>
-                  <th className="p-0 text-center py-1">BREAKFAST</th>
-                  <th className="p-0 text-center py-1">LUNCH</th>
-                  <th className="p-0 text-center py-1">DINNER</th>
+                  <th className="p-0 text-center py-1">ROOM BED TYPE</th>
+                  <th className="p-0 text-center py-1">ROOM COST</th>
+                  <th className="p-0 text-center py-1">MEAL TYPE</th>
+                  <th className="p-0 text-center py-1">MEAL COST</th>
                   <th className="p-0 text-center py-1">TAC(%)</th>
                   <th className="p-0 text-center py-1">ROOM TAX SLAB</th>
                   <th className="p-0 text-center py-1">MEAL TAX SLAB</th>
@@ -734,19 +748,39 @@ const HotelRate = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="text-center">1</td>
-                  <td className="text-center">Mark</td>
-                  <td className="text-center">Otto</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td className="text-center">@mdo</td>
-                  <td>
-                    <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
-                  </td>
-                </tr>
+              {hotelRateList?.map((item) => {
+                  return item?.Data?.map((item) => {
+                    return item?.RateDetails?.map((item) => {
+                      return (
+                        <tr key={item?.UniqueID}>
+                          <td className="text-center text-nowrap">{item?.SeasonTypeName}</td>
+                          <td className="text-center text-nowrap">{item?.ValidTo}</td>
+                          <td className="text-center text-nowrap">
+                            {item?.PaxTypeName}
+                          </td>
+                          <td className="text-center text-nowrap">{item?.MarketTypeName}</td>
+                          <td className="text-center text-nowrap">{item?.SupplierName}</td>
+                          <td className="text-center text-nowrap">{item?.TarrifeTypeName}</td>
+                          <td className="text-center text-nowrap">{item?.RoomTypeName}</td>
+                          <td className="text-center text-nowrap">{item?.MealPlanName}</td>
+                          <td className="text-center text-nowrap">{item?.RoomBedType}</td>
+                          <td className="text-center text-nowrap">{item?.RoomCost}</td>
+                          <td className="text-center text-nowrap">{item?.Status}</td>
+                          <td className="text-center text-nowrap">{item?.Status}</td>
+                          <td className="text-center text-nowrap">{item?.TAC?.toFixed(2)}</td>
+                          <td className="text-center text-nowrap">{item?.RoomTaxSlabValue}</td>
+                          <td className="text-center text-nowrap">{item?.MealSlabValue}</td>
+                          <td className="text-center">{item?.Status}</td>
+                          <td className="text-center">{item?.Status}</td>
+                          
+                          <td>
+                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                          </td>
+                        </tr>
+                      );
+                    });
+                  });
+                })}
               </tbody>
             </table>
           </div>

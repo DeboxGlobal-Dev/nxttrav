@@ -977,16 +977,67 @@ export const airlineRateAddInitialValue = {
   UpdatedDate: "2024-10-12",
 };
 
+export const activityMasterInitialValue = {
+  Type: "",
+  ServiceName: "",
+  UniqueID: "",
+  Destination: "",
+  Default: "1",
+  Supplier: "",
+  Description: "",
+  Status: "1",
+  AddedBy: "1",
+  UpdatedBy: "0",
+};
+
+export const activityRateAddInitialValue = {
+  ActivityId: "",
+  DestinationID: "33",
+  SupplierId: "",
+  Service: "",
+  ValidFrom: "",
+  ValidTo: "",
+  CurrencyId: "",
+  PaxRange: "",
+  PaxCost: "",
+  TotalCost: "",
+  TaxSlabId: "",
+  Remarks: "",
+  CompanyId: "COMP0001",
+  Status: "1",
+  AddedBy: "1",
+  UpdatedBy: "1",
+  AddedDate: "2024-10-15",
+  UpdatedDate: "2024-08-16",
+};
+
 // ------------------------VALIDATION SCHEMAS-------------------------- //
 
 export const transferMasterValidationSchema = yup.object().shape({
   TransferName: yup.string().required("Required"),
 });
 
+export const activityRateValidationSchema = yup.object().shape({
+  SupplierId: yup.string().required("Required"),
+  ValidFrom: yup.string().required("Required"),
+  ValidTo: yup.string().required("Required"),
+  CurrencyId: yup.string().required("Required"),
+  Service: yup.string().required("Required"),
+  TaxSlabId: yup.string().required("Required"),
+});
+
+export const activityMasterValidationSchema = yup.object().shape({
+  ServiceName: yup.string().required("Required"),
+  Destination: yup.string().required("Required"),
+});
+
 export const airlineRateValidationSchema = yup.object().shape({
   FlightNumber: yup.string().required("Required"),
   FlightClass: yup.string().required("Required"),
   Currency: yup.string().required("Required"),
+  AdultCost: yup.object().shape({
+    base_fare: yup.string().required("Base Fare Required"),
+  }),
 });
 
 export const restaurantRateValidationSchema = yup.object().shape({
