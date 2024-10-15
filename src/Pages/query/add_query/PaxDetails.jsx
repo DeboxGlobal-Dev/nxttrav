@@ -2,11 +2,11 @@ import React, { useState, useReducer, useEffect, useContext } from "react";
 import Counter from "../Counter";
 import { queryInitial } from "../QueryInitialValue";
 import { paxInitial } from "../QueryInitialValue";
-import { addQueryContext } from "./Addquery";
+import { Addquery  } from "./Addquery";
 
 // const PaxDetails = () => {
 //   const [PaxTotal, setPaxTotal] = useState(0);
-//   const { paxObject, queryObjects } = useContext(addQueryContext);
+//   const { paxObject, queryObjects } = useContext(Addquery);
 //   const [errors, setErrors] = useState({});
 //   const { queryFields, setQueryFields } = queryObjects;
 //   const { PaxInfo, setPaxInfo } = paxObject;
