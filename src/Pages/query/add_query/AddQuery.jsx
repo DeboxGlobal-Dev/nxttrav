@@ -17,6 +17,7 @@ import { axiosOther } from "../../../http/axios/axios_new";
 const addQueryContext = createContext();
 
 const AddQuery = () => {
+  
   ///* All State Start Here*/
   const [TravelDate, setTravelDate] = useState({ ...travelInitial });
   const [PaxInfo, setPaxInfo] = useState({ ...paxInitial });

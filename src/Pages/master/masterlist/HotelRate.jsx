@@ -80,6 +80,10 @@ const HotelRate = () => {
     }
   };
 
+  const handleRateEdit = (value) =>{
+    setFormValue(value);
+  }
+
   // get data from server for dropdown
   const postDataToServer = async () => {
     try {
@@ -840,7 +844,7 @@ const HotelRate = () => {
                           </td>
 
                           <td>
-                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer" onClick={()=>handleRateEdit(item)}></i>
                           </td>
                         </tr>
                       );

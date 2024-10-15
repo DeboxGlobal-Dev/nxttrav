@@ -62,6 +62,7 @@ const TransferRate = () => {
 
       console.log("response", data);
       if(data?.Status){
+        getTransferRateList();
         toast.success('Rate Added Successfully !');
         setFormValue(transferRateAddInitialValue);
       }
@@ -75,6 +76,10 @@ const TransferRate = () => {
       }
     }
   };
+
+  const handleRateEdit =(value) =>{
+    setFormValue(value);
+  }
 
   // get data from server for dropdown
   const postDataToServer = async () => {
@@ -528,7 +533,7 @@ const TransferRate = () => {
                           <td className="text-center">{item?.MiscCost}</td>
                           <td className="text-center">{item?.Status}</td>
                           <td>
-                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"  onClick={()=>handleRateEdit(item)}></i>
                           </td>
                         </tr>
                       );

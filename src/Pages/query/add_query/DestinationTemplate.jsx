@@ -55,7 +55,7 @@ const DestinationTemplate = () => {
           name="SuggestedPackage"
         />
         {filteredPackage != "" && (
-          <label htmlFor="" className="font-size-12">
+          <label htmlFor="" className="font-size-12 ml-2">
             Click to select the Destination
           </label>
         )}
@@ -63,20 +63,13 @@ const DestinationTemplate = () => {
       {filteredPackage?.map((value, index) => {
         return (
           <div
-            className="padding-2 d-flex align-items-center border rounded cursor-pointer mt-1"
+            className="padding-2 d-flex align-items-center rounded cursor-pointer mt-1"
             key={index + 1}
             onClick={() => handleSuggestPackage(value)}
           >
-            <div>
-              <img
-                src={value.PackageImage}
-                alt={value.PackageName}
-                style={{ height: "35px", width: "35px" }}
-                className="rounded"
-              />
-            </div>
+            
             <div className="pl-2">
-              <p className="font-size-12 font-weight-bold m-0 p-0">
+              <p className="font-size-10 font-weight-bold m-0 p-0 text-primary">
                 {value.PackageName}
               </p>
             </div>

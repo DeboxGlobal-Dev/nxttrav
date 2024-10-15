@@ -18,7 +18,6 @@ const TrainRate = () => {
   const { id } = useParams();
   const { state } = useLocation();
 
-
   const getTrainRateList = async () => {
     try {
       const { data } = await axiosOther.post("trainratelist", {
@@ -34,7 +33,7 @@ const TrainRate = () => {
     getTrainRateList();
   }, []);
 
-  console.log('train-rate-list', trainRateList);
+  console.log("train-rate-list", trainRateList);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -59,7 +58,13 @@ const TrainRate = () => {
 
       console.log("response", data);
       if (data?.Status == 1) {
-        toast.success("Rate Added Successfully !");
+        getTrainRateList();
+        toast.success(data?.Message);
+        setFormValue(trainRateAddInitialValue);
+      }
+
+      if (data?.Status != 1) {
+        toast.error(data?.Message);
       }
     } catch (err) {
       console.log("error", err);
@@ -73,8 +78,11 @@ const TrainRate = () => {
     }
   };
 
-  // getting data for dropdown
+  const handleRateEdit = (value) => {
+    setFormValue(value);
+  };
 
+  // getting data for dropdown
   const postDataToServer = async () => {
     try {
       const { data } = await axiosOther.post("supplierlist", {
@@ -344,14 +352,16 @@ const TrainRate = () => {
                 </tr>
               </thead>
               <tbody>
-              {trainRateList?.map((item) => {
+                {trainRateList?.map((item) => {
                   return item?.Data?.map((item) => {
                     return item?.RateDetails?.map((item) => {
                       return (
                         <tr key={item?.UniqueID}>
                           <td className="text-center">{item?.SupplierName}</td>
                           <td className="text-center">{item?.TrainNumber}</td>
-                          <td className="text-center">{item?.TrainClassName}</td>
+                          <td className="text-center">
+                            {item?.TrainClassName}
+                          </td>
                           <td className="text-center">{item?.JourneyType}</td>
                           <td className="text-center">--</td>
                           <td className="text-center">{item?.AdultCost}</td>
@@ -360,7 +370,10 @@ const TrainRate = () => {
                           <td className="text-center">{item?.Remarks}</td>
                           <td className="text-center">{item?.Status}</td>
                           <td>
-                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                            <i
+                              className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"
+                              onClick={() => handleRateEdit()}
+                            ></i>
                           </td>
                         </tr>
                       );

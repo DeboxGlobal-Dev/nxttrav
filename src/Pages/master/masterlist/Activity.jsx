@@ -30,7 +30,7 @@ const Activity = () => {
   useEffect(() => {
     const postDataToServer = async () => {
       try {
-        const {data} = await axiosOther.post("activitymasterlist", postData);
+        const {data} = await axiosOther.post("activitymasterlist");
         console.log('acitity-list', data?.DataList)
         setLoading(false);
         setGetData(data.DataList);
@@ -145,7 +145,7 @@ const Activity = () => {
       selector: (row) => (
         <NavLink
           to={`/master/activity/rate/${row?.id}`}
-          state={{ Name: row?.MonumentName }}
+          state={{ Name: row?.ServiceName, DestinationId:row.DestinationId }}
         >
           <button className="border font-size-10 p-1 px-2 rounded-pill bg-success">
             + View/Add

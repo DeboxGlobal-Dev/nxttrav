@@ -6,6 +6,7 @@ import {
   restaurantRateValidationSchema,
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
+import toast, { Toaster } from "react-hot-toast";
 
 const RestaurantRate = () => {
   const [formValue, setFormValue] = useState(restaurantRateAddInitialValue);
@@ -52,12 +53,21 @@ const RestaurantRate = () => {
         RestaurantId: id,
       });
 
-      const data = await axiosOther.post("addrestaurantrate", {
+      const {data} = await axiosOther.post("addrestaurantrate", {
         ...formValue,
         RestaurantId: id,
       });
 
       console.log("response", data);
+      if(data?.Status ==1){
+        getRestaurantRateList();
+        toast.success(data?.Message);
+        setFormValue(restaurantRateAddInitialValue);
+      }
+      if(data?.Status !=1){
+        toast.error(data?.Message);
+      }
+
     } catch (err) {
       console.log("error", err);
       if (err.inner) {
@@ -70,8 +80,11 @@ const RestaurantRate = () => {
     }
   };
 
-  // getting data for dropdown
+    const handleRateEdit = (value) =>{
+      setFormValue(value);
+    }
 
+  // getting data for dropdown
   const postDataToServer = async () => {
     try {
       const { data } = await axiosOther.post("supplierlist", {
@@ -136,6 +149,7 @@ const RestaurantRate = () => {
               >
                 Back
               </NavLink>
+              <Toaster/>
             </div>
           </div>
           <div className="card-body">
@@ -234,8 +248,8 @@ const RestaurantRate = () => {
                   )}
                 </div>
                 <input
-                  type="text"
-                  placeholder="Tain Number"
+                  type="number"
+                  placeholder="ADULT"
                   className="form-input-6"
                   name="AdultCost"
                   value={formValue?.AdultCost}
@@ -249,8 +263,8 @@ const RestaurantRate = () => {
                   </label>
                 </div>
                 <input
-                  type="text"
-                  placeholder="Tain Number"
+                  type="number"
+                  placeholder="CHILD"
                   className="form-input-6"
                   name="ChildCost"
                   value={formValue?.ChildCost}
@@ -337,13 +351,13 @@ const RestaurantRate = () => {
                         <tr key={item?.UniqueID}>
                           <td className="text-center">{item?.SupplierName}</td>
                           <td className="text-center">{item?.MealType}</td>
-                          <td className="text-center">{item?.Currency}</td>
+                          <td className="text-center">{item?.CurrencyName}</td>
                           <td className="text-center">{item?.AdultCost}</td>
                           <td className="text-center">{item?.ChildCost}</td>
-                          <td className="text-center">{item?.GstSlabName}</td>
-                          <td className="text-center">{item?.Status}</td>
+                          <td className="text-center">{item?.GstSlabName} ({item?.GstSlabValue})</td>
+                          <td className="text-center">{item?.Status==1? 'Active' :'Inactive'}</td>
                           <td>
-                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer" onClick={()=>handleRateEdit(item)}></i>
                           </td>
                         </tr>
                       );

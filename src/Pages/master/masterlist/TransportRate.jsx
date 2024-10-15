@@ -6,7 +6,8 @@ import {
   transportRateValidationSchema,
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import { Value } from "sass";
 
 const TransportRate = () => {
   const [formValue, setFormValue] = useState(transportRateAddInitialValue);
@@ -15,6 +16,7 @@ const TransportRate = () => {
   const [destinationList, setDestinationList] = useState([]);
   const [vehicleList, setVehicleList] = useState([]);
   const [transportRateList, setTransportRateList] = useState([]);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const [slabList, setSlabList] = useState([]);
   const [errorMessgae, setErrorMessage] = useState("");
@@ -52,18 +54,26 @@ const TransportRate = () => {
         TransportId: id,
       });
 
-      const { data } = await axiosOther.post("addtransportrate", {
-        ...formValue,
-        TransportId: id,
-      });
+      const { data } = await axiosOther.post(
+        !isUpdating ? "addtransportrate" : "updatetransportrate",
+        {
+          ...formValue,
+          TransportId: id,
+        }
+      );
 
       console.log("response", data);
 
       if (data?.Status == 1) {
-        toast.success("Rate Added Succesfully !");
+        setIsUpdating(false);
+        getTransportRateList();
+        toast.success(data?.Message);
         setFormValue(transportRateAddInitialValue);
       }
-      
+
+      if (data?.Status != 1) {
+        toast.success(data?.Message);
+      }
     } catch (err) {
       if (err.inner) {
         const errMessage = err.inner.reduce((acc, curr) => {
@@ -73,6 +83,40 @@ const TransportRate = () => {
         setErrorMessage(errMessage);
       }
     }
+  };
+
+  const handleRateEdit = (value, companyId, transportId) => {
+    setFormValue({
+      TransportId: transportId,
+      RateUniqueId: value?.UniqueID,
+      SupplierId: value?.SupplierId,
+      CompanyId: companyId,
+      DestinationID: value?.DestinationID,
+      ValidFrom: value?.ValidFrom,
+      ValidTo: value?.ValidTo,
+      Type: value?.Type,
+      VehicleTypeId: value?.VehicleTypeId,
+      TaxSlabId: value?.TaxSlabId,
+      CurrencyId: value?.CurrencyId,
+      VehicleCost: value?.VehicleCost,
+      ParkingFee: value?.ParkingFee,
+      RapEntryFee: value?.RapEntryFee,
+      Assistance: value?.Assistance,
+      AdtnlAllowance: value?.AdtnlAllowance,
+      InterStateToll: value?.InterStateToll,
+      MiscCost: value?.MiscCost,
+      Remarks: value?.Remarks,
+      Status: value?.Status,
+      AddedBy: 1,
+      UpdatedBy: 1,
+      UpdatedDate: "2025-10-21",
+    });
+    setIsUpdating(true);
+  };
+
+  const handleResetForm = () => {
+    setFormValue(transportRateAddInitialValue);
+    setIsUpdating(false);
   };
 
   // get data from server for dropdown
@@ -154,6 +198,7 @@ const TransportRate = () => {
               >
                 Back
               </NavLink>
+              <Toaster/>
             </div>
           </div>
           <div className="card-body">
@@ -316,10 +361,10 @@ const TransportRate = () => {
                   onChange={handleInputChange}
                 >
                   <option value="0">Select</option>
-                  {currencyList?.map((item) => {
+                  {slabList?.DataList?.map((item) => {
                     return (
                       <option value={item?.id} key={item?.id}>
-                        {item?.CurrencyName}
+                        {item?.TaxSlabName} ({item?.TaxValue})
                       </option>
                     );
                   })}
@@ -490,13 +535,21 @@ const TransportRate = () => {
                 />
               </div>
 
-              <div className="col-2">
+              <div className="col-2 d-flex gap-3">
                 <button
                   className="modal-save-button w-auto px-3 mt-3"
                   onClick={handleSubmit}
                 >
-                  Save
+                  {!isUpdating ? "Save" : "Update"}
                 </button>
+                {isUpdating && (
+                  <button
+                    className="modal-save-button w-auto px-3 mt-3"
+                    onClick={handleRateEdit}
+                  >
+                    Reset
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -528,26 +581,41 @@ const TransportRate = () => {
                 </tr>
               </thead>
               <tbody>
-              {transportRateList?.map((item) => {
-                  return item?.Data?.map((item) => {
-                    return item?.RateDetails?.map((item) => {
+                {transportRateList?.map((item1) => {
+                  return item1?.Data?.map((item2) => {
+                    return item2?.RateDetails?.map((item) => {
                       return (
                         <tr key={item?.UniqueID}>
-                          <td className="text-center">{item?.VehicleTypeName}</td>
+                          <td className="text-center">
+                            {item?.VehicleTypeName}
+                          </td>
                           <td className="text-center">{item?.Type}</td>
-                          <td className="text-center">{item?.DestinationName}</td>
-                          <td className="text-center">{item?.VehicleTypeName}</td>
+                          <td className="text-center">
+                            {item?.DestinationName}
+                          </td>
+                          <td className="text-center">
+                            {item?.VehicleTypeName}
+                          </td>
                           <td className="text-center">{item?.TaxSlabVal}</td>
                           <td className="text-center">{item?.VehicleCost}</td>
                           <td className="text-center">{item?.ParkingFee}</td>
                           <td className="text-center">{item?.RapEntryFee}</td>
                           <td className="text-center">{item?.Assistance}</td>
-                          <td className="text-center">{item?.AdtnlAllowance}</td>
-                          <td className="text-center">{item?.InterStateToll}</td>
+                          <td className="text-center">
+                            {item?.AdtnlAllowance}
+                          </td>
+                          <td className="text-center">
+                            {item?.InterStateToll}
+                          </td>
                           <td className="text-center">{item?.MiscCost}</td>
                           <td className="text-center">{item?.Status}</td>
                           <td>
-                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                            <i
+                              className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"
+                              onClick={() =>
+                                handleRateEdit(item, item1?.companyId, item1?.TransportId)
+                              }
+                            ></i>
                           </td>
                         </tr>
                       );

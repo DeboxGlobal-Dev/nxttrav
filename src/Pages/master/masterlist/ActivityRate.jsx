@@ -9,12 +9,12 @@ import { axiosOther } from "../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 
 const ActivityRate = () => {
-  
   const [formValue, setFormValue] = useState(activityRateAddInitialValue);
   const [supplierList, setSupplierList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
   const [taxSlabList, setTaxSlabList] = useState([]);
   const [activityRateList, setActivityRateList] = useState([]);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [errorMessgae, setErrorMessage] = useState("");
   const { id } = useParams();
   const { state } = useLocation();
@@ -34,12 +34,14 @@ const ActivityRate = () => {
     getActivityRateList();
   }, []);
 
-  console.log("activityRateList", activityRateList);
+  // console.log("activityRateList", activityRateList);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValue({ ...formValue, [name]: value });
   };
+
+  console.log('state', state);
 
   const handleSubmit = async () => {
     try {
@@ -50,19 +52,29 @@ const ActivityRate = () => {
       console.log("value", {
         ...formValue,
         ActivityId: id,
+        DestinationId: state?.DestinationId,
       });
 
-      const { data } = await axiosOther.post("addactivityrate", {
-        ...formValue,
-        ActivityId: id,
-      });
-
-      console.log('response', data);
+      const response = await axiosOther.post(
+        !isUpdating ? "addactivityrate" : "updateactivityrate",
+        {
+          ...formValue,
+          ActivityId: id,
+          DestinationId: state?.DestinationId,
+        }
+      );
+      console.log("response", response);
+      const { data } = response;
 
       if (data?.Status == 1) {
         getActivityRateList();
-        toast.success("Rate Added Successfully !");
+        toast.success(data?.Message);
         setFormValue(activityRateAddInitialValue);
+        setIsUpdating(false);
+      }
+
+      if (data?.Status != 1) {
+        toast.error(data?.Message);
       }
     } catch (err) {
       console.log("error", err);
@@ -76,12 +88,45 @@ const ActivityRate = () => {
     }
   };
 
+  const handleRateEdit = (value, companyId, activityId) => {
+    setFormValue({
+      ActivityId: activityId,
+      RateUniqueId: value?.UniqueID,
+      DestinationID: state?.DestinationId,
+      SupplierId: value?.SupplierId,
+      Service: value?.Service,
+      ValidFrom: value?.ValidFrom,
+      ValidTo: value?.ValidTo,
+      CurrencyId: value?.CurrencyId,
+      PaxRange: value?.PaxRange,
+      PaxCost: value?.PaxCost,
+      TotalCost: value?.TotalCost,
+      TaxSlabId: value?.TaxSlabId,
+      Remarks: value?.Remarks,
+      CompanyId: companyId,
+      Status: value?.Status,
+      AddedBy: value?.AddedBy,
+      UpdatedBy: value?.UpdatedBy,
+      AddedDate: "2024-10-15",
+      UpdatedDate: "2024-08-16",
+    });
+    setIsUpdating(true);
+  };
+
+  const handleResetForm = () => {
+    setFormValue(activityRateAddInitialValue);
+    setIsUpdating(false);
+  };
+
+  console.log("activity-list", activityRateList);
   const postDataToServer = async () => {
     try {
       const { data } = await axiosOther.post("fetch-supplier-name-list", {
         id: "",
         Name: "",
       });
+
+      // console.log("supplier-list", data);
       setSupplierList(data?.DataList);
     } catch (error) {
       console.log(error);
@@ -254,9 +299,8 @@ const ActivityRate = () => {
                   className="form-input-6"
                 >
                   <option value="">Select</option>
-                  <option value="1">HP</option>
-                  <option value="2">DP</option>
-                  <option value="3">AP</option>
+                  <option value={state?.Name}>{state?.Name}</option>
+                  
                 </select>
               </div>
               <div className="col-2">
@@ -366,13 +410,21 @@ const ActivityRate = () => {
                 />
               </div>
 
-              <div className="col-2">
+              <div className="col-2 d-flex gap-3">
                 <button
                   className="modal-save-button w-auto px-3 mt-3"
                   onClick={handleSubmit}
                 >
-                  Save
+                  {!isUpdating ? "Save" : "Update"}
                 </button>
+                {isUpdating && (
+                  <button
+                    className="modal-save-button w-auto px-3 mt-3"
+                    onClick={handleResetForm}
+                  >
+                    Reset
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -397,9 +449,9 @@ const ActivityRate = () => {
                 </tr>
               </thead>
               <tbody>
-                {activityRateList?.map((item) => {
-                  return item?.Data?.map((item) => {
-                    return item?.RateDetails?.map((item) => {
+                {activityRateList?.map((item1) => {
+                  return item1?.Data?.map((item2) => {
+                    return item2?.RateDetails?.map((item) => {
                       return (
                         <tr key={item?.UniqueID}>
                           <td className="text-center">{item?.SupplierName}</td>
@@ -407,11 +459,22 @@ const ActivityRate = () => {
                           <td className="text-center">{item?.PaxRange}</td>
                           <td className="text-center">{item?.TotalCost}</td>
                           <td className="text-center">{item?.PaxCost}</td>
-                          <td className="text-center">{item?.LangAllowance}</td>
-                          <td className="text-center">{item?.OtherCost}</td>
-                          <td className="text-center">{item?.GstSlabValue}</td>
+                          <td className="text-center">{item?.TaxSlabName}</td>
+                          <td className="text-center">{item?.Remarks}</td>
+                          <td className="text-center">
+                            {item?.Status == 1 ? "Active" : "Inactive"}
+                          </td>
                           <td>
-                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                            <i
+                              className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"
+                              onClick={() =>
+                                handleRateEdit(
+                                  item,
+                                  item1?.companyId,
+                                  item1?.ActivityId
+                                )
+                              }
+                            ></i>
                           </td>
                         </tr>
                       );

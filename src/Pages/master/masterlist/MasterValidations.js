@@ -883,7 +883,7 @@ export const transportRateAddInitialValue = {
   SupplierId: "",
   ValidFrom: "",
   ValidTo: "",
-  Type: "",
+  Type: "Package Cost",
   VehicleTypeId: "",
   CompanyId: "COMP0001",
   TaxSlabId: "",

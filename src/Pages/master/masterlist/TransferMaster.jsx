@@ -5,12 +5,10 @@ import Model from "../../../Component/Layout/Model";
 import DataTable from "react-data-table-component";
 import { Field, ErrorMessage } from "formik";
 import {
-  cityInitialValue,
-  cityValidationSchema,
   transferMasterInitialValue,
   transferMasterValidationSchema,
 } from "./MasterValidations";
-import { axiosOther, axiosTransport } from "../../../http/axios/axios_new";
+import { axiosOther } from "../../../http/axios/axios_new";
 import Editor from "../../../helper/Editor";
 
 const TransferMaster = () => {
@@ -97,12 +95,12 @@ const TransferMaster = () => {
     },
     {
       name: "Destination",
-      selector: (row) => row.Destinations,
+      selector: (row) => row.DestinationName,
       sortable: true,
     },
     {
       name: "Transfer Type",
-      selector: (row) => row.TransferType,
+      selector: (row) => row.TransferTypeName,
       sortable: true,
     },
     {

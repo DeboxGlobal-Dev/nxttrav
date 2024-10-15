@@ -15,6 +15,7 @@ const MonumentRate = () => {
   const [taxSlabList, setTaxSlabList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
   const [rateList, setRateList] = useState([]);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [errorMessgae, setErrorMessage] = useState("");
   const { id } = useParams();
   const { state } = useLocation();
@@ -40,7 +41,8 @@ const MonumentRate = () => {
     setFormValue({ ...formValue, [name]: value });
   };
 
-  const handleSubmit = async () => {
+  // submitting rate
+  const handleRateSubmit = async () => {
     try {
       await monumnetRateValidationSchema?.validate(formValue, {
         abortEarly: false,
@@ -51,10 +53,13 @@ const MonumentRate = () => {
         MonumentId: id,
       });
 
-      const { data } = await axiosOther.post("addmonumentrate", {
-        ...formValue,
-        MonumentId: id,
-      });
+      const { data } = await axiosOther.post(
+        !isUpdating ? "addmonumentrate" : "updatemonumentrate",
+        {
+          ...formValue,
+          MonumentId: id,
+        }
+      );
 
       console.log("response", data);
 
@@ -68,6 +73,8 @@ const MonumentRate = () => {
       }
     } catch (err) {
       console.log("error", err);
+      if (err.response.status == 500) {
+      }
       if (err.inner) {
         const errMessage = err.inner.reduce((acc, curr) => {
           acc[curr.path] = curr.message;
@@ -78,8 +85,30 @@ const MonumentRate = () => {
     }
   };
 
-  // getting data for dropdown
+  // set value into form
+  const handleRateEdit = (value, companyId) => {
+    setIsUpdating(true);
+    setFormValue({
+      ...value,
+      RateUniqueId: value?.UniqueID,
+      DestinationID: 33,
+      Remarks: value.Remarks == null ? "" : value.Remarks,
+      TAC: value.TAC == null ? "" : value.TAC,
+      Policy: value.Policy == null ? "" : value.Policy,
+      CompanyId: companyId,
+    });
+    console.log("edit-value", value);
+    console.log("company-id", companyId);
+  };
 
+  //reset all form value
+
+  const handleResetForm = () => {
+    setIsUpdating(false);
+    setFormValue(monumentRateInitialValue);
+  };
+
+  // getting data for dropdown
   const postDataToServer = async () => {
     try {
       const { data } = await axiosOther.post("fetch-supplier-name-list", {
@@ -394,13 +423,21 @@ const MonumentRate = () => {
                 />
               </div>
 
-              <div className="col-2">
+              <div className="col-2 d-flex gap-3">
                 <button
                   className="modal-save-button w-auto px-3 mt-3"
-                  onClick={handleSubmit}
+                  onClick={handleRateSubmit}
                 >
                   Save
                 </button>
+                {isUpdating && (
+                  <button
+                    className="modal-save-button w-auto px-3 mt-3"
+                    onClick={handleResetForm}
+                  >
+                    Reset
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -424,9 +461,9 @@ const MonumentRate = () => {
                 </tr>
               </thead>
               <tbody>
-                {rateList?.map((item) => {
-                  return item?.RateJson?.Data?.map((item) => {
-                    return item?.RateDetails?.map((item) => {
+                {rateList?.map((item1) => {
+                  return item1?.RateJson?.Data?.map((item2) => {
+                    return item2?.RateDetails?.map((item) => {
                       return (
                         <tr key={item?.UniqueID}>
                           <td className="text-center px-0">
@@ -442,9 +479,16 @@ const MonumentRate = () => {
                           <td className="text-center">{item?.AdultEntFee}</td>
                           <td className="text-center">{item?.ChildEntFee}</td>
                           <td className="text-center">{item?.TaxSlabVal}</td>
-                          <td className="text-center">{item?.Status}</td>
+                          <td className="text-center">
+                            {item?.Status == 1 ? "Active" : "Inactive"}
+                          </td>
                           <td>
-                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                            <i
+                              className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"
+                              onClick={() =>
+                                handleRateEdit(item, item1?.RateJson?.companyId)
+                              }
+                            ></i>
                           </td>
                         </tr>
                       );

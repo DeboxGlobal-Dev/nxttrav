@@ -9,7 +9,6 @@ import { axiosOther } from "../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 
 const AirlineRate = () => {
-  
   const [formValue, setFormValue] = useState(airlineRateAddInitialValue);
   const [currencyList, setCurrencyList] = useState([]);
   const [flightClass, setFlightClass] = useState([]);
@@ -65,10 +64,16 @@ const AirlineRate = () => {
         ...formValue,
         id: id,
       });
+      console.log("response", data);
 
       if (data?.Status == 1) {
-        toast.success("Rate Added Successfully !");
+        getAirlineRateList();
+        toast.success(data?.Message);
         setFormValue(airlineRateAddInitialValue);
+      }
+
+      if (data?.Status != 1) {
+        toast.error(data?.Message);
       }
     } catch (err) {
       console.log("error", err);
@@ -81,6 +86,10 @@ const AirlineRate = () => {
       }
     }
   };
+
+  const handleRateEdit = (value) =>{
+    setFormValue(value);
+  }
 
   // getting data for dropdown
   const postDataToServer = async () => {
@@ -420,59 +429,78 @@ const AirlineRate = () => {
               </thead>
               <tbody>
                 {airRateList?.map((item) => {
-                  console.log('airline-items', item);
                   return (
-                    <tr>
+                    <tr key={item?.UniqueID}>
                       <td className="text-center">{item?.FlightNumber}</td>
                       <td className="text-center">{item?.FlightClass?.Name}</td>
                       <td className="text-center">
                         <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">Base Fare :</span>
+                          <span className="font-weight-bold text-nowrap">
+                            Base Fare :
+                          </span>
                           <span>{item?.adult_cost?.base_fare}</span>
                         </div>
                         <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">Airline Tax :</span>
+                          <span className="font-weight-bold text-nowrap">
+                            Airline Tax :
+                          </span>
                           <span>{item?.adult_cost?.airline_tax}</span>
                         </div>
                         <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">Total Cost :</span>
+                          <span className="font-weight-bold text-nowrap">
+                            Total Cost :
+                          </span>
                           <span>{item?.adult_cost?.total}</span>
                         </div>
                       </td>
                       <td className="text-center">
-                      <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">Base Fare :</span>
+                        <div className="d-flex gap-3">
+                          <span className="font-weight-bold text-nowrap">
+                            Base Fare :
+                          </span>
                           <span>{item?.child_cost?.base_fare}</span>
                         </div>
                         <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">Airline Tax :</span>
+                          <span className="font-weight-bold text-nowrap">
+                            Airline Tax :
+                          </span>
                           <span>{item?.child_cost?.airline_tax}</span>
                         </div>
                         <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">Total Cost :</span>
+                          <span className="font-weight-bold text-nowrap">
+                            Total Cost :
+                          </span>
                           <span>{item?.child_cost?.total}</span>
                         </div>
                       </td>
                       <td className="text-center">
-                      <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">Base Fare :</span>
+                        <div className="d-flex gap-3">
+                          <span className="font-weight-bold text-nowrap">
+                            Base Fare :
+                          </span>
                           <span>{item?.infant_cost?.base_fare}</span>
                         </div>
                         <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap" >Airline Tax :</span>
+                          <span className="font-weight-bold text-nowrap">
+                            Airline Tax :
+                          </span>
                           <span>{item?.infant_cost?.airline_tax}</span>
                         </div>
                         <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">Total Cost :</span>
+                          <span className="font-weight-bold text-nowrap">
+                            Total Cost :
+                          </span>
                           <span>{item?.infant_cost?.total}</span>
                         </div>
                       </td>
                       <td className="text-center">{item?.BaggageAllowance}</td>
-                      <td className="text-center">{item?.CancellationPolicy}</td>
+                      <td className="text-center">
+                        {item?.CancellationPolicy}
+                      </td>
                       <td className="text-center">{item?.Status}</td>
                       <td className="text-center">{item?.Remarks}</td>
                       <td>
-                        <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                        <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer" onClick={()=> handleRateEdit(item)}></i>
                       </td>
                     </tr>
                   );

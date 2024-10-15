@@ -15,6 +15,7 @@ const GuideRate = () => {
   const [guideMasterList, setGuideMasterList] = useState([]);
   const [slabList, setSlabList] = useState([]);
   const [guideRateList, setGuideRateList] = useState([]);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [errorMessgae, setErrorMessage] = useState("");
   const { id } = useParams();
   const { state } = useLocation();
@@ -52,16 +53,23 @@ const GuideRate = () => {
       setErrorMessage("");
       console.log("value", { ...formValue, id: id });
 
-      const { data } = await axiosOther.post("addupdateguiderate", {
-        ...formValue,
-        id: id,
-      });
+      const { data } = await axiosOther.post(
+        !isUpdating ? "addupdateguiderate" : "updateguideratejson",
+        {
+          ...formValue,
+          id: id,
+        }
+      );
       console.log("response", data);
 
       if (data?.Status == 1) {
         getGuideRateList();
-        toast.success("Rate Added Successfully !");
+        toast.success(data?.Message);
         setFormValue(guideRateInitialValue);
+        setIsUpdating(false)
+      }
+      if (data?.Status != 1) {
+        toast.success(data?.Message);
       }
     } catch (err) {
       if (err.inner) {
@@ -72,6 +80,22 @@ const GuideRate = () => {
         setErrorMessage(errMessage);
       }
     }
+  };
+
+  // setted all value into form
+  const handleRateEdit = (value, companyId) => {
+    setIsUpdating(true);
+    setFormValue({
+      ...value,
+      RateUniqueId: value?.UniqueID,
+      CompanyId: companyId,
+    });
+  };
+
+  //reset all value from form
+  const handleRestForm = () => {
+    setIsUpdating(false);
+    setFormValue(guideRateInitialValue);
   };
 
   // get data from server for dropdown
@@ -134,7 +158,7 @@ const GuideRate = () => {
             <div className="col-xl-2 d-flex justify-content-end">
               {/*Bootstrap Modal*/}
               <NavLink
-                to="/master/tourescortprice"
+                to="/master/guideprice"
                 className="gray-button"
                 aria-expanded="false"
               >
@@ -419,13 +443,21 @@ const GuideRate = () => {
                   <option value="0">Inactive</option>
                 </select>
               </div>
-              <div className="col-2">
+              <div className="col-2 d-flex gap-3">
                 <button
                   className="modal-save-button w-auto px-3 mt-3"
                   onClick={handleSubmit}
                 >
-                  Save
+                  {!isUpdating ? "Save" : "Update"}
                 </button>
+                {isUpdating && (
+                  <button
+                    className="modal-save-button w-auto px-3 mt-3"
+                    onClick={handleRestForm}
+                  >
+                    Reset
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -452,9 +484,9 @@ const GuideRate = () => {
                 </tr>
               </thead>
               <tbody>
-                {guideRateList?.map((item) => {
-                  return item?.Ratejson?.Data?.map((item) => {
-                    return item?.RateDetails?.map((item) => {
+                {guideRateList?.map((item1) => {
+                  return item1?.Ratejson?.Data?.map((item2) => {
+                    return item2?.RateDetails?.map((item) => {
                       return (
                         <tr key={item?.UniqueID}>
                           <td className="text-center">{item?.SupplierName}</td>
@@ -469,7 +501,12 @@ const GuideRate = () => {
                           <td className="text-center">{item?.OtherCost}</td>
                           <td className="text-center">{item?.GstSlabValue}</td>
                           <td>
-                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"></i>
+                            <i
+                              className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"
+                              onClick={() =>
+                                handleRateEdit(item, item1?.CompanyId)
+                              }
+                            ></i>
                           </td>
                         </tr>
                       );

@@ -101,9 +101,9 @@ const TransportMaster = () => {
       selector: (row) => (
         <NavLink
           to={`/master/transport/rate/${row?.id}`}
-          state={{ Name: row?.MonumentName }}
+          state={{Name:row?.TransferType?.Name}}
         >
-          <button className="border font-size-10 p-1 px-2 rounded-pill bg-success" state={{Name:row?.TransferType?.Name}}>
+          <button className="border font-size-10 p-1 px-2 rounded-pill bg-success" >
             + View/Add
           </button>
         </NavLink>
