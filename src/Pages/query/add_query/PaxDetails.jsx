@@ -1,8 +1,8 @@
-// import React, { useState, useReducer, useEffect, useContext } from "react";
-// import Counter from "../Counter";
-// import { queryInitial } from "../QueryInitialValue";
-// import { paxInitial } from "../QueryInitialValue";
-// import { addQueryContext } from "./Addquery";
+import React, { useState, useReducer, useEffect, useContext } from "react";
+import Counter from "../Counter";
+import { queryInitial } from "../QueryInitialValue";
+import { paxInitial } from "../QueryInitialValue";
+import { addQueryContext } from "./Addquery";
 
 // const PaxDetails = () => {
 //   const [PaxTotal, setPaxTotal] = useState(0);
@@ -133,4 +133,10 @@
 //   );
 // };
 
-// export default React.memo(PaxDetails);
+const PaxDetails = () =>{
+  return(
+    <h1>Pax Details</h1>
+  )
+}
+
+export default React.memo(PaxDetails);
