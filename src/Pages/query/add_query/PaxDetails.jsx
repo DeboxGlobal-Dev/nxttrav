@@ -2,7 +2,7 @@ import React, { useState, useReducer, useEffect, useContext } from "react";
 import Counter from "../Counter";
 import { queryInitial } from "../QueryInitialValue";
 import { paxInitial } from "../QueryInitialValue";
-import { Addquery  } from "./Addquery";
+import { Addquery  } from './Addquery';
 
 // const PaxDetails = () => {
 //   const [PaxTotal, setPaxTotal] = useState(0);
