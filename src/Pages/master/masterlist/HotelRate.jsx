@@ -9,11 +9,10 @@ import { axiosOther } from "../../../http/axios/axios_new";
 import toast, { Toaster } from "react-hot-toast";
 
 const HotelRate = () => {
-
   const [formValue, setFormValue] = useState(hotelRateAddInitialValue);
   const [marketTypeList, setMarketTypeList] = useState([]);
   const [supplierList, setSupplierList] = useState([]);
-  const [tarifTypeList, setTarfiTypeList] = useState([]);
+  const [tarifTypeList, setTarifTypeList] = useState([]);
   const [bedTypeList, setBedTypeList] = useState([]);
   const [seasonList, setSeasonList] = useState([]);
   const [paxTypeList, setPaxTypeList] = useState([]);
@@ -22,6 +21,7 @@ const HotelRate = () => {
   const [currencyList, setCurrencyList] = useState([]);
   const [taxSlabList, setTaxSlabList] = useState([]);
   const [hotelRateList, setHotelRateList] = useState([]);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [errorMessgae, setErrorMessage] = useState("");
   const { id } = useParams();
   const { state } = useLocation();
@@ -58,17 +58,22 @@ const HotelRate = () => {
         HotelId: id,
       });
 
-      const { data } = await axiosOther.post("addhotelrates", {
-        ...formValue,
-        HotelId: id,
-      });
-      console.log('response', data);
+      const { data } = await axiosOther.post(
+        !isUpdating ? "addhotelrates" : "updatehotelratejson",
+        {
+          ...formValue,
+          HotelId: id,
+        }
+      );
+      console.log("response", data);
       if (data?.Status == 1) {
         getHotelRateList();
-        toast.success("Rate Added Successfully !");
+        toast.success(data?.Message);
         setFormValue(hotelRateAddInitialValue);
       }
-      
+      if (data?.Status != 1) {
+        toast.error(data?.Message);
+      }
     } catch (err) {
       if (err.inner) {
         const errMessage = err.inner.reduce((acc, curr) => {
@@ -80,9 +85,46 @@ const HotelRate = () => {
     }
   };
 
-  const handleRateEdit = (value) =>{
-    setFormValue(value);
-  }
+  const handleRateEdit = (value, hoteluuId, destinationId, hotelId) => {
+    setFormValue({
+      HotelId: hotelId,
+      RateUniqueId: value?.UniqueID,
+      HotelUUID: hoteluuId,
+      CompanyId: "COMP0001",
+      DestinationID: destinationId,
+      SupplierId: value?.SupplierId,
+      ValidFrom: value?.ValidFrom,
+      ValidTo: value?.ValidTo,
+      MarketTypeId: value?.MarketTypeId,
+      PaxTypeId: value?.PaxTypeId,
+      TarrifeTypeId: value?.TarrifeTypeId,
+      SeasonTypeID: value?.SeasonTypeID,
+      SeasonYear: value?.SeasonYear,
+      RoomCost: value?.RoomCost,
+      MealCost: value?.MealCost,
+      CurrencyId: value?.CurrencyId,
+      RoomTypeID: value?.RoomTypeID,
+      MealPlanId: value?.MealPlanId,
+      RoomBedType: value?.RoomBedType,
+      RoomTaxSlabId: value?.RoomTaxSlabId,
+      MealSlabId: value?.MealSlabId,
+      MarkupType: value?.MarkupType,
+      MarkupCost: value?.MarkupCost,
+      MealType: value?.MealType,
+      Remarks: value?.Remarks,
+      Status: value?.Status,
+      AddedBy: value?.AddedBy,
+      UpdatedBy: value?.UpdatedBy,
+      UpdatedDate: "2024-08-30",
+    });
+    setIsUpdating(true);
+  };
+
+  const handleResetForm = () => {
+    setFormValue(hotelRateAddInitialValue);
+    setIsUpdating(false);
+  };
+  // console.log("hotel-rate-list", hotelRateList);
 
   // get data from server for dropdown
   const postDataToServer = async () => {
@@ -92,6 +134,7 @@ const HotelRate = () => {
         Name: "",
       });
       setSupplierList(data?.DataList);
+      console.log("supplier-list", data);
     } catch (error) {
       console.log(error);
     }
@@ -102,6 +145,7 @@ const HotelRate = () => {
         Status: "",
       });
       setCurrencyList(data?.DataList);
+      console.log("currency-list", data);
     } catch (error) {
       console.log(error);
     }
@@ -112,6 +156,7 @@ const HotelRate = () => {
         Status: "",
       });
       setTaxSlabList(data);
+      console.log("tax-master", data);
     } catch (error) {
       console.log(error);
     }
@@ -120,6 +165,7 @@ const HotelRate = () => {
         PaxType: "",
       });
       setPaxTypeList(data?.DataList);
+      console.log("paxlist", data);
     } catch (error) {
       console.log(error);
     }
@@ -128,6 +174,8 @@ const HotelRate = () => {
         Search: "",
         Status: "",
       });
+      console.log;
+      "room-sharing", data;
       setBedTypeList(data?.DataList);
     } catch (error) {
       console.log(error);
@@ -137,6 +185,7 @@ const HotelRate = () => {
         Search: "",
         Status: "",
       });
+      console.log("season-list", data);
       setSeasonList(data?.DataList);
     } catch (error) {
       console.log(error);
@@ -146,6 +195,7 @@ const HotelRate = () => {
         Search: "",
         Status: "",
       });
+      console.log("roomtype", data);
       setRoomTypeList(data?.DataList);
     } catch (error) {
       console.log(error);
@@ -155,27 +205,30 @@ const HotelRate = () => {
         Search: "",
         Status: "",
       });
+      console.log("hotel-meal-plan", data);
       setMealPlanList(data?.DataList);
     } catch (error) {
       console.log(error);
     }
-    try {
-      const { data } = await axiosOther.post("markettypemasterlist", {
-        id: "",
-        Search: "",
-        Status: "",
-      });
-      setMarketTypeList(data?.DataList);
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const { data } = await axiosOther.post("markettypemasterlist", {
+    //     id: "",
+    //     Search: "",
+    //     Status: "",
+    //   });
+    //   console.log("market-type-list", data);
+    //   setMarketTypeList(data?.DataList);
+    // } catch (error) {
+    //   console.log(error);
+    // }
     try {
       const { data } = await axiosOther.post("tarifftypelist", {
         id: "",
         Search: "",
         Status: "",
       });
-      setTarfiTypeList(data?.DataList);
+      console.log("tariff-type", data);
+      setTarifTypeList(data?.DataList);
     } catch (error) {
       console.log(error);
     }
@@ -587,8 +640,8 @@ const HotelRate = () => {
                       </label>
                       <div>
                         <select
-                          name="MealTypeId"
-                          value={formValue?.MealTypeId}
+                          name="MealType"
+                          value={formValue?.MealType}
                           onChange={handleInputChange}
                           className="form-input-6"
                         >
@@ -713,13 +766,21 @@ const HotelRate = () => {
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="col-2">
+              <div className="col-2 d-flex gap-3">
                 <button
                   className="modal-save-button w-auto px-3 mt-3"
                   onClick={handleSubmit}
                 >
-                  Save
+                  {!isUpdating ? "Save" : "Update"}
                 </button>
+                {isUpdating && (
+                  <button
+                    className="modal-save-button w-auto px-3 mt-3"
+                    onClick={handleResetForm}
+                  >
+                    Reset
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -728,123 +789,132 @@ const HotelRate = () => {
 
       <div className="container-fluid px-3 pb-4 mb-5">
         <div className="row ">
-          <div className="col-12 ">
+          <div className="col-12 overflow-x-scroll rate-list-table">
             <table className="table table-bordered  table-striped table-responsive">
               <thead>
                 <tr>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10">
                     SEASON
                   </th>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10">
                     VALIDITY
                   </th>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10">
                     PAX TYPE
                   </th>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10">
                     MARKET TYPE
                   </th>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10">
                     SUPPLIER
                   </th>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10">
                     TARIF TYPE
                   </th>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10">
                     ROOM TYPE
                   </th>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10">
                     MEAL PLAN
                   </th>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10">
                     ROOM BED TYPE
                   </th>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10">
                     ROOM COST
                   </th>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10">
                     MEAL TYPE
                   </th>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10">
                     MEAL COST
                   </th>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10">
                     TAC(%)
                   </th>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10 ">
                     ROOM TAX SLAB
                   </th>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10">
                     MEAL TAX SLAB
                   </th>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10">
                     MARKUP
                   </th>
-                  <th className="p-0 text-center py-1 text-nowrap px-1">
+                  <th className="p-0 text-center py-1 text-nowrap px-1 font-size-10">
                     STATUS
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {hotelRateList?.map((item) => {
-                  return item?.Data?.map((item) => {
-                    return item?.RateDetails?.map((item) => {
+                {hotelRateList?.map((item1) => {
+                  return item1?.Data?.map((item2) => {
+                    return item2?.RateDetails?.map((item) => {
                       return (
                         <tr key={item?.UniqueID}>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.SeasonTypeName}
                           </td>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.ValidTo}
                           </td>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.PaxTypeName}
                           </td>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.MarketTypeName}
                           </td>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.SupplierName}
                           </td>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.TarrifeTypeName}
                           </td>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.RoomTypeName}
                           </td>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.MealPlanName}
                           </td>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.RoomBedType}
                           </td>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.RoomCost}
                           </td>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.Status}
                           </td>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.Status}
                           </td>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.TAC?.toFixed(2)}
                           </td>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.RoomTaxSlabValue}
                           </td>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.MealSlabValue}
                           </td>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.MarkupType}
                           </td>
-                          <td className="text-center text-nowrap">
+                          <td className="text-center text-nowrap font-size-10">
                             {item?.Status}
                           </td>
-
                           <td>
-                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer" onClick={()=>handleRateEdit(item)}></i>
+                            <i
+                              className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"
+                              onClick={() =>
+                                handleRateEdit(
+                                  item,
+                                  item1?.HotelUUID,
+                                  item1?.DestinationID,
+                                  item1?.hotelId
+                                )
+                              }
+                            ></i>
                           </td>
                         </tr>
                       );

@@ -7,4 +7,9 @@ export default defineConfig({
   // optimizeDeps: {
   //   exclude: ['js-big-decimal']
   // }
-})
+  server:{
+    proxy:{
+      "/api":"http://20.198.9.47/"
+    }
+  }
+});

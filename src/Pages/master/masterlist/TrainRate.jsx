@@ -14,6 +14,7 @@ const TrainRate = () => {
   const [trainList, setTrainList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
   const [trainRateList, setTrainRateList] = useState([]);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [errorMessgae, setErrorMessage] = useState("");
   const { id } = useParams();
   const { state } = useLocation();
@@ -33,7 +34,7 @@ const TrainRate = () => {
     getTrainRateList();
   }, []);
 
-  console.log("train-rate-list", trainRateList);
+  // console.log("train-rate-list", trainRateList);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -51,16 +52,20 @@ const TrainRate = () => {
         TrainId: id,
       });
 
-      const { data } = await axiosOther.post("addtrainrate", {
-        ...formValue,
-        TrainId: id,
-      });
+      const { data } = await axiosOther.post(
+        !isUpdating ? "addtrainrate" : "updatetrainrate",
+        {
+          ...formValue,
+          TrainId: id,
+        }
+      );
 
-      console.log("response", data);
+      // console.log("response", data);
       if (data?.Status == 1) {
         getTrainRateList();
         toast.success(data?.Message);
         setFormValue(trainRateAddInitialValue);
+        setIsUpdating(false)
       }
 
       if (data?.Status != 1) {
@@ -78,8 +83,30 @@ const TrainRate = () => {
     }
   };
 
-  const handleRateEdit = (value) => {
-    setFormValue(value);
+  const handleRateEdit = (value, trainId, companyId) => {
+    setFormValue({
+      TrainId: trainId,
+      RateUniqueId: value?.UniqueID,
+      companyId: companyId,
+      SupplierId: value?.SupplierId,
+      TrainNumber: value?.TrainNumber,
+      JourneyType: value?.JourneyType,
+      TrainClassId: value?.TrainClassId,
+      Currency: value?.CurrencyId,
+      AdultCost: value?.AdultCost,
+      ChildCost: value?.ChildCost,
+      InfantCost: value?.InfantCost,
+      Remarks: value?.Remarks,
+      Status: value?.Status,
+      AddedBy: value?.AddedBy,
+      UpdatedBy: value?.UpdatedBy,
+    });
+    setIsUpdating(true);
+  };
+
+  const handleResetForm = () => {
+    setFormValue(trainRateAddInitialValue);
+    setIsUpdating(false);
   };
 
   // getting data for dropdown
@@ -319,13 +346,21 @@ const TrainRate = () => {
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="col-2">
+              <div className="col-2 d-flex gap-3">
                 <button
                   className="modal-save-button w-auto px-3 mt-3"
                   onClick={handleSubmit}
                 >
-                  Save
+                  {!isUpdating ? "Save" : "Update"}
                 </button>
+                {isUpdating && (
+                  <button
+                    className="modal-save-button w-auto px-3 mt-3"
+                    onClick={handleResetForm}
+                  >
+                    Reset
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -352,9 +387,9 @@ const TrainRate = () => {
                 </tr>
               </thead>
               <tbody>
-                {trainRateList?.map((item) => {
-                  return item?.Data?.map((item) => {
-                    return item?.RateDetails?.map((item) => {
+                {trainRateList?.map((item1) => {
+                  return item1?.Data?.map((item2) => {
+                    return item2?.RateDetails?.map((item) => {
                       return (
                         <tr key={item?.UniqueID}>
                           <td className="text-center">{item?.SupplierName}</td>
@@ -363,7 +398,7 @@ const TrainRate = () => {
                             {item?.TrainClassName}
                           </td>
                           <td className="text-center">{item?.JourneyType}</td>
-                          <td className="text-center">--</td>
+                          <td className="text-center">{item?.CurrencyName}</td>
                           <td className="text-center">{item?.AdultCost}</td>
                           <td className="text-center">{item?.ChildCost}</td>
                           <td className="text-center">{item?.InfantCost}</td>
@@ -372,7 +407,13 @@ const TrainRate = () => {
                           <td>
                             <i
                               className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"
-                              onClick={() => handleRateEdit()}
+                              onClick={() =>
+                                handleRateEdit(
+                                  item,
+                                  item1?.TrainId,
+                                  item1?.companyId
+                                )
+                              }
                             ></i>
                           </td>
                         </tr>

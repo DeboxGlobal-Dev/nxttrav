@@ -14,12 +14,13 @@ const AirlineRate = () => {
   const [flightClass, setFlightClass] = useState([]);
   const [airRateList, setAirRateList] = useState([]);
   const [errorMessgae, setErrorMessage] = useState("");
+  const [isUpdating, setIsUpdating] = useState(false);
   const { id } = useParams();
   const { state } = useLocation();
 
   const getAirlineRateList = async () => {
     try {
-      const { data } = await axiosOther.post("airratelist", {
+      const { data } = await axiosOther.post("airlineRateList", {
         id: id,
       });
       setAirRateList(data?.DataList);
@@ -60,16 +61,20 @@ const AirlineRate = () => {
         MonumentId: id,
       });
 
-      const { data } = await axiosOther.post("addupdateairlinerate", {
-        ...formValue,
-        id: id,
-      });
+      const { data } = await axiosOther.post(
+        !isUpdating ? "addupdateairlinerate" : "updateairlineratejson",
+        {
+          ...formValue,
+          id: id,
+        }
+      );
       console.log("response", data);
 
       if (data?.Status == 1) {
         getAirlineRateList();
         toast.success(data?.Message);
         setFormValue(airlineRateAddInitialValue);
+        setIsUpdating(false);
       }
 
       if (data?.Status != 1) {
@@ -87,9 +92,41 @@ const AirlineRate = () => {
     }
   };
 
-  const handleRateEdit = (value) =>{
-    setFormValue(value);
-  }
+  const handleRateEdit = (value) => {
+    setFormValue({
+      id: "7",
+      RateUniqueId: value?.UniqueID,
+      FlightNumber: value?.FlightNumber,
+      FlightClass: value?.FlightClassId,
+      Currency: value?.CurrencyId,
+      AdultCost: {
+        base_fare: value?.AdultCost?.base_fare,
+        airline_tax: value?.AdultCost?.airline_tax,
+      },
+      ChildCost: {
+        base_fare: value?.ChildCost?.base_fare,
+        airline_tax: value?.ChildCost?.airline_tax,
+      },
+      InfantCost: {
+        base_fare: value?.InfantCost?.base_fare,
+        airline_tax: value?.InfantCost?.airline_tax,
+      },
+      BaggageAllowance: value?.BaggageAllowance,
+      CancallationPolicy: value?.CancellationPolicy,
+      Remarks: value?.Remarks,
+      Status: value?.Status,
+      AddedBy: value?.AddedBy,
+      UpdatedBy: value?.UpdatedBy,
+      AddedDate: "2024-10-11",
+      UpdatedDate: value?.UpdatedDate,
+    });
+    setIsUpdating(true);
+  };
+
+  const handleResetForm = () => {
+    setFormValue(airlineRateAddInitialValue);
+    setIsUpdating(false);
+  };
 
   // getting data for dropdown
   const postDataToServer = async () => {
@@ -117,6 +154,8 @@ const AirlineRate = () => {
     postDataToServer();
   }, []);
 
+  console.log("airline-rate", airRateList);
+
   return (
     <Layout>
       <div className="container-fluid p-3 pb-0">
@@ -131,7 +170,7 @@ const AirlineRate = () => {
             <div className="col-xl-2 d-flex justify-content-end">
               {/*Bootstrap Modal*/}
               <NavLink
-                to="/master/restaurant"
+                to="/master/airline"
                 className="gray-button"
                 aria-expanded="false"
               >
@@ -396,13 +435,21 @@ const AirlineRate = () => {
                 />
               </div>
 
-              <div className="col-2">
+              <div className="col-2 d-flex gap-3">
                 <button
                   className="modal-save-button w-auto px-3 mt-3"
                   onClick={handleSubmit}
                 >
-                  Save
+                  {!isUpdating ? "Save" : "Update"}
                 </button>
+                {isUpdating && (
+                  <button
+                    className="modal-save-button w-auto px-3 mt-3"
+                    onClick={handleResetForm}
+                  >
+                    Reset
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -428,82 +475,75 @@ const AirlineRate = () => {
                 </tr>
               </thead>
               <tbody>
-                {airRateList?.map((item) => {
-                  return (
-                    <tr key={item?.UniqueID}>
-                      <td className="text-center">{item?.FlightNumber}</td>
-                      <td className="text-center">{item?.FlightClass?.Name}</td>
-                      <td className="text-center">
-                        <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">
-                            Base Fare :
-                          </span>
-                          <span>{item?.adult_cost?.base_fare}</span>
-                        </div>
-                        <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">
-                            Airline Tax :
-                          </span>
-                          <span>{item?.adult_cost?.airline_tax}</span>
-                        </div>
-                        <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">
-                            Total Cost :
-                          </span>
-                          <span>{item?.adult_cost?.total}</span>
-                        </div>
-                      </td>
-                      <td className="text-center">
-                        <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">
-                            Base Fare :
-                          </span>
-                          <span>{item?.child_cost?.base_fare}</span>
-                        </div>
-                        <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">
-                            Airline Tax :
-                          </span>
-                          <span>{item?.child_cost?.airline_tax}</span>
-                        </div>
-                        <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">
-                            Total Cost :
-                          </span>
-                          <span>{item?.child_cost?.total}</span>
-                        </div>
-                      </td>
-                      <td className="text-center">
-                        <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">
-                            Base Fare :
-                          </span>
-                          <span>{item?.infant_cost?.base_fare}</span>
-                        </div>
-                        <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">
-                            Airline Tax :
-                          </span>
-                          <span>{item?.infant_cost?.airline_tax}</span>
-                        </div>
-                        <div className="d-flex gap-3">
-                          <span className="font-weight-bold text-nowrap">
-                            Total Cost :
-                          </span>
-                          <span>{item?.infant_cost?.total}</span>
-                        </div>
-                      </td>
-                      <td className="text-center">{item?.BaggageAllowance}</td>
-                      <td className="text-center">
-                        {item?.CancellationPolicy}
-                      </td>
-                      <td className="text-center">{item?.Status}</td>
-                      <td className="text-center">{item?.Remarks}</td>
-                      <td>
-                        <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer" onClick={()=> handleRateEdit(item)}></i>
-                      </td>
-                    </tr>
-                  );
+                {airRateList?.map((item1) => {
+                  return item1?.Data?.map((item2) => {
+                    return item2?.RateDetails?.map((item) => {
+                      return (
+                        <tr key={item?.UniqueID}>
+                          <td className="text-center">{item?.FlightNumber}</td>
+                          <td className="text-center">
+                            {/* {item?.FlightClassName} */}
+                          </td>
+                          <td className="text-center">
+                            <div className="d-flex gap-3">
+                              <span className="font-weight-bold text-nowrap">
+                                Base Fare :
+                              </span>
+                              <span>{item?.AdultCost?.base_fare}</span>
+                            </div>
+                            <div className="d-flex gap-3">
+                              <span className="font-weight-bold text-nowrap">
+                                Airline Tax :
+                              </span>
+                              <span>{item?.AdultCost?.airline_tax}</span>
+                            </div>
+                          </td>
+                          <td className="text-center">
+                            <div className="d-flex gap-3">
+                              <span className="font-weight-bold text-nowrap">
+                                Base Fare :
+                              </span>
+                              <span>{item?.ChildCost?.base_fare}</span>
+                            </div>
+                            <div className="d-flex gap-3">
+                              <span className="font-weight-bold text-nowrap">
+                                Airline Tax :
+                              </span>
+                              <span>{item?.ChildCost?.airline_tax}</span>
+                            </div>
+                          </td>
+                          <td className="text-center">
+                            <div className="d-flex gap-3">
+                              <span className="font-weight-bold text-nowrap">
+                                Base Fare :
+                              </span>
+                              <span>{item?.InfantCost?.base_fare}</span>
+                            </div>
+                            <div className="d-flex gap-3">
+                              <span className="font-weight-bold text-nowrap">
+                                Airline Tax :
+                              </span>
+                              <span>{item?.InfantCost?.airline_tax}</span>
+                            </div>
+                          </td>
+                          <td className="text-center">
+                            {item?.BaggageAllowance}
+                          </td>
+                          <td className="text-center">
+                            {item?.CancellationPolicy}
+                          </td>
+                          <td className="text-center">{item?.Status}</td>
+                          <td className="text-center">{item?.Remarks}</td>
+                          <td>
+                            <i
+                              className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"
+                              onClick={() => handleRateEdit(item)}
+                            ></i>
+                          </td>
+                        </tr>
+                      );
+                    });
+                  });
                 })}
               </tbody>
             </table>

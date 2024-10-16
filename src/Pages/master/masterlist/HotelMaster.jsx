@@ -166,46 +166,58 @@ const HotelMaster = () => {
     }
   };
 
+  const renderContacts = (contacts) => {
+    if(Array.isArray(contacts)){
+      return contacts?.map((contact, index) => (
+        <div key={index} className="d-flex flex-column mt-2">
+          <span className="font-size-11">Email : {contact?.Email}</span>
+          <span className="font-size-11">Name : {contact?.Title} {contact?.FirstName} {contact?.LastName}</span>
+          <span className="font-size-11">Phone : {contact?.Phone1} </span>
+        </div>
+      ));
+    }
+  };
+
   const columns = [
     {
       name: "Hotel Chain",
       selector: (row) => (
-        <span>
+        <span className="font-size-11">
           <i
             className="fa-solid fa-pen-to-square pr-2 cursor-pointer"
             onClick={() => handleEditClick(row)}
           ></i>
-          {row.HotelBasicDetails?.HotelChain?.ChainName}
+          {row?.HotelBasicDetails?.HotelChain?.ChainName}
         </span>
       ),
       sortable: true,
     },
     {
       name: "Hotel Name",
-      selector: (row) => row.HotelName,
+      selector: (row) => <span className="font-size-11">{row.HotelName}</span>,
       sortable: true,
     },
     {
       name: "Destination/Locality",
-      selector: (row) => row.Destination,
+      selector: (row) => <span className="font-size-11">{row?.HotelDestination?.Destinationame + " " + row?.HotelCountry?.CountryName}</span>
     },
     {
       name: "Contact Person",
-      selector: (row) => row.ContactPerson,
+      selector: (row) =>renderContacts(row?.HotelContactDetails)
     },
     {
       name: "Category",
-      selector: (row) => row.HotelBasicDetails?.HotelCategory?.CategoryName,
+      selector: (row) => <span className="font-size-11">{row.HotelBasicDetails?.HotelCategory?.CategoryName}</span>,
       sortable: true,
     },
     {
       name: "Status",
-      selector: (row) => row.Status,
+      selector: (row) => <span className="font-size-11">{row.Status}</span>,
       sortable: true,
     },
     {
       name: "Room Type",
-      selector: (row) => row?.HotelBasicDetails.HotelRoomType?.RoomTypeName,
+      selector: (row) => <spam className="font-size-11">{row?.HotelBasicDetails.HotelRoomType?.RoomTypeName}</spam>,
       sortable: true,
     },
     {
@@ -218,7 +230,7 @@ const HotelMaster = () => {
       selector: (row) => (
         <NavLink
           to={`/master/hotelmaster/rate/${row?.id}`}
-          state={{ Name: row?.MonumentName }}
+          state={{ Name: row?.HotelBasicDetails?.HotelChain?.ChainName }}
         >
           <button className="border font-size-10 p-1 px-2 rounded-pill bg-success">
             + View/Add

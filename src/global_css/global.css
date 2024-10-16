@@ -1,3 +1,4 @@
+
 .navbar-light .active > .navbar-nav-link,
 .navbar-light .navbar-nav-link.active,
 .navbar-light .navbar-nav-link.show,
@@ -6,8 +7,19 @@
   background-color: #0000001c;
 }
 
-/* ----------------custom global css----------------- */
+*{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
 
+/* ----------------custom global css----------------- */
+.padding-10px{
+  padding: 10px;
+}
+.heading-bg-1{
+  background-color: #0097A7;
+}
 .custom-button {
   border: 1px solid rgb(165, 163, 163);
   background-color: white;
@@ -188,7 +200,7 @@ a {
 .width-30-percent {
   width: 32%;
 }
-.height-60{
+.height-60 {
   height: 60px;
 }
 .image-hw {
@@ -325,7 +337,7 @@ a {
 .bg-gray {
   background-color: rgb(226, 226, 226);
 }
-.bg-gray-1{
+.bg-gray-1 {
   background-color: rgb(203, 203, 203);
 }
 .color-gold {
@@ -399,7 +411,6 @@ a {
   box-sizing: border-box;
   color: #fff;
   cursor: pointer;
-  font-family: Montserrat, sans-serif;
   font-size: 0.9em;
   margin: 5px;
   padding: 8px 15px;
@@ -675,6 +686,17 @@ a {
   font-size: 12px;
   background-color: white;
   border: 1px solid black;
+}
+.back-button-1{
+  height: 25px;
+  width: 50px;
+  border: 1px solid rgb(154, 154, 154);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  border-radius: 2px;
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
 }
 .overflow-text {
   display: -webkit-box;
@@ -1166,27 +1188,26 @@ select {
   font-size: 10px;
   color: gray;
 }
-.font-weight-400{
+.font-weight-400 {
   font-weight: 400;
 }
-.width-30px{
+.width-30px {
   width: 30px;
 }
-.custom-table-layout{
+.custom-table-layout {
   table-layout: fixed; /* It allow to fixed all table data equally*/
 }
 
-.dropdown-menu-left{
-  right: 0; 
-  left: auto; 
+.dropdown-menu-left {
+  right: 0;
+  left: auto;
 }
-.padding-right-3{
+.padding-right-3 {
   padding-right: 3px;
 }
-.rate-list-table::-webkit-scrollbar{
+.rate-list-table::-webkit-scrollbar {
   height: 3px;
 }
-
 
 @keyframes skeleton-loading {
   0% {

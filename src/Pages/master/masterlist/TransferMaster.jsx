@@ -43,7 +43,6 @@ const TransferMaster = () => {
     const postDataToServer = async () => {
       try {
         const { data } = await axiosOther.post("transfermasterlist", postData);
-        console.log("data", data);
         setGetData(data.DataList);
         setFilterData(data.DataList);
       } catch (error) {
@@ -63,7 +62,7 @@ const TransferMaster = () => {
   }, [postData]);
 
   const handleEditClick = (rowValue) => {
-    console.log(rowValue);
+    // console.log(rowValue);
     setEditData({
       ...rowValue,
       CountryId: rowValue.CountryName === "India" ? "1" : "2",

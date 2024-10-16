@@ -114,23 +114,22 @@ const CountryMaster = () => {
         <div className="container-fluid p-3 mb-4">
           <div
             className="card shadow-none border"
-            style={{ marginBottom: "0" }}
+            
           >
             <div
-              className="card-header header-elements-inline bg-primary-700 py-2"
-              style={{ padding: "10px" }}
+              className="card-header d-flex justify-content-between px-2 align-items-center heading-bg-1 p-0 py-2"
             >
-              <div className="col-xl-10 d-flex align-items-center">
+              <div className="d-flex align-items-center">
                 <h5 className="card-title d-none d-sm-block">Country Master</h5>
               </div>
-              <div className="col-xl-2 d-flex justify-content-end">
+              <div className="d-flex gap-3">
                 {/*Bootstrap Modal*/}
                 <NavLink
                   to="/master"
-                  className="gray-button"
+                  className="back-button-1 text-dark"
                   aria-expanded="false"
                 >
-                  Back
+                  BACK
                 </NavLink>
                 <Model
                   heading={"Add Country"}

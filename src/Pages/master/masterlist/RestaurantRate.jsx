@@ -16,6 +16,7 @@ const RestaurantRate = () => {
   const [currencyList, setCurrencyList] = useState([]);
   const [restaurantRateList, setRestaurantRateList] = useState([]);
   const [errorMessgae, setErrorMessage] = useState("");
+  const [isUpdating, setIsUpdating] = useState(false);
   const { id } = useParams();
   const { state } = useLocation();
 
@@ -24,14 +25,13 @@ const RestaurantRate = () => {
       const { data } = await axiosOther.post("restaurantmasterRatelist", {
         id: id,
       });
-      setRestaurantRateList(data?.DataList)
+      setRestaurantRateList(data?.DataList);
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log('restaurant-list', restaurantRateList);
-
+  console.log("restaurant-list", restaurantRateList);
 
   useEffect(() => {
     getRestaurantRateList();
@@ -53,23 +53,29 @@ const RestaurantRate = () => {
         RestaurantId: id,
       });
 
-      const {data} = await axiosOther.post("addrestaurantrate", {
-        ...formValue,
-        RestaurantId: id,
-      });
+      const { data } = await axiosOther.post(
+        !isUpdating ? "addrestaurantrate" : "updaterestaurantrate",
+        {
+          ...formValue,
+          RestaurantId: id,
+        }
+      );
 
       console.log("response", data);
-      if(data?.Status ==1){
+      if (data?.Status == 1) {
         getRestaurantRateList();
         toast.success(data?.Message);
         setFormValue(restaurantRateAddInitialValue);
+        setIsUpdating(false);
       }
-      if(data?.Status !=1){
+      if (data?.Status != 1) {
         toast.error(data?.Message);
       }
-
     } catch (err) {
       console.log("error", err);
+      if (err?.response?.status == 500) {
+        toast.error(err?.response?.statusText);
+      }
       if (err.inner) {
         const errMessage = err.inner.reduce((acc, curr) => {
           acc[curr.path] = curr.message;
@@ -80,9 +86,30 @@ const RestaurantRate = () => {
     }
   };
 
-    const handleRateEdit = (value) =>{
-      setFormValue(value);
-    }
+  const handleRateEdit = (value, restaurantId, destinationId) => {
+    setFormValue({
+      RestaurantId: restaurantId,
+      RateUniqueId: value?.UniqueID,
+      DestinationID: destinationId,
+      SupplierId: value?.SupplierId,
+      MealTypeId: value?.MealTypeId,
+      Currency: value?.CurrencyId,
+      AdultCost: value?.AdultCost,
+      ChildCost: value?.ChildCost,
+      GstSlabId: value?.GstSlabId,
+      Status: value?.Status,
+      AddedBy: value?.AddedBy,
+      UpdatedBy: value?.UpdatedBy,
+      AddedDate: value?.AddedDate,
+      UpdatedDate: value?.UpdatedDate,
+    });
+    setIsUpdating(true);
+  };
+
+  const handleResetForm = () => {
+    setFormValue(restaurantRateAddInitialValue);
+    setIsUpdating(false);
+  };
 
   // getting data for dropdown
   const postDataToServer = async () => {
@@ -97,7 +124,7 @@ const RestaurantRate = () => {
     }
 
     try {
-      const { data } = await axiosOther.post("hotelmealplanlist", {
+      const { data } = await axiosOther.post("restaurantmeallist", {
         Search: "",
         Status: "",
       });
@@ -105,6 +132,7 @@ const RestaurantRate = () => {
     } catch (error) {
       console.log(error);
     }
+
     try {
       const { data } = await axiosOther.post("currencymasterlist", {
         id: "",
@@ -149,7 +177,7 @@ const RestaurantRate = () => {
               >
                 Back
               </NavLink>
-              <Toaster/>
+              <Toaster />
             </div>
           </div>
           <div className="card-body">
@@ -314,13 +342,21 @@ const RestaurantRate = () => {
                   <option value="0">Inactive</option>
                 </select>
               </div>
-              <div className="col-2">
+              <div className="col-2 d-flex gap-3">
                 <button
                   className="modal-save-button w-auto px-3 mt-3"
                   onClick={handleSubmit}
                 >
-                  Save
+                  {!isUpdating ? "Save" : "Update"}
                 </button>
+                {isUpdating && (
+                  <button
+                    className="modal-save-button w-auto px-3 mt-3"
+                    onClick={handleResetForm}
+                  >
+                    Reset
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -344,9 +380,9 @@ const RestaurantRate = () => {
                 </tr>
               </thead>
               <tbody>
-              {restaurantRateList?.map((item) => {
-                  return item?.Data?.map((item) => {
-                    return item?.RateDetails?.map((item) => {
+                {restaurantRateList?.map((item1) => {
+                  return item1?.Data?.map((item2) => {
+                    return item2?.RateDetails?.map((item) => {
                       return (
                         <tr key={item?.UniqueID}>
                           <td className="text-center">{item?.SupplierName}</td>
@@ -354,10 +390,23 @@ const RestaurantRate = () => {
                           <td className="text-center">{item?.CurrencyName}</td>
                           <td className="text-center">{item?.AdultCost}</td>
                           <td className="text-center">{item?.ChildCost}</td>
-                          <td className="text-center">{item?.GstSlabName} ({item?.GstSlabValue})</td>
-                          <td className="text-center">{item?.Status==1? 'Active' :'Inactive'}</td>
+                          <td className="text-center">
+                            {item?.GstSlabName} ({item?.GstSlabValue})
+                          </td>
+                          <td className="text-center">
+                            {item?.Status == 1 ? "Active" : "Inactive"}
+                          </td>
                           <td>
-                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer" onClick={()=>handleRateEdit(item)}></i>
+                            <i
+                              className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"
+                              onClick={() =>
+                                handleRateEdit(
+                                  item,
+                                  item1?.RestaurantId,
+                                  item1?.DestinationID
+                                )
+                              }
+                            ></i>
                           </td>
                         </tr>
                       );

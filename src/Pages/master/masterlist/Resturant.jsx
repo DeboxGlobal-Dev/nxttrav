@@ -99,7 +99,7 @@ const Resturant = () => {
         );
         setGetData(data.DataList);
         setFilterData(data.DataList);
-        console.log("data-list", data?.DataList);
+        console.log("restaurant-list", data?.DataList);
       } catch (error) {
         console.log(error);
       }
@@ -156,7 +156,7 @@ const Resturant = () => {
     },
     {
       name: "Destination",
-      selector: (row) => row.DestinationId,
+      selector: (row) => row.DestinationName,
       sortable: true,
     },
     {

@@ -57,7 +57,7 @@ const Model = ({
     <>
       <button
         type="button"
-        className={"blue-button"}
+        className=""
         data-toggle="modal"
         data-target="#modal_form_vertical"
         onClick={() => setIsEditing(false)}

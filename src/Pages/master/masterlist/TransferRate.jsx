@@ -6,7 +6,7 @@ import {
   transferRateValidationSchema,
 } from "./MasterValidations";
 import { axiosOther } from "../../../http/axios/axios_new";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const TransferRate = () => {
   const [formValue, setFormValue] = useState(transferRateAddInitialValue);
@@ -16,10 +16,10 @@ const TransferRate = () => {
   const [vehicleList, setVehicleList] = useState([]);
   const [slabList, setSlabList] = useState([]);
   const [transferRateList, setTransferRateList] = useState([]);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [errorMessgae, setErrorMessage] = useState("");
   const { id } = useParams();
   const { state } = useLocation();
-
 
   const getTransferRateList = async () => {
     try {
@@ -27,7 +27,6 @@ const TransferRate = () => {
         id: id,
       });
       setTransferRateList(data?.data);
-      // console.log('transfer-list', data);
     } catch (error) {
       console.log(error);
     }
@@ -37,7 +36,7 @@ const TransferRate = () => {
     getTransferRateList();
   }, []);
 
-  console.log('transfer-list', transferRateList)
+  console.log("transfer-list", transferRateList);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -55,16 +54,22 @@ const TransferRate = () => {
         TransferId: id,
       });
 
-      const {data} = await axiosOther.post("addtransferrate", {
-        ...formValue,
-        TransferId: id,
-      });
+      const { data } = await axiosOther.post(
+        !isUpdating ? "addtransferrate" : "updatetransferrate",
+        {
+          ...formValue,
+          TransferId: id,
+        }
+      );
 
       console.log("response", data);
-      if(data?.Status){
+      if (data?.Status ==1) {
         getTransferRateList();
-        toast.success('Rate Added Successfully !');
+        toast.success(data?.Message);
         setFormValue(transferRateAddInitialValue);
+      }
+      if (data?.Status !=1) {
+        toast.error(data?.Message);
       }
     } catch (err) {
       if (err.inner) {
@@ -77,9 +82,39 @@ const TransferRate = () => {
     }
   };
 
-  const handleRateEdit =(value) =>{
-    setFormValue(value);
-  }
+  const handleRateEdit = (value, tranferId, destinationId, companyId) => {
+    setFormValue({
+      TransferId: tranferId,
+      RateUniqueId: value?.UniqueID,
+      CompanyId: companyId,
+      DestinationID: destinationId,
+      SupplierId: value?.SupplierId,
+      ValidFrom: value?.ValidFrom,
+      ValidTo: value?.ValidTo,
+      CurrencyId: value?.CurrencyId,
+      VehicleTypeId: value?.VehicleTypeId,
+      VehicleCost: value?.VehicleCost,
+      ParkingFee: value?.ParkingFee,
+      RapEntryFee: value?.RapEntryFee,
+      Assistance: value?.Assistance,
+      AdtnlAllowance: value?.AdtnlAllowance,
+      InterStateToll: value?.InterStateToll,
+      MiscCost: value?.MiscCost,
+      TaxSlabId: value?.TaxSlabId,
+      Remarks: value?.Remarks,
+      Status: value?.Status,
+      AddedBy: value?.AddedBy,
+      UpdatedBy: value?.UpdatedBy,
+      AddedDate: "2024-09-11",
+      UpdatedDate: "2024-09-11",
+    });
+    setIsUpdating(true);
+  };
+
+  const handleResetForm = () => {
+    setFormValue(transferRateAddInitialValue);
+    setIsUpdating(false);
+  };
 
   // get data from server for dropdown
   const postDataToServer = async () => {
@@ -159,6 +194,7 @@ const TransferRate = () => {
               >
                 Back
               </NavLink>
+              <Toaster/>
             </div>
           </div>
           <div className="card-body">
@@ -289,9 +325,8 @@ const TransferRate = () => {
               <div className="col-2">
                 <div className="d-flex justify-content-between">
                   <label htmlFor="" className="m-0 font-size-12">
-                    VEHICLE TYPE 
+                    VEHICLE TYPE
                   </label>
-                  
                 </div>
                 <select
                   name="VehicleTypeId"
@@ -476,13 +511,21 @@ const TransferRate = () => {
                 />
               </div>
 
-              <div className="col-2">
+              <div className="col-2 d-flex gap-3">
                 <button
                   className="modal-save-button w-auto px-3 mt-3"
                   onClick={handleSubmit}
                 >
-                  Save
+                  {!isUpdating ? "Save" : "Update"}
                 </button>
+                {isUpdating && (
+                  <button
+                    className="modal-save-button w-auto px-3 mt-3"
+                    onClick={handleResetForm}
+                  >
+                    Reset
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -514,26 +557,46 @@ const TransferRate = () => {
                 </tr>
               </thead>
               <tbody>
-              {transferRateList?.map((item) => {
-                  return item?.Data?.map((item) => {
-                    return item?.RateDetails?.map((item) => {
+                {transferRateList?.map((item1) => {
+                  return item1?.Data?.map((item2) => {
+                    return item2?.RateDetails?.map((item) => {
                       return (
                         <tr key={item?.UniqueID}>
-                          <td className="text-center">{item?.VehicleTypeName}</td>
+                          <td className="text-center">
+                            {item?.VehicleTypeName}
+                          </td>
                           <td className="text-center">{item?.Service}</td>
-                          <td className="text-center">{item?.DestinationName}</td>
-                          <td className="text-center">{item?.VehicleTypeName}</td>
+                          <td className="text-center">
+                            {item?.DestinationName}
+                          </td>
+                          <td className="text-center">
+                            {item?.VehicleTypeName}
+                          </td>
                           <td className="text-center">{item?.TaxSlabVal}</td>
                           <td className="text-center">{item?.VehicleCost}</td>
                           <td className="text-center">{item?.ParkingFee}</td>
                           <td className="text-center">{item?.RapEntryFee}</td>
                           <td className="text-center">{item?.Assistance}</td>
-                          <td className="text-center">{item?.AdtnlAllowance}</td>
-                          <td className="text-center">{item?.InterStateToll}</td>
+                          <td className="text-center">
+                            {item?.AdtnlAllowance}
+                          </td>
+                          <td className="text-center">
+                            {item?.InterStateToll}
+                          </td>
                           <td className="text-center">{item?.MiscCost}</td>
                           <td className="text-center">{item?.Status}</td>
                           <td>
-                            <i className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"  onClick={()=>handleRateEdit(item)}></i>
+                            <i
+                              className="fa-solid fa-pen-to-square text-success fs-5 cursor-pointer"
+                              onClick={() =>
+                                handleRateEdit(
+                                  item,
+                                  item1?.TransferId,
+                                  item1?.DestinationID,
+                                  item1?.companyId
+                                )
+                              }
+                            ></i>
                           </td>
                         </tr>
                       );
